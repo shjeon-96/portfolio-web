@@ -3,10 +3,15 @@ import { execFileSync } from 'node:child_process';
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 
-const sourceRepo = process.env.SOURCE_REPO ?? '/Users/jeonseunghun/dev/next/nb-front';
+const sourceRepo = process.env.SOURCE_REPO;
 const since = process.env.SINCE ?? '2026-04-01';
 const author = process.env.AUTHOR ?? '';
 const output = process.env.OUTPUT ?? 'tmp/changelog-candidates.json';
+
+if (!sourceRepo) {
+  console.error('SOURCE_REPO is required. Example: SOURCE_REPO=/path/to/local/repo npm run changelog:candidates');
+  process.exit(1);
+}
 
 const categoryRules = [
   {
@@ -169,7 +174,7 @@ const candidates = Array.from(grouped.values())
 const payload = {
   generatedAt: new Date().toISOString(),
   source: {
-    sourceRepo,
+    sourceRepo: '[local source repository]',
     since,
     author: author || '[all authors]',
     rawCommitSubjects: raw.split('\n').filter(Boolean).length,

@@ -11,9 +11,12 @@
     "changelog:candidates": "node scripts/generate-public-changelog.mjs"
   },
   "dependencies": {
+    "immer": "^11.1.8",
+    "lucide-react": "^1.21.0",
     "next": "16.3.0-canary.47",
     "react": "19.2.3",
-    "react-dom": "19.2.3"
+    "react-dom": "19.2.3",
+    "zustand": "^5.0.14"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",

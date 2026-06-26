@@ -4,7 +4,7 @@ import { caseStudies } from '@/lib/data';
 const baseUrl = 'https://portfolio-web.vercel.app';
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const routes = ['', '/case-studies', '/changelog', '/ai-workflow', '/skills', '/about', '/ko', '/ko/case-studies', '/ko/changelog', '/ko/ai-workflow', '/ko/skills', '/ko/about'].map((route) => ({
+  const routes = ['', '/case-studies', '/editor-prototype', '/changelog', '/ai-workflow', '/skills', '/about', '/ko', '/ko/case-studies', '/ko/editor-prototype', '/ko/changelog', '/ko/ai-workflow', '/ko/skills', '/ko/about'].map((route) => ({
     url: `${baseUrl}${route}`,
     lastModified: new Date(),
   }));

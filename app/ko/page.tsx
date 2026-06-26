@@ -27,6 +27,9 @@ export default function KoreanHomePage() {
             <Link className="rounded-md bg-[var(--text-primary)] px-4 py-2 text-sm font-semibold text-white" href="/ko/case-studies">
               케이스 스터디 보기
             </Link>
+            <Link className="rounded-md border border-[var(--border)] bg-[var(--surface)] px-4 py-2 text-sm font-semibold" href="/ko/editor-prototype">
+              프로토타입 써보기
+            </Link>
             <Link className="rounded-md border border-[var(--border)] bg-[var(--surface)] px-4 py-2 text-sm font-semibold" href="/ko/changelog">
               체인지로그 읽기
             </Link>
@@ -55,7 +58,7 @@ export default function KoreanHomePage() {
           <ConsolePanel
             eyebrow="Current Focus"
             title="AST Editor Engine"
-            description="비주얼 편집, 컴포넌트 Variant, 제품 상태 소유 경계를 구조화합니다."
+            description="비주얼 편집, 컴포넌트 Variant, 제품 상태 소유 경계를 구조화합니다. 라이트 프로토타입도 확인할 수 있습니다."
           />
           <ConsolePanel
             eyebrow="Recent Changelog"

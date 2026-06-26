@@ -22,6 +22,9 @@ export default function Home() {
             <Link className="rounded-md bg-[var(--text-primary)] px-4 py-2 text-sm font-semibold text-white" href="/case-studies">
               View case studies
             </Link>
+            <Link className="rounded-md border border-[var(--border)] bg-[var(--surface)] px-4 py-2 text-sm font-semibold" href="/editor-prototype">
+              Try prototype
+            </Link>
             <Link className="rounded-md border border-[var(--border)] bg-[var(--surface)] px-4 py-2 text-sm font-semibold" href="/changelog">
               Read changelog
             </Link>
@@ -50,7 +53,7 @@ export default function Home() {
           <ConsolePanel
             eyebrow="Current Focus"
             title="AST Editor Engine"
-            description="Structured visual editing, component variants, and product state ownership."
+            description="Structured visual editing, component variants, and product state ownership. A lightweight prototype is available."
           />
           <ConsolePanel
             eyebrow="Recent Changelog"
