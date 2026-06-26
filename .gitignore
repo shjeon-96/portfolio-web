@@ -11,5 +11,5 @@ yarn-error.log*
 pnpm-debug.log*
 dist
 coverage
+tmp
 .DS_Store
-

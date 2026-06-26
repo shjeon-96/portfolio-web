@@ -7,7 +7,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "changelog:candidates": "node scripts/generate-public-changelog.mjs"
   },
   "dependencies": {
     "next": "16.3.0-canary.47",
@@ -26,4 +27,3 @@
     "typescript": "^5"
   }
 }
-

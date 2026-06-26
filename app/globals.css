@@ -22,9 +22,14 @@ html {
 body {
   margin: 0;
   font-family: Arial, Helvetica, sans-serif;
+  background: var(--background);
+  color: var(--text-primary);
 }
 
 ::selection {
   background: color-mix(in srgb, var(--accent-blue) 18%, transparent);
 }
 
+.text-balance {
+  text-wrap: balance;
+}
