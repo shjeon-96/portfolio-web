@@ -38,6 +38,9 @@ This repository is the public portfolio web project for job applications.
 npm run dev
 npm run lint
 npm run build
+npm run check:public-safety
+npm run check:routes
+npm run precommit:verify
 ```
 
 ## Git

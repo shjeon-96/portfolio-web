@@ -8,6 +8,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
+    "check:public-safety": "node scripts/public-safety-check.mjs",
+    "check:routes": "node scripts/verify-routes.mjs",
+    "precommit:verify": "npm run check:public-safety && npm run check:routes",
     "changelog:candidates": "node scripts/generate-public-changelog.mjs"
   },
   "dependencies": {
