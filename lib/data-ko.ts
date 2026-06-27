@@ -209,7 +209,7 @@ export const caseStudiesKo: CaseStudy[] = [
     publicProof: [
       '제품 모델 경계를 중심으로 정리한 공개 가능한 아키텍처 설명',
       '에디터 상태와 렌더링 계약 중심 회귀 검증',
-      '이 포트폴리오의 인터랙티브 프로토타입 경로',
+      '생성 산출물 회귀 리뷰',
     ],
     problem:
       '노코드 에디터는 템플릿, 컴포넌트, 스타일, 이벤트, 데이터 바인딩을 하나의 일관된 모델로 편집·저장·미리보기·산출물 생성까지 연결해야 했습니다.',
@@ -232,12 +232,7 @@ export const caseStudiesKo: CaseStudy[] = [
       'Variant, Slot, Interaction이 숨은 결합 없이 확장되도록 편집 시점 상태와 런타임 동작을 분리했습니다.',
     ],
     verificationEvidence: ['상태 전이 단위 테스트', '미리보기 동작 통합 확인', '생성 산출물 회귀 리뷰'],
-    links: [
-      {
-        label: '인터랙티브 프로토타입',
-        href: '/editor-prototype',
-      },
-    ],
+    links: [],
   },
   {
     slug: 'export-deploy-parity',

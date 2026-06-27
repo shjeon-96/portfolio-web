@@ -45,9 +45,6 @@ export default function Home() {
             <Link className="flex min-h-11 items-center rounded-md bg-[var(--text-primary)] px-4 py-2 text-sm font-semibold text-white" href="/en/case-studies">
               View case studies
             </Link>
-            <Link className="flex min-h-11 items-center rounded-md border border-[var(--border)] bg-[var(--surface)] px-4 py-2 text-sm font-semibold" href="/en/editor-prototype">
-              Try prototype
-            </Link>
             <Link className="flex min-h-11 items-center rounded-md border border-[var(--border)] bg-[var(--surface)] px-4 py-2 text-sm font-semibold" href="/en/changelog">
               Read changelog
             </Link>

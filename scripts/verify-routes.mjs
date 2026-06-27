@@ -21,8 +21,6 @@ const routes = [
   '/en/skills',
   '/ai-workflow',
   '/en/ai-workflow',
-  '/editor-prototype',
-  '/en/editor-prototype',
   '/sitemap.xml',
   '/robots.txt',
 ];

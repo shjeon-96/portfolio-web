@@ -8,7 +8,6 @@ import { useState } from 'react';
 const navigationEn = [
   { href: '/en', label: 'Home' },
   { href: '/en/case-studies', label: 'Case Studies' },
-  { href: '/en/editor-prototype', label: 'Prototype' },
   { href: '/en/changelog', label: 'Changelog' },
   { href: '/en/ai-workflow', label: 'AI Workflow' },
   { href: '/en/skills', label: 'Skills' },
@@ -18,7 +17,6 @@ const navigationEn = [
 const navigationKo = [
   { href: '/', label: '홈' },
   { href: '/case-studies', label: '케이스 스터디' },
-  { href: '/editor-prototype', label: '프로토타입' },
   { href: '/changelog', label: '체인지로그' },
   { href: '/ai-workflow', label: 'AI 워크플로우' },
   { href: '/skills', label: '스킬' },
@@ -28,13 +26,8 @@ const navigationKo = [
 export function SiteHeader() {
   const pathname = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const isEditorPrototype = pathname === '/editor-prototype' || pathname === '/en/editor-prototype';
   const isKorean = !pathname.startsWith('/en');
   const navigation = isKorean ? navigationKo : navigationEn;
-
-  if (isEditorPrototype) {
-    return null;
-  }
 
   return (
     <header className="sticky top-0 z-20 border-b border-[var(--border)] bg-[color-mix(in_srgb,var(--surface)_82%,var(--background))] backdrop-blur">

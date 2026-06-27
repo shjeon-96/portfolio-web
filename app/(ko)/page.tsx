@@ -50,9 +50,6 @@ export default function KoreanHomePage() {
             <Link className="flex min-h-11 items-center rounded-md bg-[var(--text-primary)] px-4 py-2 text-sm font-semibold text-white" href="/case-studies">
               케이스 스터디 보기
             </Link>
-            <Link className="flex min-h-11 items-center rounded-md border border-[var(--border)] bg-[var(--surface)] px-4 py-2 text-sm font-semibold" href="/editor-prototype">
-              프로토타입 써보기
-            </Link>
             <Link className="flex min-h-11 items-center rounded-md border border-[var(--border)] bg-[var(--surface)] px-4 py-2 text-sm font-semibold" href="/changelog">
               체인지로그 읽기
             </Link>

@@ -269,7 +269,7 @@ export const caseStudies: CaseStudy[] = [
     publicProof: [
       'Public-safe architecture narrative with product model boundaries',
       'Regression-oriented verification around editor state and rendering contracts',
-      'Interactive prototype path in this portfolio',
+      'Generated output regression review',
     ],
     problem:
       'A no-code editor needed to edit, persist, preview, and export templates, components, styles, events, and data bindings through one coherent model.',
@@ -292,12 +292,7 @@ export const caseStudies: CaseStudy[] = [
       'Separated editing-time state from runtime behavior so variants, slots, and interactions could evolve without hidden coupling.',
     ],
     verificationEvidence: ['Unit tests for state transitions', 'Integration checks for preview behavior', 'Generated output regression review'],
-    links: [
-      {
-        label: 'Interactive prototype',
-        href: '/en/editor-prototype',
-      },
-    ],
+    links: [],
   },
   {
     slug: 'export-deploy-parity',
