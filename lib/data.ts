@@ -767,3 +767,7 @@ export const aiWorkflowSteps = [
 export function getCaseStudy(slug: string) {
   return caseStudies.find((caseStudy) => caseStudy.slug === slug);
 }
+
+export function sortChangelogEntriesByPeriodDesc<T extends ChangelogEntry>(entries: T[]) {
+  return [...entries].sort((left, right) => right.period.localeCompare(left.period));
+}

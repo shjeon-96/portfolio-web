@@ -1,5 +1,6 @@
 import { ChangelogEntry } from '@/components/changelog-entry';
 import { SectionHeading } from '@/components/section-heading';
+import { sortChangelogEntriesByPeriodDesc } from '@/lib/data';
 import { changelogEntriesKo } from '@/lib/data-ko';
 
 export const metadata = {
@@ -8,6 +9,7 @@ export const metadata = {
 };
 
 export default function KoreanChangelogPage() {
+  const sortedEntries = sortChangelogEntriesByPeriodDesc(changelogEntriesKo);
   const priorityEntries = [
     'Agent LSP Bridge 릴리즈 계약',
     '모바일 릴리즈 게이트 시스템',
@@ -55,7 +57,7 @@ export default function KoreanChangelogPage() {
         </div>
       </section>
       <section className="mt-10 rounded-xl border border-[var(--border)] bg-[var(--surface)] px-5 py-2 shadow-sm">
-        {changelogEntriesKo.map((entry) => (
+        {sortedEntries.map((entry) => (
           <ChangelogEntry entry={entry} key={entry.title} labels={{ approach: '접근', result: '결과' }} />
         ))}
       </section>

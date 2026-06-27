@@ -1,6 +1,6 @@
 import { ChangelogEntry } from '@/components/changelog-entry';
 import { SectionHeading } from '@/components/section-heading';
-import { changelogEntries } from '@/lib/data';
+import { changelogEntries, sortChangelogEntriesByPeriodDesc } from '@/lib/data';
 
 export const metadata = {
   title: 'Engineering Changelog',
@@ -8,6 +8,7 @@ export const metadata = {
 };
 
 export default function ChangelogPage() {
+  const sortedEntries = sortChangelogEntriesByPeriodDesc(changelogEntries);
   const priorityEntries = [
     'Agent LSP bridge release contract',
     'Mobile release gate system',
@@ -57,7 +58,7 @@ export default function ChangelogPage() {
         </div>
       </section>
       <section className="mt-10 rounded-xl border border-[var(--border)] bg-[var(--surface)] px-5 py-2 shadow-sm">
-        {changelogEntries.map((entry) => (
+        {sortedEntries.map((entry) => (
           <ChangelogEntry entry={entry} key={entry.title} />
         ))}
       </section>
