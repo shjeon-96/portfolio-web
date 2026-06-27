@@ -1,13 +1,14 @@
 import Link from 'next/link';
-import { CaseStudyCard } from '@/components/case-study-card';
+import { ExternalLink } from 'lucide-react';
 import { ChangelogEntry } from '@/components/changelog-entry';
 import { HomeEvidencePanel } from '@/components/home-evidence-panel';
 import { ProjectHighlightCard } from '@/components/project-highlight-card';
-import { caseStudiesKo, changelogEntriesKo, projectHighlightsKo, proofPointsKo } from '@/lib/data-ko';
+import { sortChangelogEntriesByDateDesc } from '@/lib/data';
+import { changelogEntriesKo, projectHighlightsKo, proofPointsKo } from '@/lib/data-ko';
 
 export const metadata = {
   title: '제품 프론트엔드 포트폴리오',
-  description: 'React, Next.js, 제품 엔지니어링, 변경 기록, AI 개발 흐름 포트폴리오.',
+  description: '에디터 엔진, 모바일 릴리즈 게이트, AI 개발 흐름을 공개 가능한 제품 엔지니어링 근거로 정리한 포트폴리오.',
 };
 
 export default function KoreanHomePage() {
@@ -20,20 +21,14 @@ export default function KoreanHomePage() {
       '세무·정산 운영 플랫폼',
     ].includes(project.title),
   );
-  const homeChangelogEntries = [
-    'Agent LSP Bridge 릴리즈 계약',
-    '모바일 릴리즈 게이트 시스템',
-    'SwiftUI 제품 모듈 아키텍처',
-  ]
-    .map((title) => changelogEntriesKo.find((entry) => entry.title === title))
-    .filter((entry): entry is (typeof changelogEntriesKo)[number] => Boolean(entry));
+  const homeChangelogEntries = sortChangelogEntriesByDateDesc(changelogEntriesKo).slice(0, 3);
 
   return (
     <main>
-      <section className="mx-auto grid w-full max-w-7xl gap-10 px-5 py-14 lg:grid-cols-[1.08fr_0.92fr] lg:items-center lg:py-20">
+      <section className="mx-auto grid w-full max-w-7xl gap-10 px-5 py-8 lg:grid-cols-[1.08fr_0.92fr] lg:items-start lg:py-10">
         <div>
           <p className="mb-4 font-mono text-sm font-medium uppercase tracking-[0.16em] text-[var(--accent-blue)]">
-            제품 시스템 포트폴리오
+            Seunghun Jeon / 제품 시스템 포트폴리오
           </p>
           <h1 className="max-w-3xl text-4xl font-semibold leading-tight text-balance sm:text-5xl">
             AI 도구, 모바일 릴리즈, 에디터 엔진을 다루는 제품 프론트엔드
@@ -43,19 +38,21 @@ export default function KoreanHomePage() {
             릴리즈 검증, 생성 산출물이 같은 기준으로 이어지도록 구조화합니다.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
-            <Link className="flex min-h-11 items-center rounded-md bg-[var(--text-primary)] px-4 py-2 text-sm font-semibold text-white" href="/case-studies">
-              케이스 스터디 보기
-            </Link>
-            <Link className="flex min-h-11 items-center rounded-md border border-[var(--border)] bg-[var(--surface)] px-4 py-2 text-sm font-semibold" href="/changelog">
+            <Link className="flex min-h-11 items-center rounded-md bg-[var(--text-primary)] px-4 py-2 text-sm font-semibold text-white" href="/changelog">
               체인지로그 읽기
             </Link>
+            <Link className="flex min-h-11 items-center rounded-md border border-[var(--border)] bg-[var(--surface)] px-4 py-2 text-sm font-semibold" href="/ai-workflow">
+              AI 개발 흐름 보기
+            </Link>
             <a
-              className="flex min-h-11 items-center rounded-md border border-[var(--border)] bg-[var(--surface)] px-4 py-2 text-sm font-semibold"
+              aria-label="GitHub 프로필"
+              className="grid size-11 place-items-center rounded-md border border-[var(--border)] bg-[var(--surface)] text-[var(--text-primary)]"
               href="https://github.com/shjeon-96"
               rel="noreferrer"
               target="_blank"
+              title="GitHub"
             >
-              GitHub
+              <ExternalLink aria-hidden="true" size={18} />
             </a>
           </div>
           <div className="mt-8 flex flex-wrap gap-3">
@@ -82,8 +79,8 @@ export default function KoreanHomePage() {
             },
             {
               label: '최근 작업',
-              title: '케이스 스터디와 날짜별 체인지로그',
-              description: '대표 작업은 복잡도, 소유 경계, 검증 기준으로 정리하고 변경 이력은 일자별로 추적합니다.',
+              title: '월별 체인지로그와 프로젝트 기록',
+              description: '대표 작업은 공개 가능한 프로젝트 기록으로 보완하고 변경 이력은 커밋 기반 월별 기록으로 추적합니다.',
             },
             {
               label: '작업 방식',
@@ -101,28 +98,6 @@ export default function KoreanHomePage() {
           <Metric label="제품 시스템" value="에디터 엔진" />
         </div>
       </section>
-      <section className="mx-auto max-w-7xl px-5 py-16">
-        <div className="flex flex-col justify-between gap-4 md:flex-row md:items-end">
-          <div>
-            <p className="text-sm font-semibold uppercase tracking-[0.16em] text-[var(--accent-blue)]">대표 사례</p>
-            <h2 className="mt-3 text-3xl font-semibold">복잡도를 정리한 대표 사례</h2>
-          </div>
-          <Link className="inline-flex min-h-11 items-center text-sm font-semibold text-[var(--accent-blue)]" href="/case-studies">
-            전체 케이스 스터디 보기
-          </Link>
-        </div>
-        <div className="mt-8 grid gap-4 lg:grid-cols-3">
-          {caseStudiesKo.slice(0, 3).map((caseStudy) => (
-            <CaseStudyCard
-              caseStudy={caseStudy}
-              cta="케이스 스터디 읽기"
-              hrefPrefix="/case-studies"
-              key={caseStudy.slug}
-              labels={{ proof: '보여주는 역량', verification: '검증 근거' }}
-            />
-          ))}
-        </div>
-      </section>
       <section className="border-y border-[var(--border)] bg-[var(--surface)]">
         <div className="mx-auto max-w-7xl px-5 py-14">
           <div className="flex flex-col justify-between gap-4 md:flex-row md:items-end">
@@ -131,7 +106,7 @@ export default function KoreanHomePage() {
               <h2 className="mt-3 text-3xl font-semibold">보조로 참고할 프로젝트 기록</h2>
             </div>
             <p className="max-w-2xl text-sm leading-6 text-[var(--text-secondary)]">
-              핵심 판단은 케이스 스터디와 체인지로그에서 하고, 여기서는 공개 저장소와 제품 범위를 짧게 보완합니다.
+              긴 서사 페이지 대신 공개 저장소, 제품 범위, 월별 변경 기록이 서로 보완되도록 정리합니다.
             </p>
           </div>
           <div className="mt-8 grid gap-x-8 gap-y-2 md:grid-cols-2 xl:grid-cols-3">
@@ -144,8 +119,8 @@ export default function KoreanHomePage() {
       <section className="mx-auto max-w-7xl px-5 py-14">
         <div className="mb-5 flex flex-col justify-between gap-3 md:flex-row md:items-end">
           <div>
-            <p className="text-sm font-semibold uppercase tracking-[0.16em] text-[var(--accent-blue)]">최근 변경 기록</p>
-            <h2 className="mt-2 text-3xl font-semibold">최근 변경 기록</h2>
+            <p className="text-sm font-semibold uppercase tracking-[0.16em] text-[var(--accent-blue)]">최근 엔지니어링 기록</p>
+            <h2 className="mt-2 text-3xl font-semibold">최근 엔지니어링 노트</h2>
           </div>
           <Link className="inline-flex min-h-11 items-center text-sm font-semibold text-[var(--accent-blue)]" href="/changelog">
             전체 체인지로그 보기

@@ -1,17 +1,19 @@
-import type { ChangelogEntry as ChangelogEntryType } from '@/lib/data';
+import { formatChangelogDate, type ChangelogEntry as ChangelogEntryType } from '@/lib/data';
 
 export function ChangelogEntry({
   entry,
+  locale = 'ko',
   showDate = true,
 }: Readonly<{
   entry: ChangelogEntryType;
+  locale?: 'en' | 'ko';
   showDate?: boolean;
 }>) {
   return (
     <article className={`grid gap-4 border-b border-[var(--border)] py-6 ${showDate ? 'md:grid-cols-[150px_1fr]' : ''}`}>
       {showDate ? (
         <div>
-          <p className="font-mono text-sm font-semibold text-[var(--text-primary)]">{entry.date}</p>
+          <p className="font-mono text-sm font-semibold text-[var(--text-primary)]">{formatChangelogDate(entry.date, locale)}</p>
           <p className="mt-2 inline-flex rounded-md border border-[var(--border)] bg-[var(--surface)] px-2 py-1 text-xs text-[var(--text-secondary)]">
             {entry.category}
           </p>

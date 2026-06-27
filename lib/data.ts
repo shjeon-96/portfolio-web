@@ -1,23 +1,3 @@
-export type CaseStudy = {
-  slug: string;
-  title: string;
-  label: string;
-  summary: string;
-  stack: string[];
-  publicProof: string[];
-  problem: string;
-  role: string;
-  approach: string[];
-  result: string;
-  verification: string[];
-  tradeOffs: string[];
-  verificationEvidence: string[];
-  links: Array<{
-    label: string;
-    href: string;
-  }>;
-};
-
 export type ChangelogEntry = {
   title: string;
   date: string;
@@ -38,7 +18,8 @@ export type ChangelogEntry = {
     | 'ops-platform'
     | 'pos-system'
     | 'realtime-backend'
-    | 'catalog-site';
+    | 'catalog-site'
+    | 'portfolio-system';
   problem: string;
   approach: string[];
   result: string;
@@ -178,264 +159,6 @@ export const projectHighlights: ProjectHighlight[] = [
   },
 ];
 
-export const caseStudies: CaseStudy[] = [
-  {
-    slug: 'codex-lsp-bridge',
-    title: 'Codex LSP semantic safety layer',
-    label: 'Open-source AI developer tooling',
-    summary:
-      'Built a public MCP/LSP bridge that gives coding agents read-only semantic checks such as diagnostics, definitions, references, symbols, and hover context.',
-    stack: ['TypeScript', 'Node.js', 'MCP', 'Language Server Protocol', 'Vitest'],
-    publicProof: [
-      'Public GitHub repository under shjeon-96',
-      'Published package workflow with package smoke checks',
-      'Documented MCP tools, safety limits, and maintainer workflow',
-    ],
-    problem:
-      'AI coding agents can move quickly through text search, but large codebases still need semantic feedback from the language server before changes are trusted.',
-    role:
-      'Designed the read-only tool boundary, workspace-root safety model, language adapter flow, package contract, and verification path for public distribution.',
-    approach: [
-      'Exposed language-server capabilities through a narrow MCP interface instead of allowing agents to mutate project state directly.',
-      'Kept workspace boundaries explicit, including root checks and symlink escape protection.',
-      'Added diagnostics timeout policy, package smoke checks, and integration coverage so tool behavior could be verified before release.',
-    ],
-    result:
-      'Published a reusable agent tooling package that turns semantic code intelligence into a safer part of the AI-assisted development workflow.',
-    verification: [
-      'Unit and integration tests cover TypeScript behavior, diagnostics handling, package contracts, and language adapter boundaries.',
-      'Package verification includes build, type-check, smoke install, and smoke package checks.',
-      'Public documentation explains supported tools, safety limits, and maintainer workflow.',
-    ],
-    tradeOffs: [
-      'Kept the bridge read-only so semantic context could help agents without turning the tool into an alternate mutation path.',
-      'Started with TypeScript as the primary exercised language while keeping adapter boundaries ready for additional language servers.',
-    ],
-    verificationEvidence: ['npm run ci:verify', 'npm run test', 'npm run verify:package', 'npm run smoke:package'],
-    links: [
-      {
-        label: 'GitHub repository',
-        href: 'https://github.com/shjeon-96/codex-lsp-bridge',
-      },
-    ],
-  },
-  {
-    slug: 'mobile-release-foundations',
-    title: 'Mobile release gates and shared foundations',
-    label: 'Expo/React Native product platform',
-    summary:
-      'Structured a mobile product monorepo so release policy, shared packages, native boundaries, and product documentation stayed aligned across apps.',
-    stack: ['Expo', 'React Native', 'TypeScript', 'Supabase', 'EAS', 'Maestro'],
-    publicProof: [
-      'Mobile release policy encoded in verification scripts',
-      'Shared foundation packages guarded by package-level checks',
-      'Product documentation used as the planning source of truth',
-    ],
-    problem:
-      'Mobile products with native calendar, widgets, billing, invites, and backend integrations can drift when documentation, app code, native policy, and release scripts each define their own truth.',
-    role:
-      'Owned product-facing architecture boundaries, shared package rules, release verification scripts, and public-safe documentation of the mobile delivery workflow.',
-    approach: [
-      'Kept product documents as the planning source of truth and made app code, release checks, and package ownership point back to that model.',
-      'Moved repeated auth, billing, invite, notification, analytics, and configuration behavior into shared foundations with package-level tests.',
-      'Used release gates for native policy, EAS configuration, runtime environment, widgets, store metadata, and mobile UI smoke evidence.',
-    ],
-    result:
-      'Created a repeatable mobile release path where shared behavior is verified once and production readiness is checked before store-facing builds.',
-    verification: [
-      'Release configuration checks validate Expo, EAS, native policy, runtime environment, and store-readiness inputs.',
-      'Shared foundation verification prevents duplicated app-local implementations from becoming competing sources of truth.',
-      'Mobile UI and device-oriented smoke flows provide evidence for critical app paths before release.',
-    ],
-    tradeOffs: [
-      'Rejected web or Expo Go paths as release proof because native calendar, widget, billing, and store behavior needed the real mobile boundary.',
-      'Used shared packages only where repeated app behavior had a clear owner, avoiding broad coupling for behavior that had not stabilized.',
-    ],
-    verificationEvidence: [
-      'npm run release:config',
-      'npm run verify:eas-release-config',
-      'npm run verify:mobile-ui',
-      'npm run verify:shared-foundations',
-    ],
-    links: [],
-  },
-  {
-    slug: 'ast-editor-engine',
-    title: 'AST-based visual editor engine',
-    label: 'B2B no-code web builder',
-    summary:
-      'Structured a visual editing surface where component variants, styles, interactions, bindings, preview, and deployable artifacts had to stay consistent.',
-    stack: ['React', 'Next.js', 'TypeScript', 'Zustand', 'Immer', 'Vitest'],
-    publicProof: [
-      'Public-safe architecture narrative with product model boundaries',
-      'Regression-oriented verification around editor state and rendering contracts',
-      'Generated output regression review',
-    ],
-    problem:
-      'A no-code editor needed to edit, persist, preview, and export templates, components, styles, events, and data bindings through one coherent model.',
-    role:
-      'Owned front-end editor modeling, state boundaries, canvas interaction flows, and the contract between editable state and generated output.',
-    approach: [
-      'Modeled editor state around an AST-like product structure instead of treating each panel as an isolated UI island.',
-      'Separated product editing concerns from runtime concerns so component variants, slots, bindings, and interactions could evolve without conflicting owners.',
-      'Used canonical owner modules and regression tests to reduce duplicated resolver behavior across preview and output paths.',
-    ],
-    result:
-      'Established an editor core that could support variants, slots, data binding, interactions, preview, export, and deploy workflows on a shared product model.',
-    verification: [
-      'Unit and integration tests around state transitions and rendering contracts.',
-      'Regression checks for behavior shared by preview and generated artifacts.',
-      'Code review follow-up focused on owner boundaries, not patch-level workarounds.',
-    ],
-    tradeOffs: [
-      'Modeled the editor around one product structure instead of letting each side panel own separate local truth.',
-      'Separated editing-time state from runtime behavior so variants, slots, and interactions could evolve without hidden coupling.',
-    ],
-    verificationEvidence: ['Unit tests for state transitions', 'Integration checks for preview behavior', 'Generated output regression review'],
-    links: [],
-  },
-  {
-    slug: 'export-deploy-parity',
-    title: 'Export and deploy artifact parity',
-    label: 'Commerce site builder',
-    summary:
-      'Stabilized the path from editor state to HTML/CSS/JS and deployment-oriented artifacts so what users configured matched what shipped.',
-    stack: ['TypeScript', 'React', 'HTML/CSS', 'Liquid-style templates', 'Vitest'],
-    publicProof: [
-      'Public-safe output parity narrative',
-      'Regression checks centered on generated artifacts',
-      'Shared rendering-contract framing across preview and deploy paths',
-    ],
-    problem:
-      'The editor preview and generated artifacts could drift when rendering rules, asset handling, repeat behavior, or conditional visibility were interpreted in different places.',
-    role:
-      'Clarified artifact generation boundaries and moved shared decisions into common helpers where multiple output paths needed the same behavior.',
-    approach: [
-      'Treated preview, export, and deploy as separate surfaces that must share one rendering contract.',
-      'Grouped repeat, slot, asset, font, and visibility handling into explicit generation rules.',
-      'Added artifact-oriented regression checks instead of relying only on visual inspection.',
-    ],
-    result:
-      'Reduced drift between the editor and deployable output by making artifact generation a first-class front-end pipeline instead of an afterthought.',
-    verification: [
-      'Build-time checks for generated output shape.',
-      'Regression scenarios for conditional rendering and nested structures.',
-      'Manual review against public-safe, anonymized artifact examples.',
-    ],
-    tradeOffs: [
-      'Treated generated output as the product surface, not just an implementation detail behind the editor.',
-      'Moved shared decisions into common rules instead of patching preview and deploy paths independently.',
-    ],
-    verificationEvidence: ['Generated artifact shape checks', 'Conditional rendering regression scenarios', 'Manual output review'],
-    links: [],
-  },
-  {
-    slug: 'ai-review-operations',
-    title: 'AI-assisted review operations system',
-    label: 'AI admin workflow',
-    summary:
-      'Built an operations flow for collecting review data, generating AI-assisted responses, and keeping human review in the loop.',
-    stack: ['React', 'NestJS', 'Python', 'OpenAI API', 'MySQL', 'JWT'],
-    publicProof: [
-      'Public-safe workflow summary for AI-assisted operations',
-      'Human review and editability kept visible in the product flow',
-      'Permission, empty, loading, and failed states treated as product states',
-    ],
-    problem:
-      'Operators needed to understand incoming review data, inspect AI-assisted suggestions, and respond without losing control over the final customer-facing output.',
-    role:
-      'Worked across admin UI, API contracts, crawler integration, database structures, and AI response generation flows.',
-    approach: [
-      'Separated collection, analysis, review, and response generation into visible workflow steps.',
-      'Designed admin UI states for loading, empty, failed, and permission-sensitive scenarios.',
-      'Kept AI-generated output inspectable instead of treating automation as a black box.',
-    ],
-    result:
-      'Turned repetitive review-response work into an operator-controlled workflow with AI assistance and clearer operational visibility.',
-    verification: [
-      'API behavior checks for review and response states.',
-      'Permission-aware admin UI review.',
-      'Manual workflow testing for operator handoff points.',
-    ],
-    tradeOffs: [
-      'Kept AI suggestions reviewable instead of auto-sending customer-facing responses.',
-      'Separated collection, analysis, review, and response generation so operators could diagnose each stage.',
-    ],
-    verificationEvidence: ['API state checks', 'Permission-aware UI review', 'Manual operator handoff testing'],
-    links: [],
-  },
-  {
-    slug: 'settlement-operations',
-    title: 'Payment and settlement operations flow',
-    label: 'Realtime business operations',
-    summary:
-      'Connected settlement, permissions, merchant data, and realtime notification surfaces across web and mobile admin workflows.',
-    stack: ['React', 'React Native', 'Spring API', 'PG integration', 'Realtime notification'],
-    publicProof: [
-      'Public-safe operations workflow narrative',
-      'Role-aware settlement and payment visibility',
-      'Realtime status changes modeled as product state',
-    ],
-    problem:
-      'Business users needed reliable access to payment and settlement data while permissions and operational status changed across roles.',
-    role:
-      'Implemented UI flows and API integration for merchant data management, settlement visibility, permissions, and notification surfaces.',
-    approach: [
-      'Made payment and settlement states visible through role-aware screens.',
-      'Kept admin and mobile workflows aligned around the same operational concepts.',
-      'Handled realtime status updates as product state, not just transient messages.',
-    ],
-    result:
-      'Improved the clarity of settlement operations across admin and mobile surfaces.',
-    verification: [
-      'Role-based UI checks.',
-      'API integration review for settlement states.',
-      'Manual testing around notification and status changes.',
-    ],
-    tradeOffs: [
-      'Kept admin and mobile flows aligned around shared operational concepts while preserving role-specific views.',
-      'Made realtime updates part of the state model instead of transient messages that could be missed.',
-    ],
-    verificationEvidence: ['Role-based UI checks', 'Settlement API integration review', 'Notification state manual tests'],
-    links: [],
-  },
-  {
-    slug: 'legacy-admin-modernization',
-    title: 'Legacy admin modernization',
-    label: 'Back-office migration',
-    summary:
-      'Modernized operational back-office flows while preserving service continuity across framework and deployment changes.',
-    stack: ['Vue', 'React', 'Next.js', 'Firebase', 'Docker', 'GitHub Actions'],
-    publicProof: [
-      'Public-safe migration narrative',
-      'Environment separation and repeatable release checks',
-      'Operational continuity preserved during framework changes',
-    ],
-    problem:
-      'A live operations system needed framework migration and workflow improvement without interrupting the business processes it supported.',
-    role:
-      'Worked on admin UI migration, service workflows, deployment environments, and CI/CD stabilization.',
-    approach: [
-      'Moved functionality gradually instead of rewriting all screens at once.',
-      'Separated environment concerns so local, staging, and production workflows were less error-prone.',
-      'Used deployment automation to make repeatable releases part of the product workflow.',
-    ],
-    result:
-      'Created a more maintainable web foundation for operational workflows and future feature delivery.',
-    verification: [
-      'Build and deployment checks.',
-      'Workflow review for migrated screens.',
-      'Environment-specific verification before release.',
-    ],
-    tradeOffs: [
-      'Moved workflows gradually because the operational system had to keep serving users during modernization.',
-      'Separated environment setup from feature work so release mistakes were easier to detect before production.',
-    ],
-    verificationEvidence: ['Build checks', 'Deployment workflow review', 'Environment-specific release verification'],
-    links: [],
-  },
-];
-
 export const changelogEntries: ChangelogEntry[] = [
   {
     title: 'Tax operations migration path',
@@ -516,6 +239,51 @@ export const changelogEntries: ChangelogEntry[] = [
     stack: ['Python', 'Codex plugin', 'App Store Connect'],
   },
   {
+    title: 'Single-purpose iOS release packaging',
+    date: '2026-04-25',
+    category: 'mobile-release',
+    problem:
+      'Small App Store products still need production signing, screenshots, support pages, advertising setup, and app icon polish before submission.',
+    approach: [
+      'Prepared signing and screenshot assets around a narrow one-session mobile product.',
+      'Connected the review-facing website and production ad configuration to the same release path.',
+      'Kept the MVP scope focused so store readiness did not turn into unrelated feature expansion.',
+    ],
+    result:
+      'The changelog now shows practical mobile submission work between larger platform efforts.',
+    stack: ['iOS', 'App Store', 'AdMob', 'Release assets'],
+  },
+  {
+    title: 'PDF utility App Store readiness',
+    date: '2026-04-19',
+    category: 'app-review-tooling',
+    problem:
+      'A small utility app needed the public metadata, privacy policy, review settings, and marketing page required for App Store submission.',
+    approach: [
+      'Prepared review-ready app settings and repository metadata.',
+      'Added the public privacy policy and marketing site surface.',
+      'Kept the release flow documented without exposing private submission credentials.',
+    ],
+    result:
+      'The portfolio gets another concrete example of turning a focused utility into a store-submittable product.',
+    stack: ['Swift', 'App Store', 'Privacy policy', 'Marketing site'],
+  },
+  {
+    title: 'Nutrition app feature expansion and refactor',
+    date: '2026-04-08',
+    category: 'native-product',
+    problem:
+      'A health and nutrition mobile product needed richer logging, AI-assisted capture, export, device sync, billing, and clearer feature ownership.',
+    approach: [
+      'Added AI food recognition, workout logging, data export, and health-device sync paths.',
+      'Introduced premium gating, API wiring, stale-result guards, and async cancellation around camera analysis.',
+      'Extracted screen logic into feature hooks and container boundaries so the UI could keep growing without one large surface owning everything.',
+    ],
+    result:
+      'The changelog now shows mid-cycle mobile product expansion, not only release-gate work.',
+    stack: ['React Native', 'Expo', 'AI workflow', 'Health sync', 'Billing'],
+  },
+  {
     title: 'AI PRD generation product surface',
     date: '2026-01-17',
     category: 'ai-product',
@@ -525,8 +293,53 @@ export const changelogEntries: ChangelogEntry[] = [
       'Used a Next.js product surface so the workflow could be shared as an actual web app.',
       'Kept the portfolio summary at product-flow level instead of exposing private planning data.',
     ],
-    result: 'IdeaToPRD adds a public AI product-planning example alongside implementation-heavy case studies.',
+    result: 'IdeaToPRD adds a public AI product-planning example alongside implementation-heavy project records.',
     stack: ['Next.js', 'TypeScript', 'AI workflow', 'Vercel'],
+  },
+  {
+    title: 'Health tracker monetization and retention release',
+    date: '2026-02-19',
+    category: 'mobile-release',
+    problem:
+      'A health tracking app needed release iteration around monetization, accessibility, notification reliability, app completeness, and store-facing polish.',
+    approach: [
+      'Adjusted the monetization model and removed clinical or overly specific data assumptions from the public-facing flow.',
+      'Improved UI structure, accessibility, notification handling, and settings connectivity across the app.',
+      'Kept build numbers, icons, expo-doctor cleanup, and release documents aligned with the next submission.',
+    ],
+    result:
+      'The portfolio gains a clearer mid-February mobile release story around retention and store readiness.',
+    stack: ['React Native', 'Expo', 'RevenueCat', 'Notifications', 'Accessibility'],
+  },
+  {
+    title: 'Debt payoff app MVP hardening',
+    date: '2026-02-18',
+    category: 'native-product',
+    problem:
+      'A debt payoff mobile product needed an MVP that emphasized the payoff flow while still covering errors, localization, tests, and retention basics.',
+    approach: [
+      'Bootstrapped the mobile product around payoff-first UX.',
+      'Added unit tests, an error boundary, Korean localization, and cleanup of unfinished TODO surfaces.',
+      'Improved the core UI and retention features while removing unused dependencies.',
+    ],
+    result:
+      'The changelog now includes a compact example of turning a personal finance app idea into a hardened MVP.',
+    stack: ['React Native', 'TypeScript', 'Testing', 'i18n'],
+  },
+  {
+    title: 'Programmatic SEO content system',
+    date: '2026-01-11',
+    category: 'web-toolkit',
+    problem:
+      'A content-heavy web product needed search-oriented architecture, robust AI-generated article handling, and clearer information architecture.',
+    approach: [
+      'Added topic-cluster structure, programmatic SEO routes, article indexes, and Open Graph image support.',
+      'Hardened AI response parsing with better error messages and duplicate slug handling.',
+      'Used a RAG-assisted content generation path while keeping parsing failures visible instead of silently accepting malformed output.',
+    ],
+    result:
+      'The January work fills a visible gap with web growth, content architecture, and AI-assisted publishing experience.',
+    stack: ['Next.js', 'SEO', 'AI workflow', 'Supabase', 'TypeScript'],
   },
   {
     title: 'SwiftUI product module architecture',
@@ -568,6 +381,51 @@ export const changelogEntries: ChangelogEntry[] = [
     stack: ['Rust', 'Bevy', 'Cargo', 'Serde'],
   },
   {
+    title: 'Portfolio evidence model refinement',
+    date: '2026-06-27',
+    category: 'portfolio-system',
+    problem:
+      'A public portfolio can become a loose activity list when project records, route structure, and changelog entries each tell a different story.',
+    approach: [
+      'Grouped changelog entries by date so recent work reads as product engineering notes instead of scattered commits.',
+      'Clarified the portfolio around project records, date-based changes, and verification evidence.',
+      'Removed prototype-heavy surfaces and kept the first screen focused on positioning and proof.',
+    ],
+    result:
+      'The portfolio now presents commit history as a public-safe evidence system rather than a raw project archive.',
+    stack: ['Next.js', 'TypeScript', 'Tailwind CSS', 'Public safety checks'],
+  },
+  {
+    title: 'Mobile product-catalog release boundary',
+    date: '2026-06-27',
+    category: 'mobile-release',
+    problem:
+      'Mobile release work becomes risky when product identifiers, entitlement checks, release assets, credentials, and backend smoke tests are verified in separate paths.',
+    approach: [
+      'Routed billing webhook authorization through the product catalog boundary.',
+      'Aligned subscription product identifiers with the iOS release path.',
+      'Kept release assets, protected credentials, and backend smoke checks tied to the same submission readiness flow.',
+    ],
+    result:
+      'Store-facing mobile release evidence became easier to review without exposing private credentials or issue references.',
+    stack: ['Expo', 'React Native', 'RevenueCat', 'Supabase', 'EAS'],
+  },
+  {
+    title: 'Native widget and Expo config ownership',
+    date: '2026-06-18',
+    category: 'mobile-release',
+    problem:
+      'Native widgets and Expo configuration can drift when app config, package config, privacy manifests, and generated native surfaces each define their own policy.',
+    approach: [
+      'Moved native policy ownership back into the Expo configuration path.',
+      'Decoupled widget package configuration from app-local release assumptions.',
+      'Checked widget rendering, localized payloads, native pager behavior, and dependency compatibility together.',
+    ],
+    result:
+      'The native mobile boundary became more explicit before store-facing release checks.',
+    stack: ['Expo', 'React Native', 'WidgetKit', 'TypeScript', 'Config plugins'],
+  },
+  {
     title: 'Agent LSP bridge release contract',
     date: '2026-05-19',
     category: 'agent-tooling',
@@ -579,6 +437,21 @@ export const changelogEntries: ChangelogEntry[] = [
     ],
     result: 'Semantic code intelligence became a public, repeatable tool in the agent-assisted development workflow.',
     stack: ['TypeScript', 'Node.js', 'MCP', 'LSP', 'Vitest'],
+  },
+  {
+    title: 'Agent semantic tooling hardening',
+    date: '2026-05-19',
+    category: 'agent-tooling',
+    problem:
+      'Semantic agent tooling needs predictable diagnostics, language-server startup behavior, and release documentation before it can be trusted as a reusable package.',
+    approach: [
+      'Added automatic diagnostics timeout policy and per-call timeout handling.',
+      'Improved workspace seeding and language adapter coverage beyond the initial TypeScript path.',
+      'Documented installation, diagnostic examples, maintainer workflow, and package release metadata.',
+    ],
+    result:
+      'The public LSP bridge became more reliable as an installable tool instead of a one-off local integration.',
+    stack: ['TypeScript', 'Node.js', 'MCP', 'LSP', 'Language servers'],
   },
   {
     title: 'Mobile release gate system',
@@ -697,6 +570,441 @@ export const changelogEntries: ChangelogEntry[] = [
     result: 'AI assistance became part of a reviewable operations flow instead of a hidden backend action.',
     stack: ['React', 'NestJS', 'Python', 'OpenAI API'],
   },
+  {
+    title: 'Menu scraper scheduling utility',
+    date: '2025-11-24',
+    category: 'web-toolkit',
+    problem:
+      'A small automation utility needed a stable web project base and a predictable schedule for collecting menu data.',
+    approach: [
+      'Bootstrapped the Next.js utility project and kept the workflow narrow around scraping and schedule control.',
+      'Adjusted cron timing so collection could run during the intended operating window.',
+      'Updated dependencies when framework security advisories required maintenance.',
+    ],
+    result:
+      'The changelog now includes a lightweight automation example between larger mobile and platform projects.',
+    stack: ['Next.js', 'Cron', 'Automation', 'React'],
+  },
+  {
+    title: 'Scheduler iOS widget iteration',
+    date: '2025-09-01',
+    category: 'native-product',
+    problem:
+      'A scheduler app needed widget-specific project structure and data-update guidance before the native surface could be treated as part of the product.',
+    approach: [
+      'Added the initial iOS widget project structure.',
+      'Documented example data-update paths for widget state.',
+      'Kept version updates aligned with the widget iteration instead of leaving native changes as ad hoc files.',
+    ],
+    result:
+      'The monthly changelog now shows native widget exploration before the later mobile release-gate work.',
+    stack: ['Flutter', 'iOS Widget', 'Native extension', 'Release versioning'],
+  },
+  {
+    title: 'Flutter auth and notification release hardening',
+    date: '2025-08-18',
+    category: 'mobile-release',
+    problem:
+      'Flutter mobile apps with web-linked user flows needed account linking, notification behavior, permissions, and versioning to move together.',
+    approach: [
+      'Added anonymous and social account linking flows across the app surface.',
+      'Wired FCM, local notification handling, and iOS background notification permissions into the release path.',
+      'Updated Android SDK and app versions as part of the same release-readiness work.',
+    ],
+    result:
+      'August work now appears as a concrete mobile release-hardening month instead of an empty gap.',
+    stack: ['Flutter', 'Firebase', 'FCM', 'iOS', 'Android'],
+  },
+  {
+    title: 'Weight tracking app bootstrap and release setup',
+    date: '2025-07-31',
+    category: 'native-product',
+    problem:
+      'A weight tracking product needed a mobile shell, Firebase setup, authentication, app identity, and release configuration before feature work could stand on its own.',
+    approach: [
+      'Set up Firebase, app icon, splash screen, and release keystore configuration.',
+      'Added Google and Apple sign-in paths plus account deletion support.',
+      'Handled foreground/background refresh behavior and status-bar presentation as part of the mobile shell.',
+    ],
+    result:
+      'The changelog now captures the July mobile product foundation work that preceded later notification and release iterations.',
+    stack: ['Flutter', 'Firebase', 'Authentication', 'Release signing'],
+  },
+  {
+    title: 'Early scheduler feature pass',
+    date: '2025-01-06',
+    category: 'native-product',
+    problem:
+      'The scheduler mobile project needed early feature and bug-fix iteration before later authentication, notification, and widget work could be layered on.',
+    approach: [
+      'Used short feature and fix commits to move the initial Flutter app forward.',
+      'Kept the entry conservative because the available commit subjects for this month are terse.',
+      'Treats the month as foundation evidence rather than a detailed product claim.',
+    ],
+    result:
+      'January 2025 is represented without overstating what the local commit subjects prove.',
+    stack: ['Flutter', 'Mobile UI', 'Early product iteration'],
+  },
+  {
+    title: 'Scheduler social login integration',
+    date: '2024-11-11',
+    category: 'native-product',
+    problem:
+      'The scheduler app needed account entry work so the mobile surface could move beyond anonymous local usage.',
+    approach: [
+      'Integrated social login into the Flutter app flow.',
+      'Iterated on the early authentication surface across several feature commits.',
+      'Kept the public summary focused on authentication capability rather than provider-specific private setup.',
+    ],
+    result:
+      'The November 2024 month now records a concrete mobile account-flow milestone.',
+    stack: ['Flutter', 'Authentication', 'Mobile app'],
+  },
+  {
+    title: 'Scheduler calendar optimization pass',
+    date: '2024-10-27',
+    category: 'native-product',
+    problem:
+      'Calendar-heavy scheduler work needed early product iteration around core feature behavior and calendar performance.',
+    approach: [
+      'Iterated the scheduler app through multiple feature commits.',
+      'Focused one pass on calendar optimization so the core surface could remain usable as data grew.',
+      'Kept this as a monthly product-system note because the older commit subjects are sparse.',
+    ],
+    result:
+      'October 2024 now shows the calendar product direction before later authentication and widget work.',
+    stack: ['Flutter', 'Calendar UI', 'Mobile performance'],
+  },
+  {
+    title: 'Scheduler Flutter app bootstrap',
+    date: '2024-07-16',
+    category: 'native-product',
+    problem:
+      'The scheduler product needed an initial Flutter application base before authentication, notifications, and widgets could be developed.',
+    approach: [
+      'Started the scheduler Flutter project from an initial app commit.',
+      'Added early feature work to establish the mobile product surface.',
+      'Kept the changelog summary intentionally broad because the oldest commit subjects contain limited detail.',
+    ],
+    result:
+      'The portfolio timeline now begins with the earliest local repository evidence available for this repo set.',
+    stack: ['Flutter', 'Dart', 'Mobile app bootstrap'],
+  },
+  {
+    title: 'B2B operations admin and public-site foundation',
+    date: '2023-04-30',
+    category: 'admin-ops',
+    problem:
+      'Early B2B product work needed both an operator-facing admin surface and a public-facing site to move forward together.',
+    approach: [
+      'Iterated admin React screens and public site routes from the same product context.',
+      'Kept the public portfolio summary at workflow level instead of exposing private business names or internal paths.',
+      'Used the month as the first commit-backed operations entry after the requested March 2023 starting point.',
+    ],
+    result:
+      'The changelog now records the first available 2023 product-engineering month without overstating unavailable March evidence.',
+    stack: ['React', 'Admin UI', 'Public site', 'Product operations'],
+  },
+  {
+    title: 'Operations API and admin workflow expansion',
+    date: '2023-05-31',
+    category: 'ops-platform',
+    problem:
+      'The operations product needed backend routes, admin screens, and small scheduling utilities to support real workflow iteration.',
+    approach: [
+      'Expanded API and admin behavior across the same operations domain.',
+      'Added utility work around time-based workflows where the commit history showed dedicated project activity.',
+      'Translated terse commit history into public-safe system responsibilities rather than raw task names.',
+    ],
+    result:
+      'May 2023 now appears as a concrete backend-plus-admin iteration month instead of a blank interval.',
+    stack: ['React', 'Node.js', 'Python', 'Scheduling utilities'],
+  },
+  {
+    title: 'Admin-backend integration hardening',
+    date: '2023-06-30',
+    category: 'ops-platform',
+    problem:
+      'A growing operations workflow needed the admin UI and backend service behavior to stay aligned through repeated fixes.',
+    approach: [
+      'Iterated backend service changes alongside admin-side updates.',
+      'Kept the changelog entry focused on integration reliability because the source commits are historical and terse.',
+      'Avoided duplicating private repository names in the public narrative.',
+    ],
+    result:
+      'June 2023 is represented as an operations platform hardening period backed by repository activity.',
+    stack: ['React', 'Backend services', 'Python', 'Operational tooling'],
+  },
+  {
+    title: 'Public-site and admin account surface iteration',
+    date: '2023-07-31',
+    category: 'admin-ops',
+    problem:
+      'Public site updates and admin account surfaces needed continued iteration after the initial operations foundation.',
+    approach: [
+      'Moved public-facing assets and pages forward while refining account-oriented admin screens.',
+      'Kept backend and script fixes tied to the same operations-support context.',
+      'Summarized the month by visible product surface rather than internal task labels.',
+    ],
+    result:
+      'July 2023 now has a product-surface entry covering the middle commits between the larger admin waves.',
+    stack: ['React', 'Public site', 'Admin UI', 'Backend fixes'],
+  },
+  {
+    title: 'Review operations maintenance pass',
+    date: '2023-08-31',
+    category: 'admin-ops',
+    problem:
+      'Operational review tools need steady maintenance when admin UI, backend scripts, and small runtime experiments change together.',
+    approach: [
+      'Grouped admin, server, and script fixes under one operations-maintenance entry.',
+      'Kept experimental side work out of the main claim unless it supported product-system breadth.',
+      'Used the commit month to show continuity between larger feature periods.',
+    ],
+    result:
+      'August 2023 is no longer an unexplained gap in the engineering ledger.',
+    stack: ['React', 'Server maintenance', 'Python', 'Product operations'],
+  },
+  {
+    title: 'Legacy POS refactor groundwork',
+    date: '2023-09-30',
+    category: 'pos-system',
+    problem:
+      'A legacy point-of-sale front end needed concentrated refactor work before later payment-flow changes could be explained clearly.',
+    approach: [
+      'Separated the September refactor groundwork from the later payment-specific milestone.',
+      'Focused the public entry on system modernization rather than private commit details.',
+      'Connected the work to the larger POS modernization arc already present in the timeline.',
+    ],
+    result:
+      'The POS case now has a visible setup month before the October payment refactor entry.',
+    stack: ['React', 'POS UI', 'Legacy refactor', 'TypeScript'],
+  },
+  {
+    title: 'Operations tooling maintenance bridge',
+    date: '2023-11-30',
+    category: 'admin-ops',
+    problem:
+      'After the POS-heavy refactor month, operations repositories still needed smaller admin, server, and automation fixes.',
+    approach: [
+      'Grouped low-level maintenance commits into a conservative month-level operations note.',
+      'Avoided treating maintenance as a new product claim without stronger commit evidence.',
+      'Preserved continuity in the changelog between major 2023 product entries.',
+    ],
+    result:
+      'November 2023 now records the maintenance work visible in the registered repository history.',
+    stack: ['React', 'Server fixes', 'Automation scripts'],
+  },
+  {
+    title: 'Year-end operations stabilization',
+    date: '2023-12-31',
+    category: 'admin-ops',
+    problem:
+      'The year-end operations codebase needed stabilization across admin, server, and review-support surfaces.',
+    approach: [
+      'Summarized late-year fixes as stabilization rather than inventing a broader feature claim.',
+      'Kept the entry public-safe by describing the workflow class, not private project identifiers.',
+      'Linked the month to the same operations platform thread used for the surrounding 2023 entries.',
+    ],
+    result:
+      'December 2023 is covered by a cautious stabilization entry based on registered repository commits.',
+    stack: ['React', 'Backend services', 'Operations tooling'],
+  },
+  {
+    title: 'Scheduler app and service iteration',
+    date: '2024-01-31',
+    category: 'native-product',
+    problem:
+      'The scheduler product needed coordinated app and server iteration before the later Flutter-specific mobile work.',
+    approach: [
+      'Grouped app-side and service-side scheduler commits into one product-system entry.',
+      'Kept the summary broad because the historical commit messages are short and implementation-specific.',
+      'Separated this earlier service iteration from the later mobile app bootstrap.',
+    ],
+    result:
+      'January 2024 now shows scheduler product work before the mobile timeline begins in earnest.',
+    stack: ['Mobile app', 'Scheduler service', 'Product iteration'],
+  },
+  {
+    title: 'Scheduler service stabilization',
+    date: '2024-02-29',
+    category: 'native-product',
+    problem:
+      'Scheduler app and server changes needed a smaller stabilization pass after the heavier January iteration.',
+    approach: [
+      'Captured the month as focused app-service maintenance rather than a new major feature.',
+      'Maintained the same product thread used by January and later scheduler entries.',
+      'Kept the public summary free of internal repository labels.',
+    ],
+    result:
+      'February 2024 now has a commit-backed scheduler stabilization note.',
+    stack: ['Mobile app', 'Backend service', 'Scheduler workflows'],
+  },
+  {
+    title: 'Delivery operations and scheduler service pass',
+    date: '2024-03-31',
+    category: 'realtime-backend',
+    problem:
+      'Delivery-oriented backend work and scheduler services needed parallel iteration across multiple registered repositories.',
+    approach: [
+      'Grouped delivery service, scheduler service, and small app fixes into one operations-platform month.',
+      'Used an anonymized domain label so the public portfolio does not expose private operating details.',
+      'Connected the work to the later real-time delivery backend entry.',
+    ],
+    result:
+      'March 2024 now provides the missing lead-in to the April real-time backend milestone.',
+    stack: ['Backend services', 'Scheduling', 'Operations systems', 'Python'],
+  },
+  {
+    title: 'Scheduler dark-mode polish',
+    date: '2024-05-31',
+    category: 'native-product',
+    problem:
+      'The scheduler product needed small presentation fixes so the app could remain coherent across visual modes.',
+    approach: [
+      'Captured the dark-mode and app-service maintenance commits as a narrow polish entry.',
+      'Kept the month intentionally modest because the registered commit volume was low.',
+      'Left the larger architectural claims to months with stronger evidence.',
+    ],
+    result:
+      'May 2024 is represented without inflating a small but real product-polish month.',
+    stack: ['Mobile UI', 'Dark mode', 'Scheduler service'],
+  },
+  {
+    title: 'Prototype systems and service upkeep',
+    date: '2024-06-30',
+    category: 'testing-ci',
+    problem:
+      'Several small repositories showed service upkeep and prototype work before the scheduler mobile app became the main thread.',
+    approach: [
+      'Grouped low-volume game, scheduler, and service commits under a conservative prototype-systems entry.',
+      'Did not treat the month as a shipped feature without stronger evidence.',
+      'Kept it in the changelog to preserve the actual commit-backed timeline.',
+    ],
+    result:
+      'June 2024 no longer disappears from the monthly record while staying honest about scope.',
+    stack: ['Prototype apps', 'Service maintenance', 'Flutter', 'Python'],
+  },
+  {
+    title: 'Health and game prototype checkpoint',
+    date: '2024-08-31',
+    category: 'testing-ci',
+    problem:
+      'Small prototype repositories appeared between scheduler milestones and needed a truthful public-safe representation.',
+    approach: [
+      'Recorded health-monitor and game-prototype work as exploratory product-system evidence.',
+      'Kept the entry short because the registered commit set for the month was small.',
+      'Avoided presenting prototypes as production products.',
+    ],
+    result:
+      'August 2024 is now covered as a prototype checkpoint rather than a blank month.',
+    stack: ['Prototype apps', 'Mobile experimentation', 'Runtime checks'],
+  },
+  {
+    title: 'Career project site bootstrap',
+    date: '2025-02-28',
+    category: 'portfolio-system',
+    problem:
+      'A public career-facing project site needed an initial structure before later portfolio and content-system work.',
+    approach: [
+      'Captured the registered project-site commits as a public evidence-system milestone.',
+      'Kept the description separate from the unrelated POS operations entry with the same month.',
+      'Focused on site structure and presentation rather than private application details.',
+    ],
+    result:
+      'February 2025 now includes the career-site work visible in the registered repository history.',
+    stack: ['Web', 'Portfolio content', 'Project presentation'],
+  },
+  {
+    title: 'Public profile content and deploy iteration',
+    date: '2025-03-31',
+    category: 'portfolio-system',
+    problem:
+      'A public profile site needed repeated content and deployment iteration before it could function as an application asset.',
+    approach: [
+      'Grouped content, page, and deploy commits into one portfolio-system entry.',
+      'Kept the summary about public presentation rather than raw page-by-page activity.',
+      'Positioned the work as the precursor to the later portfolio evidence model.',
+    ],
+    result:
+      'March 2025 is represented by the public profile and deployment work visible in the commit history.',
+    stack: ['Next.js', 'Public profile', 'Deployment', 'Content system'],
+  },
+  {
+    title: 'Interview content and app-link routing',
+    date: '2025-04-30',
+    category: 'portfolio-system',
+    problem:
+      'Career-facing web content needed interview-oriented pages and reliable outbound app-link handling.',
+    approach: [
+      'Iterated profile content and interview page surfaces.',
+      'Added app-store link handling as part of the same public presentation flow.',
+      'Kept the entry distinct from the AI review operations milestone already present for April.',
+    ],
+    result:
+      'April 2025 now reflects both operations AI work and public career-site iteration.',
+    stack: ['Next.js', 'Content pages', 'Routing', 'App links'],
+  },
+  {
+    title: 'Social writing surface bootstrap',
+    date: '2025-05-31',
+    category: 'web-toolkit',
+    problem:
+      'A social writing product needed authentication, profile, writing, and mobile-web surface work before feed features could matter.',
+    approach: [
+      'Built the early auth, profile, writing-page, and webview-oriented flows.',
+      'Grouped the registered repository commits into one product-surface milestone.',
+      'Kept the public wording generic so the portfolio explains the system without exposing private labels.',
+    ],
+    result:
+      'May 2025 now has a concrete product entry between the April profile work and June feed iteration.',
+    stack: ['Next.js', 'Authentication', 'Profile UI', 'Mobile webview'],
+  },
+  {
+    title: 'Social feed interaction iteration',
+    date: '2025-06-30',
+    category: 'web-toolkit',
+    problem:
+      'After the writing surface existed, the product needed feed, search, detail, comment, like, and auth-routing behavior.',
+    approach: [
+      'Expanded the social surface around feed discovery and post-detail interaction.',
+      'Connected comment and like behavior to authenticated routing expectations.',
+      'Kept the entry at feature-boundary level instead of exposing internal implementation names.',
+    ],
+    result:
+      'June 2025 now explains the interaction layer that followed the May product bootstrap.',
+    stack: ['Next.js', 'Feed UI', 'Search', 'Comments', 'Authentication'],
+  },
+  {
+    title: 'Profile automation cadence',
+    date: '2025-10-31',
+    category: 'portfolio-system',
+    problem:
+      'A public developer profile needs automated refreshes to stay current without turning the portfolio into manual bookkeeping.',
+    approach: [
+      'Recorded the generated-profile commit stream as automation evidence rather than product feature volume.',
+      'Kept the changelog entry modest because the work is cadence and publishing infrastructure.',
+      'Used the month to show continuous public-profile maintenance between larger product projects.',
+    ],
+    result:
+      'October 2025 is covered by the registered automation commits without overstating their product scope.',
+    stack: ['GitHub automation', 'Generated content', 'Public profile'],
+  },
+  {
+    title: 'Nutrition app service and AI advice boundary',
+    date: '2026-03-31',
+    category: 'ai-product',
+    problem:
+      'A nutrition app needed service boundaries, AI advice behavior, and app configuration work before the later feature expansion could be explained.',
+    approach: [
+      'Grouped AI meal advice, storage, notification, and service-layer commits into one product milestone.',
+      'Kept the public summary focused on product behavior rather than personal data or private service details.',
+      'Connected the March foundation to the April nutrition app expansion already in the timeline.',
+    ],
+    result:
+      'March 2026 now provides the missing foundation month for the nutrition-app arc.',
+    stack: ['Flutter', 'AI advice', 'Notifications', 'Local storage', 'Service layer'],
+  },
 ];
 
 export const skills: SkillContext[] = [
@@ -759,39 +1067,35 @@ export const aiWorkflowSteps = [
   },
 ];
 
-export function getCaseStudy(slug: string) {
-  return caseStudies.find((caseStudy) => caseStudy.slug === slug);
-}
-
 export function sortChangelogEntriesByDateDesc<T extends ChangelogEntry>(entries: T[]) {
   return [...entries].sort((left, right) => right.date.localeCompare(left.date));
 }
 
 export function groupChangelogEntriesByDate<T extends ChangelogEntry>(entries: T[]) {
   return sortChangelogEntriesByDateDesc(entries).reduce<Array<{ date: string; entries: T[] }>>((groups, entry) => {
+    const entryMonth = entry.date.slice(0, 7);
     const lastGroup = groups.at(-1);
 
-    if (lastGroup?.date === entry.date) {
+    if (lastGroup?.date === entryMonth) {
       lastGroup.entries.push(entry);
       return groups;
     }
 
-    groups.push({ date: entry.date, entries: [entry] });
+    groups.push({ date: entryMonth, entries: [entry] });
     return groups;
   }, []);
 }
 
 export function formatChangelogDate(date: string, locale: 'en' | 'ko') {
-  const [year, month, day] = date.split('-');
+  const [year, month] = date.split('-');
 
   if (locale === 'ko') {
-    return `${year}.${month}.${day}`;
+    return `${year}.${month}`;
   }
 
   return new Intl.DateTimeFormat('en', {
-    month: 'short',
-    day: 'numeric',
     year: 'numeric',
+    month: 'short',
     timeZone: 'UTC',
-  }).format(new Date(`${date}T00:00:00.000Z`));
+  }).format(new Date(`${year}-${month}-01T00:00:00.000Z`));
 }

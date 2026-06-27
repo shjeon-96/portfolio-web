@@ -1,19 +1,43 @@
 #!/usr/bin/env node
 import { execFileSync } from 'node:child_process';
-import { mkdirSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 
 const sourceRepo = process.env.SOURCE_REPO;
+const sourceRepos = process.env.SOURCE_REPOS?.split(',').map((repo) => repo.trim()).filter(Boolean) ?? [];
+const useRegisteredRepos = process.env.REGISTERED_REPOS === '1';
+const searchRoot = process.env.REPO_SEARCH_ROOT ?? '/Volumes/SSD/project';
 const since = process.env.SINCE ?? '2026-04-01';
 const author = process.env.AUTHOR ?? '';
 const output = process.env.OUTPUT ?? 'tmp/changelog-candidates.json';
 
-if (!sourceRepo) {
-  console.error('SOURCE_REPO is required. Example: SOURCE_REPO=/path/to/local/repo npm run changelog:candidates');
+if (!sourceRepo && sourceRepos.length === 0 && !useRegisteredRepos) {
+  console.error(
+    'SOURCE_REPO is required. Example: SOURCE_REPO=/path/to/local/repo npm run changelog:candidates\n' +
+      'For multiple repos, use SOURCE_REPOS=/repo/a,/repo/b. For portfolio-registered GitHub repos, use REGISTERED_REPOS=1.',
+  );
   process.exit(1);
 }
 
 const categoryRules = [
+  {
+    category: 'mobile-release',
+    patterns: [
+      /expo/i,
+      /eas/i,
+      /ios/i,
+      /android/i,
+      /revenuecat/i,
+      /subscription/i,
+      /iap/i,
+      /store/i,
+      /widget/i,
+      /native/i,
+      /release/i,
+      /app store/i,
+    ],
+    publicTitle: 'Mobile release boundary work',
+  },
   {
     category: 'export-deploy',
     patterns: [/export/i, /liquid/i, /artifact/i, /deploy/i, /wrapper/i],
@@ -46,9 +70,118 @@ const categoryRules = [
   },
 ];
 
+function normalizeRemoteUrl(url) {
+  return url
+    .replace(/^git@github\.com:/, 'https://github.com/')
+    .replace(/\.git$/, '')
+    .replace(/\/$/, '');
+}
+
+function registeredGithubUrls() {
+  const files = ['lib/data.ts', 'lib/data-ko.ts'];
+  const urls = new Set();
+
+  for (const file of files) {
+    if (!existsSync(file)) {
+      continue;
+    }
+
+    const source = readFileSync(file, 'utf8');
+    for (const match of source.matchAll(/href:\s*'([^']*github\.com\/shjeon-96\/[^']+)'/g)) {
+      urls.add(normalizeRemoteUrl(match[1]));
+    }
+  }
+
+  return urls;
+}
+
+function localGithubRepos() {
+  const raw = execFileSync('find', [searchRoot, '-maxdepth', '4', '-name', '.git', '-type', 'd'], {
+    encoding: 'utf8',
+  });
+
+  const repos = new Map();
+  for (const gitDir of raw.split('\n').filter(Boolean)) {
+    const repoPath = gitDir.replace(/\/\.git$/, '');
+    try {
+      const remote = execFileSync('git', ['-C', repoPath, 'remote', 'get-url', 'origin'], {
+        encoding: 'utf8',
+        stdio: ['ignore', 'pipe', 'ignore'],
+      }).trim();
+      if (remote.includes('github.com/shjeon-96')) {
+        repos.set(normalizeRemoteUrl(remote), repoPath);
+      }
+    } catch {
+      // Ignore local git directories without a readable origin remote.
+    }
+  }
+
+  return repos;
+}
+
+function resolveSourceRepos() {
+  const explicitRepos = [...sourceRepos, ...(sourceRepo ? [sourceRepo] : [])];
+
+  if (!useRegisteredRepos) {
+    return explicitRepos.map((repoPath) => ({
+      repoPath,
+      sourceLabel: sourceLabelForLocalRepo(repoPath),
+      matchedRegisteredRepo: false,
+    }));
+  }
+
+  const localRepos = localGithubRepos();
+  const registeredRepos = registeredGithubUrls();
+  const matched = [];
+  const seenPaths = new Set();
+
+  for (const registeredUrl of registeredRepos) {
+    const repoPath = localRepos.get(registeredUrl);
+    if (repoPath) {
+      seenPaths.add(repoPath);
+      matched.push({
+        repoPath,
+        sourceLabel: registeredUrl.replace('https://github.com/shjeon-96/', 'shjeon-96/'),
+        matchedRegisteredRepo: true,
+      });
+    }
+  }
+
+  for (const repoPath of explicitRepos) {
+    if (!seenPaths.has(repoPath)) {
+      matched.push({
+        repoPath,
+        sourceLabel: sourceLabelForLocalRepo(repoPath),
+        matchedRegisteredRepo: false,
+      });
+      seenPaths.add(repoPath);
+    }
+  }
+
+  return matched;
+}
+
+function sourceLabelForLocalRepo(repoPath) {
+  try {
+    const remote = execFileSync('git', ['-C', repoPath, 'remote', 'get-url', 'origin'], {
+      encoding: 'utf8',
+      stdio: ['ignore', 'pipe', 'ignore'],
+    }).trim();
+
+    if (remote.includes('github.com/shjeon-96')) {
+      return normalizeRemoteUrl(remote).replace('https://github.com/shjeon-96/', 'shjeon-96/');
+    }
+  } catch {
+    // Fall back to the anonymized local label below.
+  }
+
+  return '[local source repository]';
+}
+
 function redactCommitSubject(subject) {
   return subject
     .replace(/#[0-9]+/g, '[redacted-reference]')
+    .replace(/\bissue\s*[0-9]+/gi, '[redacted-reference]')
     .replace(/\bPR\b\s*[0-9]*/gi, 'code review')
     .replace(/\b[a-f0-9]{7,40}\b/gi, '[redacted-hash]')
     .replace(/\([^)]*\)/g, '')
@@ -80,6 +213,7 @@ function buildCandidate(category, subjects) {
 
 function publicProblemFor(category) {
   const problems = {
+    'mobile-release': 'Mobile release behavior can drift when native configuration, store inputs, billing, and device-only surfaces are verified separately.',
     'export-deploy': 'Generated artifacts can drift from editor state when output rules are interpreted in separate paths.',
     'editor-engine': 'Complex editor features become fragile when ownership boundaries are unclear.',
     performance: 'Large visual editing surfaces need responsive interactions as documents and workflows grow.',
@@ -92,6 +226,11 @@ function publicProblemFor(category) {
 
 function publicApproachFor(category) {
   const approaches = {
+    'mobile-release': [
+      'Group store, native configuration, billing, widget, and release-readiness commits by delivery boundary.',
+      'Remove issue references and private submission details before writing public entries.',
+      'Represent the work as release evidence rather than raw app-specific activity.',
+    ],
     'export-deploy': [
       'Group output-related commits into rendering, visibility, wrapper, and artifact contract themes.',
       'Remove private references and rewrite subjects into public-safe engineering changes.',
@@ -128,6 +267,7 @@ function publicApproachFor(category) {
 
 function publicResultFor(category) {
   const results = {
+    'mobile-release': 'The changelog can show mobile release discipline without exposing private store or credential details.',
     'export-deploy': 'The changelog can describe artifact parity without exposing private output details.',
     'editor-engine': 'The changelog can show product-system ownership without publishing source code or issue references.',
     performance: 'The changelog can show interaction-quality work without exposing internal performance traces.',
@@ -138,46 +278,62 @@ function publicResultFor(category) {
   return results[category] ?? results['editor-engine'];
 }
 
-const raw = execFileSync(
-  'git',
-  [
-    '-C',
-    sourceRepo,
-    'log',
-    ...(author ? [`--author=${author}`] : []),
-    '--no-merges',
-    `--since=${since}`,
-    '--pretty=format:%ad%x09%s',
-    '--date=short',
-  ],
-  { encoding: 'utf8' },
-);
+const resolvedRepos = resolveSourceRepos();
+
+if (resolvedRepos.length === 0) {
+  console.error('No source repositories resolved.');
+  process.exit(1);
+}
+
+const rawByRepo = resolvedRepos.map((repo) => {
+  const raw = execFileSync(
+    'git',
+    [
+      '-C',
+      repo.repoPath,
+      'log',
+      ...(author ? [`--author=${author}`] : []),
+      '--no-merges',
+      `--since=${since}`,
+      '--pretty=format:%ad%x09%s',
+      '--date=short',
+    ],
+    { encoding: 'utf8' },
+  );
+
+  return { ...repo, raw };
+});
 
 const grouped = new Map();
 
-for (const line of raw.split('\n')) {
-  const [, subject] = line.split('\t');
-  if (!subject) {
-    continue;
+for (const { sourceLabel, raw } of rawByRepo) {
+  for (const line of raw.split('\n')) {
+    const [, subject] = line.split('\t');
+    if (!subject) {
+      continue;
+    }
+    const category = categorize(subject);
+    const key = `${sourceLabel}:${category.category}`;
+    const next = grouped.get(key) ?? { category, subjects: [], sourceLabel };
+    next.subjects.push(subject);
+    grouped.set(key, next);
   }
-  const category = categorize(subject);
-  const key = category.category;
-  const next = grouped.get(key) ?? { category, subjects: [] };
-  next.subjects.push(subject);
-  grouped.set(key, next);
 }
 
 const candidates = Array.from(grouped.values())
-  .map(({ category, subjects }) => buildCandidate(category, subjects))
+  .map(({ category, subjects, sourceLabel }) => ({
+    sourceLabel,
+    ...buildCandidate(category, subjects),
+  }))
   .sort((a, b) => b.sourceCommitCount - a.sourceCommitCount);
 
 const payload = {
   generatedAt: new Date().toISOString(),
   source: {
-    sourceRepo: '[local source repository]',
+    sourceRepos: resolvedRepos.map((repo) => repo.sourceLabel),
     since,
     author: author || '[all authors]',
-    rawCommitSubjects: raw.split('\n').filter(Boolean).length,
+    rawCommitSubjects: rawByRepo.reduce((total, repo) => total + repo.raw.split('\n').filter(Boolean).length, 0),
     note: 'Raw commit subjects are local-only. Commit hashes, private references, and raw issue identifiers are not included in public site data.',
   },
   candidates,

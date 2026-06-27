@@ -7,7 +7,6 @@ import { useState } from 'react';
 
 const navigationEn = [
   { href: '/en', label: 'Home' },
-  { href: '/en/case-studies', label: 'Case Studies' },
   { href: '/en/changelog', label: 'Changelog' },
   { href: '/en/ai-workflow', label: 'AI Workflow' },
   { href: '/en/skills', label: 'Skills' },
@@ -16,7 +15,6 @@ const navigationEn = [
 
 const navigationKo = [
   { href: '/', label: '홈' },
-  { href: '/case-studies', label: '케이스 스터디' },
   { href: '/changelog', label: '체인지로그' },
   { href: '/ai-workflow', label: 'AI 개발 흐름' },
   { href: '/skills', label: '기술' },
