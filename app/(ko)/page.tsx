@@ -159,7 +159,7 @@ export default function KoreanHomePage() {
 
 function Metric({ label, value }: Readonly<{ label: string; value: string }>) {
   return (
-    <div className="rounded-lg border border-[var(--border)] bg-[var(--background)] p-4">
+    <div className="surface-panel bg-[var(--surface-strong)] p-4">
       <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[var(--text-secondary)]">{label}</p>
       <p className="mt-2 text-lg font-semibold">{value}</p>
     </div>

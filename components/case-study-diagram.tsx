@@ -95,10 +95,10 @@ export function CaseStudyDiagram({
   }
 
   return (
-    <section className="mt-12 rounded-xl border border-[var(--border)] bg-[var(--surface)] p-6 shadow-sm">
+    <section className="surface-panel mt-12 p-6">
       <div className="flex flex-col justify-between gap-3 md:flex-row md:items-end">
         <div>
-          <p className="text-sm font-semibold uppercase tracking-[0.14em] text-[var(--accent-blue)]">
+          <p className="eyebrow">
             {locale === 'ko' ? '시각 모델' : 'Visual model'}
           </p>
           <h2 className="mt-2 text-2xl font-semibold">{diagram.title}</h2>
@@ -107,7 +107,7 @@ export function CaseStudyDiagram({
       </div>
       <div className="mt-6 grid gap-3 md:grid-cols-5">
         {diagram.nodes.map((node, index) => (
-          <div className="relative rounded-lg border border-[var(--border)] bg-[var(--background)] p-4" key={node}>
+          <div className="relative rounded-lg border border-[var(--border)] bg-[var(--surface-strong)] p-4" key={node}>
             <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[var(--text-secondary)]">
               {String(index + 1).padStart(2, '0')}
             </p>

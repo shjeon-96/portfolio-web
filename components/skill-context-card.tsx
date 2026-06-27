@@ -2,7 +2,7 @@ import type { SkillContext } from '@/lib/data';
 
 export function SkillContextCard({ skill }: Readonly<{ skill: SkillContext }>) {
   return (
-    <article className="rounded-lg border border-[var(--border)] bg-[var(--surface)] p-5 shadow-sm">
+    <article className="surface-panel p-5">
       <h2 className="text-xl font-semibold">{skill.group}</h2>
       <div className="mt-4 flex flex-wrap gap-2">
         {skill.tools.map((tool) => (

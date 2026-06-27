@@ -12,13 +12,13 @@ export default function KoreanChangelogPage() {
   const groupedEntries = groupChangelogEntriesByDate(changelogEntriesKo);
 
   return (
-    <main className="mx-auto max-w-7xl px-5 py-16">
+    <main className="page-shell">
       <SectionHeading
         eyebrow="Engineering Changelog"
         title="날짜별 제품 엔지니어링 기록"
         description="프로젝트별 변경을 공개 가능한 범위에서 짧게 정리합니다. 각 항목은 문제 맥락, 실제 변경, 확인한 내용만 남깁니다."
       />
-      <section className="mt-10 rounded-lg border border-[var(--border)] bg-[var(--surface)] px-5 py-1 shadow-sm">
+      <section className="surface-panel mt-10 px-5 py-1">
         {groupedEntries.map((group) => (
           <div className="grid gap-4 border-b border-[var(--border)] py-7 last:border-b-0 md:grid-cols-[150px_1fr]" key={group.date}>
             <div>

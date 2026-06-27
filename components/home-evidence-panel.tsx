@@ -16,7 +16,7 @@ export function HomeEvidencePanel({
   items: EvidenceItem[];
 }>) {
   return (
-    <aside className="rounded-lg border border-[var(--border)] bg-[var(--surface)] p-5 shadow-sm">
+    <aside className="surface-panel p-5">
       <div className="border-b border-[var(--border)] pb-4">
         <p className="font-mono text-xs font-semibold uppercase tracking-[0.18em] text-[var(--accent-blue)]">{kicker}</p>
         <h2 className="mt-2 text-2xl font-semibold text-[var(--text-primary)]">{title}</h2>

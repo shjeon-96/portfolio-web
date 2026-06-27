@@ -36,3 +36,40 @@ body {
 .text-balance {
   text-wrap: balance;
 }
+
+.page-shell {
+  margin-inline: auto;
+  max-width: 80rem;
+  padding: 4rem 1.25rem;
+}
+
+.page-narrow {
+  max-width: 64rem;
+}
+
+.surface-panel {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+  box-shadow: var(--shadow-panel);
+}
+
+.eyebrow {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--accent-blue);
+}
+
+.text-copy {
+  color: var(--text-secondary);
+  line-height: 1.75;
+}
+
+@media (max-width: 640px) {
+  .page-shell {
+    padding-block: 3rem;
+  }
+}

@@ -19,8 +19,8 @@ export function CaseStudyCard({
   };
 }>) {
   return (
-    <article className="h-full rounded-lg border border-[var(--border)] bg-[var(--surface)] p-5 shadow-sm transition hover:border-[color-mix(in_srgb,var(--accent-blue)_32%,var(--border))] hover:shadow-[var(--shadow-panel)]">
-      <p className="font-mono text-xs font-semibold uppercase tracking-[0.14em] text-[var(--accent-blue)]">{caseStudy.label}</p>
+    <article className="surface-panel h-full p-5 transition hover:border-[color-mix(in_srgb,var(--accent-blue)_32%,var(--border))]">
+      <p className="eyebrow">{caseStudy.label}</p>
       <h2 className="mt-3 text-xl font-semibold">{caseStudy.title}</h2>
       <p className="mt-3 text-sm leading-6 text-[var(--text-secondary)]">{caseStudy.summary}</p>
       <dl className="mt-5 grid gap-3 border-y border-[var(--border)] py-4 text-sm">

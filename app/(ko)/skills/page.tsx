@@ -9,7 +9,7 @@ export const metadata = {
 
 export default function KoreanSkillsPage() {
   return (
-    <main className="mx-auto max-w-7xl px-5 py-16">
+    <main className="page-shell">
       <SectionHeading
         eyebrow="Skills"
         title="기술 스택은 사용 맥락과 함께 보여줍니다"

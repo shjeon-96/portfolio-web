@@ -11,13 +11,13 @@ export default function ChangelogPage() {
   const groupedEntries = groupChangelogEntriesByDate(changelogEntries);
 
   return (
-    <main className="mx-auto max-w-7xl px-5 py-16">
+    <main className="page-shell">
       <SectionHeading
         eyebrow="Engineering Changelog"
         title="Date-based product engineering notes"
         description="Project changes are rewritten into public-safe notes. Each entry keeps the context, the change, and the observed result."
       />
-      <section className="mt-10 rounded-lg border border-[var(--border)] bg-[var(--surface)] px-5 py-1 shadow-sm">
+      <section className="surface-panel mt-10 px-5 py-1">
         {groupedEntries.map((group) => (
           <div className="grid gap-4 border-b border-[var(--border)] py-7 last:border-b-0 md:grid-cols-[150px_1fr]" key={group.date}>
             <div>

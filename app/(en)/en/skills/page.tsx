@@ -9,7 +9,7 @@ export const metadata = {
 
 export default function SkillsPage() {
   return (
-    <main className="mx-auto max-w-7xl px-5 py-16">
+    <main className="page-shell">
       <SectionHeading
         eyebrow="Skills"
         title="Technology stack with product context"

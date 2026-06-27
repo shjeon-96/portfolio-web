@@ -9,7 +9,7 @@ export const metadata = {
 
 export default function KoreanCaseStudiesPage() {
   return (
-    <main className="mx-auto max-w-7xl px-5 py-16">
+    <main className="page-shell">
       <SectionHeading
         eyebrow="Case Studies"
         title="문제, 접근, 결과, 검증으로 설명합니다"

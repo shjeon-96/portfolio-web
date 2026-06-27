@@ -33,8 +33,8 @@ export default async function KoreanCaseStudyDetailPage({ params }: { params: Pr
   }
 
   return (
-    <main className="mx-auto max-w-5xl px-5 py-16">
-      <p className="text-sm font-semibold uppercase tracking-[0.16em] text-[var(--accent-blue)]">{caseStudy.label}</p>
+    <main className="page-shell page-narrow">
+      <p className="eyebrow">{caseStudy.label}</p>
       <h1 className="mt-3 text-4xl font-semibold leading-tight text-balance md:text-5xl">{caseStudy.title}</h1>
       <p className="mt-5 text-lg leading-8 text-[var(--text-secondary)]">{caseStudy.summary}</p>
       <div className="mt-8 flex flex-wrap gap-2">
@@ -66,7 +66,7 @@ export default async function KoreanCaseStudyDetailPage({ params }: { params: Pr
         <SummaryPoint label="검증 기준" value={caseStudy.verification[0]} />
       </section>
       <CaseStudyDiagram caseStudy={caseStudy} locale="ko" />
-      <section className="mt-12 grid gap-4">
+      <section className="surface-panel mt-12 divide-y divide-[var(--border)]">
         <DetailBlock title="문제" tone="blue" body={caseStudy.problem} />
         <DetailBlock title="역할" tone="amber" body={caseStudy.role} />
         <DetailList title="접근" tone="blue" items={caseStudy.approach} />
@@ -82,8 +82,8 @@ export default async function KoreanCaseStudyDetailPage({ params }: { params: Pr
 
 function SummaryPoint({ label, value }: Readonly<{ label: string; value: string }>) {
   return (
-    <article className="rounded-lg border border-[var(--border)] bg-[var(--surface)] p-5 shadow-sm">
-      <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[var(--accent-blue)]">{label}</p>
+    <article className="surface-panel p-5">
+      <p className="eyebrow">{label}</p>
       <p className="mt-3 text-sm leading-6 text-[var(--text-secondary)]">{value}</p>
     </article>
   );
@@ -99,9 +99,9 @@ function DetailBlock({
   tone: 'blue' | 'green' | 'amber';
 }>) {
   return (
-    <article className="rounded-lg border border-[var(--border)] bg-[var(--surface)] p-6 shadow-sm">
-      <p className={`text-sm font-semibold uppercase tracking-[0.14em] ${toneClass(tone)}`}>{title}</p>
-      <p className="mt-3 leading-7 text-[var(--text-secondary)]">{body}</p>
+    <article className="grid gap-3 p-6 md:grid-cols-[160px_1fr]">
+      <p className={`font-mono text-sm font-semibold uppercase tracking-[0.14em] ${toneClass(tone)}`}>{title}</p>
+      <p className="leading-7 text-[var(--text-secondary)]">{body}</p>
     </article>
   );
 }
@@ -116,11 +116,14 @@ function DetailList({
   tone: 'blue' | 'green' | 'amber';
 }>) {
   return (
-    <article className="rounded-lg border border-[var(--border)] bg-[var(--surface)] p-6 shadow-sm">
-      <p className={`text-sm font-semibold uppercase tracking-[0.14em] ${toneClass(tone)}`}>{title}</p>
-      <ul className="mt-3 space-y-3 leading-7 text-[var(--text-secondary)]">
+    <article className="grid gap-3 p-6 md:grid-cols-[160px_1fr]">
+      <p className={`font-mono text-sm font-semibold uppercase tracking-[0.14em] ${toneClass(tone)}`}>{title}</p>
+      <ul className="space-y-3 leading-7 text-[var(--text-secondary)]">
         {items.map((item) => (
-          <li key={item}>{item}</li>
+          <li className="flex gap-3" key={item}>
+            <span className="mt-3 h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--text-muted)]" />
+            <span>{item}</span>
+          </li>
         ))}
       </ul>
     </article>
@@ -129,9 +132,9 @@ function DetailList({
 
 function EvidenceList({ title, items }: Readonly<{ title: string; items: string[] }>) {
   return (
-    <article className="rounded-lg border border-[var(--border)] bg-[var(--surface)] p-6 shadow-sm">
-      <p className="text-sm font-semibold uppercase tracking-[0.14em] text-[var(--accent-green)]">{title}</p>
-      <div className="mt-3 flex flex-wrap gap-2">
+    <article className="grid gap-3 p-6 md:grid-cols-[160px_1fr]">
+      <p className="font-mono text-sm font-semibold uppercase tracking-[0.14em] text-[var(--accent-green)]">{title}</p>
+      <div className="flex flex-wrap gap-2">
         {items.map((item) => (
           <code className="rounded-md border border-[var(--border)] bg-[var(--background)] px-3 py-2 text-sm text-[var(--text-primary)]" key={item}>
             {item}

@@ -28,6 +28,13 @@ export function SiteHeader() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const isKorean = !pathname.startsWith('/en');
   const navigation = isKorean ? navigationKo : navigationEn;
+  const isActive = (href: string) => {
+    if (href === '/' || href === '/en') {
+      return pathname === href;
+    }
+
+    return pathname === href || pathname.startsWith(`${href}/`);
+  };
 
   return (
     <header className="sticky top-0 z-20 border-b border-[var(--border)] bg-[color-mix(in_srgb,var(--surface)_82%,var(--background))] backdrop-blur">
@@ -45,7 +52,10 @@ export function SiteHeader() {
         <nav className="hidden items-center gap-1 text-sm text-[var(--text-secondary)] md:flex">
           {navigation.map((item) => (
             <Link
-              className="flex min-h-11 min-w-11 items-center justify-center whitespace-nowrap rounded-md px-3 py-2 transition hover:bg-[var(--surface-strong)] hover:text-[var(--text-primary)]"
+              aria-current={isActive(item.href) ? 'page' : undefined}
+              className={`flex min-h-11 min-w-11 items-center justify-center whitespace-nowrap rounded-md px-3 py-2 transition hover:bg-[var(--surface-strong)] hover:text-[var(--text-primary)] ${
+                isActive(item.href) ? 'bg-[var(--surface-strong)] text-[var(--text-primary)]' : ''
+              }`}
               href={item.href}
               key={item.href}
             >
@@ -85,7 +95,10 @@ export function SiteHeader() {
           <div className="mx-auto grid max-w-7xl gap-1 text-sm text-[var(--text-secondary)]">
             {navigation.map((item) => (
               <Link
-                className="flex min-h-11 items-center rounded-md px-3 font-medium transition hover:bg-[var(--background)] hover:text-[var(--text-primary)]"
+                aria-current={isActive(item.href) ? 'page' : undefined}
+                className={`flex min-h-11 items-center rounded-md px-3 font-medium transition hover:bg-[var(--background)] hover:text-[var(--text-primary)] ${
+                  isActive(item.href) ? 'bg-[var(--background)] text-[var(--text-primary)]' : ''
+                }`}
                 href={item.href}
                 key={item.href}
                 onClick={() => setIsMenuOpen(false)}
