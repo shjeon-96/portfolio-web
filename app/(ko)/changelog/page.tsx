@@ -11,10 +11,11 @@ export default function KoreanChangelogPage() {
   const priorityEntries = [
     'Agent LSP Bridge 릴리즈 계약',
     '모바일 릴리즈 게이트 시스템',
+    '세무 운영 플랫폼 마이그레이션 경로',
+    'Offline-first 데스크톱 POS 아키텍처',
+    '실시간 배달 운영 백엔드',
     'SwiftUI 제품 모듈 아키텍처',
     'Privacy-first 개발자 도구 제품 방향',
-    'App Store Review 보조 도구화',
-    'AI PRD 생성 제품 surface',
   ]
     .map((title) => changelogEntriesKo.find((entry) => entry.title === title))
     .filter((entry): entry is (typeof changelogEntriesKo)[number] => Boolean(entry));

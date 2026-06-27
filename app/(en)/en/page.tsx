@@ -5,6 +5,19 @@ import { ProjectHighlightCard } from '@/components/project-highlight-card';
 import { caseStudies, changelogEntries, projectHighlights, proofPoints } from '@/lib/data';
 
 export default function Home() {
+  const featuredProjects = projectHighlights.filter((project) =>
+    [
+      'codex-lsp-bridge',
+      'Gyeol Mobile',
+      'PureFlow',
+      'Web Toolkit',
+      'Tax and settlement operations platform',
+      'AI review operations system',
+      'Desktop POS system',
+      'Realtime delivery backend',
+      'Nightbound Survival',
+    ].includes(project.title),
+  );
   const homeChangelogEntries = [
     'Agent LSP bridge release contract',
     'Mobile release gate system',
@@ -113,7 +126,7 @@ export default function Home() {
             </p>
           </div>
           <div className="mt-8 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-            {projectHighlights.map((project) => (
+            {featuredProjects.map((project) => (
               <ProjectHighlightCard project={project} key={project.title} />
             ))}
           </div>

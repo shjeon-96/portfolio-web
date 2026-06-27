@@ -68,6 +68,54 @@ export const projectHighlightsKo: ProjectHighlight[] = [
     stack: ['Rust', 'Bevy', 'Serde', 'Cargo'],
     status: '인터랙티브 시스템과 런타임 검증',
   },
+  {
+    title: '세무·정산 운영 플랫폼',
+    label: '백오피스와 모바일 운영 흐름',
+    summary:
+      '세무대리 신청, 매입·매출 대시보드, 가맹점 승인, 알림, Vue에서 React와 Next.js로 이어지는 마이그레이션을 다룬 업무 시스템입니다.',
+    stack: ['Flutter', 'React', 'Next.js', 'Firebase', 'Docker'],
+    status: '운영 workflow와 프레임워크 마이그레이션',
+  },
+  {
+    title: 'AI 리뷰 운영 시스템',
+    label: 'AI 보조 관리자 workflow',
+    summary:
+      'React 관리자 UI, NestJS API, Python 데이터 수집, JWT 인증, MySQL 스키마, OpenAI 기반 리뷰 응답 흐름을 함께 다룬 멀티스택 운영 도구입니다.',
+    stack: ['React', 'NestJS', 'Python', 'OpenAI API', 'MySQL'],
+    status: '운영자가 통제하는 AI workflow',
+  },
+  {
+    title: '데스크톱 POS 시스템',
+    label: 'Offline-first Flutter desktop app',
+    summary:
+      'Windows/macOS POS 앱에서 테이블 주문, 결제 흐름, 프린터 연동, SQLite 로컬 저장소, 네트워크 복구 후 동기화를 다뤘습니다.',
+    stack: ['Flutter', 'Dart', 'SQLite', 'Desktop', 'Hardware integration'],
+    status: '식당 운영과 로컬 데이터 안정성',
+  },
+  {
+    title: '실시간 배달 운영 백엔드',
+    label: 'Socket.io 운영 백엔드',
+    summary:
+      '실시간 주문 상태, updater socket event, 경로 최적화 지원, scraping pipeline, log management를 포함한 배달 운영 백엔드입니다.',
+    stack: ['NestJS', 'Python', 'Socket.io', 'Realtime operations'],
+    status: '백엔드와 실시간 workflow 경험',
+  },
+  {
+    title: 'POS 리팩토링과 결제 workflow',
+    label: '레거시 React POS 현대화',
+    summary:
+      '결제/취소 모달, 현금영수증, 테이블 이동·분리·합석, 그룹 결제, 성능 정리를 포함한 React POS 리팩토링입니다.',
+    stack: ['React', 'JavaScript', 'POS', 'Payment workflow'],
+    status: '운영 중인 시스템의 레거시 현대화',
+  },
+  {
+    title: '유통 제품 카탈로그 사이트',
+    label: 'Next.js SEO와 catalog surface',
+    summary:
+      'SSR, 동적 라우팅, 이미지 최적화, lazy loading, i18n route, 검색, 문의 흐름을 포함한 반응형 제품 카탈로그 사이트입니다.',
+    stack: ['Next.js', 'TypeScript', 'SSR', 'SEO', 'i18n'],
+    status: '외부-facing catalog와 성능 작업',
+  },
 ];
 
 export const caseStudiesKo: CaseStudy[] = [
@@ -334,6 +382,71 @@ export const caseStudiesKo: CaseStudy[] = [
 ];
 
 export const changelogEntriesKo: ChangelogEntry[] = [
+  {
+    title: '세무 운영 플랫폼 마이그레이션 경로',
+    period: '2025-11',
+    category: 'ops-platform',
+    problem: '운영 중인 업무 플랫폼에서 세무 신청, 매입·매출 대시보드, 가맹점 심사, 알림, 프레임워크 마이그레이션을 서비스 중단 없이 다뤄야 했습니다.',
+    approach: [
+      '레거시 Vue 화면을 React와 Next.js 구조로 단계적으로 옮겼습니다.',
+      '세무대리 신청, 수임동의, 해지, 가맹점 승인, 관리 workflow를 운영 제품 상태로 다뤘습니다.',
+      'Firebase 알림, Docker 배포, dashboard surface를 같은 백오피스 흐름에 연결했습니다.',
+    ],
+    result: '에디터와 AI 도구 외에도 실제 업무 운영 플랫폼 경험이 포트폴리오에 보강됐습니다.',
+    stack: ['Flutter', 'React', 'Next.js', 'Firebase', 'Docker'],
+  },
+  {
+    title: 'Offline-first 데스크톱 POS 아키텍처',
+    period: '2025-02',
+    category: 'pos-system',
+    problem: '식당 POS는 네트워크가 불안정해도 주문, 결제, 프린터 출력, 매출 데이터가 계속 운영 가능해야 했습니다.',
+    approach: [
+      'Flutter Desktop으로 Windows와 macOS를 하나의 코드베이스에서 지원했습니다.',
+      'SQLite 기반 로컬 저장소로 오프라인 운영 흐름을 유지했습니다.',
+      '프린터와 주문 알림 workflow를 핵심 제품 경로로 통합했습니다.',
+    ],
+    result: '데스크톱 POS 작업은 offline-first 운영과 하드웨어 인접 제품 경험을 보여주는 축이 됐습니다.',
+    stack: ['Flutter', 'Dart', 'SQLite', 'Desktop'],
+  },
+  {
+    title: '실시간 배달 운영 백엔드',
+    period: '2024-04',
+    category: 'realtime-backend',
+    problem: '배달 운영 시스템은 주문 상태, updater event, 경로 지원, 데이터 수집 로그가 즉시 반영되고 추적 가능해야 했습니다.',
+    approach: [
+      'Socket.io로 실시간 주문과 updater event를 처리했습니다.',
+      'NestJS 백엔드와 Python 데이터 수집 책임을 분리했습니다.',
+      '운영 이슈를 추적할 수 있도록 log와 error handling 흐름을 정리했습니다.',
+    ],
+    result: '체인지로그가 프론트엔드 UI뿐 아니라 백엔드와 실시간 운영 workflow 이해도까지 보여주게 됐습니다.',
+    stack: ['NestJS', 'Python', 'Socket.io'],
+  },
+  {
+    title: '레거시 POS 결제 리팩토링',
+    period: '2023-10',
+    category: 'pos-system',
+    problem: '레거시 POS 프론트엔드의 결제, 영수증, 테이블, 정산 로직은 유지보수와 성능 정리가 필요했습니다.',
+    approach: [
+      '결제와 취소 modal flow를 리팩토링했습니다.',
+      '테이블 이동, 분리, 합석, 그룹 지정, 그룹 결제 케이스를 정리했습니다.',
+      '실제 운영 중인 화면에서 rendering과 유지보수성을 개선했습니다.',
+    ],
+    result: '과거 POS 작업이 실제 업무 workflow와 레거시 현대화 경험을 보강합니다.',
+    stack: ['React', 'JavaScript', 'POS workflow'],
+  },
+  {
+    title: '카탈로그 사이트 SEO와 i18n surface',
+    period: '2025-03',
+    category: 'catalog-site',
+    problem: '제품 정보 사이트는 빠른 초기 로딩, 검색 가능한 catalog content, 다국어 route, 반응형 presentation이 필요했습니다.',
+    approach: [
+      'Next.js SSR, dynamic routing, image optimization을 사용했습니다.',
+      '제품 정보 중심 catalog search와 inquiry flow를 구성했습니다.',
+      '다국어 콘텐츠 전달을 위해 i18n route 구조를 추가했습니다.',
+    ],
+    result: 'Project Ledger에 외부-facing 웹 성능과 콘텐츠 아키텍처 작업이 추가됐습니다.',
+    stack: ['Next.js', 'TypeScript', 'SSR', 'SEO', 'i18n'],
+  },
   {
     title: 'App Store Review 보조 도구화',
     period: '2026-04',

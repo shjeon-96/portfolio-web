@@ -11,10 +11,11 @@ export default function ChangelogPage() {
   const priorityEntries = [
     'Agent LSP bridge release contract',
     'Mobile release gate system',
+    'Tax operations migration path',
+    'Offline-first desktop POS architecture',
+    'Realtime delivery operations backend',
     'SwiftUI product module architecture',
     'Privacy-first developer toolkit direction',
-    'App Store review helper as conservative tooling',
-    'AI PRD generation product surface',
   ]
     .map((title) => changelogEntries.find((entry) => entry.title === title))
     .filter((entry): entry is (typeof changelogEntries)[number] => Boolean(entry));

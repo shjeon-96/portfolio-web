@@ -10,6 +10,19 @@ export const metadata = {
 };
 
 export default function KoreanHomePage() {
+  const featuredProjects = projectHighlightsKo.filter((project) =>
+    [
+      'codex-lsp-bridge',
+      'Gyeol Mobile',
+      'PureFlow',
+      'Web Toolkit',
+      '세무·정산 운영 플랫폼',
+      'AI 리뷰 운영 시스템',
+      '데스크톱 POS 시스템',
+      '실시간 배달 운영 백엔드',
+      'Nightbound Survival',
+    ].includes(project.title),
+  );
   const homeChangelogEntries = [
     'Agent LSP Bridge 릴리즈 계약',
     '모바일 릴리즈 게이트 시스템',
@@ -124,7 +137,7 @@ export default function KoreanHomePage() {
             </p>
           </div>
           <div className="mt-8 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-            {projectHighlightsKo.map((project) => (
+            {featuredProjects.map((project) => (
               <ProjectHighlightCard project={project} key={project.title} />
             ))}
           </div>

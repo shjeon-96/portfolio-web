@@ -34,7 +34,11 @@ export type ChangelogEntry = {
     | 'web-toolkit'
     | 'game-runtime'
     | 'app-review-tooling'
-    | 'ai-product';
+    | 'ai-product'
+    | 'ops-platform'
+    | 'pos-system'
+    | 'realtime-backend'
+    | 'catalog-site';
   problem: string;
   approach: string[];
   result: string;
@@ -123,6 +127,54 @@ export const projectHighlights: ProjectHighlight[] = [
       'Rust and Bevy game project with a CI-style verification script for formatting, compilation, test binary builds, and test execution.',
     stack: ['Rust', 'Bevy', 'Serde', 'Cargo'],
     status: 'Interactive systems and runtime verification',
+  },
+  {
+    title: 'Tax and settlement operations platform',
+    label: 'Back-office and mobile operations',
+    summary:
+      'Business workflow platform covering tax agency requests, purchase and sales dashboards, merchant approval, notifications, and legacy Vue to React to Next.js migration.',
+    stack: ['Flutter', 'React', 'Next.js', 'Firebase', 'Docker'],
+    status: 'Operational workflow and framework migration',
+  },
+  {
+    title: 'AI review operations system',
+    label: 'AI-assisted admin workflow',
+    summary:
+      'Multi-stack operations tool with React admin UI, NestJS API, Python data collection, JWT authentication, MySQL schema design, and OpenAI-assisted review response flow.',
+    stack: ['React', 'NestJS', 'Python', 'OpenAI API', 'MySQL'],
+    status: 'Operator-controlled AI workflow',
+  },
+  {
+    title: 'Desktop POS system',
+    label: 'Offline-first Flutter desktop app',
+    summary:
+      'Windows and macOS POS app with table ordering, payment flows, printer integration, local SQLite storage, and synchronization after network recovery.',
+    stack: ['Flutter', 'Dart', 'SQLite', 'Desktop', 'Hardware integration'],
+    status: 'Restaurant operations and local data reliability',
+  },
+  {
+    title: 'Realtime delivery backend',
+    label: 'Socket.io operations backend',
+    summary:
+      'Delivery operations backend with realtime order status, updater socket events, route optimization support, scraping pipeline, and log management.',
+    stack: ['NestJS', 'Python', 'Socket.io', 'Realtime operations'],
+    status: 'Backend and realtime workflow experience',
+  },
+  {
+    title: 'POS refactor and payment workflow',
+    label: 'Legacy React POS modernization',
+    summary:
+      'React POS refactor covering payment and cancellation modals, cash receipt flows, table move/split/merge logic, group payment, and performance cleanup.',
+    stack: ['React', 'JavaScript', 'POS', 'Payment workflow'],
+    status: 'Legacy modernization in an operational system',
+  },
+  {
+    title: 'Distribution catalog site',
+    label: 'Next.js SEO and catalog surface',
+    summary:
+      'Responsive product catalog site with SSR, dynamic routing, image optimization, lazy loading, i18n routes, search, and inquiry flow.',
+    stack: ['Next.js', 'TypeScript', 'SSR', 'SEO', 'i18n'],
+    status: 'Public-facing catalog and performance work',
   },
 ];
 
@@ -390,6 +442,71 @@ export const caseStudies: CaseStudy[] = [
 ];
 
 export const changelogEntries: ChangelogEntry[] = [
+  {
+    title: 'Tax operations migration path',
+    period: '2025-11',
+    category: 'ops-platform',
+    problem: 'A live business operations platform needed tax request workflows, purchase and sales dashboards, merchant review, notifications, and framework migration without interrupting work.',
+    approach: [
+      'Moved legacy Vue surfaces through React and Next.js in stages.',
+      'Modeled tax agency request, consent, cancellation, merchant approval, and management workflows as operational product states.',
+      'Connected Firebase notifications, Docker deployment, and dashboard surfaces to the same back-office flow.',
+    ],
+    result: 'The portfolio gains a concrete operations-platform example beyond the editor and AI tooling stories.',
+    stack: ['Flutter', 'React', 'Next.js', 'Firebase', 'Docker'],
+  },
+  {
+    title: 'Offline-first desktop POS architecture',
+    period: '2025-02',
+    category: 'pos-system',
+    problem: 'Restaurant POS software has to keep orders, payments, printer output, and sales data usable even when the network is unstable.',
+    approach: [
+      'Used Flutter Desktop to target Windows and macOS from one codebase.',
+      'Kept local operations available through SQLite-backed storage.',
+      'Integrated printer and order notification workflows as part of the core product path.',
+    ],
+    result: 'Desktop POS work adds offline-first operations and hardware-adjacent product experience to the site.',
+    stack: ['Flutter', 'Dart', 'SQLite', 'Desktop'],
+  },
+  {
+    title: 'Realtime delivery operations backend',
+    period: '2024-04',
+    category: 'realtime-backend',
+    problem: 'Delivery operations require immediate order status updates, updater events, route support, and traceable data collection.',
+    approach: [
+      'Used Socket.io for realtime order and updater events.',
+      'Separated NestJS backend responsibilities from Python data collection.',
+      'Added logs and error handling so operational issues could be traced.',
+    ],
+    result: 'The changelog now shows backend and realtime workflow understanding, not only front-end UI work.',
+    stack: ['NestJS', 'Python', 'Socket.io'],
+  },
+  {
+    title: 'Legacy POS payment refactor',
+    period: '2023-10',
+    category: 'pos-system',
+    problem: 'A legacy POS front end had payment, receipt, table, and settlement logic that needed maintenance and performance cleanup.',
+    approach: [
+      'Refactored payment and cancellation modal flows.',
+      'Handled table move, split, merge, group assignment, and group payment cases.',
+      'Improved rendering and maintainability in an actively used operational surface.',
+    ],
+    result: 'Older POS work strengthens the portfolio story around real business workflows and legacy modernization.',
+    stack: ['React', 'JavaScript', 'POS workflow'],
+  },
+  {
+    title: 'Catalog site SEO and i18n surface',
+    period: '2025-03',
+    category: 'catalog-site',
+    problem: 'A product information site needed fast initial loading, searchable catalog content, multilingual routes, and responsive presentation.',
+    approach: [
+      'Used Next.js SSR, dynamic routing, and image optimization.',
+      'Built catalog search and inquiry flow around public-facing product information.',
+      'Added i18n route structure for multilingual content delivery.',
+    ],
+    result: 'The project ledger now includes public-facing web performance and content architecture work.',
+    stack: ['Next.js', 'TypeScript', 'SSR', 'SEO', 'i18n'],
+  },
   {
     title: 'App Store review helper as conservative tooling',
     period: '2026-04',
