@@ -29,7 +29,7 @@ export const changelogFocusRules: Record<ChangelogFocusKey, ChangelogFocusRule> 
     categories: ['editor-engine', 'export-deploy', 'testing-ci', 'performance'],
     description: {
       en: 'Filtered to entries that support the editor-state, output-parity, regression, and performance story.',
-      ko: '에디터 상태, 산출물 정합성, 회귀 검증, 성능 근거를 뒷받침하는 항목만 모았습니다.',
+      ko: '에디터 상태, 결과물 일관성, 회귀 검증, 성능 근거를 뒷받침하는 항목만 모았습니다.',
     },
     label: {
       en: 'Editor Evidence',
@@ -37,7 +37,7 @@ export const changelogFocusRules: Record<ChangelogFocusKey, ChangelogFocusRule> 
     },
     tags: {
       en: ['editor engine', 'export/deploy', 'regression', 'performance'],
-      ko: ['에디터 엔진', 'export/deploy', '회귀 검증', '성능'],
+      ko: ['에디터 엔진', '내보내기/배포', '회귀 검증', '성능'],
     },
   },
   'mobile-release': {

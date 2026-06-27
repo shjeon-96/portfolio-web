@@ -20,7 +20,7 @@ export default function KoreanSkillsPage() {
         ariaLabel="기술 페이지 읽는 기준"
         items={[
           { title: '제품 맥락', body: '기술 이름보다 어떤 제품 문제를 풀 때 사용했는지 먼저 봅니다.' },
-          { title: '상태와 계약', body: '복잡한 UI, 데이터 흐름, 산출물 계약을 어떻게 안정화했는지 봅니다.' },
+          { title: '상태와 기준', body: '복잡한 UI, 데이터 흐름, 결과물 기준을 어떻게 안정화했는지 봅니다.' },
           { title: '검증 경로', body: '테스트, 릴리즈 게이트, 배포 확인까지 연결되는 기술 경험을 봅니다.' },
         ]}
       />

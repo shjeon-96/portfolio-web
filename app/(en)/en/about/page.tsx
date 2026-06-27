@@ -1,6 +1,7 @@
 import { SectionHeading } from '@/components/section-heading';
 import { ActionLink, Panel, TextLink } from '@/components/ui';
 import { cx, ds } from '@/lib/design-system';
+import { GITHUB_PROFILE_URL, PORTFOLIO_REPOSITORY_URL } from '@/lib/site-links';
 
 export const metadata = {
   title: 'About',
@@ -70,10 +71,10 @@ export default function AboutPage() {
           <div className="mt-6 border-t border-[var(--border)] pt-5">
             <h2 className="font-semibold">Links</h2>
             <div className="mt-4 flex flex-wrap gap-3">
-              <ActionLink external href="https://github.com/shjeon-96" variant="primary">
+              <ActionLink external href={GITHUB_PROFILE_URL} variant="primary">
                 GitHub
               </ActionLink>
-              <ActionLink external href="https://github.com/shjeon-96/portfolio-web">
+              <ActionLink external href={PORTFOLIO_REPOSITORY_URL}>
                 Portfolio repository
               </ActionLink>
             </div>

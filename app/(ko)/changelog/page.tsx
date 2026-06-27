@@ -28,7 +28,7 @@ export default async function KoreanChangelogPage({ searchParams }: Readonly<Kor
   const featuredDescription =
     focusState.kind === 'active'
       ? focusState.rule.description.ko
-      : '릴리즈 게이트, 산출물 정합성, AI 원인 분석처럼 현재 포트폴리오의 방향을 가장 잘 보여주는 변경입니다.';
+      : '릴리즈 게이트, 결과물 일관성, AI 원인 분석처럼 현재 포트폴리오의 방향을 가장 잘 보여주는 변경입니다.';
 
   return (
     <main className="page-shell">

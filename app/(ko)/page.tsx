@@ -7,10 +7,11 @@ import { ActionLink, BadgeList, Panel } from '@/components/ui';
 import { sortChangelogEntriesByDateDesc } from '@/lib/data';
 import { changelogEntriesKo, implementationEvidenceKo, projectHighlightsKo, proofPointsKo } from '@/lib/data-ko';
 import { cx, ds } from '@/lib/design-system';
+import { GITHUB_PROFILE_URL } from '@/lib/site-links';
 
 export const metadata = {
   title: '제품 프론트엔드 포트폴리오',
-  description: '에디터 엔진, 모바일 릴리즈 게이트, AI 개발 흐름을 공개 가능한 제품 엔지니어링 근거로 정리한 포트폴리오.',
+  description: '에디터 엔진, 모바일 릴리즈 게이트, AI 개발 흐름을 공개해도 안전한 제품 엔지니어링 근거로 정리한 포트폴리오.',
 };
 
 export default function KoreanHomePage() {
@@ -37,8 +38,8 @@ export default function KoreanHomePage() {
             AI 도구, 모바일 릴리즈, 에디터 엔진을 다루는 제품 프론트엔드
           </h1>
           <p className={cx('mt-6 max-w-2xl', ds.text.bodyLarge)}>
-            비주얼 빌더, 모바일 제품, AI 개발 흐름에서 제품 상태와 런타임 동작,
-            릴리즈 검증, 생성 산출물이 같은 기준으로 이어지도록 구조화합니다.
+            비주얼 빌더, 모바일 제품, AI 개발 흐름에서 제품 상태, 런타임 동작,
+            릴리즈 검증, 생성 결과가 같은 기준으로 이어지도록 구조화합니다.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
             <ActionLink href="/evidence" variant="primary">
@@ -50,7 +51,7 @@ export default function KoreanHomePage() {
             <ActionLink
               ariaLabel="GitHub 프로필"
               external
-              href="https://github.com/shjeon-96"
+              href={GITHUB_PROFILE_URL}
               title="GitHub"
               variant="icon"
             >
@@ -63,12 +64,12 @@ export default function KoreanHomePage() {
         <HomeEvidencePanel
           kicker="작업 요약"
           title="최근 작업의 중심축"
-          summary="스크린샷보다 상태 모델, 데이터 흐름, 확인 가능한 동작, 릴리즈 검증, 생성 산출물을 중심으로 정리했습니다."
+          summary="스크린샷보다 상태 모델, 데이터 흐름, 확인 가능한 동작, 릴리즈 검증, 생성 결과를 중심으로 정리했습니다."
           items={[
             {
               label: '작업 범위',
-              title: '복잡한 제품 UI와 런타임 경계',
-              description: '에디터 엔진, 모바일 릴리즈, AI 개발 도구처럼 상태와 산출물이 분리되기 쉬운 영역을 다룹니다.',
+              title: '복잡한 제품 UI와 런타임 기준',
+              description: '에디터 엔진, 모바일 릴리즈, AI 개발 도구처럼 상태와 결과물이 분리되기 쉬운 영역을 다룹니다.',
             },
             {
               label: '최근 작업',
@@ -78,7 +79,7 @@ export default function KoreanHomePage() {
             {
               label: '작업 방식',
               title: '원인 모듈을 찾고 좁게 고칩니다',
-              description: '임시 우회보다 실제 소유 코드와 계약을 확인하고, 공개 가능한 범위에서 검증 근거를 남깁니다.',
+              description: '임시 우회보다 실제 담당 코드와 기준을 확인하고, 공개 가능한 범위에서 검증 근거를 남깁니다.',
             },
           ]}
         />
@@ -95,7 +96,7 @@ export default function KoreanHomePage() {
         <div className="mb-6 flex flex-col justify-between gap-3 md:flex-row md:items-end">
           <div>
             <p className={ds.text.eyebrowAccent}>구현 근거</p>
-            <h2 className="mt-2 text-3xl font-semibold">프론트엔드 역량을 판단할 대표 표면</h2>
+            <h2 className="mt-2 text-3xl font-semibold">프론트엔드 역량을 판단할 대표 영역</h2>
           </div>
           <ActionLink href="/evidence" variant="subtle">
             전체 구현 근거 보기

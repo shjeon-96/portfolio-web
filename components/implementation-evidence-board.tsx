@@ -20,7 +20,7 @@ export function ImplementationEvidenceBoard({
         return (
           <Panel as="article" className="overflow-hidden" key={entry.title}>
             <div className="grid lg:grid-cols-[0.82fr_1.18fr]">
-              <EvidenceVisual entry={entry} />
+              <EvidenceVisual entry={entry} locale={locale} />
               <div className="p-5">
                 <p className={ds.text.eyebrow}>{entry.label}</p>
                 <h2 className="mt-3 text-2xl font-semibold">{entry.title}</h2>
@@ -74,18 +74,18 @@ function EvidenceField({ label, value }: Readonly<{ label: string; value: string
   );
 }
 
-function EvidenceVisual({ entry }: Readonly<{ entry: ImplementationEvidence }>) {
+function EvidenceVisual({ entry, locale }: Readonly<{ entry: ImplementationEvidence; locale: 'en' | 'ko' }>) {
   return (
     <div className="border-b border-[var(--border)] bg-[var(--surface-strong)] p-5 lg:border-b-0 lg:border-r">
       <div className="mb-4 flex items-center justify-between">
-        <p className={ds.text.eyebrowMuted}>Implementation Surface</p>
+        <p className={ds.text.eyebrowMuted}>{locale === 'ko' ? '구현 영역' : 'Implementation Surface'}</p>
         <span className="rounded-md bg-[var(--text-primary)] px-2 py-1 font-mono text-xs font-semibold text-white">
           {entry.visualKind}
         </span>
       </div>
       {entry.visualKind === 'editor' ? <EditorVisual /> : null}
       {entry.visualKind === 'mobile' ? <MobileVisual /> : null}
-      {entry.visualKind === 'tooling' ? <ToolingVisual /> : null}
+      {entry.visualKind === 'tooling' ? <ToolingVisual locale={locale} /> : null}
       {entry.visualKind === 'web' ? <WebVisual /> : null}
     </div>
   );
@@ -141,7 +141,17 @@ function MobileVisual() {
   );
 }
 
-function ToolingVisual() {
+function ToolingVisual({ locale }: Readonly<{ locale: 'en' | 'ko' }>) {
+  const lines =
+    locale === 'ko'
+      ? ['진단: 오류 0개', '정의: 담당 소스 확인', '참조: 경로 12개 확인', '호버: 타입 기준 확인']
+      : [
+          'diagnostics: 0 errors',
+          'definition: source owner found',
+          'references: 12 paths scanned',
+          'hover: typed contract available',
+        ];
+
   return (
     <div className="rounded-md border border-[var(--border)] bg-[var(--text-primary)] p-4 text-white">
       <div className="mb-4 flex items-center gap-2">
@@ -150,10 +160,9 @@ function ToolingVisual() {
         <span className="size-2 rounded-full bg-[var(--accent-blue)]" />
       </div>
       <div className="space-y-3 font-mono text-xs">
-        <p>diagnostics: 0 errors</p>
-        <p>definition: source owner found</p>
-        <p>references: 12 paths scanned</p>
-        <p>hover: typed contract available</p>
+        {lines.map((line) => (
+          <p key={line}>{line}</p>
+        ))}
         <div className="mt-4 h-2 rounded-full bg-[color-mix(in_srgb,var(--accent-green)_48%,white)]" />
       </div>
     </div>
@@ -189,7 +198,7 @@ function getLabels(locale: 'en' | 'ko') {
     return {
       role: '맡은 역할',
       signals: '프론트엔드 신호',
-      surface: '제품 표면',
+      surface: '담당 영역',
       verification: '검증 근거',
     };
   }

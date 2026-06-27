@@ -6,6 +6,7 @@ import { ProjectHighlightCard } from '@/components/project-highlight-card';
 import { ActionLink, BadgeList, Panel } from '@/components/ui';
 import { changelogEntries, implementationEvidence, projectHighlights, proofPoints, sortChangelogEntriesByDateDesc } from '@/lib/data';
 import { cx, ds } from '@/lib/design-system';
+import { GITHUB_PROFILE_URL } from '@/lib/site-links';
 
 export default function Home() {
   const featuredProjects = projectHighlights.filter((project) =>
@@ -44,7 +45,7 @@ export default function Home() {
             <ActionLink
               ariaLabel="GitHub profile"
               external
-              href="https://github.com/shjeon-96"
+              href={GITHUB_PROFILE_URL}
               title="GitHub"
               variant="icon"
             >
