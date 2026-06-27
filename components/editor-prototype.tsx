@@ -56,38 +56,61 @@ export function EditorPrototype({ copy }: EditorPrototypeProps) {
   const exportedHtml = useMemo(() => buildHtmlPreview(ast), [ast]);
 
   return (
-    <main className="h-screen overflow-hidden bg-[#e5e5e5] text-[var(--text-primary)]">
-      <EditorTopBar copy={copy} isPreviewOpen={isPreviewOpen} onPreviewToggle={() => setIsPreviewOpen((current) => !current)} />
-      <div className="grid h-[calc(100vh-56px)] grid-cols-[280px_minmax(0,1fr)_320px]">
-        <LayerPanel
-          copy={copy}
-          layers={layers}
-          onMoveLayerBefore={moveLayerBeforeTarget}
-          selectedLayerIds={selectedLayerIds}
-          onSelect={selectLayer}
-        />
-        <CanvasPanel
-          copy={copy}
-          layers={layers}
-          onMoveLayer={moveLayer}
-          onResizeLayer={resizeLayer}
-          onRubberbandSelect={rubberbandSelect}
-          selectedLayerIds={selectedLayerIds}
-          onSelect={selectLayer}
-        />
-        <StylePanel
-          copy={copy}
-          layers={layers}
-          selectedCount={selectedLayerIds.length}
-          selectedLayer={selectedLayer}
-          updateSelectedGeometry={updateSelectedGeometry}
-          updateSelectedStyle={updateSelectedStyle}
-        />
-      </div>
-      {isPreviewOpen ? (
-        <PreviewOverlay copy={copy} exportedHtml={exportedHtml} onClose={() => setIsPreviewOpen(false)} />
-      ) : null}
-    </main>
+    <>
+      <h1 className="sr-only">{copy.title}</h1>
+      <main className="min-h-screen bg-[var(--background)] px-5 py-10 text-[var(--text-primary)] lg:hidden">
+        <section className="mx-auto max-w-md rounded-xl border border-[var(--border)] bg-[var(--surface)] p-6 shadow-sm">
+          <p className="text-sm font-semibold uppercase tracking-[0.14em] text-[var(--accent-blue)]">{copy.eyebrow}</p>
+          <h2 className="mt-3 text-3xl font-semibold leading-tight">{copy.title}</h2>
+          <p className="mt-4 text-sm leading-6 text-[var(--text-secondary)]">{copy.description}</p>
+          <div className="mt-6 rounded-lg border border-[var(--border)] bg-[var(--background)] p-4">
+            <p className="font-semibold">{copy.mobileNotice.title}</p>
+            <p className="mt-2 text-sm leading-6 text-[var(--text-secondary)]">
+              {copy.mobileNotice.description}
+            </p>
+          </div>
+          <div className="mt-6 grid gap-3">
+            {copy.badges.map((badge) => (
+              <span className="rounded-md border border-[var(--border)] px-3 py-2 text-sm text-[var(--text-secondary)]" key={badge}>
+                {badge}
+              </span>
+            ))}
+          </div>
+        </section>
+      </main>
+      <main className="hidden h-screen overflow-hidden bg-[#e5e5e5] text-[var(--text-primary)] lg:block">
+        <EditorTopBar copy={copy} isPreviewOpen={isPreviewOpen} onPreviewToggle={() => setIsPreviewOpen((current) => !current)} />
+        <div className="grid h-[calc(100vh-56px)] grid-cols-[280px_minmax(0,1fr)_320px]">
+          <LayerPanel
+            copy={copy}
+            layers={layers}
+            onMoveLayerBefore={moveLayerBeforeTarget}
+            selectedLayerIds={selectedLayerIds}
+            onSelect={selectLayer}
+          />
+          <CanvasPanel
+            copy={copy}
+            layers={layers}
+            onMoveLayer={moveLayer}
+            onResizeLayer={resizeLayer}
+            onRubberbandSelect={rubberbandSelect}
+            selectedLayerIds={selectedLayerIds}
+            onSelect={selectLayer}
+          />
+          <StylePanel
+            copy={copy}
+            layers={layers}
+            selectedCount={selectedLayerIds.length}
+            selectedLayer={selectedLayer}
+            updateSelectedGeometry={updateSelectedGeometry}
+            updateSelectedStyle={updateSelectedStyle}
+          />
+        </div>
+        {isPreviewOpen ? (
+          <PreviewOverlay copy={copy} exportedHtml={exportedHtml} onClose={() => setIsPreviewOpen(false)} />
+        ) : null}
+      </main>
+    </>
   );
 }
 
@@ -126,14 +149,19 @@ function EditorTopBar({
           <p className="text-[#6b7280]">{copy.author}</p>
         </div>
         <button
-          className="rounded-md border border-[#e5e7eb] bg-white px-3 py-2 text-sm font-semibold transition hover:bg-[#f9fafb]"
+          aria-label={isPreviewOpen ? 'Close HTML preview' : 'Open HTML preview'}
+          className="inline-flex min-h-11 items-center rounded-md border border-[#e5e7eb] bg-white px-3 py-2 text-sm font-semibold transition hover:bg-[#f9fafb]"
           onClick={onPreviewToggle}
           type="button"
         >
           {isPreviewOpen ? <X size={16} /> : <Eye size={16} />}
           <span className="ml-1.5">{isPreviewOpen ? copy.canvasTitle : copy.exportButton}</span>
         </button>
-        <button className="inline-flex items-center gap-1.5 rounded-md bg-[#4f46e5] px-3 py-2 text-sm font-semibold text-white" type="button">
+        <button
+          aria-label="Deploy prototype"
+          className="inline-flex min-h-11 items-center gap-1.5 rounded-md bg-[#4f46e5] px-3 py-2 text-sm font-semibold text-white"
+          type="button"
+        >
           <Rocket size={16} />
           Deploy
         </button>
@@ -164,7 +192,7 @@ function LayerPanel({
           <Layers size={16} />
           {copy.layerPanelTitle}
         </h2>
-        <button className="grid size-7 place-items-center rounded-md text-[#6b7280] hover:bg-[#f3f4f6]" type="button">
+        <button aria-label="Add layer" className="grid size-11 place-items-center rounded-md text-[#6b7280] hover:bg-[#f3f4f6]" type="button">
           <Plus size={16} />
         </button>
       </div>
@@ -174,11 +202,12 @@ function LayerPanel({
       <div className="h-[calc(100%-92px)] overflow-auto px-3 py-4">
         {layers.map((layer) => (
           <button
-            className={`mb-1 flex w-full items-center justify-between rounded-md px-3 py-2 text-left text-sm transition ${
+            className={`mb-1 flex min-h-11 w-full items-center justify-between rounded-md px-3 py-2 text-left text-sm transition ${
               selectedLayerIds.includes(layer.id)
                 ? 'bg-[#eef2ff] text-[#111827]'
                 : 'text-[#4b5563] hover:bg-[#f9fafb] hover:text-[#111827]'
             } ${draggingLayerId === layer.id ? 'opacity-40' : ''}`}
+            aria-label={`Select layer ${layer.name}`}
             draggable
             key={layer.id}
             onClick={(event) => onSelect(layer.id, event.metaKey || event.ctrlKey ? 'toggle' : event.shiftKey ? 'add' : 'replace')}
@@ -422,6 +451,7 @@ function CanvasLayer({
 
   return (
     <button
+      aria-label={`Select canvas layer ${layer.name}`}
       className={`absolute z-10 border text-left transition ${
         isSelected ? 'outline outline-2 outline-[#3b82f6]' : 'hover:outline hover:outline-1 hover:outline-[#93c5fd]'
       } ${layer.kind === 'text' ? 'flex items-center px-3 leading-tight' : 'grid place-items-center'}`}
@@ -571,7 +601,7 @@ function CanvasToolPalette() {
         return (
         <button
           aria-label={tool.label}
-          className={`grid size-9 place-items-center rounded-lg ${index === 0 ? 'bg-[#4f46e5] text-white' : 'text-[#4b5563] hover:bg-[#f3f4f6]'}`}
+          className={`grid size-11 place-items-center rounded-lg ${index === 0 ? 'bg-[#4f46e5] text-white' : 'text-[#4b5563] hover:bg-[#f3f4f6]'}`}
           key={tool.label}
           type="button"
         >
@@ -642,7 +672,7 @@ function StylePanel({
             </section>
             <section className="p-4">
               <div className="mb-4 flex rounded-lg bg-[#f3f4f6] p-1">
-                <button className="flex-1 rounded-md bg-white px-3 py-2 text-sm font-semibold shadow-sm" type="button">
+                <button aria-pressed="true" className="min-h-11 flex-1 rounded-md bg-white px-3 py-2 text-sm font-semibold shadow-sm" type="button">
                   {copy.styleTab}
                 </button>
               </div>
@@ -727,7 +757,12 @@ function PreviewOverlay({
             <h2 className="text-sm font-semibold">{copy.previewTitle}</h2>
             <p className="text-xs text-[#6b7280]">{copy.previewDescription}</p>
           </div>
-          <button className="inline-flex items-center gap-1.5 rounded-md border border-[#e5e7eb] px-3 py-1.5 text-sm font-semibold" onClick={onClose} type="button">
+          <button
+            aria-label="Close HTML preview"
+            className="inline-flex min-h-11 items-center gap-1.5 rounded-md border border-[#e5e7eb] px-3 py-1.5 text-sm font-semibold"
+            onClick={onClose}
+            type="button"
+          >
             <X size={15} />
             Close
           </button>
@@ -761,7 +796,8 @@ function ColorControl({
       <span>{label}</span>
       <span className="flex items-center gap-2">
         <input
-          className="h-9 w-12 rounded border border-[#e5e7eb] bg-white"
+          aria-label={label}
+          className="h-11 w-12 rounded border border-[#e5e7eb] bg-white"
           onChange={(event) => onChange(event.target.value)}
           type="color"
           value={value}
@@ -787,7 +823,8 @@ function NumberControl({
     <label className="grid gap-1 text-xs font-semibold text-[#4b5563]">
       <span>{label}</span>
       <input
-        className="h-9 rounded-md border border-[#e5e7eb] bg-white px-2 text-sm font-medium text-[#111827]"
+        aria-label={label}
+        className="h-11 rounded-md border border-[#e5e7eb] bg-white px-2 text-sm font-medium text-[#111827]"
         onChange={(event) => onChange(Number(event.target.value))}
         type="number"
         value={value}
@@ -818,7 +855,8 @@ function RangeControl({
         <span className="text-xs text-[#6b7280]">{formatControlValue(value)}</span>
       </span>
       <input
-        className="w-full accent-[#4f46e5]"
+        aria-label={label}
+        className="min-h-11 w-full accent-[#4f46e5]"
         max={max}
         min={min}
         onChange={(event) => onChange(Number(event.target.value))}

@@ -17,7 +17,7 @@ export default function CaseStudiesPage() {
       />
       <div className="mt-10 grid gap-4 md:grid-cols-2">
         {caseStudies.map((caseStudy) => (
-          <CaseStudyCard caseStudy={caseStudy} key={caseStudy.slug} />
+          <CaseStudyCard caseStudy={caseStudy} hrefPrefix="/en/case-studies" key={caseStudy.slug} />
         ))}
       </div>
     </main>

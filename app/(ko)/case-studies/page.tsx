@@ -17,7 +17,7 @@ export default function KoreanCaseStudiesPage() {
       />
       <div className="mt-10 grid gap-4 md:grid-cols-2">
         {caseStudiesKo.map((caseStudy) => (
-          <CaseStudyCard caseStudy={caseStudy} cta="케이스 스터디 읽기" hrefPrefix="/ko/case-studies" key={caseStudy.slug} />
+          <CaseStudyCard caseStudy={caseStudy} cta="케이스 스터디 읽기" hrefPrefix="/case-studies" key={caseStudy.slug} />
         ))}
       </div>
     </main>

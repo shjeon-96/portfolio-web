@@ -75,6 +75,10 @@ export type EditorPrototypeCopy = {
   exportButton: string;
   previewTitle: string;
   previewDescription: string;
+  mobileNotice: {
+    title: string;
+    description: string;
+  };
   noSelection: string;
   controls: {
     fill: string;
@@ -391,6 +395,11 @@ export const editorPrototypeCopyEn: EditorPrototypeCopy = {
   exportButton: 'Export HTML preview',
   previewTitle: 'HTML preview',
   previewDescription: 'The preview is generated from the same AST currently rendered on the canvas.',
+  mobileNotice: {
+    title: 'Desktop prototype',
+    description:
+      'This interactive editor uses a three-panel desktop canvas. Open it on a wider screen to inspect layers, canvas selection, style controls, and HTML preview export.',
+  },
   noSelection: 'Select a layer from the left panel or canvas.',
   controls: {
     fill: 'Fill',
@@ -427,6 +436,11 @@ export const editorPrototypeCopyKo: EditorPrototypeCopy = {
   exportButton: 'HTML preview export',
   previewTitle: 'HTML 미리보기',
   previewDescription: '현재 캔버스에 렌더링된 AST를 기준으로 HTML preview를 생성합니다.',
+  mobileNotice: {
+    title: '데스크톱 프로토타입',
+    description:
+      '이 인터랙티브 에디터는 3패널 데스크톱 캔버스를 기준으로 동작합니다. 더 넓은 화면에서 레이어, 캔버스 선택, 스타일 컨트롤, HTML preview export 흐름을 확인할 수 있습니다.',
+  },
   noSelection: '좌측 패널이나 캔버스에서 레이어를 선택하세요.',
   controls: {
     fill: '배경',

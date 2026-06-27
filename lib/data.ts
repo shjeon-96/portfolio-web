@@ -14,7 +14,15 @@ export type CaseStudy = {
 export type ChangelogEntry = {
   title: string;
   period: string;
-  category: 'editor-engine' | 'export-deploy' | 'performance' | 'testing-ci' | 'ai-workflow' | 'admin-ops';
+  category:
+    | 'editor-engine'
+    | 'export-deploy'
+    | 'performance'
+    | 'testing-ci'
+    | 'ai-workflow'
+    | 'admin-ops'
+    | 'agent-tooling'
+    | 'mobile-release';
   problem: string;
   approach: string[];
   result: string;
@@ -28,13 +36,61 @@ export type SkillContext = {
 };
 
 export const proofPoints = [
-  'AST editor engine',
-  'Export/deploy parity',
-  'Operational dashboards',
-  'AI agent workflow',
+  'Open-source agent tooling',
+  'Mobile release gates',
+  'Editor engine systems',
+  'Output parity',
 ];
 
 export const caseStudies: CaseStudy[] = [
+  {
+    slug: 'codex-lsp-bridge',
+    title: 'Codex LSP semantic safety layer',
+    label: 'Open-source AI developer tooling',
+    summary:
+      'Built a public MCP/LSP bridge that gives coding agents read-only semantic checks such as diagnostics, definitions, references, symbols, and hover context.',
+    stack: ['TypeScript', 'Node.js', 'MCP', 'Language Server Protocol', 'Vitest'],
+    problem:
+      'AI coding agents can move quickly through text search, but large codebases still need semantic feedback from the language server before changes are trusted.',
+    role:
+      'Designed the read-only tool boundary, workspace-root safety model, language adapter flow, package contract, and verification path for public distribution.',
+    approach: [
+      'Exposed language-server capabilities through a narrow MCP interface instead of allowing agents to mutate project state directly.',
+      'Kept workspace boundaries explicit, including root checks and symlink escape protection.',
+      'Added diagnostics timeout policy, package smoke checks, and integration coverage so tool behavior could be verified before release.',
+    ],
+    result:
+      'Published a reusable agent tooling package that turns semantic code intelligence into a safer part of the AI-assisted development workflow.',
+    verification: [
+      'Unit and integration tests cover TypeScript behavior, diagnostics handling, package contracts, and language adapter boundaries.',
+      'Package verification includes build, type-check, smoke install, and smoke package checks.',
+      'Public documentation explains supported tools, safety limits, and maintainer workflow.',
+    ],
+  },
+  {
+    slug: 'mobile-release-foundations',
+    title: 'Mobile release gates and shared foundations',
+    label: 'Expo/React Native product platform',
+    summary:
+      'Structured a mobile product monorepo so release policy, shared packages, native boundaries, and product documentation stayed aligned across apps.',
+    stack: ['Expo', 'React Native', 'TypeScript', 'Supabase', 'EAS', 'Maestro'],
+    problem:
+      'Mobile products with native calendar, widgets, billing, invites, and backend integrations can drift when documentation, app code, native policy, and release scripts each define their own truth.',
+    role:
+      'Owned product-facing architecture boundaries, shared package rules, release verification scripts, and public-safe documentation of the mobile delivery workflow.',
+    approach: [
+      'Kept product documents as the planning source of truth and made app code, release checks, and package ownership point back to that model.',
+      'Moved repeated auth, billing, invite, notification, analytics, and configuration behavior into shared foundations with package-level tests.',
+      'Used release gates for native policy, EAS configuration, runtime environment, widgets, store metadata, and mobile UI smoke evidence.',
+    ],
+    result:
+      'Created a repeatable mobile release path where shared behavior is verified once and production readiness is checked before store-facing builds.',
+    verification: [
+      'Release configuration checks validate Expo, EAS, native policy, runtime environment, and store-readiness inputs.',
+      'Shared foundation verification prevents duplicated app-local implementations from becoming competing sources of truth.',
+      'Mobile UI and device-oriented smoke flows provide evidence for critical app paths before release.',
+    ],
+  },
   {
     slug: 'ast-editor-engine',
     title: 'AST-based visual editor engine',
@@ -159,6 +215,32 @@ export const caseStudies: CaseStudy[] = [
 
 export const changelogEntries: ChangelogEntry[] = [
   {
+    title: 'Agent LSP bridge release contract',
+    period: '2026-06',
+    category: 'agent-tooling',
+    problem: 'AI coding workflows need semantic code feedback without giving tools broad write access to the project.',
+    approach: [
+      'Wrapped diagnostics, definitions, references, symbols, and hover context in read-only MCP tools.',
+      'Kept workspace-root checks and adapter boundaries explicit.',
+      'Verified package behavior with build, type-check, integration tests, and smoke package checks.',
+    ],
+    result: 'Semantic code intelligence became a public, repeatable tool in the agent-assisted development workflow.',
+    stack: ['TypeScript', 'Node.js', 'MCP', 'LSP', 'Vitest'],
+  },
+  {
+    title: 'Mobile release gate system',
+    period: '2026-06',
+    category: 'mobile-release',
+    problem: 'Native mobile releases can drift when Expo config, store metadata, widgets, runtime environment, and product docs are checked separately.',
+    approach: [
+      'Made release configuration, native policy, and product documentation point to one delivery model.',
+      'Added shared foundation checks so repeated app behavior stayed in common packages.',
+      'Used mobile UI and release smoke evidence before store-facing builds.',
+    ],
+    result: 'The mobile release path became easier to verify before iOS and Android production distribution.',
+    stack: ['Expo', 'React Native', 'EAS', 'Maestro', 'TypeScript'],
+  },
+  {
     title: 'Export runtime parity rules',
     period: '2026-06',
     category: 'export-deploy',
@@ -266,9 +348,9 @@ export const changelogEntries: ChangelogEntry[] = [
 
 export const skills: SkillContext[] = [
   {
-    group: 'Core front-end',
-    tools: ['React', 'Next.js', 'TypeScript'],
-    context: 'Complex product interfaces, App Router surfaces, product-state-driven UI, and typed component contracts.',
+    group: 'Product front-end',
+    tools: ['React', 'Next.js', 'TypeScript', 'React Native'],
+    context: 'Complex product interfaces, App Router surfaces, mobile app flows, product-state-driven UI, and typed component contracts.',
   },
   {
     group: 'State and product models',
@@ -277,8 +359,8 @@ export const skills: SkillContext[] = [
   },
   {
     group: 'Quality and verification',
-    tools: ['Vitest', 'Testing Library', 'E2E checks', 'CI'],
-    context: 'Regression prevention for preview/output parity, rendering contracts, and user-facing workflows.',
+    tools: ['Vitest', 'Testing Library', 'Maestro', 'E2E checks', 'CI'],
+    context: 'Regression prevention for preview/output parity, rendering contracts, release gates, and user-facing workflows.',
   },
   {
     group: 'Operations and backend understanding',
@@ -287,13 +369,13 @@ export const skills: SkillContext[] = [
   },
   {
     group: 'Release and deployment',
-    tools: ['Docker', 'GitHub Actions', 'Firebase', 'Vercel'],
-    context: 'Environment separation, repeatable release paths, static portfolio deployment, and production-ready checks.',
+    tools: ['Docker', 'GitHub Actions', 'Firebase', 'Vercel', 'EAS'],
+    context: 'Environment separation, repeatable release paths, static portfolio deployment, mobile store readiness, and production checks.',
   },
   {
     group: 'AI workflow',
-    tools: ['Codex', 'Claude Code', 'OpenAI API'],
-    context: 'Agent-assisted codebase exploration, root-cause narrowing, review follow-up, CI failure triage, and AI-assisted product workflows.',
+    tools: ['Codex', 'Claude Code', 'OpenAI API', 'MCP', 'LSP'],
+    context: 'Agent-assisted codebase exploration, semantic tooling, root-cause narrowing, CI failure triage, and AI-assisted product workflows.',
   },
 ];
 

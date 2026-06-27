@@ -1,20 +1,20 @@
 import { notFound } from 'next/navigation';
 import { CaseStudyDiagram } from '@/components/case-study-diagram';
-import { caseStudiesKo, getCaseStudyKo } from '@/lib/data-ko';
+import { caseStudies, getCaseStudy } from '@/lib/data';
 
 export function generateStaticParams() {
-  return caseStudiesKo.map((caseStudy) => ({
+  return caseStudies.map((caseStudy) => ({
     slug: caseStudy.slug,
   }));
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const caseStudy = getCaseStudyKo(slug);
+  const caseStudy = getCaseStudy(slug);
 
   if (!caseStudy) {
     return {
-      title: '케이스 스터디',
+      title: 'Case Study',
     };
   }
 
@@ -24,9 +24,9 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   };
 }
 
-export default async function KoreanCaseStudyDetailPage({ params }: { params: Promise<{ slug: string }> }) {
+export default async function CaseStudyDetailPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const caseStudy = getCaseStudyKo(slug);
+  const caseStudy = getCaseStudy(slug);
 
   if (!caseStudy) {
     notFound();
@@ -45,15 +45,29 @@ export default async function KoreanCaseStudyDetailPage({ params }: { params: Pr
         ))}
       </div>
 
-      <section className="mt-12 grid gap-4">
-        <DetailBlock title="문제" tone="blue" body={caseStudy.problem} />
-        <DetailBlock title="역할" tone="amber" body={caseStudy.role} />
-        <DetailList title="접근" tone="blue" items={caseStudy.approach} />
-        <DetailBlock title="결과" tone="green" body={caseStudy.result} />
-        <DetailList title="검증" tone="green" items={caseStudy.verification} />
+      <section className="mt-10 grid gap-4 md:grid-cols-3" aria-label="Case study summary">
+        <SummaryPoint label="Changed" value={caseStudy.result} />
+        <SummaryPoint label="Boundary" value={caseStudy.role} />
+        <SummaryPoint label="Verified by" value={caseStudy.verification[0]} />
       </section>
-      <CaseStudyDiagram caseStudy={caseStudy} locale="ko" />
+      <CaseStudyDiagram caseStudy={caseStudy} />
+      <section className="mt-12 grid gap-4">
+        <DetailBlock title="Problem" tone="blue" body={caseStudy.problem} />
+        <DetailBlock title="Role" tone="amber" body={caseStudy.role} />
+        <DetailList title="Approach" tone="blue" items={caseStudy.approach} />
+        <DetailBlock title="Result" tone="green" body={caseStudy.result} />
+        <DetailList title="Verification" tone="green" items={caseStudy.verification} />
+      </section>
     </main>
+  );
+}
+
+function SummaryPoint({ label, value }: Readonly<{ label: string; value: string }>) {
+  return (
+    <article className="rounded-lg border border-[var(--border)] bg-[var(--surface)] p-5 shadow-sm">
+      <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[var(--accent-blue)]">{label}</p>
+      <p className="mt-3 text-sm leading-6 text-[var(--text-secondary)]">{value}</p>
+    </article>
   );
 }
 

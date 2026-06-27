@@ -22,7 +22,7 @@ export function CaseStudyCard({
           </span>
         ))}
       </div>
-      <Link className="mt-6 inline-flex text-sm font-semibold text-[var(--accent-blue)]" href={`${hrefPrefix}/${caseStudy.slug}`}>
+      <Link className="mt-6 inline-flex min-h-11 items-center text-sm font-semibold text-[var(--accent-blue)]" href={`${hrefPrefix}/${caseStudy.slug}`}>
         {cta}
       </Link>
     </article>

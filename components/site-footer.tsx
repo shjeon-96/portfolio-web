@@ -4,7 +4,7 @@ import { usePathname } from 'next/navigation';
 
 export function SiteFooter() {
   const pathname = usePathname();
-  const isEditorPrototype = pathname === '/editor-prototype' || pathname === '/ko/editor-prototype';
+  const isEditorPrototype = pathname === '/editor-prototype' || pathname === '/en/editor-prototype';
 
   if (isEditorPrototype) {
     return null;

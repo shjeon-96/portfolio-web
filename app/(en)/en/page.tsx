@@ -1,14 +1,9 @@
 import Link from 'next/link';
 import { CaseStudyCard } from '@/components/case-study-card';
 import { ChangelogEntry } from '@/components/changelog-entry';
-import { caseStudiesKo, changelogEntriesKo, proofPointsKo } from '@/lib/data-ko';
+import { caseStudies, changelogEntries, proofPoints } from '@/lib/data';
 
-export const metadata = {
-  title: '한국어',
-  description: 'React, Next.js, 제품 엔지니어링, 엔지니어링 체인지로그, AI 워크플로우 포트폴리오 한국어 버전.',
-};
-
-export default function KoreanHomePage() {
+export default function Home() {
   return (
     <main>
       <section className="mx-auto grid min-h-[calc(100vh-73px)] w-full max-w-7xl gap-10 px-5 py-16 lg:grid-cols-[1.15fr_0.85fr] lg:items-center">
@@ -16,25 +11,25 @@ export default function KoreanHomePage() {
           <p className="mb-4 text-sm font-medium uppercase tracking-[0.16em] text-[var(--accent-blue)]">
             Product Console Portfolio
           </p>
-          <h1 className="max-w-3xl text-5xl font-semibold leading-tight text-balance">
-            React/Next.js B2B Product Front-End Developer
+          <h1 className="max-w-3xl text-4xl font-semibold leading-tight text-balance sm:text-5xl">
+            Product front-end across AI tooling, mobile release, and editor engines
           </h1>
           <p className="mt-6 max-w-2xl text-lg leading-8 text-[var(--text-secondary)]">
-            복잡한 제품 인터페이스에서 에디터 상태, 런타임 동작, 배포 가능한 산출물이 같은 기준으로
-            이어지도록 구조화합니다.
+            I structure visual builders, mobile products, and AI development workflows where product state,
+            runtime behavior, release checks, and generated artifacts must stay in sync.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
-            <Link className="rounded-md bg-[var(--text-primary)] px-4 py-2 text-sm font-semibold text-white" href="/ko/case-studies">
-              케이스 스터디 보기
+            <Link className="flex min-h-11 items-center rounded-md bg-[var(--text-primary)] px-4 py-2 text-sm font-semibold text-white" href="/en/case-studies">
+              View case studies
             </Link>
-            <Link className="rounded-md border border-[var(--border)] bg-[var(--surface)] px-4 py-2 text-sm font-semibold" href="/ko/editor-prototype">
-              프로토타입 써보기
+            <Link className="flex min-h-11 items-center rounded-md border border-[var(--border)] bg-[var(--surface)] px-4 py-2 text-sm font-semibold" href="/en/editor-prototype">
+              Try prototype
             </Link>
-            <Link className="rounded-md border border-[var(--border)] bg-[var(--surface)] px-4 py-2 text-sm font-semibold" href="/ko/changelog">
-              체인지로그 읽기
+            <Link className="flex min-h-11 items-center rounded-md border border-[var(--border)] bg-[var(--surface)] px-4 py-2 text-sm font-semibold" href="/en/changelog">
+              Read changelog
             </Link>
             <a
-              className="rounded-md border border-[var(--border)] bg-[var(--surface)] px-4 py-2 text-sm font-semibold"
+              className="flex min-h-11 items-center rounded-md border border-[var(--border)] bg-[var(--surface)] px-4 py-2 text-sm font-semibold"
               href="https://github.com/shjeon-96"
               rel="noreferrer"
               target="_blank"
@@ -43,7 +38,7 @@ export default function KoreanHomePage() {
             </a>
           </div>
           <div className="mt-8 flex flex-wrap gap-3">
-            {proofPointsKo.map((point) => (
+            {proofPoints.map((point) => (
               <span
                 className="rounded-full border border-[var(--border)] bg-[var(--surface)] px-4 py-2 text-sm text-[var(--text-secondary)]"
                 key={point}
@@ -57,49 +52,49 @@ export default function KoreanHomePage() {
         <aside className="grid gap-4">
           <ConsolePanel
             eyebrow="Current Focus"
-            title="AST Editor Engine"
-            description="비주얼 편집, 컴포넌트 Variant, 제품 상태 소유 경계를 구조화합니다. 라이트 프로토타입도 확인할 수 있습니다."
+            title="Agent Semantic Tooling"
+            description="Coding agents can use language-server feedback through read-only tools instead of broad project access."
           />
           <ConsolePanel
             eyebrow="Recent Changelog"
-            title="Export/Deploy Parity"
-            description="런타임, 미리보기, 산출물 정합성을 공개 가능한 엔지니어링 기록으로 정리합니다."
+            title="Mobile Release Gates"
+            description="Expo, native policy, shared packages, and store-facing build checks are tied to one release path."
           />
           <ConsolePanel
-            eyebrow="AI Workflow"
-            title="Issue -> Owner -> Patch -> Verify"
-            description="AI 에이전트로 원인 후보를 좁히고 실제 코드 경로와 회귀 검증으로 판단합니다."
+            eyebrow="Editor Systems"
+            title="State -> Runtime -> Output"
+            description="Editor state, runtime behavior, and generated artifacts move through one product model."
           />
         </aside>
       </section>
       <section className="border-y border-[var(--border)] bg-[var(--surface)]">
         <div className="mx-auto grid max-w-7xl gap-4 px-5 py-8 md:grid-cols-4">
-          <Metric label="Positioning" value="B2B product FE" />
+          <Metric label="Positioning" value="Product FE" />
+          <Metric label="Agent proof" value="LSP bridge" />
+          <Metric label="Mobile proof" value="Release gates" />
           <Metric label="Core system" value="Editor engine" />
-          <Metric label="Evidence" value="Case studies" />
-          <Metric label="Workflow" value="AI assisted" />
         </div>
       </section>
       <section className="mx-auto max-w-7xl px-5 py-16">
         <div className="flex flex-col justify-between gap-4 md:flex-row md:items-end">
           <div>
             <p className="text-sm font-semibold uppercase tracking-[0.16em] text-[var(--accent-blue)]">Case Studies</p>
-            <h2 className="mt-3 text-3xl font-semibold">화면이 아니라 제품 시스템을 다룹니다</h2>
+            <h2 className="mt-3 text-3xl font-semibold">Product systems, not just screens</h2>
           </div>
-          <Link className="text-sm font-semibold text-[var(--accent-blue)]" href="/ko/case-studies">
-            전체 케이스 스터디 보기
+          <Link className="inline-flex min-h-11 items-center text-sm font-semibold text-[var(--accent-blue)]" href="/en/case-studies">
+            View all case studies
           </Link>
         </div>
         <div className="mt-8 grid gap-4 md:grid-cols-2">
-          {caseStudiesKo.slice(0, 2).map((caseStudy) => (
-            <CaseStudyCard caseStudy={caseStudy} cta="케이스 스터디 읽기" hrefPrefix="/ko/case-studies" key={caseStudy.slug} />
+          {caseStudies.slice(0, 2).map((caseStudy) => (
+            <CaseStudyCard caseStudy={caseStudy} hrefPrefix="/en/case-studies" key={caseStudy.slug} />
           ))}
         </div>
       </section>
       <section className="mx-auto max-w-7xl px-5 pb-16">
         <div className="rounded-xl border border-[var(--border)] bg-[var(--surface)] px-5 py-2 shadow-sm">
-          {changelogEntriesKo.slice(0, 3).map((entry) => (
-            <ChangelogEntry entry={entry} key={entry.title} labels={{ approach: '접근', result: '결과' }} />
+          {changelogEntries.slice(0, 3).map((entry) => (
+            <ChangelogEntry entry={entry} key={entry.title} />
           ))}
         </div>
       </section>

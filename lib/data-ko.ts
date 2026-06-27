@@ -1,13 +1,61 @@
 import type { CaseStudy, ChangelogEntry, SkillContext } from '@/lib/data';
 
 export const proofPointsKo = [
-  'AST 에디터 엔진',
-  'Export/Deploy 정합성',
-  '운영 대시보드',
-  'AI 에이전트 워크플로우',
+  '오픈소스 에이전트 도구',
+  '모바일 릴리즈 게이트',
+  '에디터 엔진 시스템',
+  '산출물 정합성',
 ];
 
 export const caseStudiesKo: CaseStudy[] = [
+  {
+    slug: 'codex-lsp-bridge',
+    title: 'Codex LSP Semantic Safety Layer',
+    label: '오픈소스 AI 개발 도구',
+    summary:
+      '코딩 에이전트가 diagnostics, definition, references, symbols, hover 같은 언어 서버 정보를 읽기 전용으로 사용할 수 있게 MCP/LSP 브리지를 만들었습니다.',
+    stack: ['TypeScript', 'Node.js', 'MCP', 'Language Server Protocol', 'Vitest'],
+    problem:
+      'AI 코딩 에이전트는 텍스트 탐색만으로 빠르게 움직일 수 있지만, 큰 코드베이스에서는 변경을 신뢰하기 전에 언어 서버의 semantic feedback이 필요했습니다.',
+    role:
+      '읽기 전용 도구 경계, workspace-root 안전 모델, 언어 어댑터 흐름, 패키지 계약, 공개 배포 검증 경로를 설계했습니다.',
+    approach: [
+      '에이전트가 프로젝트 상태를 직접 바꾸지 않도록 언어 서버 기능을 좁은 MCP 인터페이스로 노출했습니다.',
+      'root check와 symlink escape 방어를 포함해 workspace 경계를 명시적으로 다뤘습니다.',
+      'diagnostics timeout 정책, package smoke check, 통합 테스트를 추가해 릴리즈 전 동작을 검증했습니다.',
+    ],
+    result:
+      'semantic code intelligence를 AI 보조 개발 워크플로우 안에서 더 안전하게 사용할 수 있는 공개 에이전트 도구 패키지로 만들었습니다.',
+    verification: [
+      'TypeScript 동작, diagnostics 처리, package contract, 언어 어댑터 경계를 단위/통합 테스트로 검증했습니다.',
+      'build, type-check, smoke install, smoke package를 패키지 검증 경로에 포함했습니다.',
+      '지원 도구, 안전 경계, maintainer workflow를 공개 문서로 정리했습니다.',
+    ],
+  },
+  {
+    slug: 'mobile-release-foundations',
+    title: '모바일 릴리즈 게이트와 Shared Foundations',
+    label: 'Expo/React Native 제품 플랫폼',
+    summary:
+      '모바일 제품 모노레포에서 release policy, shared packages, native boundary, 제품 문서가 앱 전반에서 같은 기준으로 움직이도록 구조화했습니다.',
+    stack: ['Expo', 'React Native', 'TypeScript', 'Supabase', 'EAS', 'Maestro'],
+    problem:
+      'native calendar, widgets, billing, invite, backend 연동을 가진 모바일 제품은 문서, 앱 코드, native policy, release script가 각각 다른 기준을 갖기 쉽습니다.',
+    role:
+      '제품 관점의 아키텍처 경계, shared package 규칙, 릴리즈 검증 스크립트, 공개 가능한 모바일 delivery workflow 문서화를 담당했습니다.',
+    approach: [
+      '제품 문서를 planning source of truth로 두고 앱 코드, 릴리즈 체크, 패키지 소유 경계가 같은 모델을 보게 했습니다.',
+      'auth, billing, invite, notification, analytics, configuration처럼 반복되는 동작을 shared foundations와 package-level test로 이동했습니다.',
+      'native policy, EAS configuration, runtime environment, widgets, store metadata, mobile UI smoke evidence를 릴리즈 게이트로 확인했습니다.',
+    ],
+    result:
+      '공유 동작은 한 번 검증하고, store-facing build 전에 production readiness를 확인할 수 있는 반복 가능한 모바일 릴리즈 경로를 만들었습니다.',
+    verification: [
+      'Expo, EAS, native policy, runtime environment, store-readiness 입력을 release configuration check로 검증했습니다.',
+      'shared foundation verification으로 앱별 중복 구현이 competing source of truth가 되지 않게 했습니다.',
+      'mobile UI와 device-oriented smoke flow로 주요 앱 경로의 릴리즈 전 증거를 남겼습니다.',
+    ],
+  },
   {
     slug: 'ast-editor-engine',
     title: 'AST 기반 비주얼 에디터 엔진',
@@ -132,6 +180,32 @@ export const caseStudiesKo: CaseStudy[] = [
 
 export const changelogEntriesKo: ChangelogEntry[] = [
   {
+    title: 'Agent LSP Bridge 릴리즈 계약',
+    period: '2026-06',
+    category: 'agent-tooling',
+    problem: 'AI 코딩 워크플로우에는 프로젝트에 넓은 쓰기 권한을 주지 않으면서 semantic code feedback을 제공하는 도구가 필요했습니다.',
+    approach: [
+      'diagnostics, definitions, references, symbols, hover context를 읽기 전용 MCP 도구로 감쌌습니다.',
+      'workspace-root check와 adapter boundary를 명시적으로 유지했습니다.',
+      'build, type-check, integration test, smoke package check로 패키지 동작을 검증했습니다.',
+    ],
+    result: 'semantic code intelligence를 에이전트 보조 개발 워크플로우에서 공개 가능하고 반복 가능한 도구로 사용할 수 있게 됐습니다.',
+    stack: ['TypeScript', 'Node.js', 'MCP', 'LSP', 'Vitest'],
+  },
+  {
+    title: '모바일 릴리즈 게이트 시스템',
+    period: '2026-06',
+    category: 'mobile-release',
+    problem: 'Expo config, store metadata, widgets, runtime environment, 제품 문서를 따로 확인하면 native mobile release 기준이 쉽게 어긋납니다.',
+    approach: [
+      'release configuration, native policy, product documentation이 하나의 delivery model을 보게 했습니다.',
+      '반복되는 앱 동작이 shared packages에 남도록 shared foundation check를 추가했습니다.',
+      'store-facing build 전에 mobile UI와 release smoke evidence를 확인했습니다.',
+    ],
+    result: 'iOS와 Android production distribution 전에 모바일 릴리즈 경로를 더 명확하게 검증할 수 있게 됐습니다.',
+    stack: ['Expo', 'React Native', 'EAS', 'Maestro', 'TypeScript'],
+  },
+  {
     title: 'Export 런타임 정합성 규칙 정리',
     period: '2026-06',
     category: 'export-deploy',
@@ -239,9 +313,9 @@ export const changelogEntriesKo: ChangelogEntry[] = [
 
 export const skillsKo: SkillContext[] = [
   {
-    group: 'Core Front-End',
-    tools: ['React', 'Next.js', 'TypeScript'],
-    context: '복잡한 제품 UI, App Router 기반 화면, 제품 상태 중심 UI, 타입 기반 컴포넌트 계약에 사용했습니다.',
+    group: '제품 프론트엔드',
+    tools: ['React', 'Next.js', 'TypeScript', 'React Native'],
+    context: '복잡한 제품 UI, App Router 기반 화면, 모바일 앱 흐름, 제품 상태 중심 UI, 타입 기반 컴포넌트 계약에 사용했습니다.',
   },
   {
     group: '상태와 제품 모델',
@@ -250,8 +324,8 @@ export const skillsKo: SkillContext[] = [
   },
   {
     group: '품질과 검증',
-    tools: ['Vitest', 'Testing Library', 'E2E checks', 'CI'],
-    context: '미리보기와 산출물 정합성, 렌더링 계약, 사용자 흐름의 회귀 방지에 사용했습니다.',
+    tools: ['Vitest', 'Testing Library', 'Maestro', 'E2E checks', 'CI'],
+    context: '미리보기와 산출물 정합성, 렌더링 계약, 릴리즈 게이트, 사용자 흐름의 회귀 방지에 사용했습니다.',
   },
   {
     group: '운영/백엔드 이해',
@@ -260,13 +334,13 @@ export const skillsKo: SkillContext[] = [
   },
   {
     group: '릴리즈와 배포',
-    tools: ['Docker', 'GitHub Actions', 'Firebase', 'Vercel'],
-    context: '환경 분리, 반복 가능한 릴리즈, 정적 포트폴리오 배포, production 검증 흐름에 사용했습니다.',
+    tools: ['Docker', 'GitHub Actions', 'Firebase', 'Vercel', 'EAS'],
+    context: '환경 분리, 반복 가능한 릴리즈, 정적 포트폴리오 배포, 모바일 스토어 준비, production 검증 흐름에 사용했습니다.',
   },
   {
     group: 'AI 워크플로우',
-    tools: ['Codex', 'Claude Code', 'OpenAI API'],
-    context: '코드베이스 탐색, 원인 분석, 리뷰 후속, CI 실패 추적, AI 기반 제품 운영 흐름에 사용했습니다.',
+    tools: ['Codex', 'Claude Code', 'OpenAI API', 'MCP', 'LSP'],
+    context: '코드베이스 탐색, semantic tooling, 원인 분석, CI 실패 추적, AI 기반 제품 운영 흐름에 사용했습니다.',
   },
 ];
 
