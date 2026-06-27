@@ -37,14 +37,14 @@ export function SiteHeader() {
   }
 
   return (
-    <header className="sticky top-0 z-20 border-b border-[var(--border)] bg-[color-mix(in_srgb,var(--background)_88%,white)] backdrop-blur">
+    <header className="sticky top-0 z-20 border-b border-[var(--border)] bg-[color-mix(in_srgb,var(--surface)_82%,var(--background))] backdrop-blur">
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-5 px-5 py-4">
         <Link
           className="flex min-h-11 min-w-11 items-center gap-3 font-semibold text-[var(--text-primary)]"
           href={isKorean ? '/' : '/en'}
           onClick={() => setIsMenuOpen(false)}
         >
-          <span className="flex size-8 items-center justify-center rounded-md bg-[var(--text-primary)] text-sm text-white">
+          <span className="flex size-8 items-center justify-center rounded-md border border-[var(--text-primary)] bg-[var(--text-primary)] font-mono text-sm text-white shadow-sm">
             SJ
           </span>
           <span className="hidden sm:inline">Seunghun Jeon</span>
@@ -52,7 +52,7 @@ export function SiteHeader() {
         <nav className="hidden items-center gap-1 text-sm text-[var(--text-secondary)] md:flex">
           {navigation.map((item) => (
             <Link
-              className="flex min-h-11 min-w-11 items-center justify-center whitespace-nowrap rounded-md px-3 py-2 transition hover:bg-[var(--surface)] hover:text-[var(--text-primary)]"
+              className="flex min-h-11 min-w-11 items-center justify-center whitespace-nowrap rounded-md px-3 py-2 transition hover:bg-[var(--surface-strong)] hover:text-[var(--text-primary)]"
               href={item.href}
               key={item.href}
             >
@@ -61,13 +61,13 @@ export function SiteHeader() {
           ))}
           <span className="mx-1 h-4 w-px shrink-0 bg-[var(--border)]" />
           <Link
-            className="flex min-h-11 min-w-11 items-center justify-center whitespace-nowrap rounded-md px-3 py-2 transition hover:bg-[var(--surface)] hover:text-[var(--text-primary)]"
+            className="flex min-h-11 min-w-11 items-center justify-center whitespace-nowrap rounded-md px-3 py-2 transition hover:bg-[var(--surface-strong)] hover:text-[var(--text-primary)]"
             href="/en"
           >
             EN
           </Link>
           <Link
-            className="flex min-h-11 min-w-11 items-center justify-center whitespace-nowrap rounded-md px-3 py-2 transition hover:bg-[var(--surface)] hover:text-[var(--text-primary)]"
+            className="flex min-h-11 min-w-11 items-center justify-center whitespace-nowrap rounded-md px-3 py-2 transition hover:bg-[var(--surface-strong)] hover:text-[var(--text-primary)]"
             href="/"
           >
             KO

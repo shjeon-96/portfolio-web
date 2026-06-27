@@ -1,14 +1,17 @@
 @import "tailwindcss";
 
 :root {
-  --background: #f7f8fa;
+  --background: #f3f5f2;
   --surface: #ffffff;
-  --text-primary: #111827;
-  --text-secondary: #6b7280;
-  --border: #e5e7eb;
-  --accent-blue: #2563eb;
-  --accent-green: #16a34a;
-  --accent-amber: #d97706;
+  --surface-strong: #fbfcf8;
+  --text-primary: #111a1f;
+  --text-secondary: #5f6972;
+  --text-muted: #7d8790;
+  --border: #d9dfdc;
+  --accent-blue: #1f66e5;
+  --accent-green: #1b8f65;
+  --accent-amber: #b56a15;
+  --shadow-panel: 0 18px 50px rgb(33 41 47 / 8%);
 }
 
 * {
@@ -21,8 +24,12 @@ html {
 
 body {
   margin: 0;
-  font-family: Arial, Helvetica, sans-serif;
-  background: var(--background);
+  font-family: "Pretendard", "Apple SD Gothic Neo", "Noto Sans KR", "Aptos", system-ui, sans-serif;
+  background:
+    linear-gradient(90deg, rgb(17 26 31 / 4%) 1px, transparent 1px),
+    linear-gradient(180deg, rgb(17 26 31 / 4%) 1px, transparent 1px),
+    var(--background);
+  background-size: 32px 32px;
   color: var(--text-primary);
 }
 
@@ -32,4 +39,27 @@ body {
 
 .text-balance {
   text-wrap: balance;
+}
+
+.hero-grid {
+  position: relative;
+}
+
+.hero-grid::before {
+  position: absolute;
+  inset: 24px 20px auto;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--border), transparent);
+  content: "";
+}
+
+.hero-console {
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background:
+    linear-gradient(135deg, rgb(31 102 229 / 8%), transparent 38%),
+    linear-gradient(315deg, rgb(27 143 101 / 8%), transparent 36%),
+    var(--surface);
+  box-shadow: var(--shadow-panel);
 }

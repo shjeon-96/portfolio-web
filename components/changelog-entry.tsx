@@ -16,7 +16,7 @@ export function ChangelogEntry({
     <article className={`grid gap-4 border-b border-[var(--border)] py-7 ${showDate ? 'md:grid-cols-[160px_1fr]' : ''}`}>
       {showDate ? (
         <div>
-          <p className="font-semibold text-[var(--text-primary)]">{entry.date}</p>
+          <p className="font-mono font-semibold text-[var(--text-primary)]">{entry.date}</p>
           <p className="mt-2 inline-flex rounded-md border border-[var(--border)] bg-[var(--surface)] px-2.5 py-1 text-xs text-[var(--text-secondary)]">
             {entry.category}
           </p>
@@ -24,23 +24,23 @@ export function ChangelogEntry({
       ) : null}
       <div>
         {!showDate ? (
-          <p className="mb-3 inline-flex rounded-md border border-[var(--border)] bg-[var(--surface)] px-2.5 py-1 text-xs text-[var(--text-secondary)]">
+          <p className="mb-3 inline-flex rounded-md border border-[var(--border)] bg-[var(--surface-strong)] px-2.5 py-1 text-xs text-[var(--text-secondary)]">
             {entry.category}
           </p>
         ) : null}
         <h2 className="text-xl font-semibold">{entry.title}</h2>
         <p className="mt-3 text-sm leading-6 text-[var(--text-secondary)]">{entry.problem}</p>
         <div className="mt-4 grid gap-3 lg:grid-cols-[1fr_0.8fr]">
-          <div className="rounded-lg border border-[var(--border)] bg-[var(--surface)] p-4">
-            <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[var(--accent-amber)]">{labels.approach}</p>
+          <div className="rounded-lg border border-[var(--border)] bg-[var(--surface-strong)] p-4">
+            <p className="font-mono text-xs font-semibold uppercase tracking-[0.14em] text-[var(--accent-amber)]">{labels.approach}</p>
             <ul className="mt-3 space-y-2 text-sm leading-6 text-[var(--text-secondary)]">
               {entry.approach.map((item) => (
                 <li key={item}>{item}</li>
               ))}
             </ul>
           </div>
-          <div className="rounded-lg border border-[var(--border)] bg-[var(--surface)] p-4">
-            <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[var(--accent-green)]">{labels.result}</p>
+          <div className="rounded-lg border border-[var(--border)] bg-[var(--surface-strong)] p-4">
+            <p className="font-mono text-xs font-semibold uppercase tracking-[0.14em] text-[var(--accent-green)]">{labels.result}</p>
             <p className="mt-3 text-sm leading-6 text-[var(--text-secondary)]">{entry.result}</p>
           </div>
         </div>

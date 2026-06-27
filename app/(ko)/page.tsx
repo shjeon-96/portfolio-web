@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { CaseStudyCard } from '@/components/case-study-card';
 import { ChangelogEntry } from '@/components/changelog-entry';
+import { HomeConsoleVisual } from '@/components/home-console-visual';
 import { ProjectHighlightCard } from '@/components/project-highlight-card';
 import { caseStudiesKo, changelogEntriesKo, projectHighlightsKo, proofPointsKo } from '@/lib/data-ko';
 
@@ -33,9 +34,9 @@ export default function KoreanHomePage() {
 
   return (
     <main>
-      <section className="mx-auto grid min-h-[calc(100vh-73px)] w-full max-w-7xl gap-10 px-5 py-16 lg:grid-cols-[1.15fr_0.85fr] lg:items-center">
+      <section className="hero-grid mx-auto grid min-h-[calc(100vh-73px)] w-full max-w-7xl gap-10 px-5 py-16 lg:grid-cols-[1.08fr_0.92fr] lg:items-center">
         <div>
-          <p className="mb-4 text-sm font-medium uppercase tracking-[0.16em] text-[var(--accent-blue)]">
+          <p className="mb-4 font-mono text-sm font-medium uppercase tracking-[0.16em] text-[var(--accent-blue)]">
             Product Console Portfolio
           </p>
           <h1 className="max-w-3xl text-4xl font-semibold leading-tight text-balance sm:text-5xl">
@@ -76,23 +77,18 @@ export default function KoreanHomePage() {
           </div>
         </div>
 
-        <aside className="grid gap-4">
-          <ConsolePanel
-            eyebrow="Current Focus"
-            title="Agent Semantic Tooling"
-            description="코딩 에이전트가 언어 서버의 semantic feedback을 읽기 전용 도구로 활용할 수 있게 만듭니다."
-          />
-          <ConsolePanel
-            eyebrow="Recent Changelog"
-            title="Mobile Release Gates"
-            description="Expo, native policy, shared packages, store-facing build 검증을 하나의 릴리즈 경로로 묶습니다."
-          />
-          <ConsolePanel
-            eyebrow="Editor Systems"
-            title="State -> Runtime -> Output"
-            description="에디터 상태, 런타임 동작, 생성 산출물이 하나의 제품 모델 위에서 움직이게 합니다."
-          />
-        </aside>
+        <HomeConsoleVisual
+          kicker="Working Surface"
+          title="Product systems map"
+          subtitle="AI 도구, 모바일 릴리즈, 에디터 엔진을 하나의 제품 판단 흐름으로 정리합니다."
+          signals={[
+            { label: 'agent', value: 'semantic tooling', tone: 'blue' },
+            { label: 'mobile', value: 'release gates', tone: 'green' },
+            { label: 'editor', value: 'runtime output', tone: 'amber' },
+          ]}
+          processItems={['원본 기준', '런타임 계약', '릴리즈 근거']}
+          footnote="포트폴리오의 각 항목은 문제, 접근, 결과, 검증 경계가 같은 구조로 이어집니다."
+        />
       </section>
       <section className="border-y border-[var(--border)] bg-[var(--surface)]">
         <div className="mx-auto grid max-w-7xl gap-4 px-5 py-8 md:grid-cols-4">
@@ -151,26 +147,6 @@ export default function KoreanHomePage() {
         </div>
       </section>
     </main>
-  );
-}
-
-function ConsolePanel({
-  eyebrow,
-  title,
-  description,
-}: Readonly<{
-  eyebrow: string;
-  title: string;
-  description: string;
-}>) {
-  return (
-    <section className="rounded-lg border border-[var(--border)] bg-[var(--surface)] p-5 shadow-sm">
-      <p className="text-xs font-medium uppercase tracking-[0.14em] text-[var(--text-secondary)]">
-        {eyebrow}
-      </p>
-      <h2 className="mt-3 text-xl font-semibold">{title}</h2>
-      <p className="mt-3 text-sm leading-6 text-[var(--text-secondary)]">{description}</p>
-    </section>
   );
 }
 

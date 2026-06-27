@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { CaseStudyCard } from '@/components/case-study-card';
 import { ChangelogEntry } from '@/components/changelog-entry';
+import { HomeConsoleVisual } from '@/components/home-console-visual';
 import { ProjectHighlightCard } from '@/components/project-highlight-card';
 import { caseStudies, changelogEntries, projectHighlights, proofPoints } from '@/lib/data';
 
@@ -28,9 +29,9 @@ export default function Home() {
 
   return (
     <main>
-      <section className="mx-auto grid min-h-[calc(100vh-73px)] w-full max-w-7xl gap-10 px-5 py-16 lg:grid-cols-[1.15fr_0.85fr] lg:items-center">
+      <section className="hero-grid mx-auto grid min-h-[calc(100vh-73px)] w-full max-w-7xl gap-10 px-5 py-16 lg:grid-cols-[1.08fr_0.92fr] lg:items-center">
         <div>
-          <p className="mb-4 text-sm font-medium uppercase tracking-[0.16em] text-[var(--accent-blue)]">
+          <p className="mb-4 font-mono text-sm font-medium uppercase tracking-[0.16em] text-[var(--accent-blue)]">
             Product Console Portfolio
           </p>
           <h1 className="max-w-3xl text-4xl font-semibold leading-tight text-balance sm:text-5xl">
@@ -71,23 +72,18 @@ export default function Home() {
           </div>
         </div>
 
-        <aside className="grid gap-4">
-          <ConsolePanel
-            eyebrow="Current Focus"
-            title="Agent Semantic Tooling"
-            description="Coding agents can use language-server feedback through read-only tools instead of broad project access."
-          />
-          <ConsolePanel
-            eyebrow="Recent Changelog"
-            title="Mobile Release Gates"
-            description="Expo, native policy, shared packages, and store-facing build checks are tied to one release path."
-          />
-          <ConsolePanel
-            eyebrow="Editor Systems"
-            title="State -> Runtime -> Output"
-            description="Editor state, runtime behavior, and generated artifacts move through one product model."
-          />
-        </aside>
+        <HomeConsoleVisual
+          kicker="Working Surface"
+          title="Product systems map"
+          subtitle="AI tooling, mobile release, and editor engines are presented as one product decision loop."
+          signals={[
+            { label: 'agent', value: 'semantic tooling', tone: 'blue' },
+            { label: 'mobile', value: 'release gates', tone: 'green' },
+            { label: 'editor', value: 'runtime output', tone: 'amber' },
+          ]}
+          processItems={['source truth', 'runtime contract', 'release evidence']}
+          footnote="Each portfolio item follows the same problem, approach, result, and verification structure."
+        />
       </section>
       <section className="border-y border-[var(--border)] bg-[var(--surface)]">
         <div className="mx-auto grid max-w-7xl gap-4 px-5 py-8 md:grid-cols-4">
@@ -140,26 +136,6 @@ export default function Home() {
         </div>
       </section>
     </main>
-  );
-}
-
-function ConsolePanel({
-  eyebrow,
-  title,
-  description,
-}: Readonly<{
-  eyebrow: string;
-  title: string;
-  description: string;
-}>) {
-  return (
-    <section className="rounded-lg border border-[var(--border)] bg-[var(--surface)] p-5 shadow-sm">
-      <p className="text-xs font-medium uppercase tracking-[0.14em] text-[var(--text-secondary)]">
-        {eyebrow}
-      </p>
-      <h2 className="mt-3 text-xl font-semibold">{title}</h2>
-      <p className="mt-3 text-sm leading-6 text-[var(--text-secondary)]">{description}</p>
-    </section>
   );
 }
 
