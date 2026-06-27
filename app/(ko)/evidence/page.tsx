@@ -1,6 +1,7 @@
 import { GuidePanel } from '@/components/guide-panel';
 import { HiringFitPanel } from '@/components/hiring-fit-panel';
 import { ImplementationEvidenceBoard } from '@/components/implementation-evidence-board';
+import { LiveEvidenceConsole } from '@/components/live-evidence-console';
 import { SectionHeading } from '@/components/section-heading';
 import { hiringFitKo, implementationEvidenceKo } from '@/lib/data-ko';
 
@@ -25,6 +26,7 @@ export default function KoreanEvidencePage() {
           { title: '검증 근거', body: '테스트, 빌드, 라우트, 생성 산출물 확인처럼 완료 판단에 사용한 근거를 봅니다.' },
         ]}
       />
+      <LiveEvidenceConsole locale="ko" />
       <HiringFitPanel fit={hiringFitKo} locale="ko" />
       <section className="mt-10">
         <ImplementationEvidenceBoard entries={implementationEvidenceKo} locale="ko" />
