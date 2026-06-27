@@ -1001,51 +1001,39 @@ export const skillsKo: SkillContext[] = [
 
 export const aiWorkflowStepsKo = [
   {
-    title: '문제 정의',
-    description: '바로 수정하지 않고 제품 증상, 기대 동작, 사용자 영향부터 정리합니다.',
-    detail:
-      '먼저 사용자가 실제로 본 증상, 기대 동작, 영향을 받는 제품 표면을 적습니다. 그래야 AI가 그럴듯한 코드 수정으로 바로 뛰어들지 않고 문제를 좁히는 데 쓰입니다.',
-    example:
-      'UI나 릴리즈 문제라면 보통 스크린샷, 실패한 라우트, 빌드 출력, 정확한 런타임 메시지를 출발점으로 둡니다.',
+    title: '요청 접수',
+    description: '대부분의 세션은 PRD, GitHub 이슈, 스크린샷, 크래시 로그, 직접적인 제품 우려에서 시작합니다.',
+    tools: ['PRD', 'GitHub issue', '스크린샷', '크래시 로그'],
+    artifact: 'repo에서 처리할 일과 외부 콘솔/스토어에서 처리할 일을 분리한 작업 범위.',
   },
   {
-    title: '코드 경로 탐색',
-    description: 'AI 에이전트로 관련 소유 모듈, 테스트, 생성 산출물, 주변 계약을 빠르게 확인합니다.',
-    detail:
-      'AI는 넓은 코드베이스에서 후보 경로를 빠르게 찾는 데 유용합니다. 소유 모듈, 관련 테스트, 설정 파일, 생성 산출물을 찾게 하고 최종 판단은 실제 코드 근거로 합니다.',
-    example:
-      '이 포트폴리오에서는 라우트 파일, 공통 데이터, sitemap, route verifier, 렌더된 HTML을 함께 확인한 뒤 문구나 섹션을 바꿉니다.',
+    title: 'repo 맥락 스캔',
+    description: '수정 전에 로컬 파일, 커밋 이력, 이슈 맥락, 생성 산출물, 프로젝트 규칙을 함께 확인합니다.',
+    tools: ['Codex', 'rg', 'git history', 'AGENTS.md', 'public checks'],
+    artifact: '수정할 파일, 건드리지 않을 파일, 유지해야 할 기준 규칙을 정리한 소유 경로.',
   },
   {
-    title: '소유 경계 확인',
-    description: '동작을 책임지는 기준 모듈을 찾고 같은 판단이 여러 곳에 생기지 않게 합니다.',
-    detail:
-      '수정 전에 어떤 파일이 그 규칙을 책임져야 하는지 확인합니다. 여러 곳에서 같은 말을 다르게 하고 있으면 새 설명을 하나 더 얹지 않고 오래된 기준을 제거하거나 바꿉니다.',
-    example:
-      '케이스 스터디를 제거할 때는 라우트, 내비게이션, sitemap, 검증 스크립트, 데이터 모델, 홈 문구가 모두 같은 구조를 보게 정리했습니다.',
+    title: '증거 캡처',
+    description: '좋은 세션은 화면, 로그, 라우트 출력, 브라우저 스냅샷처럼 관찰된 상태를 먼저 남깁니다.',
+    tools: ['Playwright', 'build logs', 'simulator logs', 'route output'],
+    artifact: '비공개 세션 정보를 노출하지 않으면서 변경 필요성을 설명하는 before-state.',
   },
   {
-    title: '좁은 범위 수정',
-    description: '증상을 가리는 분기보다 문제를 설명하는 소유 경로나 공유 계약을 수정합니다.',
-    detail:
-      '수정은 문제를 직접 설명해야 합니다. 제품 규칙이 아닌 fallback UI, 임시 placeholder, 우회 분기를 넣어 겉으로만 맞추는 방식은 피합니다.',
-    example:
-      '체인지로그 날짜는 정렬을 위해 원본 날짜를 유지하되, 표시와 그룹 기준만 월 단위로 바꿨습니다.',
+    title: '소유 경로 수정',
+    description: 'fallback UI나 중복 데이터, 우회 분기를 쌓지 않고 실제 기준 소스를 수정합니다.',
+    tools: ['React', 'TypeScript', 'shared helpers', 'data model'],
+    artifact: '제품 규칙, UI 문구, 검증 대상이 같은 기준을 보게 만드는 좁은 diff.',
   },
   {
-    title: '동작 검증',
-    description: '집중 검증, 산출물 확인, 회귀 테스트로 같은 문제가 다시 생길 수 있는 지점을 막습니다.',
-    detail:
-      'AI가 충분해 보인다고 말해도 완료 기준은 검증입니다. 변경 성격에 따라 lint, build, route check, public-safety check, 렌더 HTML, 브라우저 overflow를 확인합니다.',
-    example:
-      '콘텐츠/화면 변경은 소스 참조뿐 아니라 실제 렌더된 페이지까지 확인해 죽은 링크나 오래된 sitemap 항목이 남지 않게 합니다.',
+    title: '결과 검증',
+    description: '검사가 통과하고 실제 렌더/런타임 표면이 요청한 동작과 맞을 때 세션을 닫습니다.',
+    tools: ['ESLint', 'Next build', 'Route check', 'Public-safety check', 'Playwright'],
+    artifact: '통과한 명령과 실제 페이지, 라우트 응답, 시뮬레이터 결과, 배포 상태.',
   },
   {
-    title: '학습 기록',
-    description: '반복되는 분석 패턴을 작업 흐름, 테스트, 공개 가능한 변경 기록으로 남깁니다.',
-    detail:
-      '같은 종류의 문제가 반복되면 작은 규칙, 스크립트, 공개 가능한 체인지로그로 남깁니다. 다음 조사 시간을 줄이는 것이 목적입니다.',
-    example:
-      '월별 체인지로그 생성 스크립트와 route check는 포트폴리오 유지보수를 기억에 덜 의존하게 만든 예시입니다.',
+    title: '마무리 기록',
+    description: '여러 세션은 커밋, 푸시, 배포, 이슈 종료, 공개 가능한 체인지로그로 끝납니다.',
+    tools: ['git commit', 'git push', 'Vercel', 'changelog'],
+    artifact: '커밋 해시, 배포 결과, 검증 노트, 월별 엔지니어링 기록처럼 추적 가능한 완료 상태.',
   },
 ];

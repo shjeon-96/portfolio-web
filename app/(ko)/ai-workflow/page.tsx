@@ -1,40 +1,60 @@
+import { AiWorkflowMap } from '@/components/ai-workflow-map';
 import { SectionHeading } from '@/components/section-heading';
 import { aiWorkflowStepsKo } from '@/lib/data-ko';
 
 export const metadata = {
   title: 'AI 개발 흐름',
-  description: 'AI 에이전트를 원인 분석, 구현, 리뷰 후속, 검증에 통합하는 방식입니다.',
+  description: '실제 Codex 세션에서 반복된 요청 접수, repo 스캔, 증거 캡처, 검증, 커밋/배포 흐름입니다.',
 };
+
+const sessionGroups = [
+  {
+    title: '이슈 실행',
+    description: 'PRD나 GitHub 이슈에서 시작해 repo 기준으로 구현 범위를 좁히는 세션입니다.',
+    items: ['PRD 확인', 'GitHub 이슈', 'repo 스캔', '커밋/푸시'],
+    result: '요구사항과 실제 코드 변경, 검증 결과가 한 커밋 또는 이슈 상태로 연결됩니다.',
+  },
+  {
+    title: '화면 감사',
+    description: '포트폴리오와 제품 화면을 스크린샷, DOM, 라우트 응답으로 점검하는 세션입니다.',
+    items: ['Playwright', '스크린샷', 'DOM 체크', 'public safety'],
+    result: '화면 깨짐, 링크, 공개 안전성, 반응형 문제를 근거와 함께 수정합니다.',
+  },
+  {
+    title: '릴리즈 디버그',
+    description: '빌드/런타임 로그와 외부 콘솔 경계를 분리해 릴리즈 차단 원인을 찾는 세션입니다.',
+    items: ['빌드 로그', '런타임 로그', '스토어 경계', '외부 콘솔'],
+    result: 'repo에서 해결할 일과 수동 콘솔 작업을 분리해 완료 기준을 명확히 남깁니다.',
+  },
+];
 
 export default function KoreanAiWorkflowPage() {
   return (
     <main className="page-shell">
       <SectionHeading
         eyebrow="AI 개발 흐름"
-        title="AI는 넓게 찾게 하고, 결정은 코드와 산출물로 합니다"
-        description="AI 에이전트는 코드베이스 탐색, 후보 경로 정리, 검증 항목 누락 확인에 사용합니다. 최종 수정은 소유 모듈, 제품 규칙, 실제 렌더 결과를 기준으로 좁게 결정합니다."
+        title="요청을 검증 가능한 변경으로 닫는 AI 개발 흐름"
+        description="실제 Codex 세션에서 반복된 흐름을 공개 가능한 수준으로 정리했습니다. PRD/이슈 접수, repo 맥락 스캔, 화면·로그 증거 캡처, 좁은 수정, 검증, 커밋/배포 기록이 하나의 루프로 이어집니다."
       />
-      <section className="mt-10 grid gap-4 md:grid-cols-3">
-        <Principle title="AI에게 맡기는 일" body="넓은 탐색, 후보 파일 정리, 관련 테스트와 산출물 찾기, 누락된 검증 관점 제안." />
-        <Principle title="제가 결정하는 일" body="실제 소유 경계, 공개 가능한 설명 범위, 수정 방향, 완료 기준." />
-        <Principle title="완료 기준" body="빌드와 테스트뿐 아니라 라우트, sitemap, 렌더 HTML, 화면 overflow처럼 사용자에게 보이는 결과." />
-      </section>
-      <section className="surface-panel mt-10 divide-y divide-[var(--border)]">
-        {aiWorkflowStepsKo.map((step, index) => (
-          <article className="grid gap-4 p-5 md:grid-cols-[96px_1fr]" key={step.title}>
-            <p className="font-mono text-sm font-semibold text-[var(--accent-blue)]">단계 {index + 1}</p>
-            <div>
-              <h2 className="text-xl font-semibold">{step.title}</h2>
-              <p className="mt-2 text-sm leading-6 text-[var(--text-secondary)]">{step.description}</p>
-              <p className="mt-4 text-sm leading-6 text-[var(--text-primary)]">{step.detail}</p>
-              <div className="mt-4 rounded-md border border-[var(--border)] bg-[var(--surface-strong)] p-4">
-                <p className="font-mono text-xs font-semibold uppercase tracking-[0.14em] text-[var(--accent-green)]">예시</p>
-                <p className="mt-2 text-sm leading-6 text-[var(--text-secondary)]">{step.example}</p>
-              </div>
-            </div>
-          </article>
-        ))}
-      </section>
+
+      <AiWorkflowMap
+        introEyebrow="작업 모델"
+        introTitle="실제 사용 흐름은 세션을 닫는 방식에서 드러납니다"
+        introDescription="단순히 어떤 AI 도구를 썼는지가 아니라, 요청을 어떤 증거로 확인하고 어떤 완료 상태로 남겼는지를 중심으로 정리합니다."
+        signals={[
+          { label: '입력', value: 'PRD/이슈/로그' },
+          { label: '작업 루프', value: '스캔/수정/검증' },
+          { label: '산출물', value: '커밋/배포/노트' },
+        ]}
+        steps={aiWorkflowStepsKo}
+        sessionEyebrow="관찰된 세션"
+        sessionTitle="반복된 세션 유형을 기준으로 묶었습니다"
+        sessionDescription="포트폴리오 세션, 모바일 릴리즈 세션, 화면 감사 세션에서 공통으로 나타난 흐름만 공개 가능한 단어로 다시 썼습니다."
+        sessionGroups={sessionGroups}
+        outputLabel="산출물"
+        sessionResultLabel="결과"
+      />
+
       <section className="surface-panel mt-10 p-6">
         <p className="font-mono text-xs font-semibold uppercase tracking-[0.16em] text-[var(--accent-amber)]">기준</p>
         <div className="mt-4 grid gap-4 md:grid-cols-3">
@@ -44,15 +64,6 @@ export default function KoreanAiWorkflowPage() {
         </div>
       </section>
     </main>
-  );
-}
-
-function Principle({ title, body }: Readonly<{ title: string; body: string }>) {
-  return (
-    <article className="surface-panel p-5">
-      <h2 className="font-semibold">{title}</h2>
-      <p className="mt-2 text-sm leading-6 text-[var(--text-secondary)]">{body}</p>
-    </article>
   );
 }
 
