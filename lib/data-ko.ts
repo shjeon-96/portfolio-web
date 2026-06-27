@@ -1,13 +1,32 @@
 import type { ChangelogEntry, HiringFit, ImplementationEvidence, ProjectHighlight, SkillContext } from '@/lib/data';
+import { getRoutePath } from '@/lib/routes';
 
 export const proofPointsKo = [
-  '오픈소스 개발 보조 도구',
-  '모바일 릴리즈 게이트',
-  '네이티브 제품 아키텍처',
-  '에디터 엔진 설계',
+  '에디터 상태 모델',
+  'Export/Deploy 정합성',
+  'B2B 운영 콘솔',
+  'AI 검증 루프',
 ];
 
 export const projectHighlightsKo: ProjectHighlight[] = [
+  {
+    title: '노코드 웹 빌더 에디터',
+    label: '비주얼 빌더 제품 시스템',
+    summary:
+      'AST형 상태 모델, 컴포넌트 Variant, 데이터 바인딩, 캔버스 동작, 미리보기, Export/Deploy 결과물 정합성을 다룬 비공개 제품 작업을 공개 가능한 수준으로 정리했습니다.',
+    stack: ['React', 'Next.js', 'TypeScript', 'Zustand', 'Immer'],
+    status: '비공개 제품 작업을 익명화한 공개 안전 사례',
+    featured: true,
+  },
+  {
+    title: '세무·정산 운영 플랫폼',
+    label: '백오피스와 모바일 운영 흐름',
+    summary:
+      '세무대리 신청, 매입·매출 대시보드, 가맹점 승인, 알림, Vue에서 React와 Next.js로 이어지는 마이그레이션을 다룬 업무 시스템입니다.',
+    stack: ['Flutter', 'React', 'Next.js', 'Firebase', 'Docker'],
+    status: '운영 흐름과 프레임워크 마이그레이션',
+    featured: true,
+  },
   {
     title: 'codex-lsp-bridge',
     label: '오픈소스 개발 보조 도구',
@@ -34,7 +53,6 @@ export const projectHighlightsKo: ProjectHighlight[] = [
       'MVVM, 기능 모듈, 적응형 내비게이션, SwiftData, CloudKit 동기화, 위젯, 공유 확장 타깃으로 구성한 SwiftUI 생산성 앱입니다.',
     stack: ['SwiftUI', 'SwiftData', 'CloudKit', 'Firebase', 'Swift Testing'],
     status: 'iOS, iPadOS, Mac Catalyst 아키텍처',
-    featured: true,
   },
   {
     title: 'Web Toolkit',
@@ -71,15 +89,6 @@ export const projectHighlightsKo: ProjectHighlight[] = [
       '포맷팅, 컴파일, 테스트 바이너리 빌드, 테스트 실행을 하나의 검증 스크립트로 묶은 Rust/Bevy 기반 게임 프로젝트입니다.',
     stack: ['Rust', 'Bevy', 'Serde', 'Cargo'],
     status: '인터랙티브 시스템과 런타임 검증',
-  },
-  {
-    title: '세무·정산 운영 플랫폼',
-    label: '백오피스와 모바일 운영 흐름',
-    summary:
-      '세무대리 신청, 매입·매출 대시보드, 가맹점 승인, 알림, Vue에서 React와 Next.js로 이어지는 마이그레이션을 다룬 업무 시스템입니다.',
-    stack: ['Flutter', 'React', 'Next.js', 'Firebase', 'Docker'],
-    status: '운영 흐름과 프레임워크 마이그레이션',
-    featured: true,
   },
   {
     title: 'AI 리뷰 운영 시스템',
@@ -128,14 +137,27 @@ export const implementationEvidenceKo: ImplementationEvidence[] = [
     title: '에디터 상태와 결과물 일관성',
     label: '비주얼 빌더 프론트엔드',
     summary:
-      '편집 중인 상태, 실행 시 동작, 생성 결과가 같은 기준으로 맞아야 하는 제품 빌더 화면입니다.',
-    surface: 'AST 형태의 에디터 모델, Variant 동작, 미리보기 상태, 내보내기/배포 결과물.',
-    role: '편집 상태와 사용자에게 전달되는 생성 결과가 같은 기준을 따르도록 정리했습니다.',
-    frontendSignals: ['React 컴포넌트 규칙', '타입 기반 상태 모델', '조건부 렌더링 규칙', '생성 결과 검토'],
-    verification: ['Vitest 회귀 검증', '생성 HTML 확인', '라우트와 빌드 검사'],
-    outcome: '화면 구현을 넘어 상태 책임, 결과물 일관성, 회귀 방지까지 보는 프론트엔드 판단을 보여줍니다.',
+      '편집 상태, 런타임 동작, 미리보기, 생성 결과물이 하나의 제품 기준을 따라야 하는 빌더 화면입니다.',
+    surface: 'AST형 에디터 모델, 컴포넌트 Variant, 데이터 바인딩, 캔버스 동작, 미리보기 상태, Export/Deploy 결과물.',
+    role: '편집 가능한 제품 상태, 런타임 해석, 생성 결과물이 각자 다른 규칙을 갖지 않도록 정리했습니다.',
+    frontendSignals: ['React 컴포넌트 규칙', 'Zustand/Immer 상태 모델', 'Variant 담당 범위', 'Export/Deploy 정합성'],
+    verification: ['Vitest 회귀 검증', '생성 HTML 확인', '라우트/빌드 검사'],
+    outcome: '가장 강한 포트폴리오 신호입니다. 제품 빌더 안에서 상태 책임, 결과물 정합성, 회귀 방지를 함께 다뤘다는 근거입니다.',
     link: { type: 'changelog-focus', focus: 'editor', label: '에디터 근거 보기' },
     visualKind: 'editor',
+  },
+  {
+    title: '운영 콘솔과 마이그레이션 흐름',
+    label: 'B2B 제품 운영 화면',
+    summary:
+      '승인, 세무·정산 상태, 대시보드, 알림, 프레임워크 마이그레이션이 실제 운영 흐름을 끊지 않아야 했던 백오피스 화면입니다.',
+    surface: '관리자 대시보드, 승인 흐름, 세무·정산 업무, 알림 경로, Vue에서 React/Next.js로 이어지는 마이그레이션 경계.',
+    role: '업무 규칙을 타입 기반 UI 상태로 옮기고, 레거시 마이그레이션이 운영 연속성과 분리되지 않게 다뤘습니다.',
+    frontendSignals: ['React/Next.js 마이그레이션', '관리자 상태 모델링', 'API 계약 정렬', '권한 기반 UI'],
+    verification: ['라우트/빌드 검사', '운영 상태 검토', '배포 파이프라인 확인'],
+    outcome: '폼, 테이블, 권한, 업무 상태를 실제 운영 조건에서 다룬 B2B SaaS 콘솔 근거입니다.',
+    link: { type: 'changelog-focus', focus: 'ops', label: '운영 근거 보기' },
+    visualKind: 'ops',
   },
   {
     title: '모바일 릴리즈 게이트 흐름',
@@ -180,14 +202,8 @@ export const implementationEvidenceKo: ImplementationEvidence[] = [
 
 export const hiringFitKo: HiringFit = {
   summary:
-    '가장 강한 영역은 상태 책임, 생성 결과, 릴리즈 준비, 검증 경로가 동시에 맞아야 하는 제품 프론트엔드 작업입니다.',
+    '가장 강한 작업은 에디터 상태, 운영 업무 상태, 생성 결과물, 검증 경로가 하나의 기준으로 맞아야 하는 제품 프론트엔드입니다.',
   strongFits: [
-    {
-      title: 'B2B SaaS 제품 프론트엔드',
-      fit: '콘솔형 제품, 관리자 도구, 운영 흐름, 상태가 많은 제품 화면에서 강합니다.',
-      evidence: ['구현 근거 페이지', '월별 체인지로그', '디자인 시스템 기본 요소'],
-      interviewProbe: '공유 제품 상태를 바꾸기 전에 담당 범위와 제품 기준을 먼저 찾습니다.',
-    },
     {
       title: '비주얼 빌더 또는 에디터 시스템',
       fit: 'Variant, 중첩 모델, 미리보기/내보내기 일관성, 생성 결과물이 중요한 제품에서 강합니다.',
@@ -195,8 +211,14 @@ export const hiringFitKo: HiringFit = {
       interviewProbe: '미리보기 동작과 내보내기 동작을 하나의 기준으로 유지하는 문제를 깊게 다뤄왔습니다.',
     },
     {
+      title: 'B2B SaaS 제품 프론트엔드',
+      fit: '콘솔형 제품, 관리자 도구, 운영 흐름, 상태가 많은 제품 화면에서 강합니다.',
+      evidence: ['운영 콘솔 근거 필터', '월별 체인지로그', '프로젝트 근거 페이지'],
+      interviewProbe: '공유 제품 동작을 바꾸기 전에 담당 범위, 업무 상태, API 계약을 먼저 찾습니다.',
+    },
+    {
       title: 'AI 개발 흐름이 있는 프론트엔드 플랫폼',
-      fit: '에이전트, 의미 기반 도구, 검증 중심 개발 루프를 쓰는 제품 팀에서 강합니다.',
+      fit: 'AI가 제품 서사의 전부가 아니라, 검증 중심 개발 루프의 일부로 쓰이는 팀에서 강합니다.',
       evidence: ['AI 개발 흐름 페이지', 'codex-lsp-bridge 공개 저장소', 'AI 원인 분석 체인지로그'],
       interviewProbe: 'AI 제안은 바로 적용하지 않고 실제 코드 경로, 테스트, 생성 결과물 기준으로 검증합니다.',
     },
@@ -228,7 +250,7 @@ export const changelogEntriesKo: ChangelogEntry[] = [
       '세무대리 신청, 수임동의, 해지, 가맹점 승인, 관리 흐름을 운영 제품 상태로 다뤘습니다.',
       'Firebase 알림, Docker 배포, 대시보드 화면을 같은 백오피스 흐름에 연결했습니다.',
     ],
-    result: '에디터와 AI 도구 외에도 실제 업무 운영 플랫폼 경험이 포트폴리오에 보강됐습니다.',
+    result: '빌더와 공개 도구 외에도 실제 업무 운영 플랫폼 경험이 포트폴리오에 보강됐습니다.',
     stack: ['Flutter', 'React', 'Next.js', 'Firebase', 'Docker'],
   },
   {
@@ -1071,44 +1093,44 @@ export const changelogEntriesKo: ChangelogEntry[] = [
 export const skillsKo: SkillContext[] = [
   {
     group: '제품 프론트엔드',
-    tools: ['React', 'Next.js', 'TypeScript', 'React Native'],
-    context: '복잡한 제품 UI, App Router 기반 화면, 모바일 앱 흐름, 제품 상태 중심 UI, 타입 기반 컴포넌트 규칙에 사용했습니다.',
-    evidenceHref: '/changelog',
+    tools: ['React', 'Next.js', 'TypeScript', 'TanStack Query'],
+    context: '비주얼 빌더, B2B 운영 콘솔, App Router 기반 화면, API 계약 중심 UI, 타입 기반 컴포넌트 규칙에 사용했습니다.',
+    evidenceHref: getRoutePath('changelog', 'ko'),
     evidenceLabel: '제품 UI 변경 기록 보기',
   },
   {
     group: '상태와 제품 모델',
-    tools: ['Zustand', 'Immer', 'AST-like editor models'],
-    context: '에디터 상태 책임, Variant 동작, 중첩 구조, 단일 기준이 필요한 제품 액션에 사용했습니다.',
-    evidenceHref: '/changelog',
+    tools: ['Zustand', 'Immer', 'AST-like editor models', 'Export/deploy contracts'],
+    context: '에디터 상태 책임, Variant 동작, 중첩 구조, 생성 결과물, 단일 기준이 필요한 제품 액션에 사용했습니다.',
+    evidenceHref: getRoutePath('changelog', 'ko'),
     evidenceLabel: '상태 모델 근거 보기',
   },
   {
     group: '품질과 검증',
     tools: ['Vitest', 'Testing Library', 'Maestro', 'E2E checks', 'CI'],
     context: '미리보기와 결과물 일관성, 렌더링 기준, 릴리즈 게이트, 사용자 흐름의 회귀 방지에 사용했습니다.',
-    evidenceHref: '/changelog',
+    evidenceHref: getRoutePath('changelog', 'ko'),
     evidenceLabel: '검증 기록 보기',
   },
   {
     group: '운영/백엔드 이해',
     tools: ['NestJS', 'FastAPI', 'Spring API', 'MySQL', 'Oracle'],
     context: '관리자 업무 흐름, API 규칙, 권한이 중요한 화면, 제품 UI 뒤의 데이터 구조를 이해하는 데 사용했습니다.',
-    evidenceHref: '/changelog',
+    evidenceHref: getRoutePath('changelog', 'ko'),
     evidenceLabel: '운영 기록 보기',
   },
   {
     group: '릴리즈와 배포',
     tools: ['Docker', 'GitHub Actions', 'Firebase', 'Vercel', 'EAS'],
-    context: '환경 분리, 반복 가능한 릴리즈, 정적 포트폴리오 배포, 모바일 스토어 준비, 운영 배포 검증 흐름에 사용했습니다.',
-    evidenceHref: '/changelog',
+    context: '환경 분리, 반복 가능한 배포, Vercel 전달, 모바일 스토어 준비, 운영 배포 검증 흐름에 사용했습니다.',
+    evidenceHref: getRoutePath('changelog', 'ko'),
     evidenceLabel: '릴리즈 기록 보기',
   },
   {
     group: 'AI 개발 흐름',
     tools: ['Codex', 'Claude Code', 'OpenAI API', 'MCP', 'LSP'],
     context: '코드베이스 탐색, 의미 기반 코드 도구, 원인 분석, CI 실패 추적, AI 기반 제품 운영 흐름에 사용했습니다.',
-    evidenceHref: '/ai-workflow',
+    evidenceHref: getRoutePath('ai-workflow', 'ko'),
     evidenceLabel: 'AI 개발 흐름 보기',
   },
 ];

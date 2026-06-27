@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { RouteMotionShell } from '@/components/route-motion-shell';
 import { SiteFooter } from '@/components/site-footer';
 import { SiteHeader } from '@/components/site-header';
 import { PORTFOLIO_SITE_URL } from '@/lib/site-links';
@@ -11,11 +12,11 @@ export const metadata: Metadata = {
     template: '%s | Seunghun Jeon',
   },
   description:
-    '에디터 엔진, 모바일 릴리즈 게이트, 구현 근거, AI 개발 흐름을 공개해도 안전한 제품 엔지니어링 근거로 정리한 포트폴리오.',
+    '노코드 빌더, B2B 운영 콘솔, 릴리즈 경계에서 상태 모델과 배포 산출물 정합성을 다룬 제품 프론트엔드 포트폴리오.',
   openGraph: {
     title: 'Seunghun Jeon | 제품 프론트엔드 엔지니어',
     description:
-      '에디터 엔진, 모바일 릴리즈 게이트, 구현 근거, AI 개발 흐름을 공개해도 안전한 제품 엔지니어링 근거로 정리한 포트폴리오.',
+      '노코드 빌더, B2B 운영 콘솔, 릴리즈 경계에서 상태 모델과 배포 산출물 정합성을 다룬 제품 프론트엔드 포트폴리오.',
     type: 'website',
   },
 };
@@ -29,7 +30,7 @@ export default function KoreanRootLayout({
     <html lang="ko">
       <body>
         <SiteHeader />
-        {children}
+        <RouteMotionShell>{children}</RouteMotionShell>
         <SiteFooter />
       </body>
     </html>

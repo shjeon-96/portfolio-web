@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { RouteMotionShell } from '@/components/route-motion-shell';
 import { SiteFooter } from '@/components/site-footer';
 import { SiteHeader } from '@/components/site-header';
 import { PORTFOLIO_SITE_URL } from '@/lib/site-links';
@@ -11,11 +12,11 @@ export const metadata: Metadata = {
     template: '%s | Seunghun Jeon',
   },
   description:
-    'Public portfolio for implementation evidence across complex product UI, mobile release gates, editor engines, and AI-assisted engineering.',
+    'Product front-end portfolio focused on no-code builders, B2B operation consoles, state models, and export/deploy output parity.',
   openGraph: {
     title: 'Seunghun Jeon | Product Front-End Engineer',
     description:
-      'Public portfolio for implementation evidence across complex product UI, mobile release gates, editor engines, and AI-assisted engineering.',
+      'Product front-end portfolio focused on no-code builders, B2B operation consoles, state models, and export/deploy output parity.',
     type: 'website',
   },
 };
@@ -29,7 +30,7 @@ export default function EnglishRootLayout({
     <html lang="en">
       <body>
         <SiteHeader />
-        {children}
+        <RouteMotionShell>{children}</RouteMotionShell>
         <SiteFooter />
       </body>
     </html>

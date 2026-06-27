@@ -1,6 +1,7 @@
 import { ChangelogEntry } from '@/components/changelog-entry';
 import { ChangelogFocusPanel } from '@/components/changelog-focus-panel';
 import { FeaturedChangelogList } from '@/components/featured-changelog-list';
+import { MotionReveal } from '@/components/motion-reveal';
 import { SectionHeading } from '@/components/section-heading';
 import { Panel } from '@/components/ui';
 import { getChangelogFocusState, getVisibleChangelogEntries } from '@/lib/changelog-focus';
@@ -48,19 +49,21 @@ export default async function ChangelogPage({ searchParams }: Readonly<Changelog
       {groupedEntries.length > 0 ? (
         <Panel as="section" className="mt-8 px-5 py-1">
           {groupedEntries.map((group) => (
-            <div className="grid gap-4 border-b border-[var(--border)] py-7 last:border-b-0 md:grid-cols-[150px_1fr]" key={group.date}>
-              <div>
-                <p className="text-lg font-semibold text-[var(--text-primary)]">{formatChangelogDate(group.date, 'en')}</p>
-                <p className={cx('mt-2', ds.text.eyebrowMuted)}>
-                  {group.entries.length} changes
-                </p>
+            <MotionReveal key={group.date}>
+              <div className="grid gap-4 border-b border-[var(--border)] py-7 last:border-b-0 md:grid-cols-[150px_1fr]">
+                <div>
+                  <p className="text-lg font-semibold text-[var(--text-primary)]">{formatChangelogDate(group.date, 'en')}</p>
+                  <p className={cx('mt-2', ds.text.eyebrowMuted)}>
+                    {group.entries.length} changes
+                  </p>
+                </div>
+                <div className="[&>article:last-child]:border-b-0">
+                  {group.entries.map((entry) => (
+                    <ChangelogEntry entry={entry} key={entry.title} locale="en" showDate={false} />
+                  ))}
+                </div>
               </div>
-              <div className="[&>article:last-child]:border-b-0">
-                {group.entries.map((entry) => (
-                  <ChangelogEntry entry={entry} key={entry.title} locale="en" showDate={false} />
-                ))}
-              </div>
-            </div>
+            </MotionReveal>
           ))}
         </Panel>
       ) : null}

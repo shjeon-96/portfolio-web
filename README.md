@@ -9,12 +9,12 @@ This site uses a Product Console Portfolio / Engineering Ledger theme.
 The first public version should include:
 
 - Home
-- Case Studies
+- Implementation Evidence / Case Studies
 - Engineering Changelog
 - AI Workflow
 - Skills
 - About
-- Resume link
+- Public Resume page
 
 ## Stack
 
@@ -36,6 +36,8 @@ npm run dev
 ```bash
 npm run lint
 npm run build
+npm run check:public-safety
+npm run check:routes
 ```
 
 ## Deployment
@@ -45,4 +47,3 @@ Deploy with Vercel.
 - Production branch: `main`
 - Build command: `npm run build`
 - Initial version should not require environment variables.
-

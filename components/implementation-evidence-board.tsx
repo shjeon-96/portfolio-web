@@ -1,3 +1,4 @@
+import { MotionReveal } from '@/components/motion-reveal';
 import { ActionLink, BadgeList, Panel } from '@/components/ui';
 import type { ImplementationEvidence } from '@/lib/data';
 import { getChangelogFocusHref } from '@/lib/changelog-focus';
@@ -18,39 +19,44 @@ export function ImplementationEvidenceBoard({
         const link = getEvidenceLink(entry, locale);
 
         return (
-          <Panel as="article" className="overflow-hidden" key={entry.title}>
-            <div className="grid lg:grid-cols-[0.82fr_1.18fr]">
-              <EvidenceVisual entry={entry} locale={locale} />
-              <div className="p-5">
-                <p className={ds.text.eyebrow}>{entry.label}</p>
-                <h2 className="mt-3 text-2xl font-semibold">{entry.title}</h2>
-                <p className={cx('mt-3', ds.text.bodySmall)}>{entry.summary}</p>
+          <MotionReveal key={entry.title}>
+            <Panel as="article" className="overflow-hidden">
+              <div className="grid lg:grid-cols-[0.82fr_1.18fr]">
+                <EvidenceVisual entry={entry} locale={locale} />
+                <div className="p-5">
+                  <p className={ds.text.eyebrow}>{entry.label}</p>
+                  <h2 className="mt-3 text-2xl font-semibold">{entry.title}</h2>
+                  <EvidenceField className="mt-3" label={labels.problem} value={entry.summary} />
 
-                <div className="mt-5 grid gap-4 border-y border-[var(--border)] py-4 md:grid-cols-2">
-                  <EvidenceField label={labels.surface} value={entry.surface} />
-                  <EvidenceField label={labels.role} value={entry.role} />
-                </div>
-
-                <div className="mt-5 grid gap-5 md:grid-cols-2">
-                  <div>
-                    <p className={ds.text.eyebrowMuted}>{labels.signals}</p>
-                    <BadgeList className="mt-3" items={entry.frontendSignals} variant="strong" />
+                  <div className="mt-5 grid gap-4 border-y border-[var(--border)] py-4 md:grid-cols-2">
+                    <EvidenceField label={labels.surface} value={entry.surface} />
+                    <EvidenceField label={labels.role} value={entry.role} />
                   </div>
-                  <div>
-                    <p className={ds.text.eyebrowMuted}>{labels.verification}</p>
-                    <BadgeList className="mt-3" items={entry.verification} variant="muted" />
-                  </div>
-                </div>
 
-                <div className="mt-5 flex flex-col gap-4 border-t border-[var(--border)] pt-4 md:flex-row md:items-center md:justify-between">
-                  <p className={cx('max-w-2xl', ds.text.primarySmall)}>{entry.outcome}</p>
-                  <ActionLink external={link.external} href={link.href} variant="compact">
-                    {entry.link.label}
-                  </ActionLink>
+                  <div className="mt-5 grid gap-5 md:grid-cols-2">
+                    <div>
+                      <p className={ds.text.eyebrowMuted}>{labels.approach}</p>
+                      <BadgeList className="mt-3" items={entry.frontendSignals} variant="strong" />
+                    </div>
+                    <div>
+                      <p className={ds.text.eyebrowMuted}>{labels.verification}</p>
+                      <BadgeList className="mt-3" items={entry.verification} variant="muted" />
+                    </div>
+                  </div>
+
+                  <div className="mt-5 flex flex-col gap-4 border-t border-[var(--border)] pt-4 md:flex-row md:items-center md:justify-between">
+                    <div className="max-w-2xl">
+                      <p className={ds.text.eyebrowMuted}>{labels.result}</p>
+                      <p className={cx('mt-2', ds.text.primarySmall)}>{entry.outcome}</p>
+                    </div>
+                    <ActionLink external={link.external} href={link.href} variant="compact">
+                      {entry.link.label}
+                    </ActionLink>
+                  </div>
                 </div>
               </div>
-            </div>
-          </Panel>
+            </Panel>
+          </MotionReveal>
         );
       })}
     </div>
@@ -65,9 +71,17 @@ function getEvidenceLink(entry: ImplementationEvidence, locale: 'en' | 'ko') {
   return { external: false, href: getChangelogFocusHref(locale, entry.link.focus) };
 }
 
-function EvidenceField({ label, value }: Readonly<{ label: string; value: string }>) {
+function EvidenceField({
+  className,
+  label,
+  value,
+}: Readonly<{
+  className?: string;
+  label: string;
+  value: string;
+}>) {
   return (
-    <div>
+    <div className={className}>
       <p className={ds.text.eyebrowMuted}>{label}</p>
       <p className={cx('mt-2', ds.text.bodySmall)}>{value}</p>
     </div>
@@ -84,6 +98,7 @@ function EvidenceVisual({ entry, locale }: Readonly<{ entry: ImplementationEvide
         </span>
       </div>
       {entry.visualKind === 'editor' ? <EditorVisual /> : null}
+      {entry.visualKind === 'ops' ? <OpsVisual /> : null}
       {entry.visualKind === 'mobile' ? <MobileVisual /> : null}
       {entry.visualKind === 'tooling' ? <ToolingVisual locale={locale} /> : null}
       {entry.visualKind === 'web' ? <WebVisual /> : null}
@@ -117,6 +132,36 @@ function EditorVisual() {
             <span className="h-7 rounded-sm bg-[color-mix(in_srgb,var(--accent-green)_14%,var(--surface))]" />
           </div>
         </div>
+      </div>
+    </div>
+  );
+}
+
+function OpsVisual() {
+  return (
+    <div className="rounded-md border border-[var(--border)] bg-[var(--surface)]">
+      <div className="grid grid-cols-[120px_1fr] border-b border-[var(--border)]">
+        <div className="space-y-2 border-r border-[var(--border)] p-3">
+          <span className="block h-3 rounded-sm bg-[var(--text-primary)]" />
+          <span className="block h-3 rounded-sm bg-[var(--border)]" />
+          <span className="block h-3 rounded-sm bg-[var(--border)]" />
+        </div>
+        <div className="grid grid-cols-3 gap-2 p-3">
+          <span className="h-10 rounded-md bg-[color-mix(in_srgb,var(--accent-green)_14%,var(--surface))]" />
+          <span className="h-10 rounded-md bg-[var(--background)]" />
+          <span className="h-10 rounded-md bg-[color-mix(in_srgb,var(--accent-blue)_10%,var(--surface))]" />
+        </div>
+      </div>
+      <div className="grid gap-2 p-3">
+        {['request', 'approval', 'settlement', 'notification'].map((item, index) => (
+          <div className="grid grid-cols-[24px_1fr_56px] items-center gap-3 rounded-md bg-[var(--surface-strong)] px-3 py-2" key={item}>
+            <span className="grid size-6 place-items-center rounded-sm bg-[var(--text-primary)] font-mono text-[10px] font-semibold text-white">
+              {index + 1}
+            </span>
+            <span className="h-2 rounded-full bg-[var(--border)]" />
+            <span className="h-5 rounded-sm bg-[color-mix(in_srgb,var(--accent-amber)_18%,var(--surface))]" />
+          </div>
+        ))}
       </div>
     </div>
   );
@@ -196,16 +241,20 @@ function WebVisual() {
 function getLabels(locale: 'en' | 'ko') {
   if (locale === 'ko') {
     return {
+      approach: '접근',
+      problem: '문제',
+      result: '결과',
       role: '맡은 역할',
-      signals: '프론트엔드 신호',
       surface: '담당 영역',
-      verification: '검증 근거',
+      verification: '검증',
     };
   }
 
   return {
+    approach: 'Approach',
+    problem: 'Problem',
+    result: 'Result',
     role: 'Role',
-    signals: 'Front-end signals',
     surface: 'Product surface',
     verification: 'Verification',
   };

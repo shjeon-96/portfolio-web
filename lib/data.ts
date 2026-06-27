@@ -1,3 +1,5 @@
+import { getRoutePath } from '@/lib/routes';
+
 export type ChangelogEntry = {
   title: string;
   date: string;
@@ -45,7 +47,7 @@ export type SkillContext = {
   evidenceLabel: string;
 };
 
-export type ChangelogFocusKey = 'editor' | 'mobile-release';
+export type ChangelogFocusKey = 'editor' | 'ops' | 'mobile-release';
 
 export type ImplementationEvidenceLink =
   | {
@@ -69,7 +71,7 @@ export type ImplementationEvidence = {
   verification: string[];
   outcome: string;
   link: ImplementationEvidenceLink;
-  visualKind: 'editor' | 'mobile' | 'tooling' | 'web';
+  visualKind: 'editor' | 'ops' | 'mobile' | 'tooling' | 'web';
 };
 
 export type HiringSignal = {
@@ -86,13 +88,31 @@ export type HiringFit = {
 };
 
 export const proofPoints = [
-  'Open-source agent tooling',
-  'Mobile release gates',
-  'Native product architecture',
-  'Editor engine systems',
+  'Editor state models',
+  'Export/deploy parity',
+  'B2B operation consoles',
+  'AI-verified workflow',
 ];
 
 export const projectHighlights: ProjectHighlight[] = [
+  {
+    title: 'No-code web builder editor',
+    label: 'Visual builder product system',
+    summary:
+      'Anonymized editor work around AST-like state models, component variants, data binding, canvas behavior, preview, and export/deploy output parity.',
+    stack: ['React', 'Next.js', 'TypeScript', 'Zustand', 'Immer'],
+    status: 'Public-safe case study from private product work',
+    featured: true,
+  },
+  {
+    title: 'Tax and settlement operations platform',
+    label: 'Back-office and mobile operations',
+    summary:
+      'Business workflow platform covering tax agency requests, purchase and sales dashboards, merchant approval, notifications, and legacy Vue to React to Next.js migration.',
+    stack: ['Flutter', 'React', 'Next.js', 'Firebase', 'Docker'],
+    status: 'Operational workflow and framework migration',
+    featured: true,
+  },
   {
     title: 'codex-lsp-bridge',
     label: 'Open-source agent tooling',
@@ -119,7 +139,6 @@ export const projectHighlights: ProjectHighlight[] = [
       'SwiftUI and SwiftData productivity app organized with MVVM, feature modules, adaptive navigation, CloudKit sync, widget, and share extension targets.',
     stack: ['SwiftUI', 'SwiftData', 'CloudKit', 'Firebase', 'Swift Testing'],
     status: 'iOS, iPadOS, and Mac Catalyst architecture',
-    featured: true,
   },
   {
     title: 'Web Toolkit',
@@ -156,15 +175,6 @@ export const projectHighlights: ProjectHighlight[] = [
       'Rust and Bevy game project with a CI-style verification script for formatting, compilation, test binary builds, and test execution.',
     stack: ['Rust', 'Bevy', 'Serde', 'Cargo'],
     status: 'Interactive systems and runtime verification',
-  },
-  {
-    title: 'Tax and settlement operations platform',
-    label: 'Back-office and mobile operations',
-    summary:
-      'Business workflow platform covering tax agency requests, purchase and sales dashboards, merchant approval, notifications, and legacy Vue to React to Next.js migration.',
-    stack: ['Flutter', 'React', 'Next.js', 'Firebase', 'Docker'],
-    status: 'Operational workflow and framework migration',
-    featured: true,
   },
   {
     title: 'AI review operations system',
@@ -219,7 +229,7 @@ export const changelogEntries: ChangelogEntry[] = [
       'Modeled tax agency request, consent, cancellation, merchant approval, and management workflows as operational product states.',
       'Connected Firebase notifications, Docker deployment, and dashboard surfaces to the same back-office flow.',
     ],
-    result: 'The portfolio gains a concrete operations-platform example beyond the editor and AI tooling stories.',
+    result: 'The portfolio gains a concrete operations-platform example beyond the builder and public tooling stories.',
     stack: ['Flutter', 'React', 'Next.js', 'Firebase', 'Docker'],
   },
   {
@@ -1064,14 +1074,27 @@ export const implementationEvidence: ImplementationEvidence[] = [
     title: 'Editor state and output parity',
     label: 'Visual builder front-end',
     summary:
-      'A product-builder surface where design-time state, runtime behavior, and generated output need to agree.',
-    surface: 'AST-like editor model, variant behavior, preview state, and export/deploy output.',
-    role: 'Kept the source-of-truth boundary between editable product state and user-facing generated artifacts.',
-    frontendSignals: ['React contracts', 'Typed state model', 'Conditional rendering rules', 'Generated artifact review'],
-    verification: ['Vitest regressions', 'Generated HTML inspection', 'Route and build checks'],
-    outcome: 'The portfolio shows front-end judgment beyond screen assembly: state ownership, output parity, and regression control.',
+      'A builder surface where design-time state, runtime behavior, preview, and generated output have to follow one product contract.',
+    surface: 'AST-like editor model, component variants, data binding, canvas behavior, preview state, and export/deploy output.',
+    role: 'Kept editable product state, runtime interpretation, and generated artifacts aligned instead of letting each path define its own rule.',
+    frontendSignals: ['React contracts', 'Zustand/Immer state model', 'Variant ownership', 'Export/deploy parity'],
+    verification: ['Vitest regressions', 'Generated HTML inspection', 'Route/build checks'],
+    outcome: 'This is the strongest portfolio signal: front-end judgment around state ownership, output parity, and regression control in a product builder.',
     link: { type: 'changelog-focus', focus: 'editor', label: 'Review editor evidence' },
     visualKind: 'editor',
+  },
+  {
+    title: 'Operational console and migration workflows',
+    label: 'B2B product operations',
+    summary:
+      'Back-office surfaces where approval, tax and settlement states, dashboards, notifications, and framework migration had to keep operators moving.',
+    surface: 'Admin dashboards, approval flows, tax and settlement workflows, notification paths, and Vue to React/Next.js migration boundaries.',
+    role: 'Turned workflow rules into typed UI states and kept legacy migration tied to operational continuity.',
+    frontendSignals: ['React/Next.js migration', 'Admin state modeling', 'API contract alignment', 'Permission-aware UI'],
+    verification: ['Route/build checks', 'Operational state review', 'Deployment pipeline checks'],
+    outcome: 'This grounds the portfolio in B2B SaaS console work: forms, tables, permissions, and workflow state under real operations.',
+    link: { type: 'changelog-focus', focus: 'ops', label: 'Review operations evidence' },
+    visualKind: 'ops',
   },
   {
     title: 'Mobile release gate workflow',
@@ -1116,14 +1139,8 @@ export const implementationEvidence: ImplementationEvidence[] = [
 
 export const hiringFit: HiringFit = {
   summary:
-    'My strongest area is product front-end work where state ownership, generated output, release readiness, and verification need to stay aligned.',
+    'My strongest work is product front-end where editor state, operational workflow state, generated output, and verification need one contract.',
   strongFits: [
-    {
-      title: 'B2B SaaS product front-end',
-      fit: 'Strongest around console-like products, admin tools, operational workflows, and product surfaces with dense state.',
-      evidence: ['Project evidence page', 'Monthly changelog', 'Design-system primitives'],
-      interviewProbe: 'I look for the owning boundary and product rule before changing shared product state.',
-    },
     {
       title: 'Visual builder or editor systems',
       fit: 'Strongest where variants, nested models, preview/output parity, and generated artifacts matter.',
@@ -1131,8 +1148,14 @@ export const hiringFit: HiringFit = {
       interviewProbe: 'I keep preview behavior and export behavior tied to one product contract.',
     },
     {
+      title: 'B2B SaaS product front-end',
+      fit: 'Strongest around console-like products, admin tools, operational workflows, and product surfaces with dense state.',
+      evidence: ['Operations evidence filter', 'Monthly changelog', 'Project evidence page'],
+      interviewProbe: 'I look for the owning boundary, workflow state, and API contract before changing shared product behavior.',
+    },
+    {
       title: 'Front-end platform with AI workflows',
-      fit: 'Strongest in teams using agents, semantic tooling, and verification-heavy engineering loops.',
+      fit: 'Strongest when AI is part of a verification-heavy engineering loop, not the product story by itself.',
       evidence: ['AI workflow page', 'codex-lsp-bridge public repository', 'Agent root-cause changelog entry'],
       interviewProbe: 'I treat AI suggestions as hypotheses until source paths, tests, and generated output verify them.',
     },
@@ -1156,44 +1179,44 @@ export const hiringFit: HiringFit = {
 export const skills: SkillContext[] = [
   {
     group: 'Product front-end',
-    tools: ['React', 'Next.js', 'TypeScript', 'React Native'],
-    context: 'Complex product interfaces, App Router surfaces, mobile app flows, product-state-driven UI, and typed component contracts.',
-    evidenceHref: '/en/changelog',
+    tools: ['React', 'Next.js', 'TypeScript', 'TanStack Query'],
+    context: 'Visual builders, B2B operation consoles, App Router surfaces, API-contract-driven UI, and typed component contracts.',
+    evidenceHref: getRoutePath('changelog', 'en'),
     evidenceLabel: 'Review product UI changes',
   },
   {
     group: 'State and product models',
-    tools: ['Zustand', 'Immer', 'AST-like editor models'],
-    context: 'Editor state ownership, variant behavior, nested structures, and product actions that need clear source-of-truth boundaries.',
-    evidenceHref: '/en/changelog',
+    tools: ['Zustand', 'Immer', 'AST-like editor models', 'Export/deploy contracts'],
+    context: 'Editor state ownership, variant behavior, nested structures, generated output, and product actions that need clear source-of-truth boundaries.',
+    evidenceHref: getRoutePath('changelog', 'en'),
     evidenceLabel: 'Review state model evidence',
   },
   {
     group: 'Quality and verification',
     tools: ['Vitest', 'Testing Library', 'Maestro', 'E2E checks', 'CI'],
     context: 'Regression prevention for preview/output parity, rendering contracts, release gates, and user-facing workflows.',
-    evidenceHref: '/en/changelog',
+    evidenceHref: getRoutePath('changelog', 'en'),
     evidenceLabel: 'Review verification notes',
   },
   {
     group: 'Operations and backend understanding',
     tools: ['NestJS', 'FastAPI', 'Spring API', 'MySQL', 'Oracle'],
     context: 'Admin workflows, API contracts, permission-sensitive screens, and data structures behind product interfaces.',
-    evidenceHref: '/en/changelog',
+    evidenceHref: getRoutePath('changelog', 'en'),
     evidenceLabel: 'Review operations notes',
   },
   {
     group: 'Release and deployment',
     tools: ['Docker', 'GitHub Actions', 'Firebase', 'Vercel', 'EAS'],
-    context: 'Environment separation, repeatable release paths, static portfolio deployment, mobile store readiness, and production checks.',
-    evidenceHref: '/en/changelog',
+    context: 'Environment separation, repeatable deploy paths, Vercel delivery, mobile store readiness, and production checks.',
+    evidenceHref: getRoutePath('changelog', 'en'),
     evidenceLabel: 'Review release evidence',
   },
   {
     group: 'AI workflow',
     tools: ['Codex', 'Claude Code', 'OpenAI API', 'MCP', 'LSP'],
     context: 'Agent-assisted codebase exploration, semantic tooling, root-cause narrowing, CI failure triage, and AI-assisted product workflows.',
-    evidenceHref: '/en/ai-workflow',
+    evidenceHref: getRoutePath('ai-workflow', 'en'),
     evidenceLabel: 'Review AI workflow',
   },
 ];

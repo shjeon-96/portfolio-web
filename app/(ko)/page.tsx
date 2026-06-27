@@ -1,43 +1,37 @@
 import { ExternalLink } from 'lucide-react';
 import { ChangelogEntry } from '@/components/changelog-entry';
-import { HomeEvidencePanel } from '@/components/home-evidence-panel';
+import { HeroIntroShell } from '@/components/hero-intro-shell';
+import { HeroSignalConsole } from '@/components/hero-signal-console';
 import { ImplementationEvidenceBoard } from '@/components/implementation-evidence-board';
 import { ProjectHighlightCard } from '@/components/project-highlight-card';
 import { ActionLink, BadgeList, Panel } from '@/components/ui';
 import { sortChangelogEntriesByDateDesc } from '@/lib/data';
 import { changelogEntriesKo, implementationEvidenceKo, projectHighlightsKo, proofPointsKo } from '@/lib/data-ko';
 import { cx, ds } from '@/lib/design-system';
+import { getRoutePath } from '@/lib/routes';
 import { GITHUB_PROFILE_URL } from '@/lib/site-links';
 
 export const metadata = {
   title: '제품 프론트엔드 포트폴리오',
-  description: '에디터 엔진, 모바일 릴리즈 게이트, AI 개발 흐름을 공개해도 안전한 제품 엔지니어링 근거로 정리한 포트폴리오.',
+  description: '노코드 빌더, B2B 운영 콘솔, 릴리즈 경계에서 상태 모델과 배포 산출물 정합성을 다룬 제품 프론트엔드 포트폴리오.',
 };
 
 export default function KoreanHomePage() {
   const featuredProjects = projectHighlightsKo.filter((project) => project.featured);
   const homeChangelogEntries = sortChangelogEntriesByDateDesc(changelogEntriesKo).slice(0, 3);
   const homeEvidenceEntries = implementationEvidenceKo.slice(0, 2);
+  const changelogHref = getRoutePath('changelog', 'ko');
+  const evidenceHref = getRoutePath('evidence', 'ko');
 
   return (
     <main>
-      <section className={cx(ds.layout.content, 'grid w-full gap-10 py-8 lg:grid-cols-[1.08fr_0.92fr] lg:items-start lg:py-10')}>
-        <div>
-          <p className={cx('mb-4', ds.text.eyebrowAccent)}>
-            Seunghun Jeon / 제품 시스템 포트폴리오
-          </p>
-          <h1 className={cx('max-w-3xl', ds.text.headingLg, 'sm:text-5xl')}>
-            AI 도구, 모바일 릴리즈, 에디터 엔진을 다루는 제품 프론트엔드
-          </h1>
-          <p className={cx('mt-6 max-w-2xl', ds.text.bodyLarge)}>
-            비주얼 빌더, 모바일 제품, AI 개발 흐름에서 제품 상태, 런타임 동작,
-            릴리즈 검증, 생성 결과가 같은 기준으로 이어지도록 구조화합니다.
-          </p>
+      <HeroIntroShell
+        actions={
           <div className="mt-8 flex flex-wrap gap-3">
-            <ActionLink href="/evidence" variant="primary">
+            <ActionLink href={evidenceHref} variant="primary">
               구현 근거 보기
             </ActionLink>
-            <ActionLink href="/changelog">
+            <ActionLink href={changelogHref}>
               체인지로그 읽기
             </ActionLink>
             <ActionLink
@@ -50,38 +44,32 @@ export default function KoreanHomePage() {
               <ExternalLink aria-hidden="true" size={18} />
             </ActionLink>
           </div>
-          <BadgeList className="mt-8 gap-3" items={proofPointsKo} variant="pill" />
-        </div>
-
-        <HomeEvidencePanel
-          kicker="작업 요약"
-          title="최근 작업의 중심축"
-          summary="스크린샷보다 상태 모델, 데이터 흐름, 확인 가능한 동작, 릴리즈 검증, 생성 결과를 중심으로 정리했습니다."
-          items={[
-            {
-              label: '작업 범위',
-              title: '복잡한 제품 UI와 런타임 기준',
-              description: '에디터 엔진, 모바일 릴리즈, AI 개발 도구처럼 상태와 결과물이 분리되기 쉬운 영역을 다룹니다.',
-            },
-            {
-              label: '최근 작업',
-              title: '월별 체인지로그와 프로젝트 기록',
-              description: '대표 작업은 공개 가능한 프로젝트 기록으로 보완하고 변경 이력은 커밋 기반 월별 기록으로 추적합니다.',
-            },
-            {
-              label: '작업 방식',
-              title: '원인 모듈을 찾고 좁게 고칩니다',
-              description: '임시 우회보다 실제 담당 코드와 기준을 확인하고, 공개 가능한 범위에서 검증 근거를 남깁니다.',
-            },
-          ]}
-        />
-      </section>
+        }
+        badges={<BadgeList className="mt-8 gap-3" items={proofPointsKo} variant="pill" />}
+        console={<HeroSignalConsole locale="ko" />}
+        description={
+          <p className={cx('mt-6 max-w-2xl', ds.text.bodyLarge)}>
+            노코드 웹 빌더, B2B 운영 콘솔, 모바일 릴리즈에서 편집 상태, API 계약,
+            미리보기, Export/Deploy 산출물, 검증 흐름이 같은 기준을 따르도록 정리합니다.
+          </p>
+        }
+        eyebrow={
+          <p className={cx('mb-4', ds.text.eyebrowAccent)}>
+            Seunghun Jeon / 제품 시스템 포트폴리오
+          </p>
+        }
+        title={
+          <h1 className={cx('max-w-3xl', ds.text.headingLg, 'sm:text-5xl')}>
+            복잡한 제품 상태와 배포 산출물을 맞추는 프론트엔드 개발자
+          </h1>
+        }
+      />
       <section className={ds.layout.sectionBand}>
         <div className={cx(ds.layout.content, 'grid gap-4 py-8 md:grid-cols-4')}>
-          <Metric label="중심 분야" value="제품 프론트엔드" />
-          <Metric label="AI 개발 도구" value="LSP 브리지" />
-          <Metric label="모바일 제품" value="릴리즈 게이트" />
-          <Metric label="제품 시스템" value="에디터 엔진" />
+          <Metric label="핵심 제품" value="에디터/빌더" />
+          <Metric label="운영 화면" value="B2B 콘솔" />
+          <Metric label="산출물" value="Export/Deploy" />
+          <Metric label="작업 방식" value="검증 루프" />
         </div>
       </section>
       <section className={cx(ds.layout.content, 'py-14')}>
@@ -90,7 +78,7 @@ export default function KoreanHomePage() {
             <p className={ds.text.eyebrowAccent}>구현 근거</p>
             <h2 className="mt-2 text-3xl font-semibold">내가 반복해서 다뤄온 제품 프론트엔드 영역</h2>
           </div>
-          <ActionLink href="/evidence" variant="subtle">
+          <ActionLink href={evidenceHref} variant="subtle">
             전체 구현 근거 보기
           </ActionLink>
         </div>
@@ -109,7 +97,7 @@ export default function KoreanHomePage() {
           </div>
           <div className="mt-8 grid gap-x-8 gap-y-2 md:grid-cols-2 xl:grid-cols-3">
             {featuredProjects.map((project) => (
-              <ProjectHighlightCard project={project} key={project.title} />
+              <ProjectHighlightCard locale="ko" project={project} key={project.title} />
             ))}
           </div>
         </div>
@@ -120,7 +108,7 @@ export default function KoreanHomePage() {
             <p className={ds.text.eyebrowAccent}>최근 엔지니어링 기록</p>
             <h2 className="mt-2 text-3xl font-semibold">최근 엔지니어링 노트</h2>
           </div>
-          <ActionLink href="/changelog" variant="subtle">
+          <ActionLink href={changelogHref} variant="subtle">
             전체 체인지로그 보기
           </ActionLink>
         </div>

@@ -1,29 +1,19 @@
 #!/usr/bin/env node
 import { spawn } from 'node:child_process';
+import { readFileSync } from 'node:fs';
 import { createServer } from 'node:net';
 
 const port = Number(process.env.ROUTE_CHECK_PORT ?? 3210);
-const host = '127.0.0.1';
+const host = 'localhost';
 const externalBaseUrl = process.env.ROUTE_BASE_URL;
 const baseUrl = externalBaseUrl ?? `http://${host}:${port}`;
+const existingDevBaseUrl = process.env.ROUTE_EXISTING_BASE_URL ?? 'http://localhost:3000';
 const timeoutMs = Number(process.env.ROUTE_CHECK_TIMEOUT_MS ?? 75_000);
 
-const routes = [
-  '/',
-  '/about',
-  '/evidence',
-  '/en',
-  '/en/about',
-  '/en/evidence',
-  '/changelog',
-  '/en/changelog',
-  '/skills',
-  '/en/skills',
-  '/ai-workflow',
-  '/en/ai-workflow',
-  '/sitemap.xml',
-  '/robots.txt',
-];
+const publicRoutes = JSON.parse(readFileSync(new URL('../lib/public-routes.json', import.meta.url), 'utf8'));
+const homeRoute = getRequiredRoute(publicRoutes, 'home');
+const routeContentExpectations = buildRouteContentExpectations(publicRoutes);
+const routes = [...routeContentExpectations.keys(), '/sitemap.xml', '/robots.txt'];
 
 let server;
 let serverExited = false;
@@ -31,33 +21,43 @@ let effectiveBaseUrl = baseUrl;
 
 try {
   if (!externalBaseUrl) {
-    await assertPortAvailable(host, port);
+    const existingServer = await checkRoute(
+      `${existingDevBaseUrl}${homeRoute.paths.ko}`,
+      homeRoute.checkSnippets.ko,
+    );
 
-    server = spawn('npm', ['run', 'dev', '--', '--hostname', host, '--port', String(port)], {
-      env: {
-        ...process.env,
-        NEXT_TELEMETRY_DISABLED: '1',
-      },
-      stdio: ['ignore', 'pipe', 'pipe'],
-    });
-    server.on('exit', () => {
-      serverExited = true;
-    });
+    if (existingServer.ok) {
+      effectiveBaseUrl = existingDevBaseUrl;
+      console.log(`Using existing route check server at ${effectiveBaseUrl}.`);
+    } else {
+      await assertPortAvailable(host, port);
 
-    let output = '';
-    server.stdout.on('data', (chunk) => {
-      output += chunk.toString();
-    });
-    server.stderr.on('data', (chunk) => {
-      output += chunk.toString();
-    });
+      server = spawn('npm', ['run', 'dev', '--', '--hostname', host, '--port', String(port)], {
+        env: {
+          ...process.env,
+          NEXT_TELEMETRY_DISABLED: '1',
+        },
+        stdio: ['ignore', 'pipe', 'pipe'],
+      });
+      server.on('exit', () => {
+        serverExited = true;
+      });
 
-    effectiveBaseUrl = await waitForServer(baseUrl, timeoutMs, () => output);
+      let output = '';
+      server.stdout.on('data', (chunk) => {
+        output += chunk.toString();
+      });
+      server.stderr.on('data', (chunk) => {
+        output += chunk.toString();
+      });
+
+      effectiveBaseUrl = await waitForServer(baseUrl, timeoutMs, () => output);
+    }
   }
 
   const failures = [];
   for (const route of routes) {
-    const result = await checkRoute(`${effectiveBaseUrl}${route}`);
+    const result = await checkRoute(`${effectiveBaseUrl}${route}`, routeContentExpectations.get(route));
     if (!result.ok) {
       failures.push(`${route} ${result.reason}`);
     }
@@ -96,7 +96,7 @@ async function waitForServer(url, timeout, getOutput) {
   throw new Error(`Timed out waiting for Next dev server at ${url}.\n${getOutput().slice(-4000)}`);
 }
 
-async function checkRoute(url) {
+async function checkRoute(url, expectedSnippets) {
   const response = await fetchQuietly(url);
   if (!response) {
     return { ok: false, reason: 'request failed' };
@@ -109,6 +109,13 @@ async function checkRoute(url) {
   const body = await response.text();
   if (body.trim().length === 0) {
     return { ok: false, reason: 'returned an empty body' };
+  }
+
+  if (expectedSnippets) {
+    const missingSnippet = expectedSnippets.find((snippet) => !body.includes(snippet));
+    if (missingSnippet) {
+      return { ok: false, reason: `did not include expected content: ${JSON.stringify(missingSnippet)}` };
+    }
   }
 
   return { ok: true };
@@ -151,4 +158,25 @@ function assertPortAvailable(hostname, portNumber) {
 
     probe.listen(portNumber, hostname);
   });
+}
+
+function buildRouteContentExpectations(routeDefinitions) {
+  const expectations = new Map();
+
+  for (const route of routeDefinitions) {
+    expectations.set(route.paths.ko, route.checkSnippets.ko);
+    expectations.set(route.paths.en, route.checkSnippets.en);
+  }
+
+  return expectations;
+}
+
+function getRequiredRoute(routeDefinitions, routeId) {
+  const route = routeDefinitions.find((definition) => definition.id === routeId);
+
+  if (!route) {
+    throw new Error(`Missing required public route id: ${routeId}`);
+  }
+
+  return route;
 }

@@ -1,6 +1,7 @@
 import { SectionHeading } from '@/components/section-heading';
 import { ActionLink, Panel, TextLink } from '@/components/ui';
 import { cx, ds } from '@/lib/design-system';
+import { getRoutePath } from '@/lib/routes';
 import { GITHUB_PROFILE_URL, PORTFOLIO_REPOSITORY_URL } from '@/lib/site-links';
 
 export const metadata = {
@@ -9,12 +10,15 @@ export const metadata = {
 };
 
 export default function AboutPage() {
+  const changelogHref = getRoutePath('changelog', 'en');
+  const evidenceHref = getRoutePath('evidence', 'en');
+
   return (
     <main className="page-shell page-narrow">
       <SectionHeading
         eyebrow="About"
-        title="I align product state, release boundaries, and front-end delivery."
-        description="I structure products where editor engines, operational tools, mobile platforms, and AI-assisted engineering workflows can easily drift across multiple sources of truth."
+        title="I align product state, output contracts, and front-end delivery."
+        description="I structure products where no-code builders, operational consoles, mobile release paths, and AI-assisted engineering workflows can easily drift across multiple sources of truth."
       />
       <section className="mt-10 grid gap-6 lg:grid-cols-[1fr_320px]">
         <Panel as="article" className="p-6">
@@ -43,8 +47,8 @@ export default function AboutPage() {
         <Panel as="aside" className="p-6">
           <p className={ds.text.eyebrow}>Current focus</p>
           <ul className={cx('mt-4 space-y-3', ds.text.bodySmall)}>
-            <li>B2B SaaS and product engineering</li>
             <li>Visual builders and operational tools</li>
+            <li>B2B SaaS and product engineering</li>
             <li>Mobile release and native product boundaries</li>
             <li>Teams using AI agents as part of real engineering work</li>
           </ul>
@@ -52,7 +56,7 @@ export default function AboutPage() {
             <h2 className="font-semibold">Evidence to review</h2>
             <ul className={cx('mt-3 space-y-3', ds.text.bodySmall)}>
               <li>
-                <TextLink href="/en/evidence">
+                <TextLink href={evidenceHref}>
                   Representative implementation and verification evidence
                 </TextLink>
               </li>
@@ -62,7 +66,7 @@ export default function AboutPage() {
                 </TextLink>
               </li>
               <li>
-                <TextLink href="/en/changelog">
+                <TextLink href={changelogHref}>
                   Monthly engineering changelog entries
                 </TextLink>
               </li>

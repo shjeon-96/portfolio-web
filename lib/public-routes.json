@@ -1,0 +1,128 @@
+[
+  {
+    "id": "home",
+    "paths": {
+      "ko": "/",
+      "en": "/en"
+    },
+    "labels": {
+      "ko": "홈",
+      "en": "Home"
+    },
+    "checkSnippets": {
+      "ko": ["복잡한 제품 상태와 배포 산출물을 맞추는 프론트엔드 개발자", "정적인 소개 대신 동작하는 제품 상태"],
+      "en": ["Product front-end for complex state and deployable output", "A live product-state surface"]
+    },
+    "lastModified": "2026-06-27",
+    "changeFrequency": "monthly",
+    "priority": 1
+  },
+  {
+    "id": "evidence",
+    "paths": {
+      "ko": "/evidence",
+      "en": "/en/evidence"
+    },
+    "labels": {
+      "ko": "구현 사례",
+      "en": "Case Studies"
+    },
+    "checkSnippets": {
+      "ko": ["내가 책임진 제품 화면과 검증 흐름"],
+      "en": ["Product surfaces and verification I have owned"]
+    },
+    "lastModified": "2026-06-27",
+    "changeFrequency": "monthly",
+    "priority": 0.9
+  },
+  {
+    "id": "changelog",
+    "paths": {
+      "ko": "/changelog",
+      "en": "/en/changelog"
+    },
+    "labels": {
+      "ko": "체인지로그",
+      "en": "Changelog"
+    },
+    "checkSnippets": {
+      "ko": ["월별 제품 엔지니어링 기록"],
+      "en": ["Monthly product engineering notes"]
+    },
+    "lastModified": "2026-06-27",
+    "changeFrequency": "monthly",
+    "priority": 0.8
+  },
+  {
+    "id": "ai-workflow",
+    "paths": {
+      "ko": "/ai-workflow",
+      "en": "/en/ai-workflow"
+    },
+    "labels": {
+      "ko": "AI 개발 흐름",
+      "en": "AI Workflow"
+    },
+    "checkSnippets": {
+      "ko": ["요청을 검증 가능한 변경으로 마무리하는 AI 개발 흐름"],
+      "en": ["An AI workflow for closing requests with verified changes"]
+    },
+    "lastModified": "2026-06-27",
+    "changeFrequency": "monthly",
+    "priority": 0.7
+  },
+  {
+    "id": "skills",
+    "paths": {
+      "ko": "/skills",
+      "en": "/en/skills"
+    },
+    "labels": {
+      "ko": "기술",
+      "en": "Skills"
+    },
+    "checkSnippets": {
+      "ko": ["기술 스택은 실제로 쓴 제품 경험과 함께 보여줍니다"],
+      "en": ["Technology stack with product context"]
+    },
+    "lastModified": "2026-06-27",
+    "changeFrequency": "monthly",
+    "priority": 0.7
+  },
+  {
+    "id": "about",
+    "paths": {
+      "ko": "/about",
+      "en": "/en/about"
+    },
+    "labels": {
+      "ko": "소개",
+      "en": "About"
+    },
+    "checkSnippets": {
+      "ko": ["제품 상태와 산출물 기준을 끝까지 맞추는 프론트엔드 개발자"],
+      "en": ["I align product state, output contracts, and front-end delivery."]
+    },
+    "lastModified": "2026-06-27",
+    "changeFrequency": "monthly",
+    "priority": 0.7
+  },
+  {
+    "id": "resume",
+    "paths": {
+      "ko": "/resume",
+      "en": "/en/resume"
+    },
+    "labels": {
+      "ko": "이력서",
+      "en": "Resume"
+    },
+    "checkSnippets": {
+      "ko": ["공개 이력서", "제품 프론트엔드 개발자"],
+      "en": ["Public Resume", "Product Front-End Engineer"]
+    },
+    "lastModified": "2026-06-27",
+    "changeFrequency": "monthly",
+    "priority": 0.8
+  }
+]

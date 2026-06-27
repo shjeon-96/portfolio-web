@@ -1,6 +1,6 @@
 import type { ChangelogEntry, ChangelogFocusKey } from '@/lib/data';
+import { getRoutePath, type Locale } from '@/lib/routes';
 
-type Locale = 'en' | 'ko';
 type ChangelogCategory = ChangelogEntry['category'];
 
 type ChangelogFocusRule = {
@@ -40,6 +40,21 @@ export const changelogFocusRules: Record<ChangelogFocusKey, ChangelogFocusRule> 
       ko: ['에디터 엔진', '내보내기/배포', '회귀 검증', '성능'],
     },
   },
+  ops: {
+    categories: ['ops-platform', 'admin-ops', 'pos-system', 'realtime-backend'],
+    description: {
+      en: 'Filtered to entries that support the B2B operations-console, workflow-state, migration, and realtime operations story.',
+      ko: 'B2B 운영 콘솔, 업무 상태, 마이그레이션, 실시간 운영 흐름을 뒷받침하는 항목만 모았습니다.',
+    },
+    label: {
+      en: 'Operations Evidence',
+      ko: '운영 콘솔 근거',
+    },
+    tags: {
+      en: ['B2B console', 'workflow state', 'migration', 'realtime ops'],
+      ko: ['B2B 콘솔', '업무 상태', '마이그레이션', '실시간 운영'],
+    },
+  },
   'mobile-release': {
     categories: ['mobile-release', 'native-product', 'app-review-tooling'],
     description: {
@@ -58,13 +73,13 @@ export const changelogFocusRules: Record<ChangelogFocusKey, ChangelogFocusRule> 
 };
 
 export function getChangelogFocusHref(locale: Locale, focus: ChangelogFocusKey) {
-  const pathname = locale === 'ko' ? '/changelog' : '/en/changelog';
+  const pathname = getChangelogIndexHref(locale);
 
   return `${pathname}?focus=${focus}`;
 }
 
 export function getChangelogIndexHref(locale: Locale) {
-  return locale === 'ko' ? '/changelog' : '/en/changelog';
+  return getRoutePath('changelog', locale);
 }
 
 export function getChangelogFocusState(focus: string | string[] | undefined): ChangelogFocusState {

@@ -1,6 +1,7 @@
 import { SectionHeading } from '@/components/section-heading';
 import { ActionLink, Panel, TextLink } from '@/components/ui';
 import { cx, ds } from '@/lib/design-system';
+import { getRoutePath } from '@/lib/routes';
 import { GITHUB_PROFILE_URL, PORTFOLIO_REPOSITORY_URL } from '@/lib/site-links';
 
 export const metadata = {
@@ -9,12 +10,15 @@ export const metadata = {
 };
 
 export default function KoreanAboutPage() {
+  const changelogHref = getRoutePath('changelog', 'ko');
+  const evidenceHref = getRoutePath('evidence', 'ko');
+
   return (
     <main className="page-shell page-narrow">
       <SectionHeading
         eyebrow="소개"
-        title="제품 상태와 릴리즈 기준을 끝까지 맞추는 프론트엔드 개발자"
-        description="에디터 엔진, 운영 도구, 모바일 제품 플랫폼, AI 에이전트를 활용한 개발 흐름처럼 여러 기준이 쉽게 어긋나는 제품을 구조화합니다."
+        title="제품 상태와 산출물 기준을 끝까지 맞추는 프론트엔드 개발자"
+        description="노코드 빌더, 운영 콘솔, 모바일 릴리즈, AI 에이전트를 활용한 개발 흐름처럼 여러 기준이 쉽게 어긋나는 제품을 구조화합니다."
       />
       <section className="mt-10 grid gap-6 lg:grid-cols-[1fr_320px]">
         <Panel as="article" className="p-6">
@@ -42,8 +46,8 @@ export default function KoreanAboutPage() {
         <Panel as="aside" className="p-6">
           <p className={ds.text.eyebrow}>현재 관심 영역</p>
           <ul className={cx('mt-4 space-y-3', ds.text.bodySmall)}>
-            <li>B2B SaaS와 제품 엔지니어링</li>
             <li>비주얼 빌더와 운영 도구</li>
+            <li>B2B SaaS와 제품 엔지니어링</li>
             <li>모바일 릴리즈와 네이티브 제품 구조</li>
             <li>AI 에이전트를 실제 개발 방식에 녹이는 팀</li>
           </ul>
@@ -51,7 +55,7 @@ export default function KoreanAboutPage() {
             <h2 className="font-semibold">볼 만한 근거</h2>
             <ul className={cx('mt-3 space-y-3', ds.text.bodySmall)}>
               <li>
-                <TextLink href="/evidence">
+                <TextLink href={evidenceHref}>
                   대표 구현 근거와 검증 기록
                 </TextLink>
               </li>
@@ -61,7 +65,7 @@ export default function KoreanAboutPage() {
                 </TextLink>
               </li>
               <li>
-                <TextLink href="/changelog">
+                <TextLink href={changelogHref}>
                   월별 엔지니어링 체인지로그
                 </TextLink>
               </li>

@@ -6,24 +6,24 @@ import { SectionHeading } from '@/components/section-heading';
 import { hiringFit, implementationEvidence } from '@/lib/data';
 
 export const metadata = {
-  title: 'Implementation Evidence',
-  description: 'Representative product surfaces, front-end ownership, skill signals, and verification evidence.',
+  title: 'Case Studies',
+  description: 'Representative product surfaces structured by problem, role, approach, result, and verification evidence.',
 };
 
 export default function EvidencePage() {
   return (
     <main className="page-shell">
       <SectionHeading
-        eyebrow="Implementation Evidence"
+        eyebrow="Case Studies"
         title="Product surfaces and verification I have owned"
-        description="This page moves beyond project summaries. It shows the product surface, front-end role, technical signal, and verification path behind representative work."
+        description="This page moves beyond project summaries. It shows how I structure editor state, operational workflow state, output parity, and verification paths through Problem, Role, Approach, Result, and Verification."
       />
       <GuidePanel
         ariaLabel="How to read implementation evidence"
         items={[
-          { title: 'Product surface', body: 'Look for the concrete UI, state model, output, or release boundary the work had to carry.' },
-          { title: 'Front-end signal', body: 'Look for React, Next.js, TypeScript, state ownership, and runtime verification signals.' },
-          { title: 'Verification evidence', body: 'Look for tests, builds, routes, generated output, and public-safe completion checks.' },
+          { title: 'Problem and role', body: 'Look for the builder, operations console, output, or release boundary the work had to carry.' },
+          { title: 'Approach and result', body: 'Look for React, Next.js, TypeScript, state ownership, API contracts, and runtime verification signals.' },
+          { title: 'Verification', body: 'Look for tests, builds, routes, generated output, and public-safe completion checks.' },
         ]}
       />
       <LiveEvidenceConsole locale="en" />

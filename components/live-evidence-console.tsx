@@ -6,7 +6,7 @@ import { Badge, BadgeList, Panel } from '@/components/ui';
 import { cx, ds } from '@/lib/design-system';
 
 type Locale = 'en' | 'ko';
-type WorkMode = 'agent' | 'editor' | 'mobile';
+type WorkMode = 'agent' | 'editor' | 'ops';
 type ToggleKey = 'contract' | 'publicSafe' | 'regression' | 'release';
 
 type ModeCopy = {
@@ -36,13 +36,13 @@ const modeCopy: Record<Locale, Record<WorkMode, ModeCopy>> = {
       title: 'State/output parity',
       tokens: ['variant owner', 'preview state', 'export contract', 'artifact check'],
     },
-    mobile: {
-      artifact: 'Release readiness ties config, runtime, widgets, and store evidence',
-      description: 'Mobile UI work is treated as part of release readiness, not only screen delivery.',
-      output: 'Runtime config, native policy, and smoke evidence are evaluated together.',
-      owner: 'Mobile release surface',
-      title: 'Release gate surface',
-      tokens: ['Expo config', 'runtime env', 'WidgetKit', 'store metadata'],
+    ops: {
+      artifact: 'Workflow state ties UI, API contracts, permissions, and deployment evidence',
+      description: 'Operational UI work is treated as workflow state, not only forms and tables.',
+      output: 'Approval, settlement, notification, and permission paths are reviewed through one operations contract.',
+      owner: 'B2B operations console',
+      title: 'Workflow-state console',
+      tokens: ['approval flow', 'API contract', 'permissions', 'migration path'],
     },
   },
   ko: {
@@ -62,13 +62,13 @@ const modeCopy: Record<Locale, Record<WorkMode, ModeCopy>> = {
       title: '상태와 결과물 일관성',
       tokens: ['Variant 책임', '미리보기 상태', '내보내기 기준', '결과물 확인'],
     },
-    mobile: {
-      artifact: '설정, 런타임, 위젯, 스토어 제출 근거가 릴리즈 준비로 연결됨',
-      description: '모바일 UI 작업을 화면 구현이 아니라 릴리즈 준비의 일부로 봅니다.',
-      output: '런타임 설정, 네이티브 정책, 스모크 근거를 함께 평가합니다.',
-      owner: '모바일 릴리즈 영역',
-      title: '릴리즈 게이트 영역',
-      tokens: ['Expo 설정', '런타임 환경', 'WidgetKit', '스토어 메타데이터'],
+    ops: {
+      artifact: '업무 상태가 UI, API 계약, 권한, 배포 근거와 연결됨',
+      description: '운영 UI 작업을 폼과 테이블 구현이 아니라 업무 상태로 봅니다.',
+      output: '승인, 정산, 알림, 권한 경로를 하나의 운영 기준으로 검토합니다.',
+      owner: 'B2B 운영 콘솔',
+      title: '업무 상태 콘솔',
+      tokens: ['승인 흐름', 'API 계약', '권한', '마이그레이션 경로'],
     },
   },
 };
@@ -84,7 +84,7 @@ const labels = {
     owner: 'Owner',
     publicSafe: 'Public-safe summary',
     regression: 'Regression coverage',
-    release: 'Release gate',
+    release: 'Release/deploy check',
     statusReady: 'Ready to close',
     statusReview: 'Needs review',
     title: 'A small state-to-output console built into this portfolio',
@@ -99,7 +99,7 @@ const labels = {
     owner: '담당 경로',
     publicSafe: '공개 가능한 요약',
     regression: '회귀 검증',
-    release: '릴리즈 게이트',
+    release: '릴리즈/배포 확인',
     statusReady: '완료 가능',
     statusReview: '검토 필요',
     title: '포트폴리오 안에서 직접 동작하는 상태-결과물 콘솔',
@@ -126,7 +126,7 @@ export function LiveEvidenceConsole({ locale }: Readonly<{ locale: Locale }>) {
       toggles.release ? modeChecks.release : modeChecks.releaseQueued,
     ];
   }, [locale, mode, toggles]);
-  const ready = toggles.contract && toggles.regression && toggles.publicSafe && (mode !== 'mobile' || toggles.release);
+  const ready = toggles.contract && toggles.regression && toggles.publicSafe && toggles.release;
 
   return (
     <Panel as="section" className="mt-10 overflow-hidden">
@@ -235,15 +235,15 @@ function getModeChecks(locale: Locale, mode: WorkMode) {
         release: 'Route surface documented',
         releaseQueued: '!Route documentation queued',
       },
-      mobile: {
-        contract: 'Config and runtime read one release model',
-        contractMissing: '!Release model split across files',
-        publicSafe: 'Store-facing copy is public-safe',
-        publicSafeMissing: '!Store copy needs review',
-        regression: 'Smoke evidence captured',
-        regressionMissing: '!Smoke evidence missing',
-        release: 'Release gate is complete',
-        releaseQueued: '!Release gate still open',
+      ops: {
+        contract: 'Workflow state and API contract agree',
+        contractMissing: '!Workflow rule split across UI and API',
+        publicSafe: 'Operations details are anonymized',
+        publicSafeMissing: '!Operations copy needs anonymization',
+        regression: 'Route and state checks passed',
+        regressionMissing: '!Operational state review missing',
+        release: 'Deploy path is documented',
+        releaseQueued: '!Deploy path still queued',
       },
     },
     ko: {
@@ -267,15 +267,15 @@ function getModeChecks(locale: Locale, mode: WorkMode) {
         release: '라우트 화면 문서화',
         releaseQueued: '!라우트 문서화 대기',
       },
-      mobile: {
-        contract: '설정과 런타임이 같은 릴리즈 기준 사용',
-        contractMissing: '!릴리즈 기준이 여러 파일에 분리됨',
-        publicSafe: '스토어에 노출되는 문구가 공개해도 안전함',
-        publicSafeMissing: '!스토어 문구 검토 필요',
-        regression: '스모크 테스트 근거 캡처',
-        regressionMissing: '!스모크 테스트 근거 누락',
-        release: '릴리즈 게이트 완료',
-        releaseQueued: '!릴리즈 게이트 미완료',
+      ops: {
+        contract: '업무 상태와 API 계약이 같은 기준 사용',
+        contractMissing: '!업무 규칙이 UI와 API에 분리됨',
+        publicSafe: '운영 세부사항 익명화 완료',
+        publicSafeMissing: '!운영 문구 익명화 필요',
+        regression: '라우트와 상태 검사 통과',
+        regressionMissing: '!운영 상태 검토 누락',
+        release: '배포 경로 문서화',
+        releaseQueued: '!배포 경로 정리 대기',
       },
     },
   };
