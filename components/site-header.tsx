@@ -9,6 +9,7 @@ import { cx, ds } from '@/lib/design-system';
 
 const navigationEn = [
   { href: '/en', label: 'Home' },
+  { href: '/en/evidence', label: 'Evidence' },
   { href: '/en/changelog', label: 'Changelog' },
   { href: '/en/ai-workflow', label: 'AI Workflow' },
   { href: '/en/skills', label: 'Skills' },
@@ -17,6 +18,7 @@ const navigationEn = [
 
 const navigationKo = [
   { href: '/', label: '홈' },
+  { href: '/evidence', label: '구현 근거' },
   { href: '/changelog', label: '체인지로그' },
   { href: '/ai-workflow', label: 'AI 개발 흐름' },
   { href: '/skills', label: '기술' },
@@ -29,8 +31,8 @@ export function SiteHeader() {
   const isKorean = !pathname.startsWith('/en');
   const navigation = isKorean ? navigationKo : navigationEn;
   const primaryShortcut = isKorean
-    ? { href: '/changelog', label: '기록' }
-    : { href: '/en/changelog', label: 'Notes' };
+    ? { href: '/evidence', label: '근거' }
+    : { href: '/en/evidence', label: 'Proof' };
   const menuLabel = isMenuOpen
     ? isKorean
       ? '내비게이션 메뉴 닫기'

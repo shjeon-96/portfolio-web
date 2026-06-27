@@ -44,6 +44,21 @@ export type SkillContext = {
   evidenceLabel: string;
 };
 
+export type ImplementationEvidence = {
+  title: string;
+  label: string;
+  summary: string;
+  surface: string;
+  role: string;
+  frontendSignals: string[];
+  verification: string[];
+  outcome: string;
+  href: string;
+  hrefLabel: string;
+  external?: boolean;
+  visualKind: 'editor' | 'mobile' | 'tooling' | 'web';
+};
+
 export const proofPoints = [
   'Open-source agent tooling',
   'Mobile release gates',
@@ -1010,6 +1025,67 @@ export const changelogEntries: ChangelogEntry[] = [
     result:
       'March 2026 now provides the missing foundation month for the nutrition-app arc.',
     stack: ['Flutter', 'AI advice', 'Notifications', 'Local storage', 'Service layer'],
+  },
+];
+
+export const implementationEvidence: ImplementationEvidence[] = [
+  {
+    title: 'Editor state and output parity',
+    label: 'Visual builder front-end',
+    summary:
+      'A product-builder surface where design-time state, runtime behavior, and generated output need to agree.',
+    surface: 'AST-like editor model, variant behavior, preview state, and export/deploy output.',
+    role: 'Kept the source-of-truth boundary between editable product state and user-facing generated artifacts.',
+    frontendSignals: ['React contracts', 'Typed state model', 'Conditional rendering rules', 'Generated artifact review'],
+    verification: ['Vitest regressions', 'Generated HTML inspection', 'Route and build checks'],
+    outcome: 'The portfolio shows front-end judgment beyond screen assembly: state ownership, output parity, and regression control.',
+    href: '/en/changelog',
+    hrefLabel: 'Review editor evidence',
+    visualKind: 'editor',
+  },
+  {
+    title: 'Mobile release gate workflow',
+    label: 'React Native product platform',
+    summary:
+      'A calendar-first mobile product where native configuration, widgets, store metadata, runtime environment, and UI smoke evidence must move together.',
+    surface: 'Expo/React Native app surfaces, native policy, widget configuration, and release readiness checks.',
+    role: 'Connected product UI, runtime configuration, and release verification into one delivery path.',
+    frontendSignals: ['React Native flows', 'Expo configuration', 'Widget surface ownership', 'Store-facing readiness'],
+    verification: ['EAS/build checks', 'Maestro smoke evidence', 'Runtime environment review'],
+    outcome: 'The work signals a front-end engineer who can carry a product surface through release boundaries, not only local UI implementation.',
+    href: '/en/changelog',
+    hrefLabel: 'Review release evidence',
+    visualKind: 'mobile',
+  },
+  {
+    title: 'Public code-intelligence tooling',
+    label: 'Open-source developer tooling',
+    summary:
+      'A read-only MCP/LSP bridge that exposes diagnostics, definitions, references, symbols, hover, and server status to agent workflows.',
+    surface: 'Local language-server integration exposed as safe, typed tools for code investigation.',
+    role: 'Built the integration boundary so AI-assisted development could use semantic code evidence without broad project write access.',
+    frontendSignals: ['TypeScript API design', 'MCP tool contracts', 'Language server adapters', 'Package release hygiene'],
+    verification: ['Vitest', 'Integration checks', 'Package smoke checks'],
+    outcome: 'This supports the portfolio claim that AI workflow is backed by real tooling and verification, not prompt-only usage.',
+    href: 'https://github.com/shjeon-96/codex-lsp-bridge',
+    hrefLabel: 'Open public repository',
+    external: true,
+    visualKind: 'tooling',
+  },
+  {
+    title: 'Privacy-first web toolkit direction',
+    label: 'Next.js web product',
+    summary:
+      'A browser-based developer toolkit direction for client-side processing, offline usage, i18n, and shareable tool state.',
+    surface: 'Next.js product shell, route model, tool panels, and public web deployment direction.',
+    role: 'Shaped a public-facing web product around local processing and repeatable tool state instead of server-dependent workflows.',
+    frontendSignals: ['Next.js App Router', 'TypeScript UI contracts', 'Tailwind system', 'PWA-oriented surfaces'],
+    verification: ['Route checks', 'Build checks', 'Public repository review'],
+    outcome: 'The work adds a web-product signal alongside editor systems, mobile release work, and developer tooling.',
+    href: 'https://github.com/shjeon-96/dev-tool-kit',
+    hrefLabel: 'Open public repository',
+    external: true,
+    visualKind: 'web',
   },
 ];
 

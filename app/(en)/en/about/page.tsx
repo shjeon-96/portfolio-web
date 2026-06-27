@@ -51,8 +51,8 @@ export default function AboutPage() {
             <h2 className="font-semibold">Evidence to review</h2>
             <ul className={cx('mt-3 space-y-3', ds.text.bodySmall)}>
               <li>
-                <TextLink href="/en/changelog">
-                  Monthly engineering changelog entries
+                <TextLink href="/en/evidence">
+                  Representative implementation and verification evidence
                 </TextLink>
               </li>
               <li>
@@ -61,8 +61,8 @@ export default function AboutPage() {
                 </TextLink>
               </li>
               <li>
-                <TextLink href="/en/ai-workflow">
-                  AI-agent workflow used in real engineering work
+                <TextLink href="/en/changelog">
+                  Monthly engineering changelog entries
                 </TextLink>
               </li>
             </ul>

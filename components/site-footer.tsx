@@ -14,7 +14,7 @@ export function SiteFooter() {
         <p className="font-mono uppercase tracking-[0.14em]">
           {isKorean ? 'Seunghun Jeon / 제품 시스템 포트폴리오' : 'Seunghun Jeon / Product Console Portfolio'}
         </p>
-        <p>{isKorean ? '공개 가능한 변경 기록, 프로젝트 기록, AI 개발 흐름.' : 'Public-safe changelog, project evidence, and AI workflow.'}</p>
+        <p>{isKorean ? '공개 가능한 구현 근거, 변경 기록, AI 개발 흐름.' : 'Public-safe implementation evidence, changelog, and AI workflow.'}</p>
       </div>
     </footer>
   );

@@ -50,8 +50,8 @@ export default function KoreanAboutPage() {
             <h2 className="font-semibold">볼 만한 근거</h2>
             <ul className={cx('mt-3 space-y-3', ds.text.bodySmall)}>
               <li>
-                <TextLink href="/changelog">
-                  월별 엔지니어링 체인지로그
+                <TextLink href="/evidence">
+                  대표 구현 근거와 검증 기록
                 </TextLink>
               </li>
               <li>
@@ -60,8 +60,8 @@ export default function KoreanAboutPage() {
                 </TextLink>
               </li>
               <li>
-                <TextLink href="/ai-workflow">
-                  AI 에이전트를 실제 개발에 적용한 작업 흐름
+                <TextLink href="/changelog">
+                  월별 엔지니어링 체인지로그
                 </TextLink>
               </li>
             </ul>

@@ -10,11 +10,11 @@ export const metadata: Metadata = {
     template: '%s | Seunghun Jeon',
   },
   description:
-    'Public portfolio for complex product UI, mobile release gates, editor engines, and AI-assisted engineering evidence.',
+    'Public portfolio for implementation evidence across complex product UI, mobile release gates, editor engines, and AI-assisted engineering.',
   openGraph: {
     title: 'Seunghun Jeon | Product Front-End Engineer',
     description:
-      'Public portfolio for complex product UI, mobile release gates, editor engines, and AI-assisted engineering evidence.',
+      'Public portfolio for implementation evidence across complex product UI, mobile release gates, editor engines, and AI-assisted engineering.',
     type: 'website',
   },
 };

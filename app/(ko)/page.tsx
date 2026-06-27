@@ -1,10 +1,11 @@
 import { ExternalLink } from 'lucide-react';
 import { ChangelogEntry } from '@/components/changelog-entry';
 import { HomeEvidencePanel } from '@/components/home-evidence-panel';
+import { ImplementationEvidenceBoard } from '@/components/implementation-evidence-board';
 import { ProjectHighlightCard } from '@/components/project-highlight-card';
 import { ActionLink, BadgeList, Panel } from '@/components/ui';
 import { sortChangelogEntriesByDateDesc } from '@/lib/data';
-import { changelogEntriesKo, projectHighlightsKo, proofPointsKo } from '@/lib/data-ko';
+import { changelogEntriesKo, implementationEvidenceKo, projectHighlightsKo, proofPointsKo } from '@/lib/data-ko';
 import { cx, ds } from '@/lib/design-system';
 
 export const metadata = {
@@ -23,6 +24,7 @@ export default function KoreanHomePage() {
     ].includes(project.title),
   );
   const homeChangelogEntries = sortChangelogEntriesByDateDesc(changelogEntriesKo).slice(0, 3);
+  const homeEvidenceEntries = implementationEvidenceKo.slice(0, 2);
 
   return (
     <main>
@@ -39,11 +41,11 @@ export default function KoreanHomePage() {
             릴리즈 검증, 생성 산출물이 같은 기준으로 이어지도록 구조화합니다.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
-            <ActionLink href="/changelog" variant="primary">
-              체인지로그 읽기
+            <ActionLink href="/evidence" variant="primary">
+              구현 근거 보기
             </ActionLink>
-            <ActionLink href="/ai-workflow">
-              AI 개발 흐름 보기
+            <ActionLink href="/changelog">
+              체인지로그 읽기
             </ActionLink>
             <ActionLink
               ariaLabel="GitHub 프로필"
@@ -88,6 +90,18 @@ export default function KoreanHomePage() {
           <Metric label="모바일 제품" value="릴리즈 게이트" />
           <Metric label="제품 시스템" value="에디터 엔진" />
         </div>
+      </section>
+      <section className={cx(ds.layout.content, 'py-14')}>
+        <div className="mb-6 flex flex-col justify-between gap-3 md:flex-row md:items-end">
+          <div>
+            <p className={ds.text.eyebrowAccent}>구현 근거</p>
+            <h2 className="mt-2 text-3xl font-semibold">프론트엔드 역량을 판단할 대표 표면</h2>
+          </div>
+          <ActionLink href="/evidence" variant="subtle">
+            전체 구현 근거 보기
+          </ActionLink>
+        </div>
+        <ImplementationEvidenceBoard entries={homeEvidenceEntries} locale="ko" />
       </section>
       <section className={ds.layout.sectionBand}>
         <div className={cx(ds.layout.content, 'py-14')}>

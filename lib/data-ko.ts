@@ -1,4 +1,4 @@
-import type { ChangelogEntry, ProjectHighlight, SkillContext } from '@/lib/data';
+import type { ChangelogEntry, ImplementationEvidence, ProjectHighlight, SkillContext } from '@/lib/data';
 
 export const proofPointsKo = [
   '오픈소스 에이전트 도구',
@@ -115,6 +115,67 @@ export const projectHighlightsKo: ProjectHighlight[] = [
       'SSR, 동적 라우팅, 이미지 최적화, 지연 로딩, i18n 라우트, 검색, 문의 흐름을 포함한 반응형 제품 카탈로그 사이트입니다.',
     stack: ['Next.js', 'TypeScript', 'SSR', 'SEO', 'i18n'],
     status: '외부에 공개되는 카탈로그와 성능 작업',
+  },
+];
+
+export const implementationEvidenceKo: ImplementationEvidence[] = [
+  {
+    title: '에디터 상태와 산출물 정합성',
+    label: '비주얼 빌더 프론트엔드',
+    summary:
+      '디자인 시점 상태, 런타임 동작, 생성 산출물이 같은 기준으로 맞아야 하는 제품 빌더 화면입니다.',
+    surface: 'AST-like 에디터 모델, Variant 동작, 미리보기 상태, export/deploy 산출물.',
+    role: '편집 가능한 제품 상태와 사용자에게 전달되는 생성 산출물 사이의 단일 기준 경계를 맞췄습니다.',
+    frontendSignals: ['React 계약', '타입 기반 상태 모델', '조건부 렌더링 규칙', '생성 산출물 검토'],
+    verification: ['Vitest 회귀 검증', '생성 HTML 확인', '라우트와 빌드 검사'],
+    outcome: '단순 화면 구현보다 상태 소유, 산출물 정합성, 회귀 방지까지 보는 프론트엔드 판단을 보여줍니다.',
+    href: '/changelog',
+    hrefLabel: '에디터 근거 보기',
+    visualKind: 'editor',
+  },
+  {
+    title: '모바일 릴리즈 게이트 흐름',
+    label: 'React Native 제품 플랫폼',
+    summary:
+      '네이티브 설정, 위젯, 스토어 메타데이터, 런타임 환경, UI 스모크 근거가 함께 움직여야 하는 캘린더 중심 모바일 제품입니다.',
+    surface: 'Expo/React Native 앱 화면, 네이티브 정책, 위젯 설정, 릴리즈 준비 검사.',
+    role: '제품 UI, 런타임 설정, 릴리즈 검증을 하나의 전달 경로로 연결했습니다.',
+    frontendSignals: ['React Native 흐름', 'Expo 설정', '위젯 surface 소유', '스토어 제출 준비'],
+    verification: ['EAS/build 검사', 'Maestro 스모크 근거', '런타임 환경 검토'],
+    outcome: '로컬 UI 구현에서 끝나지 않고 릴리즈 경계까지 제품 화면을 가져갈 수 있음을 보여줍니다.',
+    href: '/changelog',
+    hrefLabel: '릴리즈 근거 보기',
+    visualKind: 'mobile',
+  },
+  {
+    title: '공개 코드 인텔리전스 도구',
+    label: '오픈소스 개발자 도구',
+    summary:
+      '진단, 정의, 참조, 심볼, hover, 서버 상태를 에이전트 작업 흐름에 제공하는 읽기 전용 MCP/LSP 브리지입니다.',
+    surface: '로컬 언어 서버 통합을 안전한 타입 기반 도구로 노출하는 개발자 도구 표면.',
+    role: 'AI 보조 개발이 넓은 쓰기 권한 없이 의미 기반 코드 근거를 사용할 수 있도록 통합 경계를 만들었습니다.',
+    frontendSignals: ['TypeScript API 설계', 'MCP 도구 계약', '언어 서버 어댑터', '패키지 릴리즈 정리'],
+    verification: ['Vitest', '통합 검사', '패키지 스모크 검사'],
+    outcome: 'AI 개발 흐름이 프롬프트 사용이 아니라 실제 도구와 검증으로 뒷받침된다는 근거가 됩니다.',
+    href: 'https://github.com/shjeon-96/codex-lsp-bridge',
+    hrefLabel: '공개 저장소 보기',
+    external: true,
+    visualKind: 'tooling',
+  },
+  {
+    title: 'Privacy-first 웹 도구 제품 방향',
+    label: 'Next.js 웹 제품',
+    summary:
+      '클라이언트 처리, 오프라인 사용, i18n, 공유 가능한 도구 상태를 중심으로 구성한 브라우저 개발자 도구 방향입니다.',
+    surface: 'Next.js 제품 shell, 라우트 모델, 도구 패널, 공개 웹 배포 방향.',
+    role: '서버 의존 흐름보다 로컬 처리와 반복 가능한 도구 상태를 중심으로 공개 웹 제품 방향을 잡았습니다.',
+    frontendSignals: ['Next.js App Router', 'TypeScript UI 계약', 'Tailwind 시스템', 'PWA 지향 surface'],
+    verification: ['라우트 검사', '빌드 검사', '공개 저장소 검토'],
+    outcome: '에디터, 모바일 릴리즈, 개발자 도구 외에 웹 제품 구현 신호를 추가합니다.',
+    href: 'https://github.com/shjeon-96/dev-tool-kit',
+    hrefLabel: '공개 저장소 보기',
+    external: true,
+    visualKind: 'web',
   },
 ];
 

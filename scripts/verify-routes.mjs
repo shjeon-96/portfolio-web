@@ -9,8 +9,10 @@ const timeoutMs = Number(process.env.ROUTE_CHECK_TIMEOUT_MS ?? 75_000);
 const routes = [
   '/',
   '/about',
+  '/evidence',
   '/en',
   '/en/about',
+  '/en/evidence',
   '/changelog',
   '/en/changelog',
   '/skills',

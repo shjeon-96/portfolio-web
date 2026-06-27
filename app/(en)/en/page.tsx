@@ -1,9 +1,10 @@
 import { ExternalLink } from 'lucide-react';
 import { ChangelogEntry } from '@/components/changelog-entry';
 import { HomeEvidencePanel } from '@/components/home-evidence-panel';
+import { ImplementationEvidenceBoard } from '@/components/implementation-evidence-board';
 import { ProjectHighlightCard } from '@/components/project-highlight-card';
 import { ActionLink, BadgeList, Panel } from '@/components/ui';
-import { changelogEntries, projectHighlights, proofPoints, sortChangelogEntriesByDateDesc } from '@/lib/data';
+import { changelogEntries, implementationEvidence, projectHighlights, proofPoints, sortChangelogEntriesByDateDesc } from '@/lib/data';
 import { cx, ds } from '@/lib/design-system';
 
 export default function Home() {
@@ -17,6 +18,7 @@ export default function Home() {
     ].includes(project.title),
   );
   const homeChangelogEntries = sortChangelogEntriesByDateDesc(changelogEntries).slice(0, 3);
+  const homeEvidenceEntries = implementationEvidence.slice(0, 2);
 
   return (
     <main>
@@ -33,11 +35,11 @@ export default function Home() {
             runtime behavior, release checks, and generated artifacts must stay in sync.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
-            <ActionLink href="/en/changelog" variant="primary">
-              Read changelog
+            <ActionLink href="/en/evidence" variant="primary">
+              Review evidence
             </ActionLink>
-            <ActionLink href="/en/ai-workflow">
-              View AI workflow
+            <ActionLink href="/en/changelog">
+              Read changelog
             </ActionLink>
             <ActionLink
               ariaLabel="GitHub profile"
@@ -82,6 +84,18 @@ export default function Home() {
           <Metric label="Mobile product" value="Release gates" />
           <Metric label="Product system" value="Editor engine" />
         </div>
+      </section>
+      <section className={cx(ds.layout.content, 'py-14')}>
+        <div className="mb-6 flex flex-col justify-between gap-3 md:flex-row md:items-end">
+          <div>
+            <p className={ds.text.eyebrowAccent}>Implementation Evidence</p>
+            <h2 className="mt-2 text-3xl font-semibold">Representative surfaces for front-end evaluation</h2>
+          </div>
+          <ActionLink href="/en/evidence" variant="subtle">
+            View all evidence
+          </ActionLink>
+        </div>
+        <ImplementationEvidenceBoard entries={homeEvidenceEntries} locale="en" />
       </section>
       <section className={ds.layout.sectionBand}>
         <div className={cx(ds.layout.content, 'py-14')}>
