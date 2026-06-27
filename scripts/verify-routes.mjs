@@ -130,16 +130,27 @@ async function checkSitemap(url, expectedPaths) {
     return result;
   }
 
+  const expectedPathnames = new Set(expectedPaths);
   const locPathnames = new Set();
   const locPattern = /<loc>([^<]+)<\/loc>/g;
   let match;
 
   while ((match = locPattern.exec(result.body)) !== null) {
     try {
-      locPathnames.add(new URL(match[1]).pathname);
+      const pathname = new URL(match[1]).pathname;
+      if (locPathnames.has(pathname)) {
+        return { ok: false, reason: `included duplicate sitemap path: ${pathname}` };
+      }
+
+      locPathnames.add(pathname);
     } catch {
       return { ok: false, reason: `included invalid sitemap URL: ${JSON.stringify(match[1])}` };
     }
+  }
+
+  const extraPath = [...locPathnames].find((path) => !expectedPathnames.has(path));
+  if (extraPath) {
+    return { ok: false, reason: `included unregistered public route path: ${extraPath}` };
   }
 
   const missingPath = expectedPaths.find((path) => !locPathnames.has(path));
