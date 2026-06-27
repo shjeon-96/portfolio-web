@@ -78,22 +78,22 @@ export default function KoreanHomePage() {
         </div>
 
         <HomeEvidencePanel
-          kicker="Quick read"
-          title="개발팀장이 빠르게 확인할 수 있는 근거"
-          summary="화면 구현만이 아니라 제품 상태, 릴리즈 검증, 생성 산출물까지 이어지는 작업을 중심으로 정리했습니다."
+          kicker="Work Summary"
+          title="최근 작업의 중심축"
+          summary="화면 구현에 머물지 않고 제품 상태, 릴리즈 검증, 생성 산출물까지 이어지는 작업을 정리했습니다."
           items={[
             {
-              label: 'Core scope',
+              label: '작업 범위',
               title: '복잡한 제품 UI와 런타임 경계',
               description: '에디터 엔진, 모바일 릴리즈, AI 개발 도구처럼 상태와 산출물이 분리되기 쉬운 영역을 다룹니다.',
             },
             {
-              label: 'Recent proof',
+              label: '최근 작업',
               title: '케이스 스터디와 날짜별 체인지로그',
               description: '대표 작업은 문제, 접근, 결과, 검증 기준으로 정리하고 변경 이력은 일자별로 추적합니다.',
             },
             {
-              label: 'Work style',
+              label: '작업 방식',
               title: '원인 모듈을 찾고 좁게 고칩니다',
               description: '임시 우회보다 실제 소유 코드와 계약을 확인하고, 공개 가능한 범위에서 검증 근거를 남깁니다.',
             },

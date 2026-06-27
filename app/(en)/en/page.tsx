@@ -73,17 +73,17 @@ export default function Home() {
         </div>
 
         <HomeEvidencePanel
-          kicker="Quick read"
-          title="Evidence a technical lead can scan quickly"
+          kicker="Work Summary"
+          title="Recent work focus"
           summary="The portfolio focuses on product state, release verification, and generated output rather than isolated UI screenshots."
           items={[
             {
-              label: 'Core scope',
+              label: 'Scope',
               title: 'Complex product UI and runtime boundaries',
               description: 'Editor engines, mobile release paths, and AI tooling where state and output can easily drift.',
             },
             {
-              label: 'Recent proof',
+              label: 'Recent work',
               title: 'Case studies and date-based changelog',
               description: 'Representative work is structured by problem, approach, result, and verification evidence.',
             },
