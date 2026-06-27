@@ -11,6 +11,7 @@ const existingDevBaseUrl = process.env.ROUTE_EXISTING_BASE_URL ?? 'http://localh
 const timeoutMs = Number(process.env.ROUTE_CHECK_TIMEOUT_MS ?? 75_000);
 
 const publicRoutes = JSON.parse(readFileSync(new URL('../lib/public-routes.json', import.meta.url), 'utf8'));
+const portfolioSiteUrl = readPortfolioSiteUrl();
 validatePublicRoutes(publicRoutes);
 const homeRoute = getRequiredRoute(publicRoutes, 'home');
 const routeContentExpectations = buildRouteContentExpectations(publicRoutes);
@@ -65,12 +66,12 @@ try {
     }
   }
 
-  const sitemapResult = await checkSitemap(`${effectiveBaseUrl}/sitemap.xml`, publicRoutePaths);
+  const sitemapResult = await checkSitemap(`${effectiveBaseUrl}/sitemap.xml`, publicRoutePaths, portfolioSiteUrl);
   if (!sitemapResult.ok) {
     failures.push(`/sitemap.xml ${sitemapResult.reason}`);
   }
 
-  const robotsResult = await checkRobots(`${effectiveBaseUrl}/robots.txt`);
+  const robotsResult = await checkRobots(`${effectiveBaseUrl}/robots.txt`, portfolioSiteUrl);
   if (!robotsResult.ok) {
     failures.push(`/robots.txt ${robotsResult.reason}`);
   }
@@ -124,7 +125,7 @@ async function checkRoute(url, expectedSnippets) {
   return { ok: true };
 }
 
-async function checkSitemap(url, expectedPaths) {
+async function checkSitemap(url, expectedPaths, expectedOrigin) {
   const result = await fetchText(url);
   if (!result.ok) {
     return result;
@@ -137,7 +138,16 @@ async function checkSitemap(url, expectedPaths) {
 
   while ((match = locPattern.exec(result.body)) !== null) {
     try {
-      const pathname = new URL(match[1]).pathname;
+      const locUrl = new URL(match[1]);
+      if (locUrl.origin !== expectedOrigin) {
+        return { ok: false, reason: `included URL outside canonical origin: ${locUrl.href}` };
+      }
+
+      if (locUrl.search || locUrl.hash) {
+        return { ok: false, reason: `included non-canonical URL decoration: ${locUrl.href}` };
+      }
+
+      const pathname = locUrl.pathname;
       if (locPathnames.has(pathname)) {
         return { ok: false, reason: `included duplicate sitemap path: ${pathname}` };
       }
@@ -161,14 +171,25 @@ async function checkSitemap(url, expectedPaths) {
   return { ok: true };
 }
 
-async function checkRobots(url) {
+async function checkRobots(url, expectedOrigin) {
   const result = await fetchText(url);
   if (!result.ok) {
     return result;
   }
 
-  if (!/^Sitemap:\s*https?:\/\/\S+\/sitemap\.xml\s*$/im.test(result.body)) {
-    return { ok: false, reason: 'did not include an absolute sitemap.xml directive' };
+  const sitemapLines = result.body
+    .split(/\r?\n/)
+    .map((line) => line.trim())
+    .filter((line) => /^Sitemap:/i.test(line));
+
+  if (sitemapLines.length !== 1) {
+    return { ok: false, reason: `included ${sitemapLines.length} sitemap directives instead of 1` };
+  }
+
+  const expectedSitemapUrl = `${expectedOrigin}/sitemap.xml`;
+  const sitemapUrl = sitemapLines[0].replace(/^Sitemap:\s*/i, '').trim();
+  if (sitemapUrl !== expectedSitemapUrl) {
+    return { ok: false, reason: `declared sitemap ${sitemapUrl} instead of ${expectedSitemapUrl}` };
   }
 
   return { ok: true };
@@ -204,6 +225,22 @@ function delay(ms) {
   return new Promise((resolve) => {
     setTimeout(resolve, ms);
   });
+}
+
+function readPortfolioSiteUrl() {
+  const source = readFileSync(new URL('../lib/site-links.ts', import.meta.url), 'utf8');
+  const match = source.match(/export const PORTFOLIO_SITE_URL = '([^']+)';/);
+
+  if (!match) {
+    throw new Error('Missing PORTFOLIO_SITE_URL in lib/site-links.ts.');
+  }
+
+  const siteUrl = new URL(match[1]);
+  if (siteUrl.pathname !== '/' || siteUrl.search || siteUrl.hash) {
+    throw new Error(`PORTFOLIO_SITE_URL must be an origin-only URL: ${match[1]}`);
+  }
+
+  return siteUrl.origin;
 }
 
 function assertPortAvailable(hostname, portNumber) {
