@@ -1,10 +1,11 @@
 import type { Metadata } from 'next';
 import { SiteFooter } from '@/components/site-footer';
 import { SiteHeader } from '@/components/site-header';
+import { PORTFOLIO_SITE_URL } from '@/lib/site-links';
 import '../globals.css';
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://portfolio-web.vercel.app'),
+  metadataBase: new URL(PORTFOLIO_SITE_URL),
   title: {
     default: 'Seunghun Jeon | Product Front-End Engineer',
     template: '%s | Seunghun Jeon',

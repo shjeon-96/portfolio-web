@@ -1,6 +1,5 @@
 import type { MetadataRoute } from 'next';
-
-const baseUrl = 'https://portfolio-web.vercel.app';
+import { PORTFOLIO_SITE_URL } from '@/lib/site-links';
 
 export default function sitemap(): MetadataRoute.Sitemap {
   return [
@@ -17,7 +16,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/en/skills',
     '/en/about',
   ].map((route) => ({
-    url: `${baseUrl}${route}`,
+    url: `${PORTFOLIO_SITE_URL}${route}`,
     lastModified: new Date(),
   }));
 }
