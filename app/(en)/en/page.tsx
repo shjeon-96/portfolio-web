@@ -104,7 +104,7 @@ export default function Home() {
         <div className="flex flex-col justify-between gap-4 md:flex-row md:items-end">
           <div>
             <p className="text-sm font-semibold uppercase tracking-[0.16em] text-[var(--accent-blue)]">Selected Work</p>
-            <h2 className="mt-3 text-3xl font-semibold">Product systems I have worked through recently</h2>
+            <h2 className="mt-3 text-3xl font-semibold">Representative cases of clarified product complexity</h2>
           </div>
           <Link className="inline-flex min-h-11 items-center text-sm font-semibold text-[var(--accent-blue)]" href="/en/case-studies">
             View all case studies

@@ -60,8 +60,8 @@ export default async function CaseStudyDetailPage({ params }: { params: Promise<
         </div>
       ) : null}
 
-      <section className="mt-10 grid gap-4 md:grid-cols-3" aria-label="Case study summary">
-        <SummaryPoint label="Changed" value={caseStudy.result} />
+      <section className="mt-10 grid gap-4 md:grid-cols-3" aria-label="Case study intent">
+        <SummaryPoint label="What it shows" value={caseStudy.publicProof[0]} />
         <SummaryPoint label="Boundary" value={caseStudy.role} />
         <SummaryPoint label="Verified by" value={caseStudy.verification[0]} />
       </section>

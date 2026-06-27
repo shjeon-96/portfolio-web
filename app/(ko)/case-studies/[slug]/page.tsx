@@ -60,8 +60,8 @@ export default async function KoreanCaseStudyDetailPage({ params }: { params: Pr
         </div>
       ) : null}
 
-      <section className="mt-10 grid gap-4 md:grid-cols-3" aria-label="케이스 스터디 요약">
-        <SummaryPoint label="바뀐 점" value={caseStudy.result} />
+      <section className="mt-10 grid gap-4 md:grid-cols-3" aria-label="케이스 스터디 의도">
+        <SummaryPoint label="보여주는 것" value={caseStudy.publicProof[0]} />
         <SummaryPoint label="맡은 경계" value={caseStudy.role} />
         <SummaryPoint label="검증 기준" value={caseStudy.verification[0]} />
       </section>

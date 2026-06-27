@@ -87,7 +87,7 @@ export default function KoreanHomePage() {
             {
               label: '최근 작업',
               title: '케이스 스터디와 날짜별 체인지로그',
-              description: '대표 작업은 문제, 접근, 결과, 검증 기준으로 정리하고 변경 이력은 일자별로 추적합니다.',
+              description: '대표 작업은 복잡도, 소유 경계, 검증 기준으로 정리하고 변경 이력은 일자별로 추적합니다.',
             },
             {
               label: '작업 방식',
@@ -109,7 +109,7 @@ export default function KoreanHomePage() {
         <div className="flex flex-col justify-between gap-4 md:flex-row md:items-end">
           <div>
             <p className="text-sm font-semibold uppercase tracking-[0.16em] text-[var(--accent-blue)]">Selected Work</p>
-            <h2 className="mt-3 text-3xl font-semibold">최근에 깊게 다룬 제품 시스템</h2>
+            <h2 className="mt-3 text-3xl font-semibold">복잡도를 정리한 대표 사례</h2>
           </div>
           <Link className="inline-flex min-h-11 items-center text-sm font-semibold text-[var(--accent-blue)]" href="/case-studies">
             전체 케이스 스터디 보기
@@ -122,7 +122,7 @@ export default function KoreanHomePage() {
               cta="케이스 스터디 읽기"
               hrefPrefix="/case-studies"
               key={caseStudy.slug}
-              labels={{ proof: '작업 맥락', verification: '확인한 것' }}
+              labels={{ proof: '보여주는 역량', verification: '검증 근거' }}
             />
           ))}
         </div>
