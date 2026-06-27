@@ -1044,26 +1044,50 @@ export const aiWorkflowSteps = [
   {
     title: 'Frame the issue',
     description: 'Start from the product symptom, expected behavior, and user-visible impact instead of jumping to a patch.',
+    detail:
+      'I first write down what the user actually sees, what should have happened, and which product surface is affected. That keeps the agent from optimizing for a plausible code edit before the problem is understood.',
+    example:
+      'For UI or release issues, the starting point is usually a screenshot, failed route, build output, or exact runtime message rather than a broad request to improve the code.',
   },
   {
     title: 'Search the code path',
     description: 'Use agents to inspect likely owners, tests, generated artifacts, and adjacent contracts quickly.',
+    detail:
+      'Agents are useful for wide codebase search: finding owner modules, related tests, config files, and generated output. I use them to shrink the search space, not to decide the final fix.',
+    example:
+      'On this portfolio, that means checking route files, shared data, sitemap, route verification, and rendered HTML before deciding what copy or section should change.',
   },
   {
     title: 'Find the owner',
     description: 'Identify the canonical module responsible for the behavior and avoid adding parallel logic.',
+    detail:
+      'Before editing, I look for the single place that should own the rule. If several files say the same thing differently, I remove or update the stale source instead of adding another layer.',
+    example:
+      'When case studies were removed, the route, nav, sitemap, verifier, data model, and home copy all had to point to the same new portfolio structure.',
   },
   {
     title: 'Patch narrowly',
     description: 'Change the shared contract or owner path that explains the issue without adding silent alternate behavior.',
+    detail:
+      'The patch should explain the bug or product mismatch directly. I avoid adding fallback UI, placeholder content, or alternate behavior unless that exception is part of the actual product rule.',
+    example:
+      'For changelog dates, the data kept full dates for sorting while the display and grouping rules changed to month-level output.',
   },
   {
     title: 'Verify behavior',
     description: 'Run focused checks, inspect output, and add regression coverage where the failure could return.',
+    detail:
+      'AI can suggest what might be enough, but completion is decided by checks. I use lint, build, route checks, public-safety checks, rendered HTML, and browser overflow checks depending on the change.',
+    example:
+      'For visual/content changes, I verify both source references and actual rendered pages so removed links or stale sitemap entries do not survive.',
   },
   {
     title: 'Document the learning',
     description: 'Turn repeated diagnosis patterns into reusable workflow notes, tests, or public-safe changelog entries.',
+    detail:
+      'If the same kind of issue appears more than once, I turn it into a small rule, script, or public-safe changelog entry. The goal is to make the next investigation shorter.',
+    example:
+      'The monthly changelog generator and route checks are examples of making portfolio maintenance less dependent on memory.',
   },
 ];
 
