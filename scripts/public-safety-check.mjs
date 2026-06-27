@@ -25,8 +25,15 @@ const sensitivePathPatterns = [
   /(?:^|\/)\.env(?:$|\.)/,
   /(?:^|\/).*\.pem$/,
   /(?:^|\/).*\.key$/,
+  /(?:^|\/).*\.p8$/,
+  /(?:^|\/).*\.p12$/,
+  /(?:^|\/).*\.jks$/,
+  /(?:^|\/).*\.keystore$/,
+  /(?:^|\/).*\.mobileprovision$/,
   /(?:^|\/).*id_rsa$/,
   /(?:^|\/).*id_ed25519$/,
+  /(?:^|\/).*id_ecdsa$/,
+  /(?:^|\/).*id_dsa$/,
 ];
 
 const tokenRules = [
@@ -151,6 +158,10 @@ function getCandidateFiles() {
     .filter((file) => {
       if (file.startsWith('.git/') || file.startsWith('.next/') || file.startsWith('node_modules/')) {
         return false;
+      }
+
+      if (sensitivePathPatterns.some((pattern) => pattern.test(file))) {
+        return true;
       }
 
       const extension = path.extname(file);
