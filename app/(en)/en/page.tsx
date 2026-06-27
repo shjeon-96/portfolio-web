@@ -13,10 +13,6 @@ export default function Home() {
       'PureFlow',
       'Web Toolkit',
       'Tax and settlement operations platform',
-      'AI review operations system',
-      'Desktop POS system',
-      'Realtime delivery backend',
-      'Nightbound Survival',
     ].includes(project.title),
   );
   const homeChangelogEntries = [
@@ -72,7 +68,7 @@ export default function Home() {
         <HomeEvidencePanel
           kicker="Work Summary"
           title="Recent work focus"
-          summary="The portfolio focuses on product state, release verification, and generated output rather than isolated UI screenshots."
+          summary="The portfolio prioritizes state models, data flow, inspectable behavior, release verification, and generated output over isolated screenshots."
           items={[
             {
               label: 'Scope',
@@ -117,26 +113,35 @@ export default function Home() {
         </div>
       </section>
       <section className="border-y border-[var(--border)] bg-[var(--surface)]">
-        <div className="mx-auto max-w-7xl px-5 py-16">
+        <div className="mx-auto max-w-7xl px-5 py-14">
           <div className="flex flex-col justify-between gap-4 md:flex-row md:items-end">
             <div>
               <p className="text-sm font-semibold uppercase tracking-[0.16em] text-[var(--accent-blue)]">Project Ledger</p>
-              <h2 className="mt-3 text-3xl font-semibold">Products and tools beyond one codebase</h2>
+              <h2 className="mt-3 text-3xl font-semibold">Supporting project record</h2>
             </div>
             <p className="max-w-2xl text-sm leading-6 text-[var(--text-secondary)]">
-              A curated view of public repositories, private product systems, native apps, developer tools, and runtime work
-              that shaped how I build product software.
+              Case studies and changelog carry the main argument. This ledger adds a shorter view of public repositories
+              and product surfaces.
             </p>
           </div>
-          <div className="mt-8 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+          <div className="mt-8 grid gap-x-8 gap-y-2 md:grid-cols-2 xl:grid-cols-3">
             {featuredProjects.map((project) => (
               <ProjectHighlightCard project={project} key={project.title} />
             ))}
           </div>
         </div>
       </section>
-      <section className="mx-auto max-w-7xl px-5 pb-16">
-        <div className="rounded-xl border border-[var(--border)] bg-[var(--surface)] px-5 py-2 shadow-sm">
+      <section className="mx-auto max-w-7xl px-5 py-14">
+        <div className="mb-5 flex flex-col justify-between gap-3 md:flex-row md:items-end">
+          <div>
+            <p className="text-sm font-semibold uppercase tracking-[0.16em] text-[var(--accent-blue)]">Recent Changelog</p>
+            <h2 className="mt-2 text-3xl font-semibold">Recent engineering notes</h2>
+          </div>
+          <Link className="inline-flex min-h-11 items-center text-sm font-semibold text-[var(--accent-blue)]" href="/en/changelog">
+            View full changelog
+          </Link>
+        </div>
+        <div className="surface-panel px-5 py-2">
           {homeChangelogEntries.map((entry) => (
             <ChangelogEntry entry={entry} key={entry.title} />
           ))}

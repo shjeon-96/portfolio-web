@@ -18,10 +18,6 @@ export default function KoreanHomePage() {
       'PureFlow',
       'Web Toolkit',
       '세무·정산 운영 플랫폼',
-      'AI 리뷰 운영 시스템',
-      '데스크톱 POS 시스템',
-      '실시간 배달 운영 백엔드',
-      'Nightbound Survival',
     ].includes(project.title),
   );
   const homeChangelogEntries = [
@@ -77,7 +73,7 @@ export default function KoreanHomePage() {
         <HomeEvidencePanel
           kicker="Work Summary"
           title="최근 작업의 중심축"
-          summary="화면 구현에 머물지 않고 제품 상태, 릴리즈 검증, 생성 산출물까지 이어지는 작업을 정리했습니다."
+          summary="스크린샷보다 상태 모델, 데이터 흐름, 접근성 있는 동작, 릴리즈 검증, 생성 산출물을 중심으로 정리했습니다."
           items={[
             {
               label: '작업 범위',
@@ -128,26 +124,34 @@ export default function KoreanHomePage() {
         </div>
       </section>
       <section className="border-y border-[var(--border)] bg-[var(--surface)]">
-        <div className="mx-auto max-w-7xl px-5 py-16">
+        <div className="mx-auto max-w-7xl px-5 py-14">
           <div className="flex flex-col justify-between gap-4 md:flex-row md:items-end">
             <div>
               <p className="text-sm font-semibold uppercase tracking-[0.16em] text-[var(--accent-blue)]">Project Ledger</p>
-              <h2 className="mt-3 text-3xl font-semibold">웹 밖에서도 이어온 제품과 도구들</h2>
+              <h2 className="mt-3 text-3xl font-semibold">보조로 참고할 프로젝트 기록</h2>
             </div>
             <p className="max-w-2xl text-sm leading-6 text-[var(--text-secondary)]">
-              회사 프로젝트 한 축만 보여주지 않고, 오픈소스 에이전트 도구, 모바일 앱, 네이티브 앱, 개발자 도구,
-              게임 런타임까지 직접 다뤄온 범위를 정리했습니다.
+              핵심 판단은 케이스 스터디와 체인지로그에서 하고, 여기서는 공개 저장소와 제품 범위를 짧게 보완합니다.
             </p>
           </div>
-          <div className="mt-8 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+          <div className="mt-8 grid gap-x-8 gap-y-2 md:grid-cols-2 xl:grid-cols-3">
             {featuredProjects.map((project) => (
               <ProjectHighlightCard project={project} key={project.title} />
             ))}
           </div>
         </div>
       </section>
-      <section className="mx-auto max-w-7xl px-5 pb-16">
-        <div className="rounded-xl border border-[var(--border)] bg-[var(--surface)] px-5 py-2 shadow-sm">
+      <section className="mx-auto max-w-7xl px-5 py-14">
+        <div className="mb-5 flex flex-col justify-between gap-3 md:flex-row md:items-end">
+          <div>
+            <p className="text-sm font-semibold uppercase tracking-[0.16em] text-[var(--accent-blue)]">Recent Changelog</p>
+            <h2 className="mt-2 text-3xl font-semibold">최근 변경 기록</h2>
+          </div>
+          <Link className="inline-flex min-h-11 items-center text-sm font-semibold text-[var(--accent-blue)]" href="/changelog">
+            전체 체인지로그 보기
+          </Link>
+        </div>
+        <div className="surface-panel px-5 py-2">
           {homeChangelogEntries.map((entry) => (
             <ChangelogEntry entry={entry} key={entry.title} />
           ))}
