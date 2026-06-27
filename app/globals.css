@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 :root {
-  --background: #f3f5f2;
+  --background: #f6f7f5;
   --surface: #ffffff;
   --surface-strong: #fbfcf8;
   --text-primary: #111a1f;
@@ -11,7 +11,7 @@
   --accent-blue: #1f66e5;
   --accent-green: #1b8f65;
   --accent-amber: #b56a15;
-  --shadow-panel: 0 18px 50px rgb(33 41 47 / 8%);
+  --shadow-panel: 0 10px 28px rgb(33 41 47 / 6%);
 }
 
 * {
@@ -25,11 +25,7 @@ html {
 body {
   margin: 0;
   font-family: "Pretendard", "Apple SD Gothic Neo", "Noto Sans KR", "Aptos", system-ui, sans-serif;
-  background:
-    linear-gradient(90deg, rgb(17 26 31 / 4%) 1px, transparent 1px),
-    linear-gradient(180deg, rgb(17 26 31 / 4%) 1px, transparent 1px),
-    var(--background);
-  background-size: 32px 32px;
+  background: var(--background);
   color: var(--text-primary);
 }
 
@@ -39,27 +35,4 @@ body {
 
 .text-balance {
   text-wrap: balance;
-}
-
-.hero-grid {
-  position: relative;
-}
-
-.hero-grid::before {
-  position: absolute;
-  inset: 24px 20px auto;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, var(--border), transparent);
-  content: "";
-}
-
-.hero-console {
-  overflow: hidden;
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  background:
-    linear-gradient(135deg, rgb(31 102 229 / 8%), transparent 38%),
-    linear-gradient(315deg, rgb(27 143 101 / 8%), transparent 36%),
-    var(--surface);
-  box-shadow: var(--shadow-panel);
 }

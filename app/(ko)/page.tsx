@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { CaseStudyCard } from '@/components/case-study-card';
 import { ChangelogEntry } from '@/components/changelog-entry';
-import { HomeConsoleVisual } from '@/components/home-console-visual';
+import { HomeEvidencePanel } from '@/components/home-evidence-panel';
 import { ProjectHighlightCard } from '@/components/project-highlight-card';
 import { caseStudiesKo, changelogEntriesKo, projectHighlightsKo, proofPointsKo } from '@/lib/data-ko';
 
@@ -34,7 +34,7 @@ export default function KoreanHomePage() {
 
   return (
     <main>
-      <section className="hero-grid mx-auto grid min-h-[calc(100vh-73px)] w-full max-w-7xl gap-10 px-5 py-16 lg:grid-cols-[1.08fr_0.92fr] lg:items-center">
+      <section className="mx-auto grid w-full max-w-7xl gap-10 px-5 py-14 lg:grid-cols-[1.08fr_0.92fr] lg:items-center lg:py-20">
         <div>
           <p className="mb-4 font-mono text-sm font-medium uppercase tracking-[0.16em] text-[var(--accent-blue)]">
             Product Console Portfolio
@@ -77,17 +77,27 @@ export default function KoreanHomePage() {
           </div>
         </div>
 
-        <HomeConsoleVisual
-          kicker="Working Surface"
-          title="Product systems map"
-          subtitle="AI 도구, 모바일 릴리즈, 에디터 엔진을 하나의 제품 판단 흐름으로 정리합니다."
-          signals={[
-            { label: 'agent', value: 'semantic tooling', tone: 'blue' },
-            { label: 'mobile', value: 'release gates', tone: 'green' },
-            { label: 'editor', value: 'runtime output', tone: 'amber' },
+        <HomeEvidencePanel
+          kicker="Quick read"
+          title="개발팀장이 빠르게 확인할 수 있는 근거"
+          summary="화면 구현만이 아니라 제품 상태, 릴리즈 검증, 생성 산출물까지 이어지는 작업을 중심으로 정리했습니다."
+          items={[
+            {
+              label: 'Core scope',
+              title: '복잡한 제품 UI와 런타임 경계',
+              description: '에디터 엔진, 모바일 릴리즈, AI 개발 도구처럼 상태와 산출물이 분리되기 쉬운 영역을 다룹니다.',
+            },
+            {
+              label: 'Recent proof',
+              title: '케이스 스터디와 날짜별 체인지로그',
+              description: '대표 작업은 문제, 접근, 결과, 검증 기준으로 정리하고 변경 이력은 일자별로 추적합니다.',
+            },
+            {
+              label: 'Work style',
+              title: '원인 모듈을 찾고 좁게 고칩니다',
+              description: '임시 우회보다 실제 소유 코드와 계약을 확인하고, 공개 가능한 범위에서 검증 근거를 남깁니다.',
+            },
           ]}
-          processItems={['원본 기준', '런타임 계약', '릴리즈 근거']}
-          footnote="포트폴리오의 각 항목은 문제, 접근, 결과, 검증 경계가 같은 구조로 이어집니다."
         />
       </section>
       <section className="border-y border-[var(--border)] bg-[var(--surface)]">

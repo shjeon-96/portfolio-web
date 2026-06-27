@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { CaseStudyCard } from '@/components/case-study-card';
 import { ChangelogEntry } from '@/components/changelog-entry';
-import { HomeConsoleVisual } from '@/components/home-console-visual';
+import { HomeEvidencePanel } from '@/components/home-evidence-panel';
 import { ProjectHighlightCard } from '@/components/project-highlight-card';
 import { caseStudies, changelogEntries, projectHighlights, proofPoints } from '@/lib/data';
 
@@ -29,7 +29,7 @@ export default function Home() {
 
   return (
     <main>
-      <section className="hero-grid mx-auto grid min-h-[calc(100vh-73px)] w-full max-w-7xl gap-10 px-5 py-16 lg:grid-cols-[1.08fr_0.92fr] lg:items-center">
+      <section className="mx-auto grid w-full max-w-7xl gap-10 px-5 py-14 lg:grid-cols-[1.08fr_0.92fr] lg:items-center lg:py-20">
         <div>
           <p className="mb-4 font-mono text-sm font-medium uppercase tracking-[0.16em] text-[var(--accent-blue)]">
             Product Console Portfolio
@@ -72,17 +72,27 @@ export default function Home() {
           </div>
         </div>
 
-        <HomeConsoleVisual
-          kicker="Working Surface"
-          title="Product systems map"
-          subtitle="AI tooling, mobile release, and editor engines are presented as one product decision loop."
-          signals={[
-            { label: 'agent', value: 'semantic tooling', tone: 'blue' },
-            { label: 'mobile', value: 'release gates', tone: 'green' },
-            { label: 'editor', value: 'runtime output', tone: 'amber' },
+        <HomeEvidencePanel
+          kicker="Quick read"
+          title="Evidence a technical lead can scan quickly"
+          summary="The portfolio focuses on product state, release verification, and generated output rather than isolated UI screenshots."
+          items={[
+            {
+              label: 'Core scope',
+              title: 'Complex product UI and runtime boundaries',
+              description: 'Editor engines, mobile release paths, and AI tooling where state and output can easily drift.',
+            },
+            {
+              label: 'Recent proof',
+              title: 'Case studies and date-based changelog',
+              description: 'Representative work is structured by problem, approach, result, and verification evidence.',
+            },
+            {
+              label: 'Work style',
+              title: 'Find the owner and patch narrowly',
+              description: 'Changes are tied to the owning module and verified through the public-safe evidence path.',
+            },
           ]}
-          processItems={['source truth', 'runtime contract', 'release evidence']}
-          footnote="Each portfolio item follows the same problem, approach, result, and verification structure."
         />
       </section>
       <section className="border-y border-[var(--border)] bg-[var(--surface)]">

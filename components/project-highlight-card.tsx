@@ -2,10 +2,10 @@ import type { ProjectHighlight } from '@/lib/data';
 
 export function ProjectHighlightCard({ project }: Readonly<{ project: ProjectHighlight }>) {
   const content = (
-    <article className="h-full rounded-lg border border-[var(--border)] bg-[var(--surface-strong)] p-5 shadow-sm transition hover:-translate-y-0.5 hover:border-[color-mix(in_srgb,var(--accent-green)_28%,var(--border))] hover:shadow-[var(--shadow-panel)]">
+    <article className="h-full rounded-lg border border-[var(--border)] bg-[var(--surface-strong)] p-5 shadow-sm transition hover:border-[color-mix(in_srgb,var(--accent-green)_28%,var(--border))] hover:shadow-[var(--shadow-panel)]">
       <div className="flex items-start justify-between gap-3">
         <p className="font-mono text-xs font-semibold uppercase tracking-[0.14em] text-[var(--accent-blue)]">{project.label}</p>
-        <span className="mt-0.5 h-2 w-2 shrink-0 rounded-full bg-[var(--accent-green)]" />
+        <span className="text-xs font-semibold text-[var(--text-muted)]">Project</span>
       </div>
       <h3 className="mt-3 text-xl font-semibold">{project.title}</h3>
       <p className="mt-3 text-sm leading-6 text-[var(--text-secondary)]">{project.summary}</p>
