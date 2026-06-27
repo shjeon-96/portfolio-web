@@ -13,7 +13,8 @@ const timeoutMs = Number(process.env.ROUTE_CHECK_TIMEOUT_MS ?? 75_000);
 const publicRoutes = JSON.parse(readFileSync(new URL('../lib/public-routes.json', import.meta.url), 'utf8'));
 const homeRoute = getRequiredRoute(publicRoutes, 'home');
 const routeContentExpectations = buildRouteContentExpectations(publicRoutes);
-const routes = [...routeContentExpectations.keys(), '/sitemap.xml', '/robots.txt'];
+const publicRoutePaths = [...routeContentExpectations.keys()];
+const routes = [...publicRoutePaths, '/sitemap.xml', '/robots.txt'];
 
 let server;
 let serverExited = false;
@@ -63,6 +64,16 @@ try {
     }
   }
 
+  const sitemapResult = await checkSitemap(`${effectiveBaseUrl}/sitemap.xml`, publicRoutePaths);
+  if (!sitemapResult.ok) {
+    failures.push(`/sitemap.xml ${sitemapResult.reason}`);
+  }
+
+  const robotsResult = await checkRobots(`${effectiveBaseUrl}/robots.txt`);
+  if (!robotsResult.ok) {
+    failures.push(`/robots.txt ${robotsResult.reason}`);
+  }
+
   if (failures.length > 0) {
     console.error('Route response check failed.');
     for (const failure of failures) {
@@ -97,6 +108,61 @@ async function waitForServer(url, timeout, getOutput) {
 }
 
 async function checkRoute(url, expectedSnippets) {
+  const result = await fetchText(url);
+  if (!result.ok) {
+    return result;
+  }
+
+  if (expectedSnippets) {
+    const missingSnippet = expectedSnippets.find((snippet) => !result.body.includes(snippet));
+    if (missingSnippet) {
+      return { ok: false, reason: `did not include expected content: ${JSON.stringify(missingSnippet)}` };
+    }
+  }
+
+  return { ok: true };
+}
+
+async function checkSitemap(url, expectedPaths) {
+  const result = await fetchText(url);
+  if (!result.ok) {
+    return result;
+  }
+
+  const locPathnames = new Set();
+  const locPattern = /<loc>([^<]+)<\/loc>/g;
+  let match;
+
+  while ((match = locPattern.exec(result.body)) !== null) {
+    try {
+      locPathnames.add(new URL(match[1]).pathname);
+    } catch {
+      return { ok: false, reason: `included invalid sitemap URL: ${JSON.stringify(match[1])}` };
+    }
+  }
+
+  const missingPath = expectedPaths.find((path) => !locPathnames.has(path));
+  if (missingPath) {
+    return { ok: false, reason: `did not include public route path: ${missingPath}` };
+  }
+
+  return { ok: true };
+}
+
+async function checkRobots(url) {
+  const result = await fetchText(url);
+  if (!result.ok) {
+    return result;
+  }
+
+  if (!/^Sitemap:\s*https?:\/\/\S+\/sitemap\.xml\s*$/im.test(result.body)) {
+    return { ok: false, reason: 'did not include an absolute sitemap.xml directive' };
+  }
+
+  return { ok: true };
+}
+
+async function fetchText(url) {
   const response = await fetchQuietly(url);
   if (!response) {
     return { ok: false, reason: 'request failed' };
@@ -111,14 +177,7 @@ async function checkRoute(url, expectedSnippets) {
     return { ok: false, reason: 'returned an empty body' };
   }
 
-  if (expectedSnippets) {
-    const missingSnippet = expectedSnippets.find((snippet) => !body.includes(snippet));
-    if (missingSnippet) {
-      return { ok: false, reason: `did not include expected content: ${JSON.stringify(missingSnippet)}` };
-    }
-  }
-
-  return { ok: true };
+  return { ok: true, body };
 }
 
 async function fetchQuietly(url) {

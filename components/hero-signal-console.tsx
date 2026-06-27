@@ -127,7 +127,7 @@ export function HeroSignalConsole({ locale }: Readonly<{ locale: Locale }>) {
             {labels.live}
           </Badge>
         </div>
-        <div aria-label={labels.modeLabel} className="mt-4 grid gap-2 sm:grid-cols-3">
+        <div aria-label={labels.modeLabel} className="mt-4 grid gap-2 sm:grid-cols-3" role="group">
           {modeOrder.map((item) => {
             const Icon = modeIcons[item];
             const active = mode === item;
