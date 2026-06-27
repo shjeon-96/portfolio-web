@@ -11,6 +11,7 @@ const existingDevBaseUrl = process.env.ROUTE_EXISTING_BASE_URL ?? 'http://localh
 const timeoutMs = Number(process.env.ROUTE_CHECK_TIMEOUT_MS ?? 75_000);
 
 const publicRoutes = JSON.parse(readFileSync(new URL('../lib/public-routes.json', import.meta.url), 'utf8'));
+validatePublicRoutes(publicRoutes);
 const homeRoute = getRequiredRoute(publicRoutes, 'home');
 const routeContentExpectations = buildRouteContentExpectations(publicRoutes);
 const publicRoutePaths = [...routeContentExpectations.keys()];
@@ -228,6 +229,51 @@ function buildRouteContentExpectations(routeDefinitions) {
   }
 
   return expectations;
+}
+
+function validatePublicRoutes(routeDefinitions) {
+  if (!Array.isArray(routeDefinitions) || routeDefinitions.length === 0) {
+    throw new Error('Public route registry must be a non-empty array.');
+  }
+
+  const routeIds = new Set();
+  const routePaths = new Map();
+  const locales = ['ko', 'en'];
+
+  for (const route of routeDefinitions) {
+    if (!route?.id || typeof route.id !== 'string') {
+      throw new Error('Public route is missing a string id.');
+    }
+
+    if (routeIds.has(route.id)) {
+      throw new Error(`Duplicate public route id: ${route.id}`);
+    }
+
+    routeIds.add(route.id);
+
+    for (const locale of locales) {
+      const routePath = route.paths?.[locale];
+      if (typeof routePath !== 'string' || !routePath.startsWith('/')) {
+        throw new Error(`Public route ${route.id} is missing an absolute ${locale} path.`);
+      }
+
+      const existingRoute = routePaths.get(routePath);
+      if (existingRoute) {
+        throw new Error(`Duplicate public route path: ${routePath} (${existingRoute} and ${route.id}.${locale})`);
+      }
+
+      routePaths.set(routePath, `${route.id}.${locale}`);
+
+      const snippets = route.checkSnippets?.[locale];
+      if (
+        !Array.isArray(snippets) ||
+        snippets.length === 0 ||
+        snippets.some((snippet) => typeof snippet !== 'string' || snippet.trim().length === 0)
+      ) {
+        throw new Error(`Public route ${route.id} is missing non-empty ${locale} check snippets.`);
+      }
+    }
+  }
 }
 
 function getRequiredRoute(routeDefinitions, routeId) {
