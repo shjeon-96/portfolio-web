@@ -29,6 +29,8 @@ export function SiteHeader() {
   const pathname = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const isKorean = !pathname.startsWith('/en');
+  const englishHref = getLocalizedPath(pathname, 'en');
+  const koreanHref = getLocalizedPath(pathname, 'ko');
   const navigation = isKorean ? navigationKo : navigationEn;
   const primaryShortcut = isKorean
     ? { href: '/evidence', label: '근거' }
@@ -79,13 +81,13 @@ export function SiteHeader() {
           <span className="mx-1 h-4 w-px shrink-0 bg-[var(--border)]" />
           <Link
             className={navLinkClassName}
-            href="/en"
+            href={englishHref}
           >
             EN
           </Link>
           <Link
             className={navLinkClassName}
-            href="/"
+            href={koreanHref}
           >
             KO
           </Link>
@@ -131,14 +133,14 @@ export function SiteHeader() {
             <div className="mt-2 grid grid-cols-2 gap-2 border-t border-[var(--border)] pt-3">
               <Link
                 className={cx(ds.action.secondary, 'px-3 py-0')}
-                href="/en"
+                href={englishHref}
                 onClick={() => setIsMenuOpen(false)}
               >
                 EN
               </Link>
               <Link
                 className={cx(ds.action.secondary, 'px-3 py-0')}
-                href="/"
+                href={koreanHref}
                 onClick={() => setIsMenuOpen(false)}
               >
                 KO
@@ -149,4 +151,18 @@ export function SiteHeader() {
       ) : null}
     </header>
   );
+}
+
+function getLocalizedPath(pathname: string, locale: 'en' | 'ko') {
+  const koreanPath = pathname === '/en'
+    ? '/'
+    : pathname.startsWith('/en/')
+      ? pathname.slice('/en'.length)
+      : pathname;
+
+  if (locale === 'ko') {
+    return koreanPath;
+  }
+
+  return koreanPath === '/' ? '/en' : `/en${koreanPath}`;
 }

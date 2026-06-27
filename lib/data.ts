@@ -33,6 +33,7 @@ export type ProjectHighlight = {
   summary: string;
   stack: string[];
   status: string;
+  featured?: boolean;
   href?: string;
 };
 
@@ -99,6 +100,7 @@ export const projectHighlights: ProjectHighlight[] = [
       'Read-only MCP/LSP bridge that gives Codex diagnostics, definitions, references, symbols, hover, and status from local language servers.',
     stack: ['TypeScript', 'Node.js', 'MCP', 'LSP', 'Vitest'],
     status: 'Public package and GitHub repository',
+    featured: true,
     href: 'https://github.com/shjeon-96/codex-lsp-bridge',
   },
   {
@@ -108,6 +110,7 @@ export const projectHighlights: ProjectHighlight[] = [
       'Calendar-first mobile product with release gates for native policy, EAS configuration, runtime environment, widgets, store metadata, and UI smoke evidence.',
     stack: ['Expo', 'React Native', 'TypeScript', 'Supabase', 'EAS'],
     status: 'iOS/Android release workflow',
+    featured: true,
   },
   {
     title: 'PureFlow',
@@ -116,6 +119,7 @@ export const projectHighlights: ProjectHighlight[] = [
       'SwiftUI and SwiftData productivity app organized with MVVM, feature modules, adaptive navigation, CloudKit sync, widget, and share extension targets.',
     stack: ['SwiftUI', 'SwiftData', 'CloudKit', 'Firebase', 'Swift Testing'],
     status: 'iOS, iPadOS, and Mac Catalyst architecture',
+    featured: true,
   },
   {
     title: 'Web Toolkit',
@@ -124,6 +128,7 @@ export const projectHighlights: ProjectHighlight[] = [
       'Browser-based developer toolkit direction for client-side processing, offline PWA usage, i18n, WebAssembly-powered tools, and shareable tool state.',
     stack: ['Next.js', 'React', 'TypeScript', 'Tailwind CSS', 'Vitest'],
     status: 'Public web product direction',
+    featured: true,
     href: 'https://github.com/shjeon-96/dev-tool-kit',
   },
   {
@@ -159,6 +164,7 @@ export const projectHighlights: ProjectHighlight[] = [
       'Business workflow platform covering tax agency requests, purchase and sales dashboards, merchant approval, notifications, and legacy Vue to React to Next.js migration.',
     stack: ['Flutter', 'React', 'Next.js', 'Firebase', 'Docker'],
     status: 'Operational workflow and framework migration',
+    featured: true,
   },
   {
     title: 'AI review operations system',
@@ -1110,25 +1116,25 @@ export const implementationEvidence: ImplementationEvidence[] = [
 
 export const hiringFit: HiringFit = {
   summary:
-    'The strongest hiring signal is product front-end work where state ownership, generated output, release readiness, and verification need to stay aligned.',
+    'My strongest area is product front-end work where state ownership, generated output, release readiness, and verification need to stay aligned.',
   strongFits: [
     {
       title: 'B2B SaaS product front-end',
-      fit: 'Strong fit for console-like products, admin tools, operational workflows, and product surfaces with dense state.',
+      fit: 'Strongest around console-like products, admin tools, operational workflows, and product surfaces with dense state.',
       evidence: ['Project evidence page', 'Monthly changelog', 'Design-system primitives'],
-      interviewProbe: 'Ask how the owner boundary was identified before changing shared product state.',
+      interviewProbe: 'I look for the owning boundary and product rule before changing shared product state.',
     },
     {
       title: 'Visual builder or editor systems',
-      fit: 'Strong fit where variants, nested models, preview/output parity, and generated artifacts matter.',
+      fit: 'Strongest where variants, nested models, preview/output parity, and generated artifacts matter.',
       evidence: ['Editor state evidence', 'Export runtime parity entry', 'Generated artifact review loop'],
-      interviewProbe: 'Ask how preview behavior and export behavior were kept on one contract.',
+      interviewProbe: 'I keep preview behavior and export behavior tied to one product contract.',
     },
     {
       title: 'Front-end platform with AI workflows',
-      fit: 'Strong fit for teams using agents, semantic tooling, and verification-heavy engineering loops.',
+      fit: 'Strongest in teams using agents, semantic tooling, and verification-heavy engineering loops.',
       evidence: ['AI workflow page', 'codex-lsp-bridge public repository', 'Agent root-cause changelog entry'],
-      interviewProbe: 'Ask where AI suggestions are accepted, rejected, or verified against code evidence.',
+      interviewProbe: 'I treat AI suggestions as hypotheses until source paths, tests, and generated output verify them.',
     },
   ],
   cautionFits: [
@@ -1136,13 +1142,13 @@ export const hiringFit: HiringFit = {
       title: 'Marketing-heavy visual design roles',
       fit: 'Less directly proven than product-console and product-system work.',
       evidence: ['Portfolio visual direction is intentionally console-like', 'Limited campaign or consumer-brand evidence'],
-      interviewProbe: 'Ask for a separate visual-design exercise if the role depends on campaign art direction.',
+      interviewProbe: 'My work is closer to product state, information architecture, and repeated-use surfaces than campaign art direction.',
     },
     {
       title: 'Pure backend or infrastructure roles',
       fit: 'Backend literacy is present, but the portfolio is intentionally optimized for front-end product ownership.',
       evidence: ['Operations/backend skill context', 'Realtime and admin project records'],
-      interviewProbe: 'Ask system-design questions only when the role expects front-end engineers to own backend contracts.',
+      interviewProbe: 'I fit backend-adjacent roles best when the front end owns API contracts and operational product flow.',
     },
   ],
 };

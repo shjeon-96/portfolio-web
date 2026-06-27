@@ -15,8 +15,8 @@ export default function EvidencePage() {
     <main className="page-shell">
       <SectionHeading
         eyebrow="Implementation Evidence"
-        title="Evidence a hiring team can use to evaluate front-end depth"
-        description="This page moves beyond project summaries. It shows the product surface, front-end role, technical signal, and verification evidence behind representative work."
+        title="Product surfaces and verification I have owned"
+        description="This page moves beyond project summaries. It shows the product surface, front-end role, technical signal, and verification path behind representative work."
       />
       <GuidePanel
         ariaLabel="How to read implementation evidence"

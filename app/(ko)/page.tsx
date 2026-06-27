@@ -15,15 +15,7 @@ export const metadata = {
 };
 
 export default function KoreanHomePage() {
-  const featuredProjects = projectHighlightsKo.filter((project) =>
-    [
-      'codex-lsp-bridge',
-      'Gyeol Mobile',
-      'PureFlow',
-      'Web Toolkit',
-      '세무·정산 운영 플랫폼',
-    ].includes(project.title),
-  );
+  const featuredProjects = projectHighlightsKo.filter((project) => project.featured);
   const homeChangelogEntries = sortChangelogEntriesByDateDesc(changelogEntriesKo).slice(0, 3);
   const homeEvidenceEntries = implementationEvidenceKo.slice(0, 2);
 
@@ -96,7 +88,7 @@ export default function KoreanHomePage() {
         <div className="mb-6 flex flex-col justify-between gap-3 md:flex-row md:items-end">
           <div>
             <p className={ds.text.eyebrowAccent}>구현 근거</p>
-            <h2 className="mt-2 text-3xl font-semibold">프론트엔드 역량을 판단할 대표 영역</h2>
+            <h2 className="mt-2 text-3xl font-semibold">내가 반복해서 다뤄온 제품 프론트엔드 영역</h2>
           </div>
           <ActionLink href="/evidence" variant="subtle">
             전체 구현 근거 보기

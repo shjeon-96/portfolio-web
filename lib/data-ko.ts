@@ -15,6 +15,7 @@ export const projectHighlightsKo: ProjectHighlight[] = [
       'Codex가 로컬 언어 서버의 진단, 정의, 참조, 심볼, 호버 정보, 상태 정보를 읽기 전용으로 조회할 수 있게 만든 MCP/LSP 브리지입니다.',
     stack: ['TypeScript', 'Node.js', 'MCP', 'LSP', 'Vitest'],
     status: '공개 패키지와 GitHub 저장소',
+    featured: true,
     href: 'https://github.com/shjeon-96/codex-lsp-bridge',
   },
   {
@@ -24,6 +25,7 @@ export const projectHighlightsKo: ProjectHighlight[] = [
       '네이티브 정책, EAS 설정, 런타임 환경, 위젯, 스토어 메타데이터, UI 스모크 테스트 결과를 하나의 릴리즈 기준으로 묶은 캘린더 중심 모바일 제품입니다.',
     stack: ['Expo', 'React Native', 'TypeScript', 'Supabase', 'EAS'],
     status: 'iOS/Android 릴리즈 흐름',
+    featured: true,
   },
   {
     title: 'PureFlow',
@@ -32,6 +34,7 @@ export const projectHighlightsKo: ProjectHighlight[] = [
       'MVVM, 기능 모듈, 적응형 내비게이션, SwiftData, CloudKit 동기화, 위젯, 공유 확장 타깃으로 구성한 SwiftUI 생산성 앱입니다.',
     stack: ['SwiftUI', 'SwiftData', 'CloudKit', 'Firebase', 'Swift Testing'],
     status: 'iOS, iPadOS, Mac Catalyst 아키텍처',
+    featured: true,
   },
   {
     title: 'Web Toolkit',
@@ -40,6 +43,7 @@ export const projectHighlightsKo: ProjectHighlight[] = [
       '클라이언트 처리, 오프라인 PWA, i18n, WebAssembly 기반 처리, 공유할 수 있는 도구 상태를 중심으로 구성한 브라우저 개발자 도구 제품입니다.',
     stack: ['Next.js', 'React', 'TypeScript', 'Tailwind CSS', 'Vitest'],
     status: '공개 웹 제품 방향',
+    featured: true,
     href: 'https://github.com/shjeon-96/dev-tool-kit',
   },
   {
@@ -75,6 +79,7 @@ export const projectHighlightsKo: ProjectHighlight[] = [
       '세무대리 신청, 매입·매출 대시보드, 가맹점 승인, 알림, Vue에서 React와 Next.js로 이어지는 마이그레이션을 다룬 업무 시스템입니다.',
     stack: ['Flutter', 'React', 'Next.js', 'Firebase', 'Docker'],
     status: '운영 흐름과 프레임워크 마이그레이션',
+    featured: true,
   },
   {
     title: 'AI 리뷰 운영 시스템',
@@ -175,25 +180,25 @@ export const implementationEvidenceKo: ImplementationEvidence[] = [
 
 export const hiringFitKo: HiringFit = {
   summary:
-    '가장 강한 채용 신호는 상태 책임, 생성 결과, 릴리즈 준비, 검증 경로가 동시에 맞아야 하는 제품 프론트엔드 작업입니다.',
+    '가장 강한 영역은 상태 책임, 생성 결과, 릴리즈 준비, 검증 경로가 동시에 맞아야 하는 제품 프론트엔드 작업입니다.',
   strongFits: [
     {
       title: 'B2B SaaS 제품 프론트엔드',
-      fit: '콘솔형 제품, 관리자 도구, 운영 흐름, 상태가 많은 제품 화면에 강하게 맞습니다.',
+      fit: '콘솔형 제품, 관리자 도구, 운영 흐름, 상태가 많은 제품 화면에서 강합니다.',
       evidence: ['구현 근거 페이지', '월별 체인지로그', '디자인 시스템 기본 요소'],
-      interviewProbe: '공유 제품 상태를 바꾸기 전에 담당 범위를 어떻게 찾았는지 확인해 보면 좋습니다.',
+      interviewProbe: '공유 제품 상태를 바꾸기 전에 담당 범위와 제품 기준을 먼저 찾습니다.',
     },
     {
       title: '비주얼 빌더 또는 에디터 시스템',
-      fit: 'Variant, 중첩 모델, 미리보기/내보내기 일관성, 생성 결과물이 중요한 제품에 강하게 맞습니다.',
+      fit: 'Variant, 중첩 모델, 미리보기/내보내기 일관성, 생성 결과물이 중요한 제품에서 강합니다.',
       evidence: ['에디터 상태 근거', 'Export 런타임 일관성 기록', '생성 결과 검토 흐름'],
-      interviewProbe: '미리보기 동작과 내보내기 동작을 어떻게 하나의 기준으로 유지했는지 확인해 보면 좋습니다.',
+      interviewProbe: '미리보기 동작과 내보내기 동작을 하나의 기준으로 유지하는 문제를 깊게 다뤄왔습니다.',
     },
     {
       title: 'AI 개발 흐름이 있는 프론트엔드 플랫폼',
-      fit: '에이전트, 의미 기반 도구, 검증 중심 개발 루프를 쓰는 팀에 강하게 맞습니다.',
+      fit: '에이전트, 의미 기반 도구, 검증 중심 개발 루프를 쓰는 제품 팀에서 강합니다.',
       evidence: ['AI 개발 흐름 페이지', 'codex-lsp-bridge 공개 저장소', 'AI 원인 분석 체인지로그'],
-      interviewProbe: 'AI 제안을 언제 수용하고, 언제 거절하며, 어떤 코드 근거로 검증하는지 확인해 보면 좋습니다.',
+      interviewProbe: 'AI 제안은 바로 적용하지 않고 실제 코드 경로, 테스트, 생성 결과물 기준으로 검증합니다.',
     },
   ],
   cautionFits: [
@@ -201,13 +206,13 @@ export const hiringFitKo: HiringFit = {
       title: '마케팅 중심 비주얼 디자인 역할',
       fit: '제품 콘솔과 제품 시스템 작업에 비해 직접 연결되는 근거는 많지 않습니다.',
       evidence: ['포트폴리오 방향은 의도적으로 콘솔형', '캠페인이나 소비자 브랜드 아트디렉션 근거는 제한적'],
-      interviewProbe: '역할이 캠페인 아트디렉션 중심이라면 별도 비주얼 디자인 과제를 보는 편이 좋습니다.',
+      interviewProbe: '캠페인 아트디렉션보다 제품 상태, 정보 구조, 반복 사용 화면에 더 강하게 맞습니다.',
     },
     {
       title: '순수 백엔드 또는 인프라 역할',
       fit: '백엔드 이해는 있지만, 포트폴리오는 프론트엔드 제품 책임에 맞춰져 있습니다.',
       evidence: ['운영/백엔드 기술 맥락', '실시간 운영과 관리자 프로젝트 기록'],
-      interviewProbe: '프론트엔드가 백엔드 API 규칙까지 다뤄야 하는 역할일 때만 시스템 설계 질문을 깊게 보는 편이 좋습니다.',
+      interviewProbe: '백엔드 단독보다 프론트엔드가 API 규칙과 운영 흐름까지 함께 다루는 역할에 더 잘 맞습니다.',
     },
   ],
 };

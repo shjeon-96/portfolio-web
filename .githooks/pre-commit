@@ -4,5 +4,11 @@ set -eu
 echo "[portfolio pre-commit] public repository safety"
 npm run check:public-safety
 
+echo "[portfolio pre-commit] lint"
+npm run lint
+
 echo "[portfolio pre-commit] route responses"
 npm run check:routes
+
+echo "[portfolio pre-commit] production build"
+npm run build

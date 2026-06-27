@@ -24,7 +24,7 @@ export default async function KoreanChangelogPage({ searchParams }: Readonly<Kor
   const visibleEntries = getVisibleChangelogEntries(changelogEntriesKo, focusState);
   const featuredEntries = getFeaturedChangelogEntries(visibleEntries);
   const groupedEntries = groupChangelogEntriesByDate(visibleEntries);
-  const featuredTitle = focusState.kind === 'active' ? `${focusState.rule.label.ko} 핵심 변경` : '채용자가 먼저 볼 핵심 변경 3개';
+  const featuredTitle = focusState.kind === 'active' ? `${focusState.rule.label.ko} 핵심 변경` : '작업 방식을 잘 보여주는 핵심 변경 3개';
   const featuredDescription =
     focusState.kind === 'active'
       ? focusState.rule.description.ko

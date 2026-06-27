@@ -57,17 +57,17 @@ function SignalColumn({
 function getLabels(locale: 'en' | 'ko') {
   if (locale === 'ko') {
     return {
-      cautionFit: '주의해서 볼 역할',
-      eyebrow: '채용 판단',
-      strongFit: '강하게 맞는 역할',
-      title: '어떤 프론트엔드 역할에 맞는가',
+      cautionFit: '덜 맞는 방향',
+      eyebrow: '작업 방향',
+      strongFit: '강한 영역',
+      title: '내가 강하게 맞는 제품 프론트엔드 영역',
     };
   }
 
   return {
-    cautionFit: 'Evaluate Carefully',
-    eyebrow: 'Hiring Signal',
-    strongFit: 'Strong Fit',
-    title: 'Where this front-end profile fits',
+    cautionFit: 'Less Aligned',
+    eyebrow: 'Work Direction',
+    strongFit: 'Strong Areas',
+    title: 'Where my product front-end work is strongest',
   };
 }

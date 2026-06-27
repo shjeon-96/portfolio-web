@@ -9,15 +9,7 @@ import { cx, ds } from '@/lib/design-system';
 import { GITHUB_PROFILE_URL } from '@/lib/site-links';
 
 export default function Home() {
-  const featuredProjects = projectHighlights.filter((project) =>
-    [
-      'codex-lsp-bridge',
-      'Gyeol Mobile',
-      'PureFlow',
-      'Web Toolkit',
-      'Tax and settlement operations platform',
-    ].includes(project.title),
-  );
+  const featuredProjects = projectHighlights.filter((project) => project.featured);
   const homeChangelogEntries = sortChangelogEntriesByDateDesc(changelogEntries).slice(0, 3);
   const homeEvidenceEntries = implementationEvidence.slice(0, 2);
 
@@ -90,7 +82,7 @@ export default function Home() {
         <div className="mb-6 flex flex-col justify-between gap-3 md:flex-row md:items-end">
           <div>
             <p className={ds.text.eyebrowAccent}>Implementation Evidence</p>
-            <h2 className="mt-2 text-3xl font-semibold">Representative surfaces for front-end evaluation</h2>
+            <h2 className="mt-2 text-3xl font-semibold">Product front-end surfaces I return to</h2>
           </div>
           <ActionLink href="/en/evidence" variant="subtle">
             View all evidence
