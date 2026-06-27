@@ -1,4 +1,4 @@
-import type { ChangelogEntry, ImplementationEvidence, ProjectHighlight, SkillContext } from '@/lib/data';
+import type { ChangelogEntry, HiringFit, ImplementationEvidence, ProjectHighlight, SkillContext } from '@/lib/data';
 
 export const proofPointsKo = [
   '오픈소스 에이전트 도구',
@@ -178,6 +178,45 @@ export const implementationEvidenceKo: ImplementationEvidence[] = [
     visualKind: 'web',
   },
 ];
+
+export const hiringFitKo: HiringFit = {
+  summary:
+    '가장 강한 채용 신호는 상태 소유, 생성 산출물, 릴리즈 준비, 검증 경로가 함께 맞아야 하는 제품 프론트엔드 작업입니다.',
+  strongFits: [
+    {
+      title: 'B2B SaaS 제품 프론트엔드',
+      fit: '콘솔형 제품, 관리자 도구, 운영 흐름, 상태가 많은 제품 화면에 강하게 맞습니다.',
+      evidence: ['구현 근거 페이지', '월별 체인지로그', '디자인 시스템 primitive'],
+      interviewProbe: '공유 제품 상태를 바꾸기 전에 소유 경계를 어떻게 찾았는지 물어보면 좋습니다.',
+    },
+    {
+      title: '비주얼 빌더 또는 에디터 시스템',
+      fit: 'Variant, 중첩 모델, 미리보기/산출물 정합성, 생성 artifact가 중요한 제품에 강하게 맞습니다.',
+      evidence: ['에디터 상태 근거', 'Export 런타임 정합성 기록', '생성 산출물 검토 흐름'],
+      interviewProbe: '미리보기 동작과 export 동작을 어떻게 하나의 계약으로 유지했는지 물어보면 좋습니다.',
+    },
+    {
+      title: 'AI 워크플로우가 있는 프론트엔드 플랫폼',
+      fit: '에이전트, 의미 기반 도구, 검증 중심 개발 루프를 쓰는 팀에 강하게 맞습니다.',
+      evidence: ['AI 개발 흐름 페이지', 'codex-lsp-bridge 공개 저장소', 'AI 원인 분석 체인지로그'],
+      interviewProbe: 'AI 제안을 언제 수용하고, 언제 거절하며, 어떤 코드 근거로 검증하는지 물어보면 좋습니다.',
+    },
+  ],
+  cautionFits: [
+    {
+      title: '마케팅 중심 비주얼 디자인 역할',
+      fit: '제품 콘솔과 제품 시스템 작업보다 직접적인 증거는 약합니다.',
+      evidence: ['포트폴리오 방향은 의도적으로 콘솔형', '캠페인/소비자 브랜드 아트디렉션 증거는 제한적'],
+      interviewProbe: '역할이 캠페인 아트디렉션 중심이라면 별도 비주얼 디자인 과제를 보는 편이 좋습니다.',
+    },
+    {
+      title: '순수 백엔드 또는 인프라 역할',
+      fit: '백엔드 이해는 있지만, 포트폴리오는 프론트엔드 제품 소유에 맞춰져 있습니다.',
+      evidence: ['운영/백엔드 기술 맥락', '실시간 운영과 관리자 프로젝트 기록'],
+      interviewProbe: '프론트엔드가 백엔드 계약까지 가져가야 하는 역할일 때만 시스템 설계 질문을 깊게 보는 편이 좋습니다.',
+    },
+  ],
+};
 
 export const changelogEntriesKo: ChangelogEntry[] = [
   {

@@ -59,6 +59,19 @@ export type ImplementationEvidence = {
   visualKind: 'editor' | 'mobile' | 'tooling' | 'web';
 };
 
+export type HiringSignal = {
+  title: string;
+  fit: string;
+  evidence: string[];
+  interviewProbe: string;
+};
+
+export type HiringFit = {
+  strongFits: HiringSignal[];
+  cautionFits: HiringSignal[];
+  summary: string;
+};
+
 export const proofPoints = [
   'Open-source agent tooling',
   'Mobile release gates',
@@ -1088,6 +1101,45 @@ export const implementationEvidence: ImplementationEvidence[] = [
     visualKind: 'web',
   },
 ];
+
+export const hiringFit: HiringFit = {
+  summary:
+    'The strongest hiring signal is product front-end work where state ownership, generated output, release readiness, and verification need to stay aligned.',
+  strongFits: [
+    {
+      title: 'B2B SaaS product front-end',
+      fit: 'Strong fit for console-like products, admin tools, operational workflows, and product surfaces with dense state.',
+      evidence: ['Project evidence page', 'Monthly changelog', 'Design-system primitives'],
+      interviewProbe: 'Ask how the owner boundary was identified before changing shared product state.',
+    },
+    {
+      title: 'Visual builder or editor systems',
+      fit: 'Strong fit where variants, nested models, preview/output parity, and generated artifacts matter.',
+      evidence: ['Editor state evidence', 'Export runtime parity entry', 'Generated artifact review loop'],
+      interviewProbe: 'Ask how preview behavior and export behavior were kept on one contract.',
+    },
+    {
+      title: 'Front-end platform with AI workflows',
+      fit: 'Strong fit for teams using agents, semantic tooling, and verification-heavy engineering loops.',
+      evidence: ['AI workflow page', 'codex-lsp-bridge public repository', 'Agent root-cause changelog entry'],
+      interviewProbe: 'Ask where AI suggestions are accepted, rejected, or verified against code evidence.',
+    },
+  ],
+  cautionFits: [
+    {
+      title: 'Marketing-heavy visual design roles',
+      fit: 'Less directly proven than product-console and product-system work.',
+      evidence: ['Portfolio visual direction is intentionally console-like', 'Limited campaign or consumer-brand evidence'],
+      interviewProbe: 'Ask for a separate visual-design exercise if the role depends on campaign art direction.',
+    },
+    {
+      title: 'Pure backend or infrastructure roles',
+      fit: 'Backend literacy is present, but the portfolio is intentionally optimized for front-end product ownership.',
+      evidence: ['Operations/backend skill context', 'Realtime and admin project records'],
+      interviewProbe: 'Ask system-design questions only when the role expects front-end engineers to own backend contracts.',
+    },
+  ],
+};
 
 export const skills: SkillContext[] = [
   {

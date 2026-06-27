@@ -1,7 +1,8 @@
 import { GuidePanel } from '@/components/guide-panel';
+import { HiringFitPanel } from '@/components/hiring-fit-panel';
 import { ImplementationEvidenceBoard } from '@/components/implementation-evidence-board';
 import { SectionHeading } from '@/components/section-heading';
-import { implementationEvidence } from '@/lib/data';
+import { hiringFit, implementationEvidence } from '@/lib/data';
 
 export const metadata = {
   title: 'Implementation Evidence',
@@ -24,6 +25,7 @@ export default function EvidencePage() {
           { title: 'Verification evidence', body: 'Look for tests, builds, routes, generated output, and public-safe completion checks.' },
         ]}
       />
+      <HiringFitPanel fit={hiringFit} locale="en" />
       <section className="mt-10">
         <ImplementationEvidenceBoard entries={implementationEvidence} locale="en" />
       </section>
