@@ -44,6 +44,20 @@ export type SkillContext = {
   evidenceLabel: string;
 };
 
+export type ChangelogFocusKey = 'editor' | 'mobile-release';
+
+export type ImplementationEvidenceLink =
+  | {
+      type: 'changelog-focus';
+      focus: ChangelogFocusKey;
+      label: string;
+    }
+  | {
+      type: 'external';
+      href: string;
+      label: string;
+    };
+
 export type ImplementationEvidence = {
   title: string;
   label: string;
@@ -53,9 +67,7 @@ export type ImplementationEvidence = {
   frontendSignals: string[];
   verification: string[];
   outcome: string;
-  href: string;
-  hrefLabel: string;
-  external?: boolean;
+  link: ImplementationEvidenceLink;
   visualKind: 'editor' | 'mobile' | 'tooling' | 'web';
 };
 
@@ -1052,8 +1064,7 @@ export const implementationEvidence: ImplementationEvidence[] = [
     frontendSignals: ['React contracts', 'Typed state model', 'Conditional rendering rules', 'Generated artifact review'],
     verification: ['Vitest regressions', 'Generated HTML inspection', 'Route and build checks'],
     outcome: 'The portfolio shows front-end judgment beyond screen assembly: state ownership, output parity, and regression control.',
-    href: '/en/changelog',
-    hrefLabel: 'Review editor evidence',
+    link: { type: 'changelog-focus', focus: 'editor', label: 'Review editor evidence' },
     visualKind: 'editor',
   },
   {
@@ -1066,8 +1077,7 @@ export const implementationEvidence: ImplementationEvidence[] = [
     frontendSignals: ['React Native flows', 'Expo configuration', 'Widget surface ownership', 'Store-facing readiness'],
     verification: ['EAS/build checks', 'Maestro smoke evidence', 'Runtime environment review'],
     outcome: 'The work signals a front-end engineer who can carry a product surface through release boundaries, not only local UI implementation.',
-    href: '/en/changelog',
-    hrefLabel: 'Review release evidence',
+    link: { type: 'changelog-focus', focus: 'mobile-release', label: 'Review release evidence' },
     visualKind: 'mobile',
   },
   {
@@ -1080,9 +1090,7 @@ export const implementationEvidence: ImplementationEvidence[] = [
     frontendSignals: ['TypeScript API design', 'MCP tool contracts', 'Language server adapters', 'Package release hygiene'],
     verification: ['Vitest', 'Integration checks', 'Package smoke checks'],
     outcome: 'This supports the portfolio claim that AI workflow is backed by real tooling and verification, not prompt-only usage.',
-    href: 'https://github.com/shjeon-96/codex-lsp-bridge',
-    hrefLabel: 'Open public repository',
-    external: true,
+    link: { type: 'external', href: 'https://github.com/shjeon-96/codex-lsp-bridge', label: 'Open public repository' },
     visualKind: 'tooling',
   },
   {
@@ -1095,9 +1103,7 @@ export const implementationEvidence: ImplementationEvidence[] = [
     frontendSignals: ['Next.js App Router', 'TypeScript UI contracts', 'Tailwind system', 'PWA-oriented surfaces'],
     verification: ['Route checks', 'Build checks', 'Public repository review'],
     outcome: 'The work adds a web-product signal alongside editor systems, mobile release work, and developer tooling.',
-    href: 'https://github.com/shjeon-96/dev-tool-kit',
-    hrefLabel: 'Open public repository',
-    external: true,
+    link: { type: 'external', href: 'https://github.com/shjeon-96/dev-tool-kit', label: 'Open public repository' },
     visualKind: 'web',
   },
 ];

@@ -1,5 +1,6 @@
 import { ActionLink, BadgeList, Panel } from '@/components/ui';
 import type { ImplementationEvidence } from '@/lib/data';
+import { getChangelogFocusHref } from '@/lib/changelog-focus';
 import { cx, ds } from '@/lib/design-system';
 
 export function ImplementationEvidenceBoard({
@@ -13,43 +14,55 @@ export function ImplementationEvidenceBoard({
 
   return (
     <div className="grid gap-4">
-      {entries.map((entry) => (
-        <Panel as="article" className="overflow-hidden" key={entry.title}>
-          <div className="grid lg:grid-cols-[0.82fr_1.18fr]">
-            <EvidenceVisual entry={entry} />
-            <div className="p-5">
-              <p className={ds.text.eyebrow}>{entry.label}</p>
-              <h2 className="mt-3 text-2xl font-semibold">{entry.title}</h2>
-              <p className={cx('mt-3', ds.text.bodySmall)}>{entry.summary}</p>
+      {entries.map((entry) => {
+        const link = getEvidenceLink(entry, locale);
 
-              <div className="mt-5 grid gap-4 border-y border-[var(--border)] py-4 md:grid-cols-2">
-                <EvidenceField label={labels.surface} value={entry.surface} />
-                <EvidenceField label={labels.role} value={entry.role} />
-              </div>
+        return (
+          <Panel as="article" className="overflow-hidden" key={entry.title}>
+            <div className="grid lg:grid-cols-[0.82fr_1.18fr]">
+              <EvidenceVisual entry={entry} />
+              <div className="p-5">
+                <p className={ds.text.eyebrow}>{entry.label}</p>
+                <h2 className="mt-3 text-2xl font-semibold">{entry.title}</h2>
+                <p className={cx('mt-3', ds.text.bodySmall)}>{entry.summary}</p>
 
-              <div className="mt-5 grid gap-5 md:grid-cols-2">
-                <div>
-                  <p className={ds.text.eyebrowMuted}>{labels.signals}</p>
-                  <BadgeList className="mt-3" items={entry.frontendSignals} variant="strong" />
+                <div className="mt-5 grid gap-4 border-y border-[var(--border)] py-4 md:grid-cols-2">
+                  <EvidenceField label={labels.surface} value={entry.surface} />
+                  <EvidenceField label={labels.role} value={entry.role} />
                 </div>
-                <div>
-                  <p className={ds.text.eyebrowMuted}>{labels.verification}</p>
-                  <BadgeList className="mt-3" items={entry.verification} variant="muted" />
-                </div>
-              </div>
 
-              <div className="mt-5 flex flex-col gap-4 border-t border-[var(--border)] pt-4 md:flex-row md:items-center md:justify-between">
-                <p className={cx('max-w-2xl', ds.text.primarySmall)}>{entry.outcome}</p>
-                <ActionLink external={entry.external} href={entry.href} variant="compact">
-                  {entry.hrefLabel}
-                </ActionLink>
+                <div className="mt-5 grid gap-5 md:grid-cols-2">
+                  <div>
+                    <p className={ds.text.eyebrowMuted}>{labels.signals}</p>
+                    <BadgeList className="mt-3" items={entry.frontendSignals} variant="strong" />
+                  </div>
+                  <div>
+                    <p className={ds.text.eyebrowMuted}>{labels.verification}</p>
+                    <BadgeList className="mt-3" items={entry.verification} variant="muted" />
+                  </div>
+                </div>
+
+                <div className="mt-5 flex flex-col gap-4 border-t border-[var(--border)] pt-4 md:flex-row md:items-center md:justify-between">
+                  <p className={cx('max-w-2xl', ds.text.primarySmall)}>{entry.outcome}</p>
+                  <ActionLink external={link.external} href={link.href} variant="compact">
+                    {entry.link.label}
+                  </ActionLink>
+                </div>
               </div>
             </div>
-          </div>
-        </Panel>
-      ))}
+          </Panel>
+        );
+      })}
     </div>
   );
+}
+
+function getEvidenceLink(entry: ImplementationEvidence, locale: 'en' | 'ko') {
+  if (entry.link.type === 'external') {
+    return { external: true, href: entry.link.href };
+  }
+
+  return { external: false, href: getChangelogFocusHref(locale, entry.link.focus) };
 }
 
 function EvidenceField({ label, value }: Readonly<{ label: string; value: string }>) {

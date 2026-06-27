@@ -129,8 +129,7 @@ export const implementationEvidenceKo: ImplementationEvidence[] = [
     frontendSignals: ['React 계약', '타입 기반 상태 모델', '조건부 렌더링 규칙', '생성 산출물 검토'],
     verification: ['Vitest 회귀 검증', '생성 HTML 확인', '라우트와 빌드 검사'],
     outcome: '단순 화면 구현보다 상태 소유, 산출물 정합성, 회귀 방지까지 보는 프론트엔드 판단을 보여줍니다.',
-    href: '/changelog',
-    hrefLabel: '에디터 근거 보기',
+    link: { type: 'changelog-focus', focus: 'editor', label: '에디터 근거 보기' },
     visualKind: 'editor',
   },
   {
@@ -143,8 +142,7 @@ export const implementationEvidenceKo: ImplementationEvidence[] = [
     frontendSignals: ['React Native 흐름', 'Expo 설정', '위젯 surface 소유', '스토어 제출 준비'],
     verification: ['EAS/build 검사', 'Maestro 스모크 근거', '런타임 환경 검토'],
     outcome: '로컬 UI 구현에서 끝나지 않고 릴리즈 경계까지 제품 화면을 가져갈 수 있음을 보여줍니다.',
-    href: '/changelog',
-    hrefLabel: '릴리즈 근거 보기',
+    link: { type: 'changelog-focus', focus: 'mobile-release', label: '릴리즈 근거 보기' },
     visualKind: 'mobile',
   },
   {
@@ -157,9 +155,7 @@ export const implementationEvidenceKo: ImplementationEvidence[] = [
     frontendSignals: ['TypeScript API 설계', 'MCP 도구 계약', '언어 서버 어댑터', '패키지 릴리즈 정리'],
     verification: ['Vitest', '통합 검사', '패키지 스모크 검사'],
     outcome: 'AI 개발 흐름이 프롬프트 사용이 아니라 실제 도구와 검증으로 뒷받침된다는 근거가 됩니다.',
-    href: 'https://github.com/shjeon-96/codex-lsp-bridge',
-    hrefLabel: '공개 저장소 보기',
-    external: true,
+    link: { type: 'external', href: 'https://github.com/shjeon-96/codex-lsp-bridge', label: '공개 저장소 보기' },
     visualKind: 'tooling',
   },
   {
@@ -172,9 +168,7 @@ export const implementationEvidenceKo: ImplementationEvidence[] = [
     frontendSignals: ['Next.js App Router', 'TypeScript UI 계약', 'Tailwind 시스템', 'PWA 지향 surface'],
     verification: ['라우트 검사', '빌드 검사', '공개 저장소 검토'],
     outcome: '에디터, 모바일 릴리즈, 개발자 도구 외에 웹 제품 구현 신호를 추가합니다.',
-    href: 'https://github.com/shjeon-96/dev-tool-kit',
-    hrefLabel: '공개 저장소 보기',
-    external: true,
+    link: { type: 'external', href: 'https://github.com/shjeon-96/dev-tool-kit', label: '공개 저장소 보기' },
     visualKind: 'web',
   },
 ];
