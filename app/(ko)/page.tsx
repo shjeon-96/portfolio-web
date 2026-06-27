@@ -7,7 +7,7 @@ import { caseStudiesKo, changelogEntriesKo, projectHighlightsKo, proofPointsKo }
 
 export const metadata = {
   title: '제품 프론트엔드 포트폴리오',
-  description: 'React, Next.js, 제품 엔지니어링, 엔지니어링 체인지로그, AI 워크플로우 포트폴리오.',
+  description: 'React, Next.js, 제품 엔지니어링, 변경 기록, AI 개발 흐름 포트폴리오.',
 };
 
 export default function KoreanHomePage() {
@@ -33,13 +33,13 @@ export default function KoreanHomePage() {
       <section className="mx-auto grid w-full max-w-7xl gap-10 px-5 py-14 lg:grid-cols-[1.08fr_0.92fr] lg:items-center lg:py-20">
         <div>
           <p className="mb-4 font-mono text-sm font-medium uppercase tracking-[0.16em] text-[var(--accent-blue)]">
-            Product Console Portfolio
+            제품 시스템 포트폴리오
           </p>
           <h1 className="max-w-3xl text-4xl font-semibold leading-tight text-balance sm:text-5xl">
             AI 도구, 모바일 릴리즈, 에디터 엔진을 다루는 제품 프론트엔드
           </h1>
           <p className="mt-6 max-w-2xl text-lg leading-8 text-[var(--text-secondary)]">
-            비주얼 빌더, 모바일 제품, AI 개발 워크플로우에서 제품 상태와 런타임 동작,
+            비주얼 빌더, 모바일 제품, AI 개발 흐름에서 제품 상태와 런타임 동작,
             릴리즈 검증, 생성 산출물이 같은 기준으로 이어지도록 구조화합니다.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
@@ -71,9 +71,9 @@ export default function KoreanHomePage() {
         </div>
 
         <HomeEvidencePanel
-          kicker="Work Summary"
+          kicker="작업 요약"
           title="최근 작업의 중심축"
-          summary="스크린샷보다 상태 모델, 데이터 흐름, 접근성 있는 동작, 릴리즈 검증, 생성 산출물을 중심으로 정리했습니다."
+          summary="스크린샷보다 상태 모델, 데이터 흐름, 확인 가능한 동작, 릴리즈 검증, 생성 산출물을 중심으로 정리했습니다."
           items={[
             {
               label: '작업 범위',
@@ -95,16 +95,16 @@ export default function KoreanHomePage() {
       </section>
       <section className="border-y border-[var(--border)] bg-[var(--surface)]">
         <div className="mx-auto grid max-w-7xl gap-4 px-5 py-8 md:grid-cols-4">
-          <Metric label="중심 분야" value="Product FE" />
-          <Metric label="AI 개발 도구" value="LSP bridge" />
-          <Metric label="모바일 제품" value="Release gates" />
-          <Metric label="제품 시스템" value="Editor engine" />
+          <Metric label="중심 분야" value="제품 프론트엔드" />
+          <Metric label="AI 개발 도구" value="LSP 브리지" />
+          <Metric label="모바일 제품" value="릴리즈 게이트" />
+          <Metric label="제품 시스템" value="에디터 엔진" />
         </div>
       </section>
       <section className="mx-auto max-w-7xl px-5 py-16">
         <div className="flex flex-col justify-between gap-4 md:flex-row md:items-end">
           <div>
-            <p className="text-sm font-semibold uppercase tracking-[0.16em] text-[var(--accent-blue)]">Selected Work</p>
+            <p className="text-sm font-semibold uppercase tracking-[0.16em] text-[var(--accent-blue)]">대표 사례</p>
             <h2 className="mt-3 text-3xl font-semibold">복잡도를 정리한 대표 사례</h2>
           </div>
           <Link className="inline-flex min-h-11 items-center text-sm font-semibold text-[var(--accent-blue)]" href="/case-studies">
@@ -127,7 +127,7 @@ export default function KoreanHomePage() {
         <div className="mx-auto max-w-7xl px-5 py-14">
           <div className="flex flex-col justify-between gap-4 md:flex-row md:items-end">
             <div>
-              <p className="text-sm font-semibold uppercase tracking-[0.16em] text-[var(--accent-blue)]">Project Ledger</p>
+              <p className="text-sm font-semibold uppercase tracking-[0.16em] text-[var(--accent-blue)]">프로젝트 기록</p>
               <h2 className="mt-3 text-3xl font-semibold">보조로 참고할 프로젝트 기록</h2>
             </div>
             <p className="max-w-2xl text-sm leading-6 text-[var(--text-secondary)]">
@@ -144,7 +144,7 @@ export default function KoreanHomePage() {
       <section className="mx-auto max-w-7xl px-5 py-14">
         <div className="mb-5 flex flex-col justify-between gap-3 md:flex-row md:items-end">
           <div>
-            <p className="text-sm font-semibold uppercase tracking-[0.16em] text-[var(--accent-blue)]">Recent Changelog</p>
+            <p className="text-sm font-semibold uppercase tracking-[0.16em] text-[var(--accent-blue)]">최근 변경 기록</p>
             <h2 className="mt-2 text-3xl font-semibold">최근 변경 기록</h2>
           </div>
           <Link className="inline-flex min-h-11 items-center text-sm font-semibold text-[var(--accent-blue)]" href="/changelog">

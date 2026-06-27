@@ -11,12 +11,12 @@ export default function KoreanCaseStudiesPage() {
   return (
     <main className="page-shell">
       <SectionHeading
-        eyebrow="Case Studies"
+        eyebrow="사례"
         title="제품 복잡도를 어떻게 정리했는지 보여줍니다"
-        description="각 사례는 프로젝트 소개가 아니라, 복잡도가 생긴 지점을 어떻게 정의하고 소유 경계와 검증 루프로 정리했는지 보여주는 기록입니다."
+        description="각 사례는 프로젝트 소개가 아니라, 복잡도가 생긴 지점을 어떻게 정의하고 소유 경계와 검증 흐름으로 정리했는지 보여주는 기록입니다."
       />
       <section className="surface-panel mt-10 grid gap-4 p-5 md:grid-cols-3" aria-label="케이스 스터디 읽는 기준">
-        <GuidePoint title="경계 정의" body="어떤 상태, 모듈, 산출물이 서로 충돌하거나 drift될 수 있었는지 봅니다." />
+        <GuidePoint title="경계 정의" body="어떤 상태, 모듈, 산출물이 서로 어긋날 수 있었는지 봅니다." />
         <GuidePoint title="흐름 안정화" body="제품 흐름을 어떤 단위로 쪼개고 하나의 기준으로 묶었는지 봅니다." />
         <GuidePoint title="검증 가능성" body="변경 후 무엇으로 확인했고, 같은 문제가 돌아오지 않게 어떤 근거를 남겼는지 봅니다." />
       </section>

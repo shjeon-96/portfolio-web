@@ -2,7 +2,7 @@ import { SectionHeading } from '@/components/section-heading';
 import { aiWorkflowStepsKo } from '@/lib/data-ko';
 
 export const metadata = {
-  title: 'AI 워크플로우',
+  title: 'AI 개발 흐름',
   description: 'AI 에이전트를 원인 분석, 구현, 리뷰 후속, 검증에 통합하는 방식입니다.',
 };
 
@@ -10,14 +10,14 @@ export default function KoreanAiWorkflowPage() {
   return (
     <main className="page-shell">
       <SectionHeading
-        eyebrow="AI Workflow"
+        eyebrow="AI 개발 흐름"
         title="AI는 조사 속도를 높이고, 판단은 코드 근거로 합니다"
-        description="원인 분석, 소유 경계 확인, 좁은 범위 수정, 회귀 검증을 중심으로 AI 에이전트를 개발 루프에 통합합니다."
+        description="원인 분석, 소유 경계 확인, 좁은 범위 수정, 회귀 검증을 중심으로 AI 에이전트를 개발 과정에 통합합니다."
       />
       <section className="surface-panel mt-10 divide-y divide-[var(--border)]">
         {aiWorkflowStepsKo.map((step, index) => (
           <article className="grid gap-4 p-5 md:grid-cols-[88px_1fr]" key={step.title}>
-            <p className="font-mono text-sm font-semibold text-[var(--accent-blue)]">Step {index + 1}</p>
+            <p className="font-mono text-sm font-semibold text-[var(--accent-blue)]">단계 {index + 1}</p>
             <div>
               <h2 className="text-xl font-semibold">{step.title}</h2>
               <p className="mt-2 text-sm leading-6 text-[var(--text-secondary)]">{step.description}</p>
@@ -26,7 +26,7 @@ export default function KoreanAiWorkflowPage() {
         ))}
       </section>
       <section className="surface-panel mt-10 p-6">
-        <p className="font-mono text-xs font-semibold uppercase tracking-[0.16em] text-[var(--accent-amber)]">Boundaries</p>
+        <p className="font-mono text-xs font-semibold uppercase tracking-[0.16em] text-[var(--accent-amber)]">기준</p>
         <div className="mt-4 grid gap-4 md:grid-cols-3">
           <Boundary title="제안은 바로 적용하지 않습니다" body="AI 제안은 실제 소유 경로와 테스트 기준으로 확인한 뒤 적용합니다." />
           <Boundary title="증상을 가리지 않습니다" body="임시 분기보다 문제를 설명하는 제품 계약과 소유 경계를 고칩니다." />

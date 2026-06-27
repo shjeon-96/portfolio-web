@@ -18,8 +18,8 @@ const navigationKo = [
   { href: '/', label: '홈' },
   { href: '/case-studies', label: '케이스 스터디' },
   { href: '/changelog', label: '체인지로그' },
-  { href: '/ai-workflow', label: 'AI 워크플로우' },
-  { href: '/skills', label: '스킬' },
+  { href: '/ai-workflow', label: 'AI 개발 흐름' },
+  { href: '/skills', label: '기술' },
   { href: '/about', label: '소개' },
 ];
 

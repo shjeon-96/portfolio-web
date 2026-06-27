@@ -14,9 +14,9 @@ export default function KoreanChangelogPage() {
   return (
     <main className="page-shell">
       <SectionHeading
-        eyebrow="Engineering Changelog"
+        eyebrow="변경 기록"
         title="날짜별 제품 엔지니어링 기록"
-        description="프로젝트별 변경을 공개 가능한 범위에서 짧게 정리합니다. 각 항목은 문제 맥락, 실제 변경, 확인한 내용만 남깁니다."
+        description="프로젝트별 변경을 공개 가능한 범위에서 짧게 정리합니다. 각 항목은 문제 배경, 실제 변경, 확인한 내용만 남깁니다."
       />
       <section className="surface-panel mt-10 px-5 py-1">
         {groupedEntries.map((group) => (

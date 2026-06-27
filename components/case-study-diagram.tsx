@@ -44,14 +44,14 @@ const diagramBySlug: Record<string, {
 
 const koreanDiagramBySlug: typeof diagramBySlug = {
   'codex-lsp-bridge': {
-    title: '에이전트 semantic tooling 경로',
+    title: '에이전트 코드 정보 경로',
     nodes: ['코딩 에이전트', 'MCP 도구', 'LSP 브리지', '언어 서버', '읽기 전용 근거'],
-    caption: '에이전트가 변경을 제안하기 전에 좁은 읽기 전용 경계로 semantic code feedback을 받습니다.',
+    caption: '에이전트가 변경을 제안하기 전에 좁은 읽기 전용 경계로 의미 기반 코드 정보를 받습니다.',
   },
   'mobile-release-foundations': {
     title: '모바일 릴리즈 게이트 흐름',
-    nodes: ['제품 문서', 'Shared packages', 'App config', '검증 스위트', '스토어 빌드'],
-    caption: '제품 규칙, shared foundations, native configuration, 릴리즈 증거가 하나의 delivery model을 따릅니다.',
+    nodes: ['제품 문서', '공통 패키지', '앱 설정', '검증 스위트', '스토어 빌드'],
+    caption: '제품 규칙, 공통 기반, 네이티브 설정, 릴리즈 근거가 하나의 전달 기준을 따릅니다.',
   },
   'ast-editor-engine': {
     title: '에디터 모델 흐름',
@@ -64,8 +64,8 @@ const koreanDiagramBySlug: typeof diagramBySlug = {
     caption: '미리보기와 배포 경로를 같은 렌더링 계약에서 나온 결과로 다룹니다.',
   },
   'ai-review-operations': {
-    title: 'Human-in-the-loop 운영 흐름',
-    nodes: ['수집 데이터', 'AI 초안', '운영자 검수', '수정 가능한 응답', '사용자-facing 동작'],
+    title: '사람이 검수하는 운영 흐름',
+    nodes: ['수집 데이터', 'AI 초안', '운영자 검수', '수정 가능한 응답', '사용자에게 보이는 동작'],
     caption: 'AI 출력은 사용자에게 닿기 전에 운영자가 확인하고 수정할 수 있어야 합니다.',
   },
   'settlement-operations': {
