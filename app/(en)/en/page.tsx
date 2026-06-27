@@ -1,9 +1,10 @@
-import Link from 'next/link';
 import { ExternalLink } from 'lucide-react';
 import { ChangelogEntry } from '@/components/changelog-entry';
 import { HomeEvidencePanel } from '@/components/home-evidence-panel';
 import { ProjectHighlightCard } from '@/components/project-highlight-card';
+import { ActionLink, BadgeList, Panel } from '@/components/ui';
 import { changelogEntries, projectHighlights, proofPoints, sortChangelogEntriesByDateDesc } from '@/lib/data';
+import { cx, ds } from '@/lib/design-system';
 
 export default function Home() {
   const featuredProjects = projectHighlights.filter((project) =>
@@ -19,46 +20,36 @@ export default function Home() {
 
   return (
     <main>
-      <section className="mx-auto grid w-full max-w-7xl gap-10 px-5 py-8 lg:grid-cols-[1.08fr_0.92fr] lg:items-start lg:py-10">
+      <section className={cx(ds.layout.content, 'grid w-full gap-10 py-8 lg:grid-cols-[1.08fr_0.92fr] lg:items-start lg:py-10')}>
         <div>
-          <p className="mb-4 font-mono text-sm font-medium uppercase tracking-[0.16em] text-[var(--accent-blue)]">
+          <p className={cx('mb-4', ds.text.eyebrowAccent)}>
             Seunghun Jeon / Product Console Portfolio
           </p>
-          <h1 className="text-keep max-w-3xl text-4xl font-semibold leading-tight text-balance sm:text-5xl">
+          <h1 className={cx('max-w-3xl', ds.text.headingLg, 'sm:text-5xl')}>
             Product front-end across AI tooling, mobile release, and editor engines
           </h1>
-          <p className="mt-6 max-w-2xl text-lg leading-8 text-[var(--text-secondary)]">
+          <p className={cx('mt-6 max-w-2xl', ds.text.bodyLarge)}>
             I structure visual builders, mobile products, and AI development workflows where product state,
             runtime behavior, release checks, and generated artifacts must stay in sync.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
-            <Link className="flex min-h-11 items-center rounded-md bg-[var(--text-primary)] px-4 py-2 text-sm font-semibold text-white" href="/en/changelog">
+            <ActionLink href="/en/changelog" variant="primary">
               Read changelog
-            </Link>
-            <Link className="flex min-h-11 items-center rounded-md border border-[var(--border)] bg-[var(--surface)] px-4 py-2 text-sm font-semibold" href="/en/ai-workflow">
+            </ActionLink>
+            <ActionLink href="/en/ai-workflow">
               View AI workflow
-            </Link>
-            <a
-              aria-label="GitHub profile"
-              className="grid size-11 place-items-center rounded-md border border-[var(--border)] bg-[var(--surface)] text-[var(--text-primary)]"
+            </ActionLink>
+            <ActionLink
+              ariaLabel="GitHub profile"
+              external
               href="https://github.com/shjeon-96"
-              rel="noreferrer"
-              target="_blank"
               title="GitHub"
+              variant="icon"
             >
               <ExternalLink aria-hidden="true" size={18} />
-            </a>
+            </ActionLink>
           </div>
-          <div className="mt-8 flex flex-wrap gap-3">
-            {proofPoints.map((point) => (
-              <span
-                className="rounded-full border border-[var(--border)] bg-[var(--surface)] px-4 py-2 text-sm text-[var(--text-secondary)]"
-                key={point}
-              >
-                {point}
-              </span>
-            ))}
-          </div>
+          <BadgeList className="mt-8 gap-3" items={proofPoints} variant="pill" />
         </div>
 
         <HomeEvidencePanel
@@ -84,22 +75,22 @@ export default function Home() {
           ]}
         />
       </section>
-      <section className="border-y border-[var(--border)] bg-[var(--surface)]">
-        <div className="mx-auto grid max-w-7xl gap-4 px-5 py-8 md:grid-cols-4">
+      <section className={ds.layout.sectionBand}>
+        <div className={cx(ds.layout.content, 'grid gap-4 py-8 md:grid-cols-4')}>
           <Metric label="Focus" value="Product front-end" />
           <Metric label="AI tooling" value="LSP bridge" />
           <Metric label="Mobile product" value="Release gates" />
           <Metric label="Product system" value="Editor engine" />
         </div>
       </section>
-      <section className="border-y border-[var(--border)] bg-[var(--surface)]">
-        <div className="mx-auto max-w-7xl px-5 py-14">
-          <div className="flex flex-col justify-between gap-4 md:flex-row md:items-end">
+      <section className={ds.layout.sectionBand}>
+        <div className={cx(ds.layout.content, 'py-14')}>
+          <div className={ds.layout.sectionHeader}>
             <div>
-              <p className="text-sm font-semibold uppercase tracking-[0.16em] text-[var(--accent-blue)]">Project Evidence</p>
-              <h2 className="mt-3 text-3xl font-semibold">Supporting product work</h2>
+              <p className={ds.text.eyebrowAccent}>Project Evidence</p>
+              <h2 className="mt-3 text-3xl font-semibold">Public project evidence</h2>
             </div>
-            <p className="max-w-2xl text-sm leading-6 text-[var(--text-secondary)]">
+            <p className={cx('max-w-2xl', ds.text.bodySmall)}>
               Instead of long narrative pages, this section keeps the public repositories and product surfaces close
               to the monthly changelog.
             </p>
@@ -111,21 +102,21 @@ export default function Home() {
           </div>
         </div>
       </section>
-      <section className="mx-auto max-w-7xl px-5 py-14">
+      <section className={cx(ds.layout.content, 'py-14')}>
         <div className="mb-5 flex flex-col justify-between gap-3 md:flex-row md:items-end">
           <div>
-            <p className="text-sm font-semibold uppercase tracking-[0.16em] text-[var(--accent-blue)]">Recent Changelog</p>
+            <p className={ds.text.eyebrowAccent}>Recent Changelog</p>
             <h2 className="mt-2 text-3xl font-semibold">Recent engineering notes</h2>
           </div>
-          <Link className="inline-flex min-h-11 items-center text-sm font-semibold text-[var(--accent-blue)]" href="/en/changelog">
+          <ActionLink href="/en/changelog" variant="subtle">
             View full changelog
-          </Link>
+          </ActionLink>
         </div>
-        <div className="surface-panel px-5 py-2">
+        <Panel className="px-5 py-2">
           {homeChangelogEntries.map((entry) => (
             <ChangelogEntry entry={entry} key={entry.title} locale="en" />
           ))}
-        </div>
+        </Panel>
       </section>
     </main>
   );
@@ -133,9 +124,9 @@ export default function Home() {
 
 function Metric({ label, value }: Readonly<{ label: string; value: string }>) {
   return (
-    <div className="surface-panel bg-[var(--surface-strong)] p-4">
-      <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[var(--text-secondary)]">{label}</p>
+    <Panel className="bg-[var(--surface-strong)] p-4">
+      <p className={ds.text.eyebrowMuted}>{label}</p>
       <p className="mt-2 text-lg font-semibold">{value}</p>
-    </div>
+    </Panel>
   );
 }

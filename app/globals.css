@@ -11,6 +11,12 @@
   --accent-blue: #1f66e5;
   --accent-green: #1b8f65;
   --accent-amber: #b56a15;
+  --focus-ring: #2f7af7;
+  --radius-panel: 8px;
+  --radius-control: 6px;
+  --font-sans: "Pretendard", "Apple SD Gothic Neo", "Noto Sans KR", "Aptos", system-ui, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  --tracking-label: 0.16em;
   --shadow-panel: 0 10px 28px rgb(33 41 47 / 6%);
 }
 
@@ -24,9 +30,14 @@ html {
 
 body {
   margin: 0;
-  font-family: "Pretendard", "Apple SD Gothic Neo", "Noto Sans KR", "Aptos", system-ui, sans-serif;
+  font-family: var(--font-sans);
   background: var(--background);
   color: var(--text-primary);
+}
+
+*:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
 }
 
 ::selection {
@@ -54,16 +65,16 @@ body {
 
 .surface-panel {
   border: 1px solid var(--border);
-  border-radius: 8px;
+  border-radius: var(--radius-panel);
   background: var(--surface);
   box-shadow: var(--shadow-panel);
 }
 
 .eyebrow {
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  font-family: var(--font-mono);
   font-size: 0.75rem;
   font-weight: 700;
-  letter-spacing: 0.16em;
+  letter-spacing: var(--tracking-label);
   text-transform: uppercase;
   color: var(--accent-blue);
 }

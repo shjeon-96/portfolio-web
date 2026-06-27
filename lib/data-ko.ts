@@ -415,6 +415,7 @@ export const changelogEntriesKo: ChangelogEntry[] = [
   {
     title: '모바일 릴리즈 게이트 시스템',
     date: '2026-06-27',
+    featured: true,
     category: 'mobile-release',
     problem: 'Expo 설정, 스토어 메타데이터, 위젯, 런타임 환경, 제품 문서를 따로 확인하면 네이티브 모바일 릴리즈 기준이 쉽게 어긋납니다.',
     approach: [
@@ -428,6 +429,7 @@ export const changelogEntriesKo: ChangelogEntry[] = [
   {
     title: 'Export 런타임 정합성 규칙 정리',
     date: '2026-06-26',
+    featured: true,
     category: 'export-deploy',
     problem: '조건부 렌더링 규칙이 여러 경로에서 평가되면 미리보기와 배포 산출물이 달라질 수 있었습니다.',
     approach: [
@@ -467,6 +469,7 @@ export const changelogEntriesKo: ChangelogEntry[] = [
   {
     title: 'AI 에이전트 기반 원인 분석 흐름',
     date: '2026-06-23',
+    featured: true,
     category: 'ai-workflow',
     problem: '큰 프론트엔드 시스템에서는 실제 소유 모듈을 찾지 못한 채 증상만 고치기 쉽습니다.',
     approach: [
@@ -971,31 +974,43 @@ export const skillsKo: SkillContext[] = [
     group: '제품 프론트엔드',
     tools: ['React', 'Next.js', 'TypeScript', 'React Native'],
     context: '복잡한 제품 UI, App Router 기반 화면, 모바일 앱 흐름, 제품 상태 중심 UI, 타입 기반 컴포넌트 계약에 사용했습니다.',
+    evidenceHref: '/changelog',
+    evidenceLabel: '제품 UI 변경 기록 보기',
   },
   {
     group: '상태와 제품 모델',
     tools: ['Zustand', 'Immer', 'AST-like editor models'],
     context: '에디터 상태 소유, Variant 동작, 중첩 구조, 단일 기준이 필요한 제품 액션에 사용했습니다.',
+    evidenceHref: '/changelog',
+    evidenceLabel: '상태 모델 근거 보기',
   },
   {
     group: '품질과 검증',
     tools: ['Vitest', 'Testing Library', 'Maestro', 'E2E checks', 'CI'],
     context: '미리보기와 산출물 정합성, 렌더링 계약, 릴리즈 게이트, 사용자 흐름의 회귀 방지에 사용했습니다.',
+    evidenceHref: '/changelog',
+    evidenceLabel: '검증 기록 보기',
   },
   {
     group: '운영/백엔드 이해',
     tools: ['NestJS', 'FastAPI', 'Spring API', 'MySQL', 'Oracle'],
     context: '관리자 업무 흐름, API 계약, 권한이 중요한 화면, 제품 UI 뒤의 데이터 구조를 이해하는 데 사용했습니다.',
+    evidenceHref: '/changelog',
+    evidenceLabel: '운영 기록 보기',
   },
   {
     group: '릴리즈와 배포',
     tools: ['Docker', 'GitHub Actions', 'Firebase', 'Vercel', 'EAS'],
     context: '환경 분리, 반복 가능한 릴리즈, 정적 포트폴리오 배포, 모바일 스토어 준비, 운영 배포 검증 흐름에 사용했습니다.',
+    evidenceHref: '/changelog',
+    evidenceLabel: '릴리즈 기록 보기',
   },
   {
     group: 'AI 개발 흐름',
     tools: ['Codex', 'Claude Code', 'OpenAI API', 'MCP', 'LSP'],
     context: '코드베이스 탐색, 의미 기반 코드 도구, 원인 분석, CI 실패 추적, AI 기반 제품 운영 흐름에 사용했습니다.',
+    evidenceHref: '/ai-workflow',
+    evidenceLabel: 'AI 개발 흐름 보기',
   },
 ];
 

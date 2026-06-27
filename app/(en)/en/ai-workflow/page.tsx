@@ -1,6 +1,8 @@
 import { AiWorkflowMap } from '@/components/ai-workflow-map';
 import { SectionHeading } from '@/components/section-heading';
+import { Panel } from '@/components/ui';
 import { aiWorkflowSteps } from '@/lib/data';
+import { cx, ds } from '@/lib/design-system';
 
 export const metadata = {
   title: 'AI Workflow',
@@ -55,23 +57,23 @@ export default function AiWorkflowPage() {
         sessionResultLabel="Result"
       />
 
-      <section className="surface-panel mt-10 p-6">
-        <p className="font-mono text-xs font-semibold uppercase tracking-[0.16em] text-[var(--accent-amber)]">Boundaries</p>
-        <div className="mt-4 grid gap-4 md:grid-cols-3">
+      <Panel as="section" className="mt-10 p-6">
+        <p className={ds.text.eyebrowAmber}>Boundaries</p>
+        <div className="mt-4 grid gap-4 divide-y divide-[var(--border)] md:grid-cols-3 md:divide-x md:divide-y-0">
           <Boundary title="No blind patches" body="Agent suggestions are checked against the actual owner path before implementation." />
           <Boundary title="No hidden alternate behavior" body="The preferred fix is the canonical contract, not a permissive alternate branch." />
           <Boundary title="Verification first" body="Generated output, tests, and user-visible behavior decide whether the change is done." />
         </div>
-      </section>
+      </Panel>
     </main>
   );
 }
 
 function Boundary({ title, body }: Readonly<{ title: string; body: string }>) {
   return (
-    <div className="rounded-lg bg-[var(--surface-strong)] p-4">
+    <div className="pt-4 first:pt-0 md:pl-4 md:pt-0 md:first:pl-0">
       <h3 className="font-semibold">{title}</h3>
-      <p className="mt-2 text-sm leading-6 text-[var(--text-secondary)]">{body}</p>
+      <p className={cx('mt-2', ds.text.bodySmall)}>{body}</p>
     </div>
   );
 }

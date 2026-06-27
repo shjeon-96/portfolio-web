@@ -1,7 +1,10 @@
 import { ChangelogEntry } from '@/components/changelog-entry';
+import { FeaturedChangelogList } from '@/components/featured-changelog-list';
 import { SectionHeading } from '@/components/section-heading';
-import { formatChangelogDate, groupChangelogEntriesByDate } from '@/lib/data';
+import { Panel } from '@/components/ui';
+import { formatChangelogDate, getFeaturedChangelogEntries, groupChangelogEntriesByDate } from '@/lib/data';
 import { changelogEntriesKo } from '@/lib/data-ko';
+import { cx, ds } from '@/lib/design-system';
 
 export const metadata = {
   title: '엔지니어링 체인지로그',
@@ -9,6 +12,7 @@ export const metadata = {
 };
 
 export default function KoreanChangelogPage() {
+  const featuredEntries = getFeaturedChangelogEntries(changelogEntriesKo);
   const groupedEntries = groupChangelogEntriesByDate(changelogEntriesKo);
 
   return (
@@ -18,12 +22,18 @@ export default function KoreanChangelogPage() {
         title="월별 제품 엔지니어링 기록"
         description="프로젝트별 변경을 공개 가능한 월별 기록으로 정리합니다. 각 항목은 문제 배경, 실제 변경, 확인한 내용만 남깁니다."
       />
-      <section className="surface-panel mt-10 px-5 py-1">
+      <FeaturedChangelogList
+        description="릴리즈 게이트, 산출물 정합성, AI 원인 분석처럼 현재 포트폴리오의 방향을 가장 잘 보여주는 변경입니다."
+        entries={featuredEntries}
+        locale="ko"
+        title="채용자가 먼저 볼 핵심 변경 3개"
+      />
+      <Panel as="section" className="mt-8 px-5 py-1">
         {groupedEntries.map((group) => (
           <div className="grid gap-4 border-b border-[var(--border)] py-7 last:border-b-0 md:grid-cols-[150px_1fr]" key={group.date}>
             <div>
               <p className="text-lg font-semibold text-[var(--text-primary)]">{formatChangelogDate(group.date, 'ko')}</p>
-              <p className="mt-2 font-mono text-xs font-semibold uppercase tracking-[0.14em] text-[var(--text-secondary)]">
+              <p className={cx('mt-2', ds.text.eyebrowMuted)}>
                 변경 {group.entries.length}개
               </p>
             </div>
@@ -34,7 +44,7 @@ export default function KoreanChangelogPage() {
             </div>
           </div>
         ))}
-      </section>
+      </Panel>
     </main>
   );
 }

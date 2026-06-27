@@ -1,4 +1,6 @@
 import { SectionHeading } from '@/components/section-heading';
+import { ActionLink, Panel, TextLink } from '@/components/ui';
+import { cx, ds } from '@/lib/design-system';
 
 export const metadata = {
   title: 'About',
@@ -14,8 +16,8 @@ export default function AboutPage() {
         description="I structure products where editor engines, operational tools, mobile platforms, and AI-assisted engineering workflows can easily drift across multiple sources of truth."
       />
       <section className="mt-10 grid gap-6 lg:grid-cols-[1fr_320px]">
-        <article className="surface-panel p-6">
-          <p className="eyebrow">Profile</p>
+        <Panel as="article" className="p-6">
+          <p className={ds.text.eyebrow}>Profile</p>
           <div className="mt-4 space-y-5 text-copy">
             <p>
               I am a front-end developer focused on complex product interfaces. Recently, I have worked on an AST-based
@@ -30,16 +32,16 @@ export default function AboutPage() {
           </div>
           <div className="mt-6 border-t border-[var(--border)] pt-5">
             <h2 className="font-semibold">Working principles</h2>
-            <ul className="mt-3 grid gap-3 text-sm leading-6 text-[var(--text-secondary)] md:grid-cols-3">
+            <ul className={cx('mt-3 grid gap-3 md:grid-cols-3', ds.text.bodySmall)}>
               <li>Find the owning module and product boundary first.</li>
               <li>Move duplicated decisions into shared rules and checks.</li>
               <li>Keep public evidence useful without exposing private operations.</li>
             </ul>
           </div>
-        </article>
-        <aside className="surface-panel p-6">
-          <p className="eyebrow">Current focus</p>
-          <ul className="mt-4 space-y-3 text-sm leading-6 text-[var(--text-secondary)]">
+        </Panel>
+        <Panel as="aside" className="p-6">
+          <p className={ds.text.eyebrow}>Current focus</p>
+          <ul className={cx('mt-4 space-y-3', ds.text.bodySmall)}>
             <li>B2B SaaS and product engineering</li>
             <li>Visual builders and operational tools</li>
             <li>Mobile release and native product boundaries</li>
@@ -47,34 +49,36 @@ export default function AboutPage() {
           </ul>
           <div className="mt-6 border-t border-[var(--border)] pt-5">
             <h2 className="font-semibold">Evidence to review</h2>
-            <ul className="mt-3 space-y-3 text-sm leading-6 text-[var(--text-secondary)]">
-              <li>Monthly engineering changelog entries</li>
-              <li>Public repositories and reusable developer tooling</li>
-              <li>AI-agent workflow used in real engineering work</li>
+            <ul className={cx('mt-3 space-y-3', ds.text.bodySmall)}>
+              <li>
+                <TextLink href="/en/changelog">
+                  Monthly engineering changelog entries
+                </TextLink>
+              </li>
+              <li>
+                <TextLink external href="https://github.com/shjeon-96/codex-lsp-bridge">
+                  Public repositories and reusable developer tooling
+                </TextLink>
+              </li>
+              <li>
+                <TextLink href="/en/ai-workflow">
+                  AI-agent workflow used in real engineering work
+                </TextLink>
+              </li>
             </ul>
           </div>
           <div className="mt-6 border-t border-[var(--border)] pt-5">
             <h2 className="font-semibold">Links</h2>
             <div className="mt-4 flex flex-wrap gap-3">
-              <a
-                className="rounded-md bg-[var(--text-primary)] px-4 py-2 text-sm font-semibold text-white"
-                href="https://github.com/shjeon-96"
-                rel="noreferrer"
-                target="_blank"
-              >
+              <ActionLink external href="https://github.com/shjeon-96" variant="primary">
                 GitHub
-              </a>
-              <a
-                className="rounded-md border border-[var(--border)] bg-[var(--surface)] px-4 py-2 text-sm font-semibold"
-                href="https://github.com/shjeon-96/portfolio-web"
-                rel="noreferrer"
-                target="_blank"
-              >
+              </ActionLink>
+              <ActionLink external href="https://github.com/shjeon-96/portfolio-web">
                 Portfolio repository
-              </a>
+              </ActionLink>
             </div>
           </div>
-        </aside>
+        </Panel>
       </section>
     </main>
   );

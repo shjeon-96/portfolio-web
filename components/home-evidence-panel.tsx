@@ -1,3 +1,6 @@
+import { NumberMarker, Panel } from '@/components/ui';
+import { cx, ds } from '@/lib/design-system';
+
 type EvidenceItem = {
   label: string;
   title: string;
@@ -16,26 +19,24 @@ export function HomeEvidencePanel({
   items: EvidenceItem[];
 }>) {
   return (
-    <aside className="surface-panel p-4">
+    <Panel as="aside" className="p-4">
       <div className="border-b border-[var(--border)] pb-3">
-        <p className="font-mono text-xs font-semibold uppercase tracking-[0.18em] text-[var(--accent-blue)]">{kicker}</p>
+        <p className={ds.text.eyebrowAccent}>{kicker}</p>
         <h2 className="mt-2 text-xl font-semibold text-[var(--text-primary)]">{title}</h2>
-        <p className="mt-2 text-sm leading-5 text-[var(--text-secondary)]">{summary}</p>
+        <p className={cx('mt-2', ds.text.bodyCompact)}>{summary}</p>
       </div>
       <div className="divide-y divide-[var(--border)]">
         {items.map((item, index) => (
           <section className="grid gap-3 py-3 sm:grid-cols-[32px_1fr]" key={item.label}>
-            <span className="flex size-8 items-center justify-center rounded-md bg-[var(--surface-strong)] font-mono text-xs font-semibold text-[var(--text-muted)]">
-              {String(index + 1).padStart(2, '0')}
-            </span>
+            <NumberMarker index={index} />
             <div>
-              <p className="font-mono text-xs font-semibold uppercase tracking-[0.16em] text-[var(--text-muted)]">{item.label}</p>
+              <p className={ds.text.eyebrowMuted}>{item.label}</p>
               <h3 className="mt-1 text-base font-semibold text-[var(--text-primary)]">{item.title}</h3>
-              <p className="mt-1.5 text-sm leading-5 text-[var(--text-secondary)]">{item.description}</p>
+              <p className={cx('mt-1.5', ds.text.bodyCompact)}>{item.description}</p>
             </div>
           </section>
         ))}
       </div>
-    </aside>
+    </Panel>
   );
 }

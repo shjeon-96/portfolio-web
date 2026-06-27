@@ -1,6 +1,9 @@
 import { ChangelogEntry } from '@/components/changelog-entry';
+import { FeaturedChangelogList } from '@/components/featured-changelog-list';
 import { SectionHeading } from '@/components/section-heading';
-import { changelogEntries, formatChangelogDate, groupChangelogEntriesByDate } from '@/lib/data';
+import { Panel } from '@/components/ui';
+import { changelogEntries, formatChangelogDate, getFeaturedChangelogEntries, groupChangelogEntriesByDate } from '@/lib/data';
+import { cx, ds } from '@/lib/design-system';
 
 export const metadata = {
   title: 'Engineering Changelog',
@@ -8,6 +11,7 @@ export const metadata = {
 };
 
 export default function ChangelogPage() {
+  const featuredEntries = getFeaturedChangelogEntries(changelogEntries);
   const groupedEntries = groupChangelogEntriesByDate(changelogEntries);
 
   return (
@@ -17,12 +21,18 @@ export default function ChangelogPage() {
         title="Monthly product engineering notes"
         description="Project changes are rewritten into public-safe monthly notes. Each entry keeps the context, the change, and the observed result."
       />
-      <section className="surface-panel mt-10 px-5 py-1">
+      <FeaturedChangelogList
+        description="Release gates, output parity, and AI-assisted root-cause work are the clearest current signals in this portfolio."
+        entries={featuredEntries}
+        locale="en"
+        title="Three changes to review first"
+      />
+      <Panel as="section" className="mt-8 px-5 py-1">
         {groupedEntries.map((group) => (
           <div className="grid gap-4 border-b border-[var(--border)] py-7 last:border-b-0 md:grid-cols-[150px_1fr]" key={group.date}>
             <div>
               <p className="text-lg font-semibold text-[var(--text-primary)]">{formatChangelogDate(group.date, 'en')}</p>
-              <p className="mt-2 font-mono text-xs font-semibold uppercase tracking-[0.14em] text-[var(--text-secondary)]">
+              <p className={cx('mt-2', ds.text.eyebrowMuted)}>
                 {group.entries.length} changes
               </p>
             </div>
@@ -33,7 +43,7 @@ export default function ChangelogPage() {
             </div>
           </div>
         ))}
-      </section>
+      </Panel>
     </main>
   );
 }

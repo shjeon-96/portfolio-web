@@ -1,6 +1,7 @@
 export type ChangelogEntry = {
   title: string;
   date: string;
+  featured?: boolean;
   category:
     | 'editor-engine'
     | 'export-deploy'
@@ -39,6 +40,8 @@ export type SkillContext = {
   group: string;
   tools: string[];
   context: string;
+  evidenceHref: string;
+  evidenceLabel: string;
 };
 
 export const proofPoints = [
@@ -456,6 +459,7 @@ export const changelogEntries: ChangelogEntry[] = [
   {
     title: 'Mobile release gate system',
     date: '2026-06-27',
+    featured: true,
     category: 'mobile-release',
     problem: 'Native mobile releases can drift when Expo config, store metadata, widgets, runtime environment, and product docs are checked separately.',
     approach: [
@@ -469,6 +473,7 @@ export const changelogEntries: ChangelogEntry[] = [
   {
     title: 'Export runtime parity rules',
     date: '2026-06-26',
+    featured: true,
     category: 'export-deploy',
     problem: 'Preview and deployable output can diverge when conditional rendering rules are evaluated in separate paths.',
     approach: [
@@ -508,6 +513,7 @@ export const changelogEntries: ChangelogEntry[] = [
   {
     title: 'Agent-assisted root-cause workflow',
     date: '2026-06-23',
+    featured: true,
     category: 'ai-workflow',
     problem: 'Large front-end systems make it easy to patch symptoms without finding the canonical owner.',
     approach: [
@@ -1012,31 +1018,43 @@ export const skills: SkillContext[] = [
     group: 'Product front-end',
     tools: ['React', 'Next.js', 'TypeScript', 'React Native'],
     context: 'Complex product interfaces, App Router surfaces, mobile app flows, product-state-driven UI, and typed component contracts.',
+    evidenceHref: '/en/changelog',
+    evidenceLabel: 'Review product UI changes',
   },
   {
     group: 'State and product models',
     tools: ['Zustand', 'Immer', 'AST-like editor models'],
     context: 'Editor state ownership, variant behavior, nested structures, and product actions that need clear source-of-truth boundaries.',
+    evidenceHref: '/en/changelog',
+    evidenceLabel: 'Review state model evidence',
   },
   {
     group: 'Quality and verification',
     tools: ['Vitest', 'Testing Library', 'Maestro', 'E2E checks', 'CI'],
     context: 'Regression prevention for preview/output parity, rendering contracts, release gates, and user-facing workflows.',
+    evidenceHref: '/en/changelog',
+    evidenceLabel: 'Review verification notes',
   },
   {
     group: 'Operations and backend understanding',
     tools: ['NestJS', 'FastAPI', 'Spring API', 'MySQL', 'Oracle'],
     context: 'Admin workflows, API contracts, permission-sensitive screens, and data structures behind product interfaces.',
+    evidenceHref: '/en/changelog',
+    evidenceLabel: 'Review operations notes',
   },
   {
     group: 'Release and deployment',
     tools: ['Docker', 'GitHub Actions', 'Firebase', 'Vercel', 'EAS'],
     context: 'Environment separation, repeatable release paths, static portfolio deployment, mobile store readiness, and production checks.',
+    evidenceHref: '/en/changelog',
+    evidenceLabel: 'Review release evidence',
   },
   {
     group: 'AI workflow',
     tools: ['Codex', 'Claude Code', 'OpenAI API', 'MCP', 'LSP'],
     context: 'Agent-assisted codebase exploration, semantic tooling, root-cause narrowing, CI failure triage, and AI-assisted product workflows.',
+    evidenceHref: '/en/ai-workflow',
+    evidenceLabel: 'Review AI workflow',
   },
 ];
 
@@ -1081,6 +1099,12 @@ export const aiWorkflowSteps = [
 
 export function sortChangelogEntriesByDateDesc<T extends ChangelogEntry>(entries: T[]) {
   return [...entries].sort((left, right) => right.date.localeCompare(left.date));
+}
+
+export function getFeaturedChangelogEntries<T extends ChangelogEntry>(entries: T[], limit = 3) {
+  return sortChangelogEntriesByDateDesc(entries)
+    .filter((entry) => entry.featured)
+    .slice(0, limit);
 }
 
 export function groupChangelogEntriesByDate<T extends ChangelogEntry>(entries: T[]) {

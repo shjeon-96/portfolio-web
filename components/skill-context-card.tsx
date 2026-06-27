@@ -1,17 +1,18 @@
+import { ActionLink, BadgeList, Panel } from '@/components/ui';
 import type { SkillContext } from '@/lib/data';
+import { cx, ds } from '@/lib/design-system';
 
 export function SkillContextCard({ skill }: Readonly<{ skill: SkillContext }>) {
   return (
-    <article className="surface-panel p-5">
+    <Panel as="article" className="p-5">
       <h2 className="text-xl font-semibold">{skill.group}</h2>
-      <div className="mt-4 flex flex-wrap gap-2">
-        {skill.tools.map((tool) => (
-          <span className="rounded-md border border-[var(--border)] px-2.5 py-1 text-xs text-[var(--text-secondary)]" key={tool}>
-            {tool}
-          </span>
-        ))}
+      <BadgeList className="mt-4" items={skill.tools} />
+      <p className={cx('mt-4', ds.text.bodySmall)}>{skill.context}</p>
+      <div className="mt-5 border-t border-[var(--border)] pt-4">
+        <ActionLink href={skill.evidenceHref} variant="compact">
+          {skill.evidenceLabel}
+        </ActionLink>
       </div>
-      <p className="mt-4 text-sm leading-6 text-[var(--text-secondary)]">{skill.context}</p>
-    </article>
+    </Panel>
   );
 }

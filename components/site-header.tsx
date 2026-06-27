@@ -5,6 +5,8 @@ import { usePathname } from 'next/navigation';
 import { Menu, X } from 'lucide-react';
 import { useState } from 'react';
 
+import { cx, ds } from '@/lib/design-system';
+
 const navigationEn = [
   { href: '/en', label: 'Home' },
   { href: '/en/changelog', label: 'Changelog' },
@@ -26,6 +28,19 @@ export function SiteHeader() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const isKorean = !pathname.startsWith('/en');
   const navigation = isKorean ? navigationKo : navigationEn;
+  const primaryShortcut = isKorean
+    ? { href: '/changelog', label: '기록' }
+    : { href: '/en/changelog', label: 'Notes' };
+  const menuLabel = isMenuOpen
+    ? isKorean
+      ? '내비게이션 메뉴 닫기'
+      : 'Close navigation menu'
+    : isKorean
+      ? '내비게이션 메뉴 열기'
+      : 'Open navigation menu';
+  const navLinkClassName =
+    'flex min-h-11 min-w-11 items-center justify-center whitespace-nowrap rounded-md px-3 py-2 transition hover:bg-[var(--surface-strong)] hover:text-[var(--text-primary)]';
+  const mobileMenuLinkClassName = 'flex min-h-11 items-center rounded-md px-3 font-medium transition hover:bg-[var(--background)] hover:text-[var(--text-primary)]';
   const isActive = (href: string) => {
     if (href === '/' || href === '/en') {
       return pathname === href;
@@ -52,9 +67,7 @@ export function SiteHeader() {
           {navigation.map((item) => (
             <Link
               aria-current={isActive(item.href) ? 'page' : undefined}
-              className={`flex min-h-11 min-w-11 items-center justify-center whitespace-nowrap rounded-md px-3 py-2 transition hover:bg-[var(--surface-strong)] hover:text-[var(--text-primary)] ${
-                isActive(item.href) ? 'bg-[var(--surface-strong)] text-[var(--text-primary)]' : ''
-              }`}
+              className={cx(navLinkClassName, isActive(item.href) && 'bg-[var(--surface-strong)] text-[var(--text-primary)]')}
               href={item.href}
               key={item.href}
             >
@@ -63,28 +76,38 @@ export function SiteHeader() {
           ))}
           <span className="mx-1 h-4 w-px shrink-0 bg-[var(--border)]" />
           <Link
-            className="flex min-h-11 min-w-11 items-center justify-center whitespace-nowrap rounded-md px-3 py-2 transition hover:bg-[var(--surface-strong)] hover:text-[var(--text-primary)]"
+            className={navLinkClassName}
             href="/en"
           >
             EN
           </Link>
           <Link
-            className="flex min-h-11 min-w-11 items-center justify-center whitespace-nowrap rounded-md px-3 py-2 transition hover:bg-[var(--surface-strong)] hover:text-[var(--text-primary)]"
+            className={navLinkClassName}
             href="/"
           >
             KO
           </Link>
         </nav>
-        <button
-          aria-controls="mobile-site-navigation"
-          aria-expanded={isMenuOpen}
-          aria-label={isMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
-          className="grid size-11 place-items-center rounded-md border border-[var(--border)] bg-[var(--surface)] text-[var(--text-primary)] md:hidden"
-          onClick={() => setIsMenuOpen((current) => !current)}
-          type="button"
-        >
-          {isMenuOpen ? <X size={18} /> : <Menu size={18} />}
-        </button>
+        <div className="flex items-center gap-2 md:hidden">
+          <Link
+            aria-current={isActive(primaryShortcut.href) ? 'page' : undefined}
+            className={cx(ds.action.compact, isActive(primaryShortcut.href) && 'bg-[var(--text-primary)] text-white hover:bg-[var(--text-primary)] hover:text-white')}
+            href={primaryShortcut.href}
+            onClick={() => setIsMenuOpen(false)}
+          >
+            {primaryShortcut.label}
+          </Link>
+          <button
+            aria-controls="mobile-site-navigation"
+            aria-expanded={isMenuOpen}
+            aria-label={menuLabel}
+            className={ds.action.icon}
+            onClick={() => setIsMenuOpen((current) => !current)}
+            type="button"
+          >
+            {isMenuOpen ? <X size={18} /> : <Menu size={18} />}
+          </button>
+        </div>
       </div>
       {isMenuOpen ? (
         <nav
@@ -95,9 +118,7 @@ export function SiteHeader() {
             {navigation.map((item) => (
               <Link
                 aria-current={isActive(item.href) ? 'page' : undefined}
-                className={`flex min-h-11 items-center rounded-md px-3 font-medium transition hover:bg-[var(--background)] hover:text-[var(--text-primary)] ${
-                  isActive(item.href) ? 'bg-[var(--background)] text-[var(--text-primary)]' : ''
-                }`}
+                className={cx(mobileMenuLinkClassName, isActive(item.href) && 'bg-[var(--background)] text-[var(--text-primary)]')}
                 href={item.href}
                 key={item.href}
                 onClick={() => setIsMenuOpen(false)}
@@ -107,14 +128,14 @@ export function SiteHeader() {
             ))}
             <div className="mt-2 grid grid-cols-2 gap-2 border-t border-[var(--border)] pt-3">
               <Link
-                className="flex min-h-11 items-center justify-center rounded-md border border-[var(--border)] font-semibold text-[var(--text-primary)]"
+                className={cx(ds.action.secondary, 'px-3 py-0')}
                 href="/en"
                 onClick={() => setIsMenuOpen(false)}
               >
                 EN
               </Link>
               <Link
-                className="flex min-h-11 items-center justify-center rounded-md border border-[var(--border)] font-semibold text-[var(--text-primary)]"
+                className={cx(ds.action.secondary, 'px-3 py-0')}
                 href="/"
                 onClick={() => setIsMenuOpen(false)}
               >

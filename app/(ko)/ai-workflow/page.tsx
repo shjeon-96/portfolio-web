@@ -1,6 +1,8 @@
 import { AiWorkflowMap } from '@/components/ai-workflow-map';
 import { SectionHeading } from '@/components/section-heading';
+import { Panel } from '@/components/ui';
 import { aiWorkflowStepsKo } from '@/lib/data-ko';
+import { cx, ds } from '@/lib/design-system';
 
 export const metadata = {
   title: 'AI 개발 흐름',
@@ -55,23 +57,23 @@ export default function KoreanAiWorkflowPage() {
         sessionResultLabel="결과"
       />
 
-      <section className="surface-panel mt-10 p-6">
-        <p className="font-mono text-xs font-semibold uppercase tracking-[0.16em] text-[var(--accent-amber)]">기준</p>
-        <div className="mt-4 grid gap-4 md:grid-cols-3">
+      <Panel as="section" className="mt-10 p-6">
+        <p className={ds.text.eyebrowAmber}>기준</p>
+        <div className="mt-4 grid gap-4 divide-y divide-[var(--border)] md:grid-cols-3 md:divide-x md:divide-y-0">
           <Boundary title="제안은 바로 적용하지 않습니다" body="AI 제안은 실제 소유 경로와 테스트 기준으로 확인한 뒤 적용합니다." />
           <Boundary title="증상을 가리지 않습니다" body="임시 분기보다 문제를 설명하는 제품 계약과 소유 경계를 고칩니다." />
           <Boundary title="검증을 먼저 봅니다" body="생성 산출물, 테스트, 사용자에게 보이는 동작이 완료 기준입니다." />
         </div>
-      </section>
+      </Panel>
     </main>
   );
 }
 
 function Boundary({ title, body }: Readonly<{ title: string; body: string }>) {
   return (
-    <div className="rounded-lg bg-[var(--surface-strong)] p-4">
+    <div className="pt-4 first:pt-0 md:pl-4 md:pt-0 md:first:pl-0">
       <h3 className="font-semibold">{title}</h3>
-      <p className="mt-2 text-sm leading-6 text-[var(--text-secondary)]">{body}</p>
+      <p className={cx('mt-2', ds.text.bodySmall)}>{body}</p>
     </div>
   );
 }
