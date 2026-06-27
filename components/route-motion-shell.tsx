@@ -18,19 +18,20 @@ export function RouteMotionShell({ children }: Readonly<RouteMotionShellProps>) 
   );
 
   return (
-    <AnimatePresence initial={false} mode="wait">
-      <motion.div
-        animate={reduceMotion ? undefined : { opacity: 1, y: 0 }}
-        className="relative min-h-[calc(100vh-9rem)] overflow-hidden"
-        exit={reduceMotion ? undefined : { opacity: 0.96, y: -6 }}
-        initial={false}
-        key={pathname}
-        transition={transition}
-      >
-        {!reduceMotion ? <RouteScanLine /> : null}
-        {children}
-      </motion.div>
-    </AnimatePresence>
+    <div className="relative min-h-[calc(100vh-9rem)] overflow-hidden">
+      {!reduceMotion ? <RouteScanLine key={pathname} /> : null}
+      <AnimatePresence initial={false} mode="wait">
+        <motion.div
+          animate={reduceMotion ? undefined : { opacity: 1, y: 0 }}
+          exit={reduceMotion ? undefined : { opacity: 0.96, y: -6 }}
+          initial={false}
+          key={pathname}
+          transition={transition}
+        >
+          {children}
+        </motion.div>
+      </AnimatePresence>
+    </div>
   );
 }
 
