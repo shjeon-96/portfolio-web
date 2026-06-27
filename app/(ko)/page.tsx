@@ -83,15 +83,15 @@ export default function KoreanHomePage() {
       <section className="mx-auto max-w-7xl px-5 py-16">
         <div className="flex flex-col justify-between gap-4 md:flex-row md:items-end">
           <div>
-            <p className="text-sm font-semibold uppercase tracking-[0.16em] text-[var(--accent-blue)]">Case Studies</p>
-            <h2 className="mt-3 text-3xl font-semibold">화면이 아니라 제품 시스템을 다룹니다</h2>
+            <p className="text-sm font-semibold uppercase tracking-[0.16em] text-[var(--accent-blue)]">Representative Proof</p>
+            <h2 className="mt-3 text-3xl font-semibold">채용자가 바로 볼 수 있는 대표 증거 3개</h2>
           </div>
           <Link className="inline-flex min-h-11 items-center text-sm font-semibold text-[var(--accent-blue)]" href="/case-studies">
             전체 케이스 스터디 보기
           </Link>
         </div>
-        <div className="mt-8 grid gap-4 md:grid-cols-2">
-          {caseStudiesKo.slice(0, 2).map((caseStudy) => (
+        <div className="mt-8 grid gap-4 lg:grid-cols-3">
+          {caseStudiesKo.slice(0, 3).map((caseStudy) => (
             <CaseStudyCard caseStudy={caseStudy} cta="케이스 스터디 읽기" hrefPrefix="/case-studies" key={caseStudy.slug} />
           ))}
         </div>

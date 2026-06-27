@@ -5,6 +5,16 @@ const diagramBySlug: Record<string, {
   nodes: string[];
   caption: string;
 }> = {
+  'codex-lsp-bridge': {
+    title: 'Agent semantic tooling path',
+    nodes: ['Coding agent', 'MCP tool', 'LSP bridge', 'Language server', 'Read-only insight'],
+    caption: 'Semantic code feedback is exposed through a narrow read-only boundary before an agent proposes changes.',
+  },
+  'mobile-release-foundations': {
+    title: 'Mobile release gate flow',
+    nodes: ['Product docs', 'Shared packages', 'App config', 'Verifier suite', 'Store build'],
+    caption: 'Product rules, shared foundations, native configuration, and release evidence move through one delivery model.',
+  },
   'ast-editor-engine': {
     title: 'Editor model flow',
     nodes: ['Editable AST', 'State owner', 'Canvas UI', 'Preview', 'Generated output'],
@@ -33,6 +43,16 @@ const diagramBySlug: Record<string, {
 };
 
 const koreanDiagramBySlug: typeof diagramBySlug = {
+  'codex-lsp-bridge': {
+    title: '에이전트 semantic tooling 경로',
+    nodes: ['코딩 에이전트', 'MCP 도구', 'LSP 브리지', '언어 서버', '읽기 전용 근거'],
+    caption: '에이전트가 변경을 제안하기 전에 좁은 읽기 전용 경계로 semantic code feedback을 받습니다.',
+  },
+  'mobile-release-foundations': {
+    title: '모바일 릴리즈 게이트 흐름',
+    nodes: ['제품 문서', 'Shared packages', 'App config', '검증 스위트', '스토어 빌드'],
+    caption: '제품 규칙, shared foundations, native configuration, 릴리즈 증거가 하나의 delivery model을 따릅니다.',
+  },
   'ast-editor-engine': {
     title: '에디터 모델 흐름',
     nodes: ['편집 AST', '상태 소유자', '캔버스 UI', '미리보기', '생성 산출물'],

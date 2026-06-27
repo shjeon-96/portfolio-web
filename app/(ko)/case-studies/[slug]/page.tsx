@@ -44,6 +44,21 @@ export default async function KoreanCaseStudyDetailPage({ params }: { params: Pr
           </span>
         ))}
       </div>
+      {caseStudy.links.length > 0 ? (
+        <div className="mt-5 flex flex-wrap gap-3">
+          {caseStudy.links.map((link) => (
+            <a
+              className="inline-flex min-h-11 items-center rounded-md border border-[var(--border)] bg-[var(--surface)] px-4 py-2 text-sm font-semibold text-[var(--accent-blue)]"
+              href={link.href}
+              key={link.href}
+              rel={link.href.startsWith('http') ? 'noreferrer' : undefined}
+              target={link.href.startsWith('http') ? '_blank' : undefined}
+            >
+              {link.label}
+            </a>
+          ))}
+        </div>
+      ) : null}
 
       <section className="mt-10 grid gap-4 md:grid-cols-3" aria-label="케이스 스터디 요약">
         <SummaryPoint label="바뀐 점" value={caseStudy.result} />
@@ -56,7 +71,10 @@ export default async function KoreanCaseStudyDetailPage({ params }: { params: Pr
         <DetailBlock title="역할" tone="amber" body={caseStudy.role} />
         <DetailList title="접근" tone="blue" items={caseStudy.approach} />
         <DetailBlock title="결과" tone="green" body={caseStudy.result} />
+        <DetailList title="공개 근거" tone="blue" items={caseStudy.publicProof} />
+        <DetailList title="핵심 Trade-off" tone="amber" items={caseStudy.tradeOffs} />
         <DetailList title="검증" tone="green" items={caseStudy.verification} />
+        <EvidenceList title="검증 명령과 증거" items={caseStudy.verificationEvidence} />
       </section>
     </main>
   );
@@ -105,6 +123,21 @@ function DetailList({
           <li key={item}>{item}</li>
         ))}
       </ul>
+    </article>
+  );
+}
+
+function EvidenceList({ title, items }: Readonly<{ title: string; items: string[] }>) {
+  return (
+    <article className="rounded-lg border border-[var(--border)] bg-[var(--surface)] p-6 shadow-sm">
+      <p className="text-sm font-semibold uppercase tracking-[0.14em] text-[var(--accent-green)]">{title}</p>
+      <div className="mt-3 flex flex-wrap gap-2">
+        {items.map((item) => (
+          <code className="rounded-md border border-[var(--border)] bg-[var(--background)] px-3 py-2 text-sm text-[var(--text-primary)]" key={item}>
+            {item}
+          </code>
+        ))}
+      </div>
     </article>
   );
 }

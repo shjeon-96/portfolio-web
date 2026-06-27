@@ -4,11 +4,18 @@ export type CaseStudy = {
   label: string;
   summary: string;
   stack: string[];
+  publicProof: string[];
   problem: string;
   role: string;
   approach: string[];
   result: string;
   verification: string[];
+  tradeOffs: string[];
+  verificationEvidence: string[];
+  links: Array<{
+    label: string;
+    href: string;
+  }>;
 };
 
 export type ChangelogEntry = {
@@ -50,6 +57,11 @@ export const caseStudies: CaseStudy[] = [
     summary:
       'Built a public MCP/LSP bridge that gives coding agents read-only semantic checks such as diagnostics, definitions, references, symbols, and hover context.',
     stack: ['TypeScript', 'Node.js', 'MCP', 'Language Server Protocol', 'Vitest'],
+    publicProof: [
+      'Public GitHub repository under shjeon-96',
+      'Published package workflow with package smoke checks',
+      'Documented MCP tools, safety limits, and maintainer workflow',
+    ],
     problem:
       'AI coding agents can move quickly through text search, but large codebases still need semantic feedback from the language server before changes are trusted.',
     role:
@@ -66,6 +78,17 @@ export const caseStudies: CaseStudy[] = [
       'Package verification includes build, type-check, smoke install, and smoke package checks.',
       'Public documentation explains supported tools, safety limits, and maintainer workflow.',
     ],
+    tradeOffs: [
+      'Kept the bridge read-only so semantic context could help agents without turning the tool into an alternate mutation path.',
+      'Started with TypeScript as the primary exercised language while keeping adapter boundaries ready for additional language servers.',
+    ],
+    verificationEvidence: ['npm run ci:verify', 'npm run test', 'npm run verify:package', 'npm run smoke:package'],
+    links: [
+      {
+        label: 'GitHub repository',
+        href: 'https://github.com/shjeon-96/codex-lsp-bridge',
+      },
+    ],
   },
   {
     slug: 'mobile-release-foundations',
@@ -74,6 +97,11 @@ export const caseStudies: CaseStudy[] = [
     summary:
       'Structured a mobile product monorepo so release policy, shared packages, native boundaries, and product documentation stayed aligned across apps.',
     stack: ['Expo', 'React Native', 'TypeScript', 'Supabase', 'EAS', 'Maestro'],
+    publicProof: [
+      'Mobile release policy encoded in verification scripts',
+      'Shared foundation packages guarded by package-level checks',
+      'Product documentation used as the planning source of truth',
+    ],
     problem:
       'Mobile products with native calendar, widgets, billing, invites, and backend integrations can drift when documentation, app code, native policy, and release scripts each define their own truth.',
     role:
@@ -90,6 +118,17 @@ export const caseStudies: CaseStudy[] = [
       'Shared foundation verification prevents duplicated app-local implementations from becoming competing sources of truth.',
       'Mobile UI and device-oriented smoke flows provide evidence for critical app paths before release.',
     ],
+    tradeOffs: [
+      'Rejected web or Expo Go paths as release proof because native calendar, widget, billing, and store behavior needed the real mobile boundary.',
+      'Used shared packages only where repeated app behavior had a clear owner, avoiding broad coupling for behavior that had not stabilized.',
+    ],
+    verificationEvidence: [
+      'npm run release:config',
+      'npm run verify:eas-release-config',
+      'npm run verify:mobile-ui',
+      'npm run verify:shared-foundations',
+    ],
+    links: [],
   },
   {
     slug: 'ast-editor-engine',
@@ -98,6 +137,11 @@ export const caseStudies: CaseStudy[] = [
     summary:
       'Structured a visual editing surface where component variants, styles, interactions, bindings, preview, and deployable artifacts had to stay consistent.',
     stack: ['React', 'Next.js', 'TypeScript', 'Zustand', 'Immer', 'Vitest'],
+    publicProof: [
+      'Public-safe architecture narrative with product model boundaries',
+      'Regression-oriented verification around editor state and rendering contracts',
+      'Interactive prototype path in this portfolio',
+    ],
     problem:
       'A no-code editor needed to edit, persist, preview, and export templates, components, styles, events, and data bindings through one coherent model.',
     role:
@@ -114,6 +158,17 @@ export const caseStudies: CaseStudy[] = [
       'Regression checks for behavior shared by preview and generated artifacts.',
       'Code review follow-up focused on owner boundaries, not patch-level workarounds.',
     ],
+    tradeOffs: [
+      'Modeled the editor around one product structure instead of letting each side panel own separate local truth.',
+      'Separated editing-time state from runtime behavior so variants, slots, and interactions could evolve without hidden coupling.',
+    ],
+    verificationEvidence: ['Unit tests for state transitions', 'Integration checks for preview behavior', 'Generated output regression review'],
+    links: [
+      {
+        label: 'Interactive prototype',
+        href: '/en/editor-prototype',
+      },
+    ],
   },
   {
     slug: 'export-deploy-parity',
@@ -122,6 +177,11 @@ export const caseStudies: CaseStudy[] = [
     summary:
       'Stabilized the path from editor state to HTML/CSS/JS and deployment-oriented artifacts so what users configured matched what shipped.',
     stack: ['TypeScript', 'React', 'HTML/CSS', 'Liquid-style templates', 'Vitest'],
+    publicProof: [
+      'Public-safe output parity narrative',
+      'Regression checks centered on generated artifacts',
+      'Shared rendering-contract framing across preview and deploy paths',
+    ],
     problem:
       'The editor preview and generated artifacts could drift when rendering rules, asset handling, repeat behavior, or conditional visibility were interpreted in different places.',
     role:
@@ -138,6 +198,12 @@ export const caseStudies: CaseStudy[] = [
       'Regression scenarios for conditional rendering and nested structures.',
       'Manual review against public-safe, anonymized artifact examples.',
     ],
+    tradeOffs: [
+      'Treated generated output as the product surface, not just an implementation detail behind the editor.',
+      'Moved shared decisions into common rules instead of patching preview and deploy paths independently.',
+    ],
+    verificationEvidence: ['Generated artifact shape checks', 'Conditional rendering regression scenarios', 'Manual output review'],
+    links: [],
   },
   {
     slug: 'ai-review-operations',
@@ -146,6 +212,11 @@ export const caseStudies: CaseStudy[] = [
     summary:
       'Built an operations flow for collecting review data, generating AI-assisted responses, and keeping human review in the loop.',
     stack: ['React', 'NestJS', 'Python', 'OpenAI API', 'MySQL', 'JWT'],
+    publicProof: [
+      'Public-safe workflow summary for AI-assisted operations',
+      'Human review and editability kept visible in the product flow',
+      'Permission, empty, loading, and failed states treated as product states',
+    ],
     problem:
       'Operators needed to understand incoming review data, inspect AI-assisted suggestions, and respond without losing control over the final customer-facing output.',
     role:
@@ -162,6 +233,12 @@ export const caseStudies: CaseStudy[] = [
       'Permission-aware admin UI review.',
       'Manual workflow testing for operator handoff points.',
     ],
+    tradeOffs: [
+      'Kept AI suggestions reviewable instead of auto-sending customer-facing responses.',
+      'Separated collection, analysis, review, and response generation so operators could diagnose each stage.',
+    ],
+    verificationEvidence: ['API state checks', 'Permission-aware UI review', 'Manual operator handoff testing'],
+    links: [],
   },
   {
     slug: 'settlement-operations',
@@ -170,6 +247,11 @@ export const caseStudies: CaseStudy[] = [
     summary:
       'Connected settlement, permissions, merchant data, and realtime notification surfaces across web and mobile admin workflows.',
     stack: ['React', 'React Native', 'Spring API', 'PG integration', 'Realtime notification'],
+    publicProof: [
+      'Public-safe operations workflow narrative',
+      'Role-aware settlement and payment visibility',
+      'Realtime status changes modeled as product state',
+    ],
     problem:
       'Business users needed reliable access to payment and settlement data while permissions and operational status changed across roles.',
     role:
@@ -186,6 +268,12 @@ export const caseStudies: CaseStudy[] = [
       'API integration review for settlement states.',
       'Manual testing around notification and status changes.',
     ],
+    tradeOffs: [
+      'Kept admin and mobile flows aligned around shared operational concepts while preserving role-specific views.',
+      'Made realtime updates part of the state model instead of transient messages that could be missed.',
+    ],
+    verificationEvidence: ['Role-based UI checks', 'Settlement API integration review', 'Notification state manual tests'],
+    links: [],
   },
   {
     slug: 'legacy-admin-modernization',
@@ -194,6 +282,11 @@ export const caseStudies: CaseStudy[] = [
     summary:
       'Modernized operational back-office flows while preserving service continuity across framework and deployment changes.',
     stack: ['Vue', 'React', 'Next.js', 'Firebase', 'Docker', 'GitHub Actions'],
+    publicProof: [
+      'Public-safe migration narrative',
+      'Environment separation and repeatable release checks',
+      'Operational continuity preserved during framework changes',
+    ],
     problem:
       'A live operations system needed framework migration and workflow improvement without interrupting the business processes it supported.',
     role:
@@ -210,6 +303,12 @@ export const caseStudies: CaseStudy[] = [
       'Workflow review for migrated screens.',
       'Environment-specific verification before release.',
     ],
+    tradeOffs: [
+      'Moved workflows gradually because the operational system had to keep serving users during modernization.',
+      'Separated environment setup from feature work so release mistakes were easier to detect before production.',
+    ],
+    verificationEvidence: ['Build checks', 'Deployment workflow review', 'Environment-specific release verification'],
+    links: [],
   },
 ];
 

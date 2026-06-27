@@ -30,6 +30,13 @@ export default function KoreanAboutPage() {
           </p>
         </article>
         <article className="rounded-xl border border-[var(--border)] bg-[var(--surface)] p-6 shadow-sm">
+          <h2 className="text-xl font-semibold">지원 포지션 적합도</h2>
+          <p className="mt-4 leading-8 text-[var(--text-secondary)]">
+            복잡한 제품 UI를 단순 화면 구현이 아니라 상태 모델, 검증 루프, 릴리즈 경계까지 함께 다뤄야 하는 팀에 잘 맞습니다.
+            특히 B2B SaaS, 에디터/빌더 제품, 모바일 제품 플랫폼, AI 개발 워크플로우를 제품화하는 역할에서 강점을 냅니다.
+          </p>
+        </article>
+        <article className="rounded-xl border border-[var(--border)] bg-[var(--surface)] p-6 shadow-sm">
           <h2 className="text-xl font-semibold">Links</h2>
           <div className="mt-4 flex flex-wrap gap-3">
             <a

@@ -78,15 +78,15 @@ export default function Home() {
       <section className="mx-auto max-w-7xl px-5 py-16">
         <div className="flex flex-col justify-between gap-4 md:flex-row md:items-end">
           <div>
-            <p className="text-sm font-semibold uppercase tracking-[0.16em] text-[var(--accent-blue)]">Case Studies</p>
-            <h2 className="mt-3 text-3xl font-semibold">Product systems, not just screens</h2>
+            <p className="text-sm font-semibold uppercase tracking-[0.16em] text-[var(--accent-blue)]">Representative Proof</p>
+            <h2 className="mt-3 text-3xl font-semibold">Three proof points recruiters can scan first</h2>
           </div>
           <Link className="inline-flex min-h-11 items-center text-sm font-semibold text-[var(--accent-blue)]" href="/en/case-studies">
             View all case studies
           </Link>
         </div>
-        <div className="mt-8 grid gap-4 md:grid-cols-2">
-          {caseStudies.slice(0, 2).map((caseStudy) => (
+        <div className="mt-8 grid gap-4 lg:grid-cols-3">
+          {caseStudies.slice(0, 3).map((caseStudy) => (
             <CaseStudyCard caseStudy={caseStudy} hrefPrefix="/en/case-studies" key={caseStudy.slug} />
           ))}
         </div>

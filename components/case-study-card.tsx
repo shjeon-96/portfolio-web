@@ -15,6 +15,16 @@ export function CaseStudyCard({
       <p className="text-xs font-semibold uppercase tracking-[0.14em] text-[var(--accent-blue)]">{caseStudy.label}</p>
       <h2 className="mt-3 text-xl font-semibold">{caseStudy.title}</h2>
       <p className="mt-3 text-sm leading-6 text-[var(--text-secondary)]">{caseStudy.summary}</p>
+      <dl className="mt-5 grid gap-3 border-y border-[var(--border)] py-4 text-sm">
+        <div>
+          <dt className="text-xs font-semibold uppercase tracking-[0.14em] text-[var(--text-secondary)]">Proof</dt>
+          <dd className="mt-1 text-[var(--text-primary)]">{caseStudy.publicProof[0]}</dd>
+        </div>
+        <div>
+          <dt className="text-xs font-semibold uppercase tracking-[0.14em] text-[var(--text-secondary)]">Verification</dt>
+          <dd className="mt-1 text-[var(--text-primary)]">{caseStudy.verificationEvidence[0]}</dd>
+        </div>
+      </dl>
       <div className="mt-5 flex flex-wrap gap-2">
         {caseStudy.stack.slice(0, 4).map((item) => (
           <span className="rounded-md border border-[var(--border)] px-2.5 py-1 text-xs text-[var(--text-secondary)]" key={item}>

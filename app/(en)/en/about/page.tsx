@@ -31,6 +31,14 @@ export default function AboutPage() {
           </p>
         </article>
         <article className="rounded-xl border border-[var(--border)] bg-[var(--surface)] p-6 shadow-sm">
+          <h2 className="text-xl font-semibold">Role fit</h2>
+          <p className="mt-4 leading-8 text-[var(--text-secondary)]">
+            I fit teams where complex product UI needs more than screen delivery: state modeling, verification loops,
+            and release boundaries need to move together. The strongest match is B2B SaaS, editor or builder products,
+            mobile product platforms, and teams turning AI development workflows into real product infrastructure.
+          </p>
+        </article>
+        <article className="rounded-xl border border-[var(--border)] bg-[var(--surface)] p-6 shadow-sm">
           <h2 className="text-xl font-semibold">Links</h2>
           <div className="mt-4 flex flex-wrap gap-3">
             <a

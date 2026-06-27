@@ -15,6 +15,11 @@ export const caseStudiesKo: CaseStudy[] = [
     summary:
       '코딩 에이전트가 diagnostics, definition, references, symbols, hover 같은 언어 서버 정보를 읽기 전용으로 사용할 수 있게 MCP/LSP 브리지를 만들었습니다.',
     stack: ['TypeScript', 'Node.js', 'MCP', 'Language Server Protocol', 'Vitest'],
+    publicProof: [
+      'shjeon-96 계정의 공개 GitHub 저장소',
+      '패키지 smoke check를 포함한 공개 배포 워크플로우',
+      'MCP 도구, 안전 경계, maintainer workflow 문서화',
+    ],
     problem:
       'AI 코딩 에이전트는 텍스트 탐색만으로 빠르게 움직일 수 있지만, 큰 코드베이스에서는 변경을 신뢰하기 전에 언어 서버의 semantic feedback이 필요했습니다.',
     role:
@@ -31,6 +36,17 @@ export const caseStudiesKo: CaseStudy[] = [
       'build, type-check, smoke install, smoke package를 패키지 검증 경로에 포함했습니다.',
       '지원 도구, 안전 경계, maintainer workflow를 공개 문서로 정리했습니다.',
     ],
+    tradeOffs: [
+      'semantic context는 제공하되 도구가 프로젝트를 직접 수정하는 alternate mutation path가 되지 않도록 read-only로 제한했습니다.',
+      'TypeScript를 우선 검증 언어로 두고, 다른 language server는 adapter boundary를 통해 확장 가능하게 남겼습니다.',
+    ],
+    verificationEvidence: ['npm run ci:verify', 'npm run test', 'npm run verify:package', 'npm run smoke:package'],
+    links: [
+      {
+        label: 'GitHub repository',
+        href: 'https://github.com/shjeon-96/codex-lsp-bridge',
+      },
+    ],
   },
   {
     slug: 'mobile-release-foundations',
@@ -39,6 +55,11 @@ export const caseStudiesKo: CaseStudy[] = [
     summary:
       '모바일 제품 모노레포에서 release policy, shared packages, native boundary, 제품 문서가 앱 전반에서 같은 기준으로 움직이도록 구조화했습니다.',
     stack: ['Expo', 'React Native', 'TypeScript', 'Supabase', 'EAS', 'Maestro'],
+    publicProof: [
+      '릴리즈 정책을 검증 스크립트로 고정',
+      'shared foundation package를 package-level check로 보호',
+      '제품 문서를 planning source of truth로 사용',
+    ],
     problem:
       'native calendar, widgets, billing, invite, backend 연동을 가진 모바일 제품은 문서, 앱 코드, native policy, release script가 각각 다른 기준을 갖기 쉽습니다.',
     role:
@@ -55,6 +76,17 @@ export const caseStudiesKo: CaseStudy[] = [
       'shared foundation verification으로 앱별 중복 구현이 competing source of truth가 되지 않게 했습니다.',
       'mobile UI와 device-oriented smoke flow로 주요 앱 경로의 릴리즈 전 증거를 남겼습니다.',
     ],
+    tradeOffs: [
+      'native calendar, widget, billing, store 동작은 실제 모바일 경계가 필요해 web이나 Expo Go 경로를 릴리즈 증거로 쓰지 않았습니다.',
+      '반복 동작의 소유자가 명확한 경우에만 shared package로 이동해 안정화 전 추상화로 인한 결합을 피했습니다.',
+    ],
+    verificationEvidence: [
+      'npm run release:config',
+      'npm run verify:eas-release-config',
+      'npm run verify:mobile-ui',
+      'npm run verify:shared-foundations',
+    ],
+    links: [],
   },
   {
     slug: 'ast-editor-engine',
@@ -63,6 +95,11 @@ export const caseStudiesKo: CaseStudy[] = [
     summary:
       '컴포넌트 Variant, 스타일, 인터랙션, 데이터 바인딩, 미리보기, 배포 산출물이 같은 기준으로 움직여야 하는 비주얼 편집 화면을 구조화했습니다.',
     stack: ['React', 'Next.js', 'TypeScript', 'Zustand', 'Immer', 'Vitest'],
+    publicProof: [
+      '제품 모델 경계를 중심으로 정리한 공개 가능한 아키텍처 설명',
+      '에디터 상태와 렌더링 계약 중심 회귀 검증',
+      '이 포트폴리오의 인터랙티브 프로토타입 경로',
+    ],
     problem:
       '노코드 에디터는 템플릿, 컴포넌트, 스타일, 이벤트, 데이터 바인딩을 하나의 일관된 모델로 편집·저장·미리보기·산출물 생성까지 연결해야 했습니다.',
     role:
@@ -79,6 +116,17 @@ export const caseStudiesKo: CaseStudy[] = [
       '미리보기와 생성 산출물에서 공유되는 동작을 회귀 시나리오로 확인했습니다.',
       '코드 리뷰 후속에서는 임시 수정이 아니라 소유 경계와 계약을 기준으로 검증했습니다.',
     ],
+    tradeOffs: [
+      '각 패널이 별도 local truth를 갖게 하지 않고 하나의 제품 구조를 중심으로 에디터를 모델링했습니다.',
+      'Variant, Slot, Interaction이 숨은 결합 없이 확장되도록 편집 시점 상태와 런타임 동작을 분리했습니다.',
+    ],
+    verificationEvidence: ['상태 전이 단위 테스트', '미리보기 동작 통합 확인', '생성 산출물 회귀 리뷰'],
+    links: [
+      {
+        label: '인터랙티브 프로토타입',
+        href: '/editor-prototype',
+      },
+    ],
   },
   {
     slug: 'export-deploy-parity',
@@ -87,6 +135,11 @@ export const caseStudiesKo: CaseStudy[] = [
     summary:
       '편집 상태에서 HTML/CSS/JS 및 배포용 산출물로 이어지는 경로를 안정화해 사용자가 설정한 결과와 실제 산출물이 어긋나지 않도록 했습니다.',
     stack: ['TypeScript', 'React', 'HTML/CSS', 'Liquid-style templates', 'Vitest'],
+    publicProof: [
+      '공개 가능한 산출물 정합성 설명',
+      '생성 산출물 중심 회귀 확인',
+      'preview와 deploy 경로가 공유하는 렌더링 계약',
+    ],
     problem:
       '렌더링 규칙, asset 처리, repeat 동작, 조건부 표시가 여러 경로에서 다르게 해석되면 에디터 미리보기와 실제 산출물이 달라질 수 있었습니다.',
     role:
@@ -103,6 +156,12 @@ export const caseStudiesKo: CaseStudy[] = [
       '조건부 렌더링과 중첩 구조에 대한 회귀 시나리오를 검증했습니다.',
       '공개 가능한 익명화 산출물 예시 기준으로 수동 리뷰했습니다.',
     ],
+    tradeOffs: [
+      '생성 산출물을 에디터 뒤의 구현 세부사항이 아니라 실제 제품 표면으로 다뤘습니다.',
+      'preview와 deploy 경로를 각각 패치하지 않고 공통 규칙으로 판단을 이동했습니다.',
+    ],
+    verificationEvidence: ['생성 산출물 shape 확인', '조건부 렌더링 회귀 시나리오', '수동 output review'],
+    links: [],
   },
   {
     slug: 'ai-review-operations',
@@ -111,6 +170,11 @@ export const caseStudiesKo: CaseStudy[] = [
     summary:
       '리뷰 데이터를 수집하고, AI가 응답 초안을 만들며, 운영자가 최종 검수할 수 있는 운영 흐름을 구축했습니다.',
     stack: ['React', 'NestJS', 'Python', 'OpenAI API', 'MySQL', 'JWT'],
+    publicProof: [
+      'AI 보조 운영 흐름의 공개 가능한 요약',
+      '사람 검수와 수정 가능성을 제품 흐름에 유지',
+      '권한, 빈 상태, 로딩, 실패 상태를 제품 상태로 처리',
+    ],
     problem:
       '운영자는 수집된 리뷰 데이터와 AI 응답 제안을 이해하고, 최종 고객 응답을 통제할 수 있어야 했습니다.',
     role:
@@ -127,6 +191,12 @@ export const caseStudiesKo: CaseStudy[] = [
       '권한이 반영된 관리자 UI를 검토했습니다.',
       '운영자 검수 지점 기준으로 수동 워크플로우 테스트를 진행했습니다.',
     ],
+    tradeOffs: [
+      'AI 제안을 고객-facing 응답으로 자동 전송하지 않고 운영자가 검토할 수 있게 유지했습니다.',
+      '수집, 분석, 검수, 응답 생성을 분리해 운영자가 각 단계를 진단할 수 있게 했습니다.',
+    ],
+    verificationEvidence: ['API 상태 확인', '권한 기반 UI 검토', '운영자 handoff 수동 테스트'],
+    links: [],
   },
   {
     slug: 'settlement-operations',
@@ -135,6 +205,11 @@ export const caseStudiesKo: CaseStudy[] = [
     summary:
       '정산, 권한, 가맹점 데이터, 실시간 알림 화면을 웹과 모바일 운영 흐름에 연결했습니다.',
     stack: ['React', 'React Native', 'Spring API', 'PG integration', 'Realtime notification'],
+    publicProof: [
+      '공개 가능한 운영 workflow 설명',
+      '역할 기반 결제/정산 가시성',
+      '실시간 상태 변화를 제품 상태로 모델링',
+    ],
     problem:
       '역할과 운영 상태가 바뀌는 상황에서도 비즈니스 사용자는 결제·정산 데이터를 안정적으로 확인해야 했습니다.',
     role:
@@ -151,6 +226,12 @@ export const caseStudiesKo: CaseStudy[] = [
       '정산 상태 API 연동을 검토했습니다.',
       '알림과 상태 변경 흐름을 수동으로 테스트했습니다.',
     ],
+    tradeOffs: [
+      '관리자와 모바일 흐름은 같은 운영 개념을 공유하되 역할별 화면 차이는 유지했습니다.',
+      '실시간 업데이트를 놓치기 쉬운 메시지가 아니라 상태 모델 일부로 다뤘습니다.',
+    ],
+    verificationEvidence: ['역할별 UI 확인', '정산 API 연동 검토', '알림 상태 수동 테스트'],
+    links: [],
   },
   {
     slug: 'legacy-admin-modernization',
@@ -159,6 +240,11 @@ export const caseStudiesKo: CaseStudy[] = [
     summary:
       '운영 중인 백오피스 흐름을 유지하면서 프레임워크 전환과 배포 안정화를 진행했습니다.',
     stack: ['Vue', 'React', 'Next.js', 'Firebase', 'Docker', 'GitHub Actions'],
+    publicProof: [
+      '공개 가능한 migration narrative',
+      '환경 분리와 반복 가능한 릴리즈 확인',
+      '프레임워크 전환 중 운영 연속성 유지',
+    ],
     problem:
       '운영 시스템은 업무를 멈추지 않으면서 프레임워크 전환과 기능 개선을 함께 진행해야 했습니다.',
     role:
@@ -175,6 +261,12 @@ export const caseStudiesKo: CaseStudy[] = [
       '이관된 화면의 업무 흐름을 검토했습니다.',
       '환경별 릴리즈 전 검증을 진행했습니다.',
     ],
+    tradeOffs: [
+      '운영 시스템이 계속 사용자 업무를 처리해야 했기 때문에 기능을 점진적으로 이동했습니다.',
+      '환경 설정을 기능 작업과 분리해 production 이전에 릴리즈 실수를 잡기 쉽게 만들었습니다.',
+    ],
+    verificationEvidence: ['빌드 확인', '배포 workflow 검토', '환경별 릴리즈 검증'],
+    links: [],
   },
 ];
 
