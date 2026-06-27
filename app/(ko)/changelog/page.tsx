@@ -8,9 +8,16 @@ export const metadata = {
 };
 
 export default function KoreanChangelogPage() {
-  const priorityEntries = changelogEntriesKo.filter((entry) =>
-    ['Export 런타임 정합성 규칙 정리', 'Variant 상태 소유 경계 정리', 'AI 에이전트 기반 원인 분석 루프'].includes(entry.title),
-  );
+  const priorityEntries = [
+    'Agent LSP Bridge 릴리즈 계약',
+    '모바일 릴리즈 게이트 시스템',
+    'SwiftUI 제품 모듈 아키텍처',
+    'Privacy-first 개발자 도구 제품 방향',
+    'App Store Review 보조 도구화',
+    'AI PRD 생성 제품 surface',
+  ]
+    .map((title) => changelogEntriesKo.find((entry) => entry.title === title))
+    .filter((entry): entry is (typeof changelogEntriesKo)[number] => Boolean(entry));
 
   return (
     <main className="mx-auto max-w-7xl px-5 py-16">
@@ -20,20 +27,20 @@ export default function KoreanChangelogPage() {
         description="커밋 활동량을 보여주는 대신, 어떤 문제가 있었고 어떤 기준으로 고쳤으며 무엇을 검증하기 쉬워졌는지 정리합니다."
       />
       <section className="mt-8 rounded-xl border border-[var(--border)] bg-[var(--surface)] p-5 shadow-sm">
-        <p className="text-sm font-semibold uppercase tracking-[0.14em] text-[var(--accent-blue)]">Generated workflow</p>
+        <p className="text-sm font-semibold uppercase tracking-[0.14em] text-[var(--accent-blue)]">Source handling</p>
         <p className="mt-3 text-sm leading-6 text-[var(--text-secondary)]">
-          첫 체인지로그 묶음은 2026-04-01 이후 로컬 non-merge 커밋 2,084개를 추출해 여섯 개의 공개 가능한
-          주제로 분류한 뒤 작성했습니다. 원문 커밋 제목, 해시, 비공개 참조, 내부 이슈 식별자는 로컬에만 둡니다.
+          로컬 프로젝트와 GitHub 저장소 메타데이터를 공개 가능한 엔지니어링 기록으로 다시 정리합니다.
+          공개 저장소는 직접 연결하고, private 제품은 아키텍처, 워크플로우, 검증 경계만 익명화해서 남깁니다.
         </p>
       </section>
       <section className="mt-8">
         <div className="flex flex-col justify-between gap-3 md:flex-row md:items-end">
           <div>
-            <p className="text-sm font-semibold uppercase tracking-[0.14em] text-[var(--accent-blue)]">Hiring signal</p>
-            <h2 className="mt-2 text-2xl font-semibold">먼저 볼 엔지니어링 판단</h2>
+            <p className="text-sm font-semibold uppercase tracking-[0.14em] text-[var(--accent-blue)]">Recent systems</p>
+            <h2 className="mt-2 text-2xl font-semibold">한 코드베이스 밖으로 확장된 작업들</h2>
           </div>
           <p className="max-w-xl text-sm leading-6 text-[var(--text-secondary)]">
-            에디터 소유 경계, 산출물 정합성, AI 기반 원인 분석을 가장 잘 보여주는 기록입니다.
+            오픈소스 도구, 모바일 릴리즈, 네이티브 앱 아키텍처, 개발자 도구, AI 제품 surface를 함께 보여주는 기록입니다.
           </p>
         </div>
         <div className="mt-5 grid gap-4 md:grid-cols-3">

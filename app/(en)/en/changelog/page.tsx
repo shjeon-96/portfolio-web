@@ -8,9 +8,16 @@ export const metadata = {
 };
 
 export default function ChangelogPage() {
-  const priorityEntries = changelogEntries.filter((entry) =>
-    ['Export runtime parity rules', 'Variant state ownership', 'Agent-assisted root-cause workflow'].includes(entry.title),
-  );
+  const priorityEntries = [
+    'Agent LSP bridge release contract',
+    'Mobile release gate system',
+    'SwiftUI product module architecture',
+    'Privacy-first developer toolkit direction',
+    'App Store review helper as conservative tooling',
+    'AI PRD generation product surface',
+  ]
+    .map((title) => changelogEntries.find((entry) => entry.title === title))
+    .filter((entry): entry is (typeof changelogEntries)[number] => Boolean(entry));
 
   return (
     <main className="mx-auto max-w-7xl px-5 py-16">
@@ -20,21 +27,22 @@ export default function ChangelogPage() {
         description="Commit activity is rewritten into notable changes: what problem appeared, how the system was adjusted, and what became easier to verify."
       />
       <section className="mt-8 rounded-xl border border-[var(--border)] bg-[var(--surface)] p-5 shadow-sm">
-        <p className="text-sm font-semibold uppercase tracking-[0.14em] text-[var(--accent-blue)]">Generated workflow</p>
+        <p className="text-sm font-semibold uppercase tracking-[0.14em] text-[var(--accent-blue)]">Source handling</p>
         <p className="mt-3 text-sm leading-6 text-[var(--text-secondary)]">
-          The first changelog set is based on a local extraction of 2,084 non-merge commits since 2026-04-01,
-          grouped into six public-safe themes. Raw commit subjects, hashes, private references, and internal issue
-          identifiers stay local-only.
+          Entries are rewritten from local projects and GitHub repository metadata into public-safe engineering notes.
+          Public repositories can be linked directly; private products are summarized by architecture, workflow, and
+          verification boundaries only.
         </p>
       </section>
       <section className="mt-8">
         <div className="flex flex-col justify-between gap-3 md:flex-row md:items-end">
           <div>
-            <p className="text-sm font-semibold uppercase tracking-[0.14em] text-[var(--accent-blue)]">Hiring signal</p>
-            <h2 className="mt-2 text-2xl font-semibold">Start with these decisions</h2>
+            <p className="text-sm font-semibold uppercase tracking-[0.14em] text-[var(--accent-blue)]">Recent systems</p>
+            <h2 className="mt-2 text-2xl font-semibold">Work that broadens the portfolio beyond one codebase</h2>
           </div>
           <p className="max-w-xl text-sm leading-6 text-[var(--text-secondary)]">
-            These entries best represent editor ownership, output parity, and agent-assisted root-cause work.
+            These entries connect open-source tooling, mobile release systems, native app architecture, developer tools,
+            and AI product surfaces.
           </p>
         </div>
         <div className="mt-5 grid gap-4 md:grid-cols-3">

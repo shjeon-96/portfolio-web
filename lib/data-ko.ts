@@ -1,10 +1,73 @@
-import type { CaseStudy, ChangelogEntry, SkillContext } from '@/lib/data';
+import type { CaseStudy, ChangelogEntry, ProjectHighlight, SkillContext } from '@/lib/data';
 
 export const proofPointsKo = [
   '오픈소스 에이전트 도구',
   '모바일 릴리즈 게이트',
+  '네이티브 제품 아키텍처',
   '에디터 엔진 시스템',
-  '산출물 정합성',
+];
+
+export const projectHighlightsKo: ProjectHighlight[] = [
+  {
+    title: 'codex-lsp-bridge',
+    label: '오픈소스 에이전트 도구',
+    summary:
+      'Codex가 로컬 language server에서 diagnostics, definition, references, symbols, hover, status를 읽기 전용으로 가져오게 하는 MCP/LSP 브리지입니다.',
+    stack: ['TypeScript', 'Node.js', 'MCP', 'LSP', 'Vitest'],
+    status: '공개 패키지와 GitHub 저장소',
+    href: 'https://github.com/shjeon-96/codex-lsp-bridge',
+  },
+  {
+    title: 'Gyeol Mobile',
+    label: 'Expo/React Native 제품 플랫폼',
+    summary:
+      'native policy, EAS configuration, runtime environment, widgets, store metadata, UI smoke evidence를 릴리즈 게이트로 묶은 calendar-first 모바일 제품입니다.',
+    stack: ['Expo', 'React Native', 'TypeScript', 'Supabase', 'EAS'],
+    status: 'iOS/Android 릴리즈 워크플로우',
+  },
+  {
+    title: 'PureFlow',
+    label: '네이티브 생산성 앱',
+    summary:
+      'MVVM, feature module, adaptive navigation, SwiftData, CloudKit sync, widget, share extension target으로 구성한 SwiftUI 생산성 앱입니다.',
+    stack: ['SwiftUI', 'SwiftData', 'CloudKit', 'Firebase', 'Swift Testing'],
+    status: 'iOS, iPadOS, Mac Catalyst 아키텍처',
+  },
+  {
+    title: 'Web Toolkit',
+    label: 'Privacy-first 개발자 도구',
+    summary:
+      'client-side processing, offline PWA, i18n, WebAssembly 기반 처리, shareable tool state를 중심으로 구성한 브라우저 개발자 도구 제품입니다.',
+    stack: ['Next.js', 'React', 'TypeScript', 'Tailwind CSS', 'Vitest'],
+    status: '공개 웹 제품 방향',
+    href: 'https://github.com/shjeon-96/dev-tool-kit',
+  },
+  {
+    title: 'app-store-connect-release',
+    label: 'Codex 릴리즈 검토 플러그인',
+    summary:
+      'App Store Connect 제출 입력을 보수적으로 검토하고 App Review 응답 초안을 작성하기 위한 공개 Codex 플러그인입니다.',
+    stack: ['Python', 'Codex plugin', 'App Store Connect', 'Release workflow'],
+    status: '공개 GitHub 저장소',
+    href: 'https://github.com/shjeon-96/app-store-connect-release',
+  },
+  {
+    title: 'IdeaToPRD',
+    label: 'AI 제품 기획 SaaS',
+    summary:
+      '아이디어 입력을 구조화된 PRD와 제품 계획으로 바꾸는 AI-assisted planning 제품 방향입니다.',
+    stack: ['Next.js', 'TypeScript', 'AI workflow', 'Vercel'],
+    status: '공개 저장소와 라이브 웹 surface',
+    href: 'https://github.com/shjeon-96/ideatoprd',
+  },
+  {
+    title: 'Nightbound Survival',
+    label: 'Bevy 게임 런타임',
+    summary:
+      'formatting, compile, test binary build, test execution을 하나의 검증 스크립트로 묶은 Rust/Bevy 기반 게임 프로젝트입니다.',
+    stack: ['Rust', 'Bevy', 'Serde', 'Cargo'],
+    status: '인터랙티브 시스템과 런타임 검증',
+  },
 ];
 
 export const caseStudiesKo: CaseStudy[] = [
@@ -271,6 +334,71 @@ export const caseStudiesKo: CaseStudy[] = [
 ];
 
 export const changelogEntriesKo: ChangelogEntry[] = [
+  {
+    title: 'App Store Review 보조 도구화',
+    period: '2026-04',
+    category: 'app-review-tooling',
+    problem: '릴리즈 제출 작업은 문구와 입력값을 신중하게 다뤄야 하며, private data나 검증되지 않은 설명이 섞이면 리뷰 지연으로 이어질 수 있습니다.',
+    approach: [
+      '제출 입력 검토와 App Review 응답 초안 작성에 집중한 보수적인 플러그인으로 범위를 좁혔습니다.',
+      '릴리즈 보조 문서 작성과 실제 스토어 운영 경계를 분리했습니다.',
+      'private app release detail을 넣지 않고 공개 가능한 helper로 문서화했습니다.',
+    ],
+    result: '반복되는 릴리즈 검토 작업을 재사용 가능한 도구로 바꾼 작은 공개 사례가 추가됐습니다.',
+    stack: ['Python', 'Codex plugin', 'App Store Connect'],
+  },
+  {
+    title: 'AI PRD 생성 제품 surface',
+    period: '2026-01',
+    category: 'ai-product',
+    problem: '초기 제품 아이디어는 구현 전에 구조화된 요구사항과 제품 계획으로 정리될 필요가 있습니다.',
+    approach: [
+      '아이디어 입력과 PRD 생성을 연결하는 AI-assisted product planning 흐름을 탐색했습니다.',
+      '워크플로우가 실제 웹 앱으로 공유될 수 있도록 Next.js 제품 surface로 구성했습니다.',
+      'private planning data를 노출하지 않고 제품 흐름 수준으로만 포트폴리오에 정리했습니다.',
+    ],
+    result: 'IdeaToPRD는 구현 중심 케이스 사이에 공개 가능한 AI 제품 기획 사례를 더합니다.',
+    stack: ['Next.js', 'TypeScript', 'AI workflow', 'Vercel'],
+  },
+  {
+    title: 'SwiftUI 제품 모듈 아키텍처',
+    period: '2026-06',
+    category: 'native-product',
+    problem: '네이티브 생산성 앱에서 task, focus, label, widget, share, sync 화면이 늘어나도 구조가 무너지지 않아야 했습니다.',
+    approach: [
+      '앱 진입점, core utilities, data models, feature modules, shared UI, resources를 분리했습니다.',
+      'SwiftUI, SwiftData, CloudKit, adaptive navigation을 네이티브 제품 경계로 사용했습니다.',
+      '모델, 서비스, ViewModel 동작은 Swift Testing과 in-memory data path로 확인했습니다.',
+    ],
+    result: 'PureFlow는 웹 프론트엔드 밖의 네이티브 제품 아키텍처 경험을 보여주는 축이 됐습니다.',
+    stack: ['SwiftUI', 'SwiftData', 'CloudKit', 'Swift Testing', 'XcodeGen'],
+  },
+  {
+    title: 'Privacy-first 개발자 도구 제품 방향',
+    period: '2026-06',
+    category: 'web-toolkit',
+    problem: '개발자 도구는 사용자가 민감한 JSON, JWT, 텍스트를 붙여 넣는 경우가 많아 서버 처리 경로를 신중히 다뤄야 했습니다.',
+    approach: [
+      'client-side processing, no server uploads, offline PWA 사용을 제품 방향으로 잡았습니다.',
+      'text/code, media/design, converters, security 그룹으로 도구를 분류했습니다.',
+      'i18n, command search, WebAssembly 처리, shareable state를 제품 기능으로 정리했습니다.',
+    ],
+    result: 'Web Toolkit은 유틸리티 중심 브라우저 소프트웨어를 공개 제품 방향으로 보여주는 항목이 됐습니다.',
+    stack: ['Next.js', 'React', 'TypeScript', 'PWA', 'WebAssembly'],
+  },
+  {
+    title: 'Bevy 런타임 검증 루프',
+    period: '2026-06',
+    category: 'game-runtime',
+    problem: '게임 런타임은 gameplay 변경 이후 formatting, compile, tests가 계속 통과하는지 빠르게 확인할 수 있어야 했습니다.',
+    approach: [
+      'CI에서 쓰는 것과 같은 검증 경로를 하나의 script로 문서화했습니다.',
+      'cargo 기반 check, test binary build, test execution 명령을 분리해 집중 검증할 수 있게 했습니다.',
+      '게임 프로젝트도 실험이 아니라 반복 가능한 feedback이 필요한 제품 시스템으로 다뤘습니다.',
+    ],
+    result: 'Nightbound Survival은 Rust와 interactive runtime 경험을 제품 엔지니어링 흐름 안에 추가했습니다.',
+    stack: ['Rust', 'Bevy', 'Cargo', 'Serde'],
+  },
   {
     title: 'Agent LSP Bridge 릴리즈 계약',
     period: '2026-06',

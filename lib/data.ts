@@ -29,11 +29,25 @@ export type ChangelogEntry = {
     | 'ai-workflow'
     | 'admin-ops'
     | 'agent-tooling'
-    | 'mobile-release';
+    | 'mobile-release'
+    | 'native-product'
+    | 'web-toolkit'
+    | 'game-runtime'
+    | 'app-review-tooling'
+    | 'ai-product';
   problem: string;
   approach: string[];
   result: string;
   stack: string[];
+};
+
+export type ProjectHighlight = {
+  title: string;
+  label: string;
+  summary: string;
+  stack: string[];
+  status: string;
+  href?: string;
 };
 
 export type SkillContext = {
@@ -45,8 +59,71 @@ export type SkillContext = {
 export const proofPoints = [
   'Open-source agent tooling',
   'Mobile release gates',
+  'Native product architecture',
   'Editor engine systems',
-  'Output parity',
+];
+
+export const projectHighlights: ProjectHighlight[] = [
+  {
+    title: 'codex-lsp-bridge',
+    label: 'Open-source agent tooling',
+    summary:
+      'Read-only MCP/LSP bridge that gives Codex diagnostics, definitions, references, symbols, hover, and status from local language servers.',
+    stack: ['TypeScript', 'Node.js', 'MCP', 'LSP', 'Vitest'],
+    status: 'Public package and GitHub repository',
+    href: 'https://github.com/shjeon-96/codex-lsp-bridge',
+  },
+  {
+    title: 'Gyeol Mobile',
+    label: 'Expo/React Native product platform',
+    summary:
+      'Calendar-first mobile product with release gates for native policy, EAS configuration, runtime environment, widgets, store metadata, and UI smoke evidence.',
+    stack: ['Expo', 'React Native', 'TypeScript', 'Supabase', 'EAS'],
+    status: 'iOS/Android release workflow',
+  },
+  {
+    title: 'PureFlow',
+    label: 'Native productivity app',
+    summary:
+      'SwiftUI and SwiftData productivity app organized with MVVM, feature modules, adaptive navigation, CloudKit sync, widget, and share extension targets.',
+    stack: ['SwiftUI', 'SwiftData', 'CloudKit', 'Firebase', 'Swift Testing'],
+    status: 'iOS, iPadOS, and Mac Catalyst architecture',
+  },
+  {
+    title: 'Web Toolkit',
+    label: 'Privacy-first developer tools',
+    summary:
+      'Browser-based developer toolkit direction for client-side processing, offline PWA usage, i18n, WebAssembly-powered tools, and shareable tool state.',
+    stack: ['Next.js', 'React', 'TypeScript', 'Tailwind CSS', 'Vitest'],
+    status: 'Public web product direction',
+    href: 'https://github.com/shjeon-96/dev-tool-kit',
+  },
+  {
+    title: 'app-store-connect-release',
+    label: 'Codex release review plugin',
+    summary:
+      'Conservative App Store Connect submission helper for reviewing release inputs and drafting App Review responses without exposing private release data.',
+    stack: ['Python', 'Codex plugin', 'App Store Connect', 'Release workflow'],
+    status: 'Public GitHub repository',
+    href: 'https://github.com/shjeon-96/app-store-connect-release',
+  },
+  {
+    title: 'IdeaToPRD',
+    label: 'AI product planning SaaS',
+    summary:
+      'AI-assisted PRD generation product direction that connects idea capture, structured planning, and deployable Next.js product surfaces.',
+    stack: ['Next.js', 'TypeScript', 'AI workflow', 'Vercel'],
+    status: 'Public repository and live web surface',
+    href: 'https://github.com/shjeon-96/ideatoprd',
+  },
+  {
+    title: 'Nightbound Survival',
+    label: 'Bevy game runtime',
+    summary:
+      'Rust and Bevy game project with a CI-style verification script for formatting, compilation, test binary builds, and test execution.',
+    stack: ['Rust', 'Bevy', 'Serde', 'Cargo'],
+    status: 'Interactive systems and runtime verification',
+  },
 ];
 
 export const caseStudies: CaseStudy[] = [
@@ -313,6 +390,71 @@ export const caseStudies: CaseStudy[] = [
 ];
 
 export const changelogEntries: ChangelogEntry[] = [
+  {
+    title: 'App Store review helper as conservative tooling',
+    period: '2026-04',
+    category: 'app-review-tooling',
+    problem: 'Release submission work needs careful wording and input review because accidental private data or unsupported claims can delay review.',
+    approach: [
+      'Kept the plugin focused on conservative submission input review and App Review reply drafting.',
+      'Separated release-support writing from live store operations.',
+      'Documented the tool as a public helper instead of embedding private app release details.',
+    ],
+    result: 'The portfolio now shows a small but concrete example of turning repeated release review work into reusable tooling.',
+    stack: ['Python', 'Codex plugin', 'App Store Connect'],
+  },
+  {
+    title: 'AI PRD generation product surface',
+    period: '2026-01',
+    category: 'ai-product',
+    problem: 'Early product ideas need to become structured requirements before implementation starts.',
+    approach: [
+      'Explored an AI-assisted product planning flow around idea capture and PRD generation.',
+      'Used a Next.js product surface so the workflow could be shared as an actual web app.',
+      'Kept the portfolio summary at product-flow level instead of exposing private planning data.',
+    ],
+    result: 'IdeaToPRD adds a public AI product-planning example alongside implementation-heavy case studies.',
+    stack: ['Next.js', 'TypeScript', 'AI workflow', 'Vercel'],
+  },
+  {
+    title: 'SwiftUI product module architecture',
+    period: '2026-06',
+    category: 'native-product',
+    problem: 'A native productivity app needed task, focus, label, widget, share, and sync surfaces to stay organized as the product expanded.',
+    approach: [
+      'Separated app entry, core utilities, data models, feature modules, shared UI, and resources.',
+      'Used SwiftUI, SwiftData, CloudKit, and adaptive navigation as native product boundaries.',
+      'Kept model, service, and ViewModel behavior covered through Swift Testing with in-memory data paths.',
+    ],
+    result: 'PureFlow became a native product architecture example beyond web-only front-end work.',
+    stack: ['SwiftUI', 'SwiftData', 'CloudKit', 'Swift Testing', 'XcodeGen'],
+  },
+  {
+    title: 'Privacy-first developer toolkit direction',
+    period: '2026-06',
+    category: 'web-toolkit',
+    problem: 'Developer tools often ask users to paste sensitive text into unknown server paths.',
+    approach: [
+      'Framed the product around client-side processing, no server uploads, and offline PWA use.',
+      'Mapped tools into text/code, media/design, converters, and security groups.',
+      'Kept i18n, command search, WebAssembly processing, and shareable state as product capabilities.',
+    ],
+    result: 'The web toolkit adds a public product direction for utility-heavy browser software.',
+    stack: ['Next.js', 'React', 'TypeScript', 'PWA', 'WebAssembly'],
+  },
+  {
+    title: 'Bevy runtime verification loop',
+    period: '2026-06',
+    category: 'game-runtime',
+    problem: 'Interactive game systems need fast local confidence that formatting, compilation, and tests still pass after gameplay changes.',
+    approach: [
+      'Used one verification script as the same path documented for CI.',
+      'Kept focused cargo commands for check, test binary build, and test execution.',
+      'Treated runtime projects as product systems with repeatable feedback, not just experiments.',
+    ],
+    result: 'Nightbound Survival broadens the portfolio into Rust and interactive runtime work without diluting the product-engineering story.',
+    stack: ['Rust', 'Bevy', 'Cargo', 'Serde'],
+  },
   {
     title: 'Agent LSP bridge release contract',
     period: '2026-06',

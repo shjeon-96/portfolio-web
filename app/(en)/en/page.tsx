@@ -1,9 +1,18 @@
 import Link from 'next/link';
 import { CaseStudyCard } from '@/components/case-study-card';
 import { ChangelogEntry } from '@/components/changelog-entry';
-import { caseStudies, changelogEntries, proofPoints } from '@/lib/data';
+import { ProjectHighlightCard } from '@/components/project-highlight-card';
+import { caseStudies, changelogEntries, projectHighlights, proofPoints } from '@/lib/data';
 
 export default function Home() {
+  const homeChangelogEntries = [
+    'Agent LSP bridge release contract',
+    'Mobile release gate system',
+    'SwiftUI product module architecture',
+  ]
+    .map((title) => changelogEntries.find((entry) => entry.title === title))
+    .filter((entry): entry is (typeof changelogEntries)[number] => Boolean(entry));
+
   return (
     <main>
       <section className="mx-auto grid min-h-[calc(100vh-73px)] w-full max-w-7xl gap-10 px-5 py-16 lg:grid-cols-[1.15fr_0.85fr] lg:items-center">
@@ -91,9 +100,28 @@ export default function Home() {
           ))}
         </div>
       </section>
+      <section className="border-y border-[var(--border)] bg-[var(--surface)]">
+        <div className="mx-auto max-w-7xl px-5 py-16">
+          <div className="flex flex-col justify-between gap-4 md:flex-row md:items-end">
+            <div>
+              <p className="text-sm font-semibold uppercase tracking-[0.16em] text-[var(--accent-blue)]">Project Ledger</p>
+              <h2 className="mt-3 text-3xl font-semibold">Products and tools beyond one codebase</h2>
+            </div>
+            <p className="max-w-2xl text-sm leading-6 text-[var(--text-secondary)]">
+              A curated view of public repositories, private product systems, native apps, developer tools, and runtime work
+              that shaped how I build product software.
+            </p>
+          </div>
+          <div className="mt-8 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+            {projectHighlights.map((project) => (
+              <ProjectHighlightCard project={project} key={project.title} />
+            ))}
+          </div>
+        </div>
+      </section>
       <section className="mx-auto max-w-7xl px-5 pb-16">
         <div className="rounded-xl border border-[var(--border)] bg-[var(--surface)] px-5 py-2 shadow-sm">
-          {changelogEntries.slice(0, 3).map((entry) => (
+          {homeChangelogEntries.map((entry) => (
             <ChangelogEntry entry={entry} key={entry.title} />
           ))}
         </div>
