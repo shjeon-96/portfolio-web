@@ -30,7 +30,7 @@ export default function KoreanHomePage() {
           <p className="mb-4 font-mono text-sm font-medium uppercase tracking-[0.16em] text-[var(--accent-blue)]">
             Seunghun Jeon / 제품 시스템 포트폴리오
           </p>
-          <h1 className="max-w-3xl text-4xl font-semibold leading-tight text-balance sm:text-5xl">
+          <h1 className="text-keep max-w-3xl text-4xl font-semibold leading-tight text-balance sm:text-5xl">
             AI 도구, 모바일 릴리즈, 에디터 엔진을 다루는 제품 프론트엔드
           </h1>
           <p className="mt-6 max-w-2xl text-lg leading-8 text-[var(--text-secondary)]">

@@ -25,7 +25,7 @@ export function ProjectHighlightCard({ project }: Readonly<{ project: ProjectHig
   }
 
   return (
-    <a href={project.href} rel="noreferrer" target="_blank">
+    <a aria-label={`${project.title} project link`} href={project.href} rel="noreferrer" target="_blank">
       {content}
     </a>
   );

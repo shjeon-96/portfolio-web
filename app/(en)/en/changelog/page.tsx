@@ -14,8 +14,8 @@ export default function ChangelogPage() {
     <main className="page-shell">
       <SectionHeading
         eyebrow="Engineering Changelog"
-        title="Date-based product engineering notes"
-        description="Project changes are rewritten into public-safe notes. Each entry keeps the context, the change, and the observed result."
+        title="Monthly product engineering notes"
+        description="Project changes are rewritten into public-safe monthly notes. Each entry keeps the context, the change, and the observed result."
       />
       <section className="surface-panel mt-10 px-5 py-1">
         {groupedEntries.map((group) => (

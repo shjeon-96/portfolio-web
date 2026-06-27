@@ -45,6 +45,7 @@ export function SiteHeader() {
           <span className="flex size-8 items-center justify-center rounded-md border border-[var(--text-primary)] bg-[var(--text-primary)] font-mono text-sm text-white shadow-sm">
             SJ
           </span>
+          <span className="inline sm:hidden">Seunghun</span>
           <span className="hidden sm:inline">Seunghun Jeon</span>
         </Link>
         <nav className="hidden items-center gap-1 text-sm text-[var(--text-secondary)] md:flex">

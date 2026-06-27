@@ -387,8 +387,8 @@ export const changelogEntries: ChangelogEntry[] = [
     problem:
       'A public portfolio can become a loose activity list when project records, route structure, and changelog entries each tell a different story.',
     approach: [
-      'Grouped changelog entries by date so recent work reads as product engineering notes instead of scattered commits.',
-      'Clarified the portfolio around project records, date-based changes, and verification evidence.',
+      'Grouped changelog entries by month so recent work reads as product engineering notes instead of scattered commits.',
+      'Clarified the portfolio around project records, monthly changes, and verification evidence.',
       'Removed prototype-heavy surfaces and kept the first screen focused on positioning and proof.',
     ],
     result:

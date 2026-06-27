@@ -48,7 +48,7 @@ export default function AboutPage() {
           <div className="mt-6 border-t border-[var(--border)] pt-5">
             <h2 className="font-semibold">Evidence to review</h2>
             <ul className="mt-3 space-y-3 text-sm leading-6 text-[var(--text-secondary)]">
-              <li>Date-based engineering changelog entries</li>
+              <li>Monthly engineering changelog entries</li>
               <li>Public repositories and reusable developer tooling</li>
               <li>AI-agent workflow used in real engineering work</li>
             </ul>

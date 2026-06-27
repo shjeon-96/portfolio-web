@@ -24,7 +24,7 @@ export default function Home() {
           <p className="mb-4 font-mono text-sm font-medium uppercase tracking-[0.16em] text-[var(--accent-blue)]">
             Seunghun Jeon / Product Console Portfolio
           </p>
-          <h1 className="max-w-3xl text-4xl font-semibold leading-tight text-balance sm:text-5xl">
+          <h1 className="text-keep max-w-3xl text-4xl font-semibold leading-tight text-balance sm:text-5xl">
             Product front-end across AI tooling, mobile release, and editor engines
           </h1>
           <p className="mt-6 max-w-2xl text-lg leading-8 text-[var(--text-secondary)]">

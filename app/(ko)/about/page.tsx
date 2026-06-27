@@ -47,7 +47,7 @@ export default function KoreanAboutPage() {
           <div className="mt-6 border-t border-[var(--border)] pt-5">
             <h2 className="font-semibold">볼 만한 근거</h2>
             <ul className="mt-3 space-y-3 text-sm leading-6 text-[var(--text-secondary)]">
-              <li>날짜별 엔지니어링 체인지로그</li>
+              <li>월별 엔지니어링 체인지로그</li>
               <li>공개 저장소와 재사용 가능한 도구 작업</li>
               <li>AI 에이전트를 실제 개발에 적용한 작업 흐름</li>
             </ul>
