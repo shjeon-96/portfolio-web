@@ -31,11 +31,11 @@ export default function AboutPage() {
           </p>
         </article>
         <article className="rounded-xl border border-[var(--border)] bg-[var(--surface)] p-6 shadow-sm">
-          <h2 className="text-xl font-semibold">Role fit</h2>
+          <h2 className="text-xl font-semibold">How I work</h2>
           <p className="mt-4 leading-8 text-[var(--text-secondary)]">
-            I fit teams where complex product UI needs more than screen delivery: state modeling, verification loops,
-            and release boundaries need to move together. The strongest match is B2B SaaS, editor or builder products,
-            mobile product platforms, and teams turning AI development workflows into real product infrastructure.
+            I do not treat complex product UI as screen delivery alone. I work through state models, verification loops,
+            and release boundaries together, especially across B2B SaaS, editor and builder products, mobile product
+            platforms, and AI development workflows.
           </p>
         </article>
         <article className="rounded-xl border border-[var(--border)] bg-[var(--surface)] p-6 shadow-sm">

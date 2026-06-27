@@ -74,17 +74,17 @@ export default function KoreanHomePage() {
       </section>
       <section className="border-y border-[var(--border)] bg-[var(--surface)]">
         <div className="mx-auto grid max-w-7xl gap-4 px-5 py-8 md:grid-cols-4">
-          <Metric label="Positioning" value="Product FE" />
-          <Metric label="Agent proof" value="LSP bridge" />
-          <Metric label="Mobile proof" value="Release gates" />
-          <Metric label="Core system" value="Editor engine" />
+          <Metric label="중심 분야" value="Product FE" />
+          <Metric label="AI 개발 도구" value="LSP bridge" />
+          <Metric label="모바일 제품" value="Release gates" />
+          <Metric label="제품 시스템" value="Editor engine" />
         </div>
       </section>
       <section className="mx-auto max-w-7xl px-5 py-16">
         <div className="flex flex-col justify-between gap-4 md:flex-row md:items-end">
           <div>
-            <p className="text-sm font-semibold uppercase tracking-[0.16em] text-[var(--accent-blue)]">Representative Proof</p>
-            <h2 className="mt-3 text-3xl font-semibold">채용자가 바로 볼 수 있는 대표 증거 3개</h2>
+            <p className="text-sm font-semibold uppercase tracking-[0.16em] text-[var(--accent-blue)]">Selected Work</p>
+            <h2 className="mt-3 text-3xl font-semibold">최근에 깊게 다룬 제품 시스템</h2>
           </div>
           <Link className="inline-flex min-h-11 items-center text-sm font-semibold text-[var(--accent-blue)]" href="/case-studies">
             전체 케이스 스터디 보기
@@ -92,7 +92,13 @@ export default function KoreanHomePage() {
         </div>
         <div className="mt-8 grid gap-4 lg:grid-cols-3">
           {caseStudiesKo.slice(0, 3).map((caseStudy) => (
-            <CaseStudyCard caseStudy={caseStudy} cta="케이스 스터디 읽기" hrefPrefix="/case-studies" key={caseStudy.slug} />
+            <CaseStudyCard
+              caseStudy={caseStudy}
+              cta="케이스 스터디 읽기"
+              hrefPrefix="/case-studies"
+              key={caseStudy.slug}
+              labels={{ proof: '작업 맥락', verification: '확인한 것' }}
+            />
           ))}
         </div>
       </section>

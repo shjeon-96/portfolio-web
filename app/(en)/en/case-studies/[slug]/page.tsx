@@ -71,10 +71,10 @@ export default async function CaseStudyDetailPage({ params }: { params: Promise<
         <DetailBlock title="Role" tone="amber" body={caseStudy.role} />
         <DetailList title="Approach" tone="blue" items={caseStudy.approach} />
         <DetailBlock title="Result" tone="green" body={caseStudy.result} />
-        <DetailList title="Public proof" tone="blue" items={caseStudy.publicProof} />
+        <DetailList title="Visible work" tone="blue" items={caseStudy.publicProof} />
         <DetailList title="Key trade-off" tone="amber" items={caseStudy.tradeOffs} />
         <DetailList title="Verification" tone="green" items={caseStudy.verification} />
-        <EvidenceList title="Verification commands and evidence" items={caseStudy.verificationEvidence} />
+        <EvidenceList title="Commands and checks" items={caseStudy.verificationEvidence} />
       </section>
     </main>
   );

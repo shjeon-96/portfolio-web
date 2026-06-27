@@ -69,17 +69,17 @@ export default function Home() {
       </section>
       <section className="border-y border-[var(--border)] bg-[var(--surface)]">
         <div className="mx-auto grid max-w-7xl gap-4 px-5 py-8 md:grid-cols-4">
-          <Metric label="Positioning" value="Product FE" />
-          <Metric label="Agent proof" value="LSP bridge" />
-          <Metric label="Mobile proof" value="Release gates" />
-          <Metric label="Core system" value="Editor engine" />
+          <Metric label="Focus" value="Product FE" />
+          <Metric label="AI tooling" value="LSP bridge" />
+          <Metric label="Mobile product" value="Release gates" />
+          <Metric label="Product system" value="Editor engine" />
         </div>
       </section>
       <section className="mx-auto max-w-7xl px-5 py-16">
         <div className="flex flex-col justify-between gap-4 md:flex-row md:items-end">
           <div>
-            <p className="text-sm font-semibold uppercase tracking-[0.16em] text-[var(--accent-blue)]">Representative Proof</p>
-            <h2 className="mt-3 text-3xl font-semibold">Three proof points recruiters can scan first</h2>
+            <p className="text-sm font-semibold uppercase tracking-[0.16em] text-[var(--accent-blue)]">Selected Work</p>
+            <h2 className="mt-3 text-3xl font-semibold">Product systems I have worked through recently</h2>
           </div>
           <Link className="inline-flex min-h-11 items-center text-sm font-semibold text-[var(--accent-blue)]" href="/en/case-studies">
             View all case studies

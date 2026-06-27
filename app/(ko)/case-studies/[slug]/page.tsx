@@ -71,10 +71,10 @@ export default async function KoreanCaseStudyDetailPage({ params }: { params: Pr
         <DetailBlock title="역할" tone="amber" body={caseStudy.role} />
         <DetailList title="접근" tone="blue" items={caseStudy.approach} />
         <DetailBlock title="결과" tone="green" body={caseStudy.result} />
-        <DetailList title="공개 근거" tone="blue" items={caseStudy.publicProof} />
+        <DetailList title="드러나는 작업" tone="blue" items={caseStudy.publicProof} />
         <DetailList title="핵심 Trade-off" tone="amber" items={caseStudy.tradeOffs} />
         <DetailList title="검증" tone="green" items={caseStudy.verification} />
-        <EvidenceList title="검증 명령과 증거" items={caseStudy.verificationEvidence} />
+        <EvidenceList title="확인한 명령과 기록" items={caseStudy.verificationEvidence} />
       </section>
     </main>
   );
