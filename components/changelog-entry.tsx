@@ -3,22 +3,31 @@ import type { ChangelogEntry as ChangelogEntryType } from '@/lib/data';
 export function ChangelogEntry({
   entry,
   labels = { approach: 'Approach', result: 'Result' },
+  showDate = true,
 }: Readonly<{
   entry: ChangelogEntryType;
   labels?: {
     approach: string;
     result: string;
   };
+  showDate?: boolean;
 }>) {
   return (
-    <article className="grid gap-4 border-b border-[var(--border)] py-7 md:grid-cols-[160px_1fr]">
+    <article className={`grid gap-4 border-b border-[var(--border)] py-7 ${showDate ? 'md:grid-cols-[160px_1fr]' : ''}`}>
+      {showDate ? (
+        <div>
+          <p className="font-semibold text-[var(--text-primary)]">{entry.date}</p>
+          <p className="mt-2 inline-flex rounded-md border border-[var(--border)] bg-[var(--surface)] px-2.5 py-1 text-xs text-[var(--text-secondary)]">
+            {entry.category}
+          </p>
+        </div>
+      ) : null}
       <div>
-        <p className="font-semibold text-[var(--text-primary)]">{entry.period}</p>
-        <p className="mt-2 inline-flex rounded-md border border-[var(--border)] bg-[var(--surface)] px-2.5 py-1 text-xs text-[var(--text-secondary)]">
-          {entry.category}
-        </p>
-      </div>
-      <div>
+        {!showDate ? (
+          <p className="mb-3 inline-flex rounded-md border border-[var(--border)] bg-[var(--surface)] px-2.5 py-1 text-xs text-[var(--text-secondary)]">
+            {entry.category}
+          </p>
+        ) : null}
         <h2 className="text-xl font-semibold">{entry.title}</h2>
         <p className="mt-3 text-sm leading-6 text-[var(--text-secondary)]">{entry.problem}</p>
         <div className="mt-4 grid gap-3 lg:grid-cols-[1fr_0.8fr]">

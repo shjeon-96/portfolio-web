@@ -1,6 +1,6 @@
 import { ChangelogEntry } from '@/components/changelog-entry';
 import { SectionHeading } from '@/components/section-heading';
-import { changelogEntries, sortChangelogEntriesByPeriodDesc } from '@/lib/data';
+import { changelogEntries, formatChangelogDate, groupChangelogEntriesByDate } from '@/lib/data';
 
 export const metadata = {
   title: 'Engineering Changelog',
@@ -8,7 +8,7 @@ export const metadata = {
 };
 
 export default function ChangelogPage() {
-  const sortedEntries = sortChangelogEntriesByPeriodDesc(changelogEntries);
+  const groupedEntries = groupChangelogEntriesByDate(changelogEntries);
   const priorityEntries = [
     'Agent LSP bridge release contract',
     'Mobile release gate system',
@@ -58,8 +58,20 @@ export default function ChangelogPage() {
         </div>
       </section>
       <section className="mt-10 rounded-xl border border-[var(--border)] bg-[var(--surface)] px-5 py-2 shadow-sm">
-        {sortedEntries.map((entry) => (
-          <ChangelogEntry entry={entry} key={entry.title} />
+        {groupedEntries.map((group) => (
+          <div className="grid gap-4 border-b border-[var(--border)] py-7 last:border-b-0 md:grid-cols-[160px_1fr]" key={group.date}>
+            <div>
+              <p className="text-lg font-semibold text-[var(--text-primary)]">{formatChangelogDate(group.date, 'en')}</p>
+              <p className="mt-2 text-xs font-semibold uppercase tracking-[0.14em] text-[var(--text-secondary)]">
+                {group.entries.length} changes
+              </p>
+            </div>
+            <div className="[&>article:last-child]:border-b-0">
+              {group.entries.map((entry) => (
+                <ChangelogEntry entry={entry} key={entry.title} showDate={false} />
+              ))}
+            </div>
+          </div>
         ))}
       </section>
     </main>

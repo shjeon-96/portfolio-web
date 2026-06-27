@@ -384,7 +384,7 @@ export const caseStudiesKo: CaseStudy[] = [
 export const changelogEntriesKo: ChangelogEntry[] = [
   {
     title: '세무 운영 플랫폼 마이그레이션 경로',
-    period: '2025-11',
+    date: '2025-11-30',
     category: 'ops-platform',
     problem: '운영 중인 업무 플랫폼에서 세무 신청, 매입·매출 대시보드, 가맹점 심사, 알림, 프레임워크 마이그레이션을 서비스 중단 없이 다뤄야 했습니다.',
     approach: [
@@ -397,7 +397,7 @@ export const changelogEntriesKo: ChangelogEntry[] = [
   },
   {
     title: 'Offline-first 데스크톱 POS 아키텍처',
-    period: '2025-02',
+    date: '2025-02-28',
     category: 'pos-system',
     problem: '식당 POS는 네트워크가 불안정해도 주문, 결제, 프린터 출력, 매출 데이터가 계속 운영 가능해야 했습니다.',
     approach: [
@@ -410,7 +410,7 @@ export const changelogEntriesKo: ChangelogEntry[] = [
   },
   {
     title: '실시간 배달 운영 백엔드',
-    period: '2024-04',
+    date: '2024-04-30',
     category: 'realtime-backend',
     problem: '배달 운영 시스템은 주문 상태, updater event, 경로 지원, 데이터 수집 로그가 즉시 반영되고 추적 가능해야 했습니다.',
     approach: [
@@ -423,7 +423,7 @@ export const changelogEntriesKo: ChangelogEntry[] = [
   },
   {
     title: '레거시 POS 결제 리팩토링',
-    period: '2023-10',
+    date: '2023-10-31',
     category: 'pos-system',
     problem: '레거시 POS 프론트엔드의 결제, 영수증, 테이블, 정산 로직은 유지보수와 성능 정리가 필요했습니다.',
     approach: [
@@ -436,7 +436,7 @@ export const changelogEntriesKo: ChangelogEntry[] = [
   },
   {
     title: '카탈로그 사이트 SEO와 i18n surface',
-    period: '2025-03',
+    date: '2025-03-31',
     category: 'catalog-site',
     problem: '제품 정보 사이트는 빠른 초기 로딩, 검색 가능한 catalog content, 다국어 route, 반응형 presentation이 필요했습니다.',
     approach: [
@@ -449,7 +449,7 @@ export const changelogEntriesKo: ChangelogEntry[] = [
   },
   {
     title: 'App Store Review 보조 도구화',
-    period: '2026-04',
+    date: '2026-04-19',
     category: 'app-review-tooling',
     problem: '릴리즈 제출 작업은 문구와 입력값을 신중하게 다뤄야 하며, private data나 검증되지 않은 설명이 섞이면 리뷰 지연으로 이어질 수 있습니다.',
     approach: [
@@ -462,7 +462,7 @@ export const changelogEntriesKo: ChangelogEntry[] = [
   },
   {
     title: 'AI PRD 생성 제품 surface',
-    period: '2026-01',
+    date: '2026-01-17',
     category: 'ai-product',
     problem: '초기 제품 아이디어는 구현 전에 구조화된 요구사항과 제품 계획으로 정리될 필요가 있습니다.',
     approach: [
@@ -475,7 +475,7 @@ export const changelogEntriesKo: ChangelogEntry[] = [
   },
   {
     title: 'SwiftUI 제품 모듈 아키텍처',
-    period: '2026-06',
+    date: '2026-02-08',
     category: 'native-product',
     problem: '네이티브 생산성 앱에서 task, focus, label, widget, share, sync 화면이 늘어나도 구조가 무너지지 않아야 했습니다.',
     approach: [
@@ -488,7 +488,7 @@ export const changelogEntriesKo: ChangelogEntry[] = [
   },
   {
     title: 'Privacy-first 개발자 도구 제품 방향',
-    period: '2026-06',
+    date: '2026-06-18',
     category: 'web-toolkit',
     problem: '개발자 도구는 사용자가 민감한 JSON, JWT, 텍스트를 붙여 넣는 경우가 많아 서버 처리 경로를 신중히 다뤄야 했습니다.',
     approach: [
@@ -501,7 +501,7 @@ export const changelogEntriesKo: ChangelogEntry[] = [
   },
   {
     title: 'Bevy 런타임 검증 루프',
-    period: '2026-06',
+    date: '2026-06-27',
     category: 'game-runtime',
     problem: '게임 런타임은 gameplay 변경 이후 formatting, compile, tests가 계속 통과하는지 빠르게 확인할 수 있어야 했습니다.',
     approach: [
@@ -514,7 +514,7 @@ export const changelogEntriesKo: ChangelogEntry[] = [
   },
   {
     title: 'Agent LSP Bridge 릴리즈 계약',
-    period: '2026-06',
+    date: '2026-05-19',
     category: 'agent-tooling',
     problem: 'AI 코딩 워크플로우에는 프로젝트에 넓은 쓰기 권한을 주지 않으면서 semantic code feedback을 제공하는 도구가 필요했습니다.',
     approach: [
@@ -527,7 +527,7 @@ export const changelogEntriesKo: ChangelogEntry[] = [
   },
   {
     title: '모바일 릴리즈 게이트 시스템',
-    period: '2026-06',
+    date: '2026-06-27',
     category: 'mobile-release',
     problem: 'Expo config, store metadata, widgets, runtime environment, 제품 문서를 따로 확인하면 native mobile release 기준이 쉽게 어긋납니다.',
     approach: [
@@ -540,7 +540,7 @@ export const changelogEntriesKo: ChangelogEntry[] = [
   },
   {
     title: 'Export 런타임 정합성 규칙 정리',
-    period: '2026-06',
+    date: '2026-06-26',
     category: 'export-deploy',
     problem: '조건부 렌더링 규칙이 여러 경로에서 평가되면 미리보기와 배포 산출물이 달라질 수 있었습니다.',
     approach: [
@@ -553,7 +553,7 @@ export const changelogEntriesKo: ChangelogEntry[] = [
   },
   {
     title: 'Variant 상태 소유 경계 정리',
-    period: '2026-06',
+    date: '2026-06-25',
     category: 'editor-engine',
     problem: '컴포넌트 Variant 선택은 편집 상태와 런타임 상태의 경계가 흐리면 쉽게 불안정해집니다.',
     approach: [
@@ -566,7 +566,7 @@ export const changelogEntriesKo: ChangelogEntry[] = [
   },
   {
     title: '생성 산출물 검토 루프',
-    period: '2026-06',
+    date: '2026-06-24',
     category: 'testing-ci',
     problem: '소스 코드만 보면 맞아 보여도 실제 HTML이나 배포 산출물에서 어긋남이 드러날 수 있습니다.',
     approach: [
@@ -579,7 +579,7 @@ export const changelogEntriesKo: ChangelogEntry[] = [
   },
   {
     title: 'AI 에이전트 기반 원인 분석 루프',
-    period: '2026-06',
+    date: '2026-06-23',
     category: 'ai-workflow',
     problem: '큰 프론트엔드 시스템에서는 실제 소유 모듈을 찾지 못한 채 증상만 고치기 쉽습니다.',
     approach: [
@@ -592,7 +592,7 @@ export const changelogEntriesKo: ChangelogEntry[] = [
   },
   {
     title: '캔버스 성능 가드레일',
-    period: '2026-05',
+    date: '2026-05-31',
     category: 'performance',
     problem: '큰 편집 화면은 문서가 복잡해져도 예측 가능한 조작감을 유지해야 합니다.',
     approach: [
@@ -605,7 +605,7 @@ export const changelogEntriesKo: ChangelogEntry[] = [
   },
   {
     title: '관리자 빈 상태와 실패 상태 정리',
-    period: '2025-12',
+    date: '2025-12-31',
     category: 'admin-ops',
     problem: '운영자는 데이터가 로딩 중인지, 없는지, 권한이 없는지, 실패했는지를 명확히 알아야 합니다.',
     approach: [
@@ -618,7 +618,7 @@ export const changelogEntriesKo: ChangelogEntry[] = [
   },
   {
     title: '환경별 릴리즈 흐름 정리',
-    period: '2025-08',
+    date: '2025-08-31',
     category: 'testing-ci',
     problem: '환경 설정을 수동으로 관리하면 잘못된 설정으로 배포될 위험이 커집니다.',
     approach: [
@@ -631,7 +631,7 @@ export const changelogEntriesKo: ChangelogEntry[] = [
   },
   {
     title: 'AI 리뷰 운영 워크플로우',
-    period: '2025-04',
+    date: '2025-04-30',
     category: 'admin-ops',
     problem: 'AI 생성 응답은 고객에게 노출되기 전에 운영자의 신뢰, 검토, 수정 흐름이 필요했습니다.',
     approach: [

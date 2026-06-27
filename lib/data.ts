@@ -20,7 +20,7 @@ export type CaseStudy = {
 
 export type ChangelogEntry = {
   title: string;
-  period: string;
+  date: string;
   category:
     | 'editor-engine'
     | 'export-deploy'
@@ -444,7 +444,7 @@ export const caseStudies: CaseStudy[] = [
 export const changelogEntries: ChangelogEntry[] = [
   {
     title: 'Tax operations migration path',
-    period: '2025-11',
+    date: '2025-11-30',
     category: 'ops-platform',
     problem: 'A live business operations platform needed tax request workflows, purchase and sales dashboards, merchant review, notifications, and framework migration without interrupting work.',
     approach: [
@@ -457,7 +457,7 @@ export const changelogEntries: ChangelogEntry[] = [
   },
   {
     title: 'Offline-first desktop POS architecture',
-    period: '2025-02',
+    date: '2025-02-28',
     category: 'pos-system',
     problem: 'Restaurant POS software has to keep orders, payments, printer output, and sales data usable even when the network is unstable.',
     approach: [
@@ -470,7 +470,7 @@ export const changelogEntries: ChangelogEntry[] = [
   },
   {
     title: 'Realtime delivery operations backend',
-    period: '2024-04',
+    date: '2024-04-30',
     category: 'realtime-backend',
     problem: 'Delivery operations require immediate order status updates, updater events, route support, and traceable data collection.',
     approach: [
@@ -483,7 +483,7 @@ export const changelogEntries: ChangelogEntry[] = [
   },
   {
     title: 'Legacy POS payment refactor',
-    period: '2023-10',
+    date: '2023-10-31',
     category: 'pos-system',
     problem: 'A legacy POS front end had payment, receipt, table, and settlement logic that needed maintenance and performance cleanup.',
     approach: [
@@ -496,7 +496,7 @@ export const changelogEntries: ChangelogEntry[] = [
   },
   {
     title: 'Catalog site SEO and i18n surface',
-    period: '2025-03',
+    date: '2025-03-31',
     category: 'catalog-site',
     problem: 'A product information site needed fast initial loading, searchable catalog content, multilingual routes, and responsive presentation.',
     approach: [
@@ -509,7 +509,7 @@ export const changelogEntries: ChangelogEntry[] = [
   },
   {
     title: 'App Store review helper as conservative tooling',
-    period: '2026-04',
+    date: '2026-04-19',
     category: 'app-review-tooling',
     problem: 'Release submission work needs careful wording and input review because accidental private data or unsupported claims can delay review.',
     approach: [
@@ -522,7 +522,7 @@ export const changelogEntries: ChangelogEntry[] = [
   },
   {
     title: 'AI PRD generation product surface',
-    period: '2026-01',
+    date: '2026-01-17',
     category: 'ai-product',
     problem: 'Early product ideas need to become structured requirements before implementation starts.',
     approach: [
@@ -535,7 +535,7 @@ export const changelogEntries: ChangelogEntry[] = [
   },
   {
     title: 'SwiftUI product module architecture',
-    period: '2026-06',
+    date: '2026-02-08',
     category: 'native-product',
     problem: 'A native productivity app needed task, focus, label, widget, share, and sync surfaces to stay organized as the product expanded.',
     approach: [
@@ -548,7 +548,7 @@ export const changelogEntries: ChangelogEntry[] = [
   },
   {
     title: 'Privacy-first developer toolkit direction',
-    period: '2026-06',
+    date: '2026-06-18',
     category: 'web-toolkit',
     problem: 'Developer tools often ask users to paste sensitive text into unknown server paths.',
     approach: [
@@ -561,7 +561,7 @@ export const changelogEntries: ChangelogEntry[] = [
   },
   {
     title: 'Bevy runtime verification loop',
-    period: '2026-06',
+    date: '2026-06-27',
     category: 'game-runtime',
     problem: 'Interactive game systems need fast local confidence that formatting, compilation, and tests still pass after gameplay changes.',
     approach: [
@@ -574,7 +574,7 @@ export const changelogEntries: ChangelogEntry[] = [
   },
   {
     title: 'Agent LSP bridge release contract',
-    period: '2026-06',
+    date: '2026-05-19',
     category: 'agent-tooling',
     problem: 'AI coding workflows need semantic code feedback without giving tools broad write access to the project.',
     approach: [
@@ -587,7 +587,7 @@ export const changelogEntries: ChangelogEntry[] = [
   },
   {
     title: 'Mobile release gate system',
-    period: '2026-06',
+    date: '2026-06-27',
     category: 'mobile-release',
     problem: 'Native mobile releases can drift when Expo config, store metadata, widgets, runtime environment, and product docs are checked separately.',
     approach: [
@@ -600,7 +600,7 @@ export const changelogEntries: ChangelogEntry[] = [
   },
   {
     title: 'Export runtime parity rules',
-    period: '2026-06',
+    date: '2026-06-26',
     category: 'export-deploy',
     problem: 'Preview and deployable output can diverge when conditional rendering rules are evaluated in separate paths.',
     approach: [
@@ -613,7 +613,7 @@ export const changelogEntries: ChangelogEntry[] = [
   },
   {
     title: 'Variant state ownership',
-    period: '2026-06',
+    date: '2026-06-25',
     category: 'editor-engine',
     problem: 'Component variant selection becomes fragile when local editing state and runtime state share unclear boundaries.',
     approach: [
@@ -626,7 +626,7 @@ export const changelogEntries: ChangelogEntry[] = [
   },
   {
     title: 'Generated artifact review loop',
-    period: '2026-06',
+    date: '2026-06-24',
     category: 'testing-ci',
     problem: 'Source-level changes can look correct while generated HTML or deployment artifacts reveal a mismatch.',
     approach: [
@@ -639,7 +639,7 @@ export const changelogEntries: ChangelogEntry[] = [
   },
   {
     title: 'Agent-assisted root-cause workflow',
-    period: '2026-06',
+    date: '2026-06-23',
     category: 'ai-workflow',
     problem: 'Large front-end systems make it easy to patch symptoms without finding the canonical owner.',
     approach: [
@@ -652,7 +652,7 @@ export const changelogEntries: ChangelogEntry[] = [
   },
   {
     title: 'Canvas performance guardrails',
-    period: '2026-05',
+    date: '2026-05-31',
     category: 'performance',
     problem: 'Large editing surfaces need predictable interaction even as documents grow in size and complexity.',
     approach: [
@@ -665,7 +665,7 @@ export const changelogEntries: ChangelogEntry[] = [
   },
   {
     title: 'Admin empty and failure states',
-    period: '2025-12',
+    date: '2025-12-31',
     category: 'admin-ops',
     problem: 'Operational users need clear state feedback when data is loading, missing, restricted, or failed.',
     approach: [
@@ -678,7 +678,7 @@ export const changelogEntries: ChangelogEntry[] = [
   },
   {
     title: 'Environment-aware release workflow',
-    period: '2025-08',
+    date: '2025-08-31',
     category: 'testing-ci',
     problem: 'Manual environment handling increases the risk of deploying the wrong configuration.',
     approach: [
@@ -691,7 +691,7 @@ export const changelogEntries: ChangelogEntry[] = [
   },
   {
     title: 'AI review operations workflow',
-    period: '2025-04',
+    date: '2025-04-30',
     category: 'admin-ops',
     problem: 'AI-generated responses need operator trust, review, and correction before they affect customer-facing workflows.',
     approach: [
@@ -768,6 +768,35 @@ export function getCaseStudy(slug: string) {
   return caseStudies.find((caseStudy) => caseStudy.slug === slug);
 }
 
-export function sortChangelogEntriesByPeriodDesc<T extends ChangelogEntry>(entries: T[]) {
-  return [...entries].sort((left, right) => right.period.localeCompare(left.period));
+export function sortChangelogEntriesByDateDesc<T extends ChangelogEntry>(entries: T[]) {
+  return [...entries].sort((left, right) => right.date.localeCompare(left.date));
+}
+
+export function groupChangelogEntriesByDate<T extends ChangelogEntry>(entries: T[]) {
+  return sortChangelogEntriesByDateDesc(entries).reduce<Array<{ date: string; entries: T[] }>>((groups, entry) => {
+    const lastGroup = groups.at(-1);
+
+    if (lastGroup?.date === entry.date) {
+      lastGroup.entries.push(entry);
+      return groups;
+    }
+
+    groups.push({ date: entry.date, entries: [entry] });
+    return groups;
+  }, []);
+}
+
+export function formatChangelogDate(date: string, locale: 'en' | 'ko') {
+  const [year, month, day] = date.split('-');
+
+  if (locale === 'ko') {
+    return `${year}.${month}.${day}`;
+  }
+
+  return new Intl.DateTimeFormat('en', {
+    month: 'short',
+    day: 'numeric',
+    year: 'numeric',
+    timeZone: 'UTC',
+  }).format(new Date(`${date}T00:00:00.000Z`));
 }
