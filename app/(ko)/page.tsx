@@ -152,7 +152,7 @@ export default function KoreanHomePage() {
       <section className="mx-auto max-w-7xl px-5 pb-16">
         <div className="rounded-xl border border-[var(--border)] bg-[var(--surface)] px-5 py-2 shadow-sm">
           {homeChangelogEntries.map((entry) => (
-            <ChangelogEntry entry={entry} key={entry.title} labels={{ approach: '접근', result: '결과' }} />
+            <ChangelogEntry entry={entry} key={entry.title} />
           ))}
         </div>
       </section>
