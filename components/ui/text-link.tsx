@@ -2,6 +2,7 @@ import Link from 'next/link';
 import type { ReactNode } from 'react';
 
 import { cx } from '@/lib/design-system';
+import { externalLinkProps } from '@/lib/external-link';
 
 const textLinkClassName = 'font-medium text-[var(--text-primary)] transition hover:text-[var(--accent-blue)]';
 
@@ -20,7 +21,7 @@ export function TextLink({
 
   if (external) {
     return (
-      <a className={linkClassName} href={href} rel="noreferrer" target="_blank">
+      <a {...externalLinkProps} className={linkClassName} href={href}>
         {children}
       </a>
     );

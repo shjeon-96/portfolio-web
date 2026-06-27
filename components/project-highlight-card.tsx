@@ -2,6 +2,7 @@ import { MotionReveal } from '@/components/motion-reveal';
 import { BadgeList } from '@/components/ui';
 import type { ProjectHighlight } from '@/lib/data';
 import { ds } from '@/lib/design-system';
+import { externalLinkProps } from '@/lib/external-link';
 
 export function ProjectHighlightCard({
   locale = 'ko',
@@ -32,7 +33,7 @@ export function ProjectHighlightCard({
   }
 
   return (
-    <a aria-label={linkLabel} className="block h-full" href={project.href} rel="noreferrer" target="_blank">
+    <a {...externalLinkProps} aria-label={linkLabel} className="block h-full" href={project.href}>
       {content}
     </a>
   );

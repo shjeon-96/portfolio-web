@@ -7,13 +7,11 @@ const port = Number(process.env.ROUTE_CHECK_PORT ?? 3210);
 const host = 'localhost';
 const externalBaseUrl = process.env.ROUTE_BASE_URL;
 const baseUrl = externalBaseUrl ?? `http://${host}:${port}`;
-const existingDevBaseUrl = process.env.ROUTE_EXISTING_BASE_URL ?? 'http://localhost:3000';
 const timeoutMs = Number(process.env.ROUTE_CHECK_TIMEOUT_MS ?? 75_000);
 
 const publicRoutes = JSON.parse(readFileSync(new URL('../lib/public-routes.json', import.meta.url), 'utf8'));
 const portfolioSiteUrl = readPortfolioSiteUrl();
 validatePublicRoutes(publicRoutes);
-const homeRoute = getRequiredRoute(publicRoutes, 'home');
 const routeContentExpectations = buildRouteContentExpectations(publicRoutes);
 const publicRoutePaths = [...routeContentExpectations.keys()];
 const routes = [...publicRoutePaths, '/sitemap.xml', '/robots.txt'];
@@ -24,38 +22,28 @@ let effectiveBaseUrl = baseUrl;
 
 try {
   if (!externalBaseUrl) {
-    const existingServer = await checkRoute(
-      `${existingDevBaseUrl}${homeRoute.paths.ko}`,
-      homeRoute.checkSnippets.ko,
-    );
+    await assertPortAvailable(host, port);
 
-    if (existingServer.ok) {
-      effectiveBaseUrl = existingDevBaseUrl;
-      console.log(`Using existing route check server at ${effectiveBaseUrl}.`);
-    } else {
-      await assertPortAvailable(host, port);
+    server = spawn('npm', ['run', 'dev', '--', '--hostname', host, '--port', String(port)], {
+      env: {
+        ...process.env,
+        NEXT_TELEMETRY_DISABLED: '1',
+      },
+      stdio: ['ignore', 'pipe', 'pipe'],
+    });
+    server.on('exit', () => {
+      serverExited = true;
+    });
 
-      server = spawn('npm', ['run', 'dev', '--', '--hostname', host, '--port', String(port)], {
-        env: {
-          ...process.env,
-          NEXT_TELEMETRY_DISABLED: '1',
-        },
-        stdio: ['ignore', 'pipe', 'pipe'],
-      });
-      server.on('exit', () => {
-        serverExited = true;
-      });
+    let output = '';
+    server.stdout.on('data', (chunk) => {
+      output += chunk.toString();
+    });
+    server.stderr.on('data', (chunk) => {
+      output += chunk.toString();
+    });
 
-      let output = '';
-      server.stdout.on('data', (chunk) => {
-        output += chunk.toString();
-      });
-      server.stderr.on('data', (chunk) => {
-        output += chunk.toString();
-      });
-
-      effectiveBaseUrl = await waitForServer(baseUrl, timeoutMs, () => output);
-    }
+    effectiveBaseUrl = await waitForServer(baseUrl, timeoutMs, () => output);
   }
 
   const failures = [];
@@ -322,14 +310,4 @@ function validatePublicRoutes(routeDefinitions) {
       }
     }
   }
-}
-
-function getRequiredRoute(routeDefinitions, routeId) {
-  const route = routeDefinitions.find((definition) => definition.id === routeId);
-
-  if (!route) {
-    throw new Error(`Missing required public route id: ${routeId}`);
-  }
-
-  return route;
 }

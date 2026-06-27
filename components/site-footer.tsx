@@ -3,6 +3,7 @@
 import { usePathname } from 'next/navigation';
 
 import { cx, ds } from '@/lib/design-system';
+import { externalLinkProps } from '@/lib/external-link';
 import { GITHUB_PROFILE_URL } from '@/lib/site-links';
 
 export function SiteFooter() {
@@ -17,7 +18,7 @@ export function SiteFooter() {
         </p>
         <div className="flex flex-col gap-1 md:items-end">
           <p>{isKorean ? '공개해도 안전한 구현 근거, 변경 기록, AI 개발 흐름.' : 'Public-safe implementation evidence, changelog, and AI workflow.'}</p>
-          <a className="font-medium text-[var(--text-primary)] transition hover:text-[var(--accent-blue)]" href={GITHUB_PROFILE_URL} rel="noreferrer" target="_blank">
+          <a {...externalLinkProps} className="font-medium text-[var(--text-primary)] transition hover:text-[var(--accent-blue)]" href={GITHUB_PROFILE_URL}>
             github.com/shjeon-96
           </a>
         </div>

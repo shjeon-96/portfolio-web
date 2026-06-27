@@ -16,6 +16,8 @@ export function SiteHeader() {
   const isKorean = !pathname.startsWith('/en');
   const englishHref = getLocalizedPath(pathname, 'en');
   const koreanHref = getLocalizedPath(pathname, 'ko');
+  const isEnglishLocaleLinkCurrent = pathname === englishHref;
+  const isKoreanLocaleLinkCurrent = pathname === koreanHref;
   const navigation = getNavigationItems(isKorean ? 'ko' : 'en');
   const primaryShortcut = isKorean
     ? { href: getRoutePath('evidence', 'ko'), label: '사례' }
@@ -33,6 +35,8 @@ export function SiteHeader() {
   );
   const navLinkClassName =
     'relative flex min-h-11 min-w-11 items-center justify-center overflow-hidden whitespace-nowrap rounded-md px-3 py-2 transition hover:bg-[var(--surface-strong)] hover:text-[var(--text-primary)]';
+  const localeLinkClassName =
+    'relative flex min-h-11 min-w-11 items-center justify-center rounded-md px-3 py-2 font-mono text-xs font-semibold transition hover:bg-[var(--surface-strong)] hover:text-[var(--text-primary)]';
   const mobileMenuLinkClassName = 'flex min-h-11 items-center rounded-md px-3 font-medium transition hover:bg-[var(--background)] hover:text-[var(--text-primary)]';
   const isActive = (href: string) => {
     if (href === '/' || href === '/en') {
@@ -76,13 +80,17 @@ export function SiteHeader() {
           ))}
           <span className="mx-1 h-4 w-px shrink-0 bg-[var(--border)]" />
           <Link
-            className={navLinkClassName}
+            aria-current={isEnglishLocaleLinkCurrent ? 'true' : undefined}
+            aria-label={isKorean ? '영어 버전 보기' : 'Current language: English'}
+            className={cx(localeLinkClassName, isEnglishLocaleLinkCurrent && 'bg-[var(--surface-strong)] text-[var(--text-primary)]')}
             href={englishHref}
           >
             EN
           </Link>
           <Link
-            className={navLinkClassName}
+            aria-current={isKoreanLocaleLinkCurrent ? 'true' : undefined}
+            aria-label={isKorean ? '현재 언어: 한국어' : 'View Korean version'}
+            className={cx(localeLinkClassName, isKoreanLocaleLinkCurrent && 'bg-[var(--surface-strong)] text-[var(--text-primary)]')}
             href={koreanHref}
           >
             KO
@@ -105,7 +113,7 @@ export function SiteHeader() {
             onClick={() => setIsMenuOpen((current) => !current)}
             type="button"
           >
-            {isMenuOpen ? <X size={18} /> : <Menu size={18} />}
+            {isMenuOpen ? <X aria-hidden="true" size={18} /> : <Menu aria-hidden="true" size={18} />}
           </button>
         </div>
       </div>
@@ -133,14 +141,18 @@ export function SiteHeader() {
               ))}
               <div className="mt-2 grid grid-cols-2 gap-2 border-t border-[var(--border)] pt-3">
                 <Link
-                  className={cx(ds.action.secondary, 'px-3 py-0')}
+                  aria-current={isEnglishLocaleLinkCurrent ? 'true' : undefined}
+                  aria-label={isKorean ? '영어 버전 보기' : 'Current language: English'}
+                  className={cx(ds.action.secondary, 'px-3 py-0', isEnglishLocaleLinkCurrent && 'bg-[var(--text-primary)] text-white hover:bg-[var(--text-primary)] hover:text-white')}
                   href={englishHref}
                   onClick={() => setIsMenuOpen(false)}
                 >
                   EN
                 </Link>
                 <Link
-                  className={cx(ds.action.secondary, 'px-3 py-0')}
+                  aria-current={isKoreanLocaleLinkCurrent ? 'true' : undefined}
+                  aria-label={isKorean ? '현재 언어: 한국어' : 'View Korean version'}
+                  className={cx(ds.action.secondary, 'px-3 py-0', isKoreanLocaleLinkCurrent && 'bg-[var(--text-primary)] text-white hover:bg-[var(--text-primary)] hover:text-white')}
                   href={koreanHref}
                   onClick={() => setIsMenuOpen(false)}
                 >

@@ -10,6 +10,12 @@ import { cx, ds } from '@/lib/design-system';
 import { getRoutePath } from '@/lib/routes';
 import { GITHUB_PROFILE_URL } from '@/lib/site-links';
 
+export const metadata = {
+  title: 'Product Front-End Portfolio',
+  description:
+    'Product front-end portfolio focused on no-code builders, B2B operation consoles, state models, and export/deploy output parity.',
+};
+
 export default function Home() {
   const featuredProjects = projectHighlights.filter((project) => project.featured);
   const homeChangelogEntries = sortChangelogEntriesByDateDesc(changelogEntries).slice(0, 3);

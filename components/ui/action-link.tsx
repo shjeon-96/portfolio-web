@@ -2,6 +2,7 @@ import Link from 'next/link';
 import type { MouseEventHandler, ReactNode } from 'react';
 
 import { cx, ds, type ActionVariant } from '@/lib/design-system';
+import { externalLinkProps } from '@/lib/external-link';
 
 export function ActionLink({
   ariaLabel,
@@ -26,7 +27,7 @@ export function ActionLink({
 
   if (external) {
     return (
-      <a aria-label={ariaLabel} className={actionClassName} href={href} onClick={onClick} rel="noreferrer" target="_blank" title={title}>
+      <a {...externalLinkProps} aria-label={ariaLabel} className={actionClassName} href={href} onClick={onClick} title={title}>
         {children}
       </a>
     );
