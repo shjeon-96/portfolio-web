@@ -1,1175 +1,1592 @@
-import type { ChangelogEntry, HiringFit, ImplementationEvidence, ProjectHighlight, SkillContext } from '@/lib/data';
-import { getRoutePath } from '@/lib/routes';
+import {
+  aiWorkflowSteps,
+  changelogEntries,
+  hiringFit,
+  implementationEvidence,
+  projectHighlights,
+  proofPoints,
+  skills,
+  type ChangelogEntry,
+  type HiringSignal,
+  type ImplementationEvidence,
+  type ProjectHighlight,
+  type SkillContext,
+} from '@/lib/data';
+import { getLocalizedRoutePath } from '@/lib/routes';
 
-export const proofPointsKo = [
-  '에디터 상태 모델',
-  'Export/Deploy 정합성',
-  'B2B 운영 콘솔',
-  'AI 검증 루프',
-];
+type TranslationMap<T> = Record<string, T>;
+type ProjectHighlightTranslation = Pick<ProjectHighlight, 'title' | 'label' | 'summary' | 'stack' | 'status'>;
+type EvidenceArtifactTranslation = Pick<ImplementationEvidence['artifact'], 'description' | 'label'>;
+type ImplementationEvidenceTranslation = Pick<
+  ImplementationEvidence,
+  'title' | 'label' | 'summary' | 'surface' | 'role' | 'frontendSignals' | 'verification' | 'outcome'
+> & {
+  artifact: EvidenceArtifactTranslation;
+  linkLabel: string;
+};
+type ChangelogEntryTranslation = Pick<ChangelogEntry, 'title' | 'problem' | 'approach' | 'result' | 'stack'>;
+type SkillContextTranslation = Pick<SkillContext, 'group' | 'tools' | 'context' | 'evidenceLabel'>;
+type WorkflowStep = (typeof aiWorkflowSteps)[number];
+type WorkflowStepTranslation = Pick<WorkflowStep, 'title' | 'description' | 'tools' | 'artifact'>;
+type HiringSignalTranslation = Pick<HiringSignal, 'title' | 'fit' | 'evidence' | 'interviewProbe'>;
 
-export const projectHighlightsKo: ProjectHighlight[] = [
-  {
-    title: '노코드 웹 빌더 에디터',
-    label: '비주얼 빌더 제품 시스템',
-    summary:
-      'AST형 상태 모델, 컴포넌트 Variant, 데이터 바인딩, 캔버스 동작, 미리보기, Export/Deploy 결과물 정합성을 다룬 비공개 제품 작업을 공개 가능한 수준으로 정리했습니다.',
-    stack: ['React', 'Next.js', 'TypeScript', 'Zustand', 'Immer'],
-    status: '비공개 제품 작업을 익명화한 공개 안전 사례',
-    featured: true,
-  },
-  {
-    title: '세무·정산 운영 플랫폼',
-    label: '백오피스와 모바일 운영 흐름',
-    summary:
-      '세무대리 신청, 매입·매출 대시보드, 가맹점 승인, 알림, Vue에서 React와 Next.js로 이어지는 마이그레이션을 다룬 업무 시스템입니다.',
-    stack: ['Flutter', 'React', 'Next.js', 'Firebase', 'Docker'],
-    status: '운영 흐름과 프레임워크 마이그레이션',
-    featured: true,
-  },
-  {
-    title: 'codex-lsp-bridge',
-    label: '오픈소스 개발 보조 도구',
-    summary:
-      'Codex가 로컬 언어 서버의 진단, 정의, 참조, 심볼, 호버 정보, 상태 정보를 읽기 전용으로 조회할 수 있게 만든 MCP/LSP 브리지입니다.',
-    stack: ['TypeScript', 'Node.js', 'MCP', 'LSP', 'Vitest'],
-    status: '공개 패키지와 GitHub 저장소',
-    featured: true,
-    href: 'https://github.com/shjeon-96/codex-lsp-bridge',
-  },
-  {
-    title: 'Gyeol Mobile',
-    label: 'Expo/React Native 제품 플랫폼',
-    summary:
-      '네이티브 정책, EAS 설정, 런타임 환경, 위젯, 스토어 메타데이터, UI 스모크 테스트 결과를 하나의 릴리즈 기준으로 묶은 캘린더 중심 모바일 제품입니다.',
-    stack: ['Expo', 'React Native', 'TypeScript', 'Supabase', 'EAS'],
-    status: 'iOS/Android 릴리즈 흐름',
-    featured: true,
-  },
-  {
-    title: 'PureFlow',
-    label: '네이티브 생산성 앱',
-    summary:
-      'MVVM, 기능 모듈, 적응형 내비게이션, SwiftData, CloudKit 동기화, 위젯, 공유 확장 타깃으로 구성한 SwiftUI 생산성 앱입니다.',
-    stack: ['SwiftUI', 'SwiftData', 'CloudKit', 'Firebase', 'Swift Testing'],
-    status: 'iOS, iPadOS, Mac Catalyst 아키텍처',
-  },
-  {
-    title: 'Web Toolkit',
-    label: '개인정보 우선 개발자 도구',
-    summary:
-      '클라이언트 처리, 오프라인 PWA, i18n, WebAssembly 기반 처리, 공유할 수 있는 도구 상태를 중심으로 구성한 브라우저 개발자 도구 제품입니다.',
-    stack: ['Next.js', 'React', 'TypeScript', 'Tailwind CSS', 'Vitest'],
-    status: '공개 웹 제품 방향',
-    featured: true,
-    href: 'https://github.com/shjeon-96/dev-tool-kit',
-  },
-  {
-    title: 'app-store-connect-release',
-    label: 'Codex 릴리즈 검토 플러그인',
-    summary:
-      'App Store Connect 제출 입력을 보수적으로 검토하고 App Review 응답 초안을 작성하기 위한 공개 Codex 플러그인입니다.',
-    stack: ['Python', 'Codex plugin', 'App Store Connect', '릴리즈 흐름'],
-    status: '공개 GitHub 저장소',
-    href: 'https://github.com/shjeon-96/app-store-connect-release',
-  },
-  {
-    title: 'IdeaToPRD',
-    label: 'AI 제품 기획 SaaS',
-    summary:
-      '아이디어 입력을 구조화된 PRD와 제품 계획으로 바꾸는 AI 보조 기획 제품입니다.',
-    stack: ['Next.js', 'TypeScript', 'AI 흐름', 'Vercel'],
-    status: '공개 저장소와 실제 웹 화면',
-    href: 'https://github.com/shjeon-96/ideatoprd',
-  },
-  {
-    title: 'Nightbound Survival',
-    label: 'Bevy 게임 런타임',
-    summary:
-      '포맷팅, 컴파일, 테스트 바이너리 빌드, 테스트 실행을 하나의 검증 스크립트로 묶은 Rust/Bevy 기반 게임 프로젝트입니다.',
-    stack: ['Rust', 'Bevy', 'Serde', 'Cargo'],
-    status: '인터랙티브 시스템과 런타임 검증',
-  },
-  {
-    title: 'AI 리뷰 운영 시스템',
-    label: 'AI 보조 관리자 흐름',
-    summary:
-      'React 관리자 UI, NestJS API, Python 데이터 수집, JWT 인증, MySQL 스키마, OpenAI 기반 리뷰 응답 흐름을 함께 다룬 멀티스택 운영 도구입니다.',
-    stack: ['React', 'NestJS', 'Python', 'OpenAI API', 'MySQL'],
-    status: '운영자가 통제하는 AI 흐름',
-  },
-  {
-    title: '데스크톱 POS 시스템',
-    label: '오프라인 우선 Flutter 데스크톱 앱',
-    summary:
-      'Windows/macOS POS 앱에서 테이블 주문, 결제 흐름, 프린터 연동, SQLite 로컬 저장소, 네트워크 복구 후 동기화를 다뤘습니다.',
-    stack: ['Flutter', 'Dart', 'SQLite', 'Desktop', 'Hardware integration'],
-    status: '식당 운영과 로컬 데이터 안정성',
-  },
-  {
-    title: '실시간 배달 운영 백엔드',
-    label: 'Socket.io 운영 백엔드',
-    summary:
-      '실시간 주문 상태, 상태 변경 소켓 이벤트, 경로 최적화 지원, 데이터 수집 파이프라인, 로그 관리를 포함한 배달 운영 백엔드입니다.',
-    stack: ['NestJS', 'Python', 'Socket.io', 'Realtime operations'],
-    status: '백엔드와 실시간 운영 흐름 경험',
-  },
-  {
-    title: 'POS 리팩토링과 결제 흐름',
-    label: '레거시 React POS 현대화',
-    summary:
-      '결제/취소 모달, 현금영수증, 테이블 이동·분리·합석, 그룹 결제, 성능 정리를 포함한 React POS 리팩토링입니다.',
-    stack: ['React', 'JavaScript', 'POS', '결제 흐름'],
-    status: '운영 중인 시스템의 레거시 현대화',
-  },
-  {
-    title: '유통 제품 카탈로그 사이트',
-    label: 'Next.js SEO와 카탈로그 화면',
-    summary:
-      'SSR, 동적 라우팅, 이미지 최적화, 지연 로딩, i18n 라우트, 검색, 문의 흐름을 포함한 반응형 제품 카탈로그 사이트입니다.',
-    stack: ['Next.js', 'TypeScript', 'SSR', 'SEO', 'i18n'],
-    status: '외부에 공개되는 카탈로그와 성능 작업',
-  },
-];
+const proofPointTranslations = {
+  "Editor state models": "에디터 상태 모델",
+  "Export/deploy parity": "Export/Deploy 정합성",
+  "B2B operation consoles": "B2B 운영 콘솔",
+  "AI-verified workflow": "AI 검증 루프"
+} satisfies TranslationMap<string>;
 
-export const implementationEvidenceKo: ImplementationEvidence[] = [
-  {
-    title: '에디터 상태와 결과물 일관성',
-    label: '비주얼 빌더 프론트엔드',
-    summary:
-      '편집 상태, 런타임 동작, 미리보기, 생성 결과물이 하나의 제품 기준을 따라야 하는 빌더 화면입니다.',
-    surface: 'AST형 에디터 모델, 컴포넌트 Variant, 데이터 바인딩, 캔버스 동작, 미리보기 상태, Export/Deploy 결과물.',
-    role: '편집 가능한 제품 상태, 런타임 해석, 생성 결과물이 각자 다른 규칙을 갖지 않도록 정리했습니다.',
-    frontendSignals: ['React 컴포넌트 규칙', 'Zustand/Immer 상태 모델', 'Variant 담당 범위', 'Export/Deploy 정합성'],
-    verification: ['Vitest 회귀 검증', '생성 HTML 확인', '라우트/빌드 검사'],
-    outcome: '가장 강한 포트폴리오 신호입니다. 제품 빌더 안에서 상태 책임, 결과물 정합성, 회귀 방지를 함께 다뤘다는 근거입니다.',
-    link: { type: 'changelog-focus', focus: 'editor', label: '에디터 근거 보기' },
-    visualKind: 'editor',
+const projectHighlightTranslations = {
+  "No-code web builder editor": {
+    "title": "노코드 웹 빌더 에디터",
+    "label": "비주얼 빌더 제품 시스템",
+    "summary": "AST형 상태 모델, 컴포넌트 Variant, 데이터 바인딩, 캔버스 동작, 미리보기, Export/Deploy 결과물 정합성을 다룬 비공개 제품 작업을 공개 가능한 수준으로 정리했습니다.",
+    "stack": [
+      "React",
+      "Next.js",
+      "TypeScript",
+      "Zustand",
+      "Immer"
+    ],
+    "status": "비공개 제품 작업을 익명화한 공개 안전 사례"
   },
-  {
-    title: '운영 콘솔과 마이그레이션 흐름',
-    label: 'B2B 제품 운영 화면',
-    summary:
-      '승인, 세무·정산 상태, 대시보드, 알림, 프레임워크 마이그레이션이 실제 운영 흐름을 끊지 않아야 했던 백오피스 화면입니다.',
-    surface: '관리자 대시보드, 승인 흐름, 세무·정산 업무, 알림 경로, Vue에서 React/Next.js로 이어지는 마이그레이션 경계.',
-    role: '업무 규칙을 타입 기반 UI 상태로 옮기고, 레거시 마이그레이션이 운영 연속성과 분리되지 않게 다뤘습니다.',
-    frontendSignals: ['React/Next.js 마이그레이션', '관리자 상태 모델링', 'API 계약 정렬', '권한 기반 UI'],
-    verification: ['라우트/빌드 검사', '운영 상태 검토', '배포 파이프라인 확인'],
-    outcome: '폼, 테이블, 권한, 업무 상태를 실제 운영 조건에서 다룬 B2B SaaS 콘솔 근거입니다.',
-    link: { type: 'changelog-focus', focus: 'ops', label: '운영 근거 보기' },
-    visualKind: 'ops',
+  "Tax and settlement operations platform": {
+    "title": "세무·정산 운영 플랫폼",
+    "label": "백오피스와 모바일 운영 흐름",
+    "summary": "세무대리 신청, 매입·매출 대시보드, 가맹점 승인, 알림, Vue에서 React와 Next.js로 이어지는 마이그레이션을 다룬 업무 시스템입니다.",
+    "stack": [
+      "Flutter",
+      "React",
+      "Next.js",
+      "Firebase",
+      "Docker"
+    ],
+    "status": "운영 흐름과 프레임워크 마이그레이션"
   },
-  {
-    title: '모바일 릴리즈 게이트 흐름',
-    label: 'React Native 제품 플랫폼',
-    summary:
-      '네이티브 설정, 위젯, 스토어 메타데이터, 런타임 환경, UI 스모크 테스트 결과가 함께 맞아야 하는 캘린더 중심 모바일 제품입니다.',
-    surface: 'Expo/React Native 앱 화면, 네이티브 정책, 위젯 설정, 릴리즈 준비 점검.',
-    role: '제품 UI, 런타임 설정, 릴리즈 검증이 한 흐름으로 이어지도록 연결했습니다.',
-    frontendSignals: ['React Native 흐름', 'Expo 설정', '위젯 영역 책임', '스토어 제출 준비'],
-    verification: ['EAS 빌드 검사', 'Maestro 스모크 테스트', '런타임 환경 검토'],
-    outcome: '로컬 UI 구현에서 끝나지 않고 릴리즈 기준까지 제품 화면을 가져갈 수 있음을 보여줍니다.',
-    link: { type: 'changelog-focus', focus: 'mobile-release', label: '릴리즈 근거 보기' },
-    visualKind: 'mobile',
+  "codex-lsp-bridge": {
+    "title": "codex-lsp-bridge",
+    "label": "오픈소스 개발 보조 도구",
+    "summary": "Codex가 로컬 언어 서버의 진단, 정의, 참조, 심볼, 호버 정보, 상태 정보를 읽기 전용으로 조회할 수 있게 만든 MCP/LSP 브리지입니다.",
+    "stack": [
+      "TypeScript",
+      "Node.js",
+      "MCP",
+      "LSP",
+      "Vitest"
+    ],
+    "status": "공개 패키지와 GitHub 저장소"
   },
-  {
-    title: '공개 코드 인텔리전스 도구',
-    label: '오픈소스 개발자 도구',
-    summary:
-      '진단, 정의, 참조, 심볼, 호버 정보, 서버 상태를 AI 보조 개발 흐름에 제공하는 읽기 전용 MCP/LSP 브리지입니다.',
-    surface: '로컬 언어 서버 통합을 안전한 타입 기반 도구 인터페이스로 노출하는 개발자 도구.',
-    role: 'AI 보조 개발이 넓은 쓰기 권한 없이 의미 기반 코드 근거를 사용할 수 있도록 연동 기준을 만들었습니다.',
-    frontendSignals: ['TypeScript API 설계', 'MCP 도구 규칙', '언어 서버 어댑터', '패키지 릴리즈 정리'],
-    verification: ['Vitest', '통합 검사', '패키지 스모크 검사'],
-    outcome: 'AI 개발 흐름이 프롬프트 사용이 아니라 실제 도구와 검증으로 뒷받침된다는 근거가 됩니다.',
-    link: { type: 'external', href: 'https://github.com/shjeon-96/codex-lsp-bridge', label: '공개 저장소 보기' },
-    visualKind: 'tooling',
+  "Gyeol Mobile": {
+    "title": "Gyeol Mobile",
+    "label": "Expo/React Native 제품 플랫폼",
+    "summary": "네이티브 정책, EAS 설정, 런타임 환경, 위젯, 스토어 메타데이터, UI 스모크 테스트 결과를 하나의 릴리즈 기준으로 묶은 캘린더 중심 모바일 제품입니다.",
+    "stack": [
+      "Expo",
+      "React Native",
+      "TypeScript",
+      "Supabase",
+      "EAS"
+    ],
+    "status": "iOS/Android 릴리즈 흐름"
   },
-  {
-    title: '개인정보 우선 웹 도구 제품 방향',
-    label: 'Next.js 웹 제품',
-    summary:
-      '클라이언트 처리, 오프라인 사용, i18n, 공유 가능한 도구 상태를 중심으로 구성한 브라우저 개발자 도구 방향입니다.',
-    surface: 'Next.js 제품 기본 구조, 라우트 모델, 도구 패널, 공개 웹 배포 방향.',
-    role: '서버 의존 흐름보다 로컬 처리와 반복 가능한 도구 상태를 중심으로 공개 웹 제품 방향을 잡았습니다.',
-    frontendSignals: ['Next.js App Router', 'TypeScript UI 규칙', 'Tailwind 시스템', 'PWA 지향 화면 구조'],
-    verification: ['라우트 검사', '빌드 검사', '공개 저장소 검토'],
-    outcome: '에디터, 모바일 릴리즈, 개발자 도구 외에 웹 제품 구현 신호를 추가합니다.',
-    link: { type: 'external', href: 'https://github.com/shjeon-96/dev-tool-kit', label: '공개 저장소 보기' },
-    visualKind: 'web',
+  "PureFlow": {
+    "title": "PureFlow",
+    "label": "네이티브 생산성 앱",
+    "summary": "MVVM, 기능 모듈, 적응형 내비게이션, SwiftData, CloudKit 동기화, 위젯, 공유 확장 타깃으로 구성한 SwiftUI 생산성 앱입니다.",
+    "stack": [
+      "SwiftUI",
+      "SwiftData",
+      "CloudKit",
+      "Firebase",
+      "Swift Testing"
+    ],
+    "status": "iOS, iPadOS, Mac Catalyst 아키텍처"
   },
-];
+  "Web Toolkit": {
+    "title": "Web Toolkit",
+    "label": "개인정보 우선 개발자 도구",
+    "summary": "클라이언트 처리, 오프라인 PWA, i18n, WebAssembly 기반 처리, 공유할 수 있는 도구 상태를 중심으로 구성한 브라우저 개발자 도구 제품입니다.",
+    "stack": [
+      "Next.js",
+      "React",
+      "TypeScript",
+      "Tailwind CSS",
+      "Vitest"
+    ],
+    "status": "공개 웹 제품 방향"
+  },
+  "app-store-connect-release": {
+    "title": "app-store-connect-release",
+    "label": "Codex 릴리즈 검토 플러그인",
+    "summary": "App Store Connect 제출 입력을 보수적으로 검토하고 App Review 응답 초안을 작성하기 위한 공개 Codex 플러그인입니다.",
+    "stack": [
+      "Python",
+      "Codex plugin",
+      "App Store Connect",
+      "릴리즈 흐름"
+    ],
+    "status": "공개 GitHub 저장소"
+  },
+  "IdeaToPRD": {
+    "title": "IdeaToPRD",
+    "label": "AI 제품 기획 SaaS",
+    "summary": "아이디어 입력을 구조화된 PRD와 제품 계획으로 바꾸는 AI 보조 기획 제품입니다.",
+    "stack": [
+      "Next.js",
+      "TypeScript",
+      "AI 흐름",
+      "Vercel"
+    ],
+    "status": "공개 저장소와 실제 웹 화면"
+  },
+  "Nightbound Survival": {
+    "title": "Nightbound Survival",
+    "label": "Bevy 게임 런타임",
+    "summary": "포맷팅, 컴파일, 테스트 바이너리 빌드, 테스트 실행을 하나의 검증 스크립트로 묶은 Rust/Bevy 기반 게임 프로젝트입니다.",
+    "stack": [
+      "Rust",
+      "Bevy",
+      "Serde",
+      "Cargo"
+    ],
+    "status": "인터랙티브 시스템과 런타임 검증"
+  },
+  "AI review operations system": {
+    "title": "AI 리뷰 운영 시스템",
+    "label": "AI 보조 관리자 흐름",
+    "summary": "React 관리자 UI, NestJS API, Python 데이터 수집, JWT 인증, MySQL 스키마, OpenAI 기반 리뷰 응답 흐름을 함께 다룬 멀티스택 운영 도구입니다.",
+    "stack": [
+      "React",
+      "NestJS",
+      "Python",
+      "OpenAI API",
+      "MySQL"
+    ],
+    "status": "운영자가 통제하는 AI 흐름"
+  },
+  "Desktop POS system": {
+    "title": "데스크톱 POS 시스템",
+    "label": "오프라인 우선 Flutter 데스크톱 앱",
+    "summary": "Windows/macOS POS 앱에서 테이블 주문, 결제 흐름, 프린터 연동, SQLite 로컬 저장소, 네트워크 복구 후 동기화를 다뤘습니다.",
+    "stack": [
+      "Flutter",
+      "Dart",
+      "SQLite",
+      "Desktop",
+      "Hardware integration"
+    ],
+    "status": "식당 운영과 로컬 데이터 안정성"
+  },
+  "Realtime delivery backend": {
+    "title": "실시간 배달 운영 백엔드",
+    "label": "Socket.io 운영 백엔드",
+    "summary": "실시간 주문 상태, 상태 변경 소켓 이벤트, 경로 최적화 지원, 데이터 수집 파이프라인, 로그 관리를 포함한 배달 운영 백엔드입니다.",
+    "stack": [
+      "NestJS",
+      "Python",
+      "Socket.io",
+      "Realtime operations"
+    ],
+    "status": "백엔드와 실시간 운영 흐름 경험"
+  },
+  "POS refactor and payment workflow": {
+    "title": "POS 리팩토링과 결제 흐름",
+    "label": "레거시 React POS 현대화",
+    "summary": "결제/취소 모달, 현금영수증, 테이블 이동·분리·합석, 그룹 결제, 성능 정리를 포함한 React POS 리팩토링입니다.",
+    "stack": [
+      "React",
+      "JavaScript",
+      "POS",
+      "결제 흐름"
+    ],
+    "status": "운영 중인 시스템의 레거시 현대화"
+  },
+  "Distribution catalog site": {
+    "title": "유통 제품 카탈로그 사이트",
+    "label": "Next.js SEO와 카탈로그 화면",
+    "summary": "SSR, 동적 라우팅, 이미지 최적화, 지연 로딩, i18n 라우트, 검색, 문의 흐름을 포함한 반응형 제품 카탈로그 사이트입니다.",
+    "stack": [
+      "Next.js",
+      "TypeScript",
+      "SSR",
+      "SEO",
+      "i18n"
+    ],
+    "status": "외부에 공개되는 카탈로그와 성능 작업"
+  }
+} satisfies TranslationMap<ProjectHighlightTranslation>;
 
-export const hiringFitKo: HiringFit = {
+const implementationEvidenceTranslations = {
+  "Editor state and output parity": {
+    "title": "에디터 상태와 결과물 일관성",
+    "label": "비주얼 빌더 프론트엔드",
+    "summary": "편집 상태, 런타임 동작, 미리보기, 생성 결과물이 하나의 제품 기준을 따라야 하는 빌더 화면입니다.",
+    "surface": "AST형 에디터 모델, 컴포넌트 Variant, 데이터 바인딩, 캔버스 동작, 미리보기 상태, Export/Deploy 결과물.",
+    "role": "편집 가능한 제품 상태, 런타임 해석, 생성 결과물이 각자 다른 규칙을 갖지 않도록 정리했습니다.",
+    "frontendSignals": [
+      "React 컴포넌트 규칙",
+      "Zustand/Immer 상태 모델",
+      "Variant 담당 범위",
+      "Export/Deploy 정합성"
+    ],
+    "verification": [
+      "Vitest 회귀 검증",
+      "생성 HTML 확인",
+      "라우트/빌드 검사"
+    ],
+    "outcome": "가장 강한 포트폴리오 신호입니다. 제품 빌더 안에서 상태 책임, 결과물 정합성, 회귀 방지를 함께 다뤘다는 근거입니다.",
+    "artifact": {
+      "label": "에디터 근거 체인지로그",
+      "description": "에디터 상태, 결과물 일관성, 회귀 검증, 성능 항목만 필터링한 공개 체인지로그입니다."
+    },
+    "linkLabel": "에디터 근거 보기"
+  },
+  "Operational console and migration workflows": {
+    "title": "운영 콘솔과 마이그레이션 흐름",
+    "label": "B2B 제품 운영 화면",
+    "summary": "승인, 세무·정산 상태, 대시보드, 알림, 프레임워크 마이그레이션이 실제 운영 흐름을 끊지 않아야 했던 백오피스 화면입니다.",
+    "surface": "관리자 대시보드, 승인 흐름, 세무·정산 업무, 알림 경로, Vue에서 React/Next.js로 이어지는 마이그레이션 경계.",
+    "role": "업무 규칙을 타입 기반 UI 상태로 옮기고, 레거시 마이그레이션이 운영 연속성과 분리되지 않게 다뤘습니다.",
+    "frontendSignals": [
+      "React/Next.js 마이그레이션",
+      "관리자 상태 모델링",
+      "API 계약 정렬",
+      "권한 기반 UI"
+    ],
+    "verification": [
+      "라우트/빌드 검사",
+      "운영 상태 검토",
+      "배포 파이프라인 확인"
+    ],
+    "outcome": "폼, 테이블, 권한, 업무 상태를 실제 운영 조건에서 다룬 B2B SaaS 콘솔 근거입니다.",
+    "artifact": {
+      "label": "운영 콘솔 근거 체인지로그",
+      "description": "운영 콘솔, 업무 상태, 마이그레이션, 실시간 운영 항목만 필터링한 공개 체인지로그입니다."
+    },
+    "linkLabel": "운영 근거 보기"
+  },
+  "Mobile release gate workflow": {
+    "title": "모바일 릴리즈 게이트 흐름",
+    "label": "React Native 제품 플랫폼",
+    "summary": "네이티브 설정, 위젯, 스토어 메타데이터, 런타임 환경, UI 스모크 테스트 결과가 함께 맞아야 하는 캘린더 중심 모바일 제품입니다.",
+    "surface": "Expo/React Native 앱 화면, 네이티브 정책, 위젯 설정, 릴리즈 준비 점검.",
+    "role": "제품 UI, 런타임 설정, 릴리즈 검증이 한 흐름으로 이어지도록 연결했습니다.",
+    "frontendSignals": [
+      "React Native 흐름",
+      "Expo 설정",
+      "위젯 영역 책임",
+      "스토어 제출 준비"
+    ],
+    "verification": [
+      "EAS 빌드 검사",
+      "Maestro 스모크 테스트",
+      "런타임 환경 검토"
+    ],
+    "outcome": "로컬 UI 구현에서 끝나지 않고 릴리즈 기준까지 제품 화면을 가져갈 수 있음을 보여줍니다.",
+    "artifact": {
+      "label": "모바일 릴리즈 근거 체인지로그",
+      "description": "UI 구현, 네이티브 설정, 스토어 검토, 릴리즈 근거가 함께 움직이는 항목을 모은 공개 체인지로그입니다."
+    },
+    "linkLabel": "릴리즈 근거 보기"
+  },
+  "Public code-intelligence tooling": {
+    "title": "공개 코드 인텔리전스 도구",
+    "label": "오픈소스 개발자 도구",
+    "summary": "진단, 정의, 참조, 심볼, 호버 정보, 서버 상태를 AI 보조 개발 흐름에 제공하는 읽기 전용 MCP/LSP 브리지입니다.",
+    "surface": "로컬 언어 서버 통합을 안전한 타입 기반 도구 인터페이스로 노출하는 개발자 도구.",
+    "role": "AI 보조 개발이 넓은 쓰기 권한 없이 의미 기반 코드 근거를 사용할 수 있도록 연동 기준을 만들었습니다.",
+    "frontendSignals": [
+      "TypeScript API 설계",
+      "MCP 도구 규칙",
+      "언어 서버 어댑터",
+      "패키지 릴리즈 정리"
+    ],
+    "verification": [
+      "Vitest",
+      "통합 검사",
+      "패키지 스모크 검사"
+    ],
+    "outcome": "AI 개발 흐름이 프롬프트 사용이 아니라 실제 도구와 검증으로 뒷받침된다는 근거가 됩니다.",
+    "artifact": {
+      "label": "codex-lsp-bridge 공개 저장소",
+      "description": "MCP/LSP 브리지의 패키지 구조, README, 검증 표면을 확인할 수 있는 공개 GitHub 저장소입니다."
+    },
+    "linkLabel": "공개 저장소 보기"
+  },
+  "Privacy-first web toolkit direction": {
+    "title": "개인정보 우선 웹 도구 제품 방향",
+    "label": "Next.js 웹 제품",
+    "summary": "클라이언트 처리, 오프라인 사용, i18n, 공유 가능한 도구 상태를 중심으로 구성한 브라우저 개발자 도구 방향입니다.",
+    "surface": "Next.js 제품 기본 구조, 라우트 모델, 도구 패널, 공개 웹 배포 방향.",
+    "role": "서버 의존 흐름보다 로컬 처리와 반복 가능한 도구 상태를 중심으로 공개 웹 제품 방향을 잡았습니다.",
+    "frontendSignals": [
+      "Next.js App Router",
+      "TypeScript UI 규칙",
+      "Tailwind 시스템",
+      "PWA 지향 화면 구조"
+    ],
+    "verification": [
+      "라우트 검사",
+      "빌드 검사",
+      "공개 저장소 검토"
+    ],
+    "outcome": "에디터, 모바일 릴리즈, 개발자 도구 외에 웹 제품 구현 신호를 추가합니다.",
+    "artifact": {
+      "label": "Web Toolkit 공개 저장소",
+      "description": "브라우저 기반 개발자 도구 방향과 라우트 중심 제품 화면을 확인할 수 있는 공개 GitHub 저장소입니다."
+    },
+    "linkLabel": "공개 저장소 보기"
+  }
+} satisfies TranslationMap<ImplementationEvidenceTranslation>;
+
+const changelogEntryTranslations = {
+  "Tax operations migration path": {
+    "title": "세무 운영 플랫폼 마이그레이션 경로",
+    "problem": "운영 중인 업무 플랫폼에서 세무 신청, 매입·매출 대시보드, 가맹점 심사, 알림, 프레임워크 마이그레이션을 서비스 중단 없이 다뤄야 했습니다.",
+    "approach": [
+      "레거시 Vue 화면을 React와 Next.js 구조로 단계적으로 옮겼습니다.",
+      "세무대리 신청, 수임동의, 해지, 가맹점 승인, 관리 흐름을 운영 제품 상태로 다뤘습니다.",
+      "Firebase 알림, Docker 배포, 대시보드 화면을 같은 백오피스 흐름에 연결했습니다."
+    ],
+    "result": "빌더와 공개 도구 외에도 실제 업무 운영 플랫폼 경험이 포트폴리오에 보강됐습니다.",
+    "stack": [
+      "Flutter",
+      "React",
+      "Next.js",
+      "Firebase",
+      "Docker"
+    ]
+  },
+  "Offline-first desktop POS architecture": {
+    "title": "Offline-first 데스크톱 POS 아키텍처",
+    "problem": "식당 POS는 네트워크가 불안정해도 주문, 결제, 프린터 출력, 매출 데이터가 계속 운영 가능해야 했습니다.",
+    "approach": [
+      "Flutter Desktop으로 Windows와 macOS를 하나의 코드베이스에서 지원했습니다.",
+      "SQLite 기반 로컬 저장소로 오프라인 운영 흐름을 유지했습니다.",
+      "프린터와 주문 알림 흐름을 핵심 제품 경로로 통합했습니다."
+    ],
+    "result": "데스크톱 POS 작업은 오프라인 우선 운영과 하드웨어 인접 제품 경험을 보여주는 축이 됐습니다.",
+    "stack": [
+      "Flutter",
+      "Dart",
+      "SQLite",
+      "Desktop"
+    ]
+  },
+  "Realtime delivery operations backend": {
+    "title": "실시간 배달 운영 백엔드",
+    "problem": "배달 운영 시스템은 주문 상태, 업데이트 이벤트, 경로 지원, 데이터 수집 로그가 즉시 반영되고 추적 가능해야 했습니다.",
+    "approach": [
+      "Socket.io로 실시간 주문과 업데이트 이벤트를 처리했습니다.",
+      "NestJS 백엔드와 Python 데이터 수집 책임을 분리했습니다.",
+      "운영 이슈를 추적할 수 있도록 로그와 오류 처리 흐름을 정리했습니다."
+    ],
+    "result": "변경 기록이 프론트엔드 UI뿐 아니라 백엔드와 실시간 운영 흐름 이해도까지 보여주게 됐습니다.",
+    "stack": [
+      "NestJS",
+      "Python",
+      "Socket.io"
+    ]
+  },
+  "Legacy POS payment refactor": {
+    "title": "레거시 POS 결제 리팩토링",
+    "problem": "레거시 POS 프론트엔드의 결제, 영수증, 테이블, 정산 로직은 유지보수와 성능 정리가 필요했습니다.",
+    "approach": [
+      "결제와 취소 모달 흐름을 리팩토링했습니다.",
+      "테이블 이동, 분리, 합석, 그룹 지정, 그룹 결제 케이스를 정리했습니다.",
+      "실제 운영 중인 화면에서 렌더링과 유지보수성을 개선했습니다."
+    ],
+    "result": "과거 POS 작업이 실제 업무 흐름과 레거시 현대화 경험을 보강합니다.",
+    "stack": [
+      "React",
+      "JavaScript",
+      "POS 흐름"
+    ]
+  },
+  "Catalog site SEO and i18n surface": {
+    "title": "카탈로그 사이트 SEO와 i18n 화면",
+    "problem": "제품 정보 사이트는 빠른 초기 로딩, 검색 가능한 카탈로그 콘텐츠, 다국어 라우트, 반응형 표현이 필요했습니다.",
+    "approach": [
+      "Next.js SSR, 동적 라우팅, 이미지 최적화를 사용했습니다.",
+      "제품 정보 중심 카탈로그 검색과 문의 흐름을 구성했습니다.",
+      "다국어 콘텐츠 전달을 위해 i18n 라우트 구조를 추가했습니다."
+    ],
+    "result": "프로젝트 기록에 외부에 공개되는 웹 성능과 콘텐츠 아키텍처 작업이 추가됐습니다.",
+    "stack": [
+      "Next.js",
+      "TypeScript",
+      "SSR",
+      "SEO",
+      "i18n"
+    ]
+  },
+  "App Store review helper as conservative tooling": {
+    "title": "App Store 심사 대응 보조 도구",
+    "problem": "릴리즈 제출 작업은 문구와 입력값을 신중하게 다뤄야 하며, 비공개 데이터나 검증되지 않은 설명이 섞이면 리뷰 지연으로 이어질 수 있습니다.",
+    "approach": [
+      "제출 입력 검토와 App Review 응답 초안 작성에 집중한 보수적인 플러그인으로 범위를 좁혔습니다.",
+      "릴리즈 보조 문서 작성과 실제 스토어 운영 범위를 분리했습니다.",
+      "비공개 앱 릴리즈 세부사항을 넣지 않고 공개 가능한 보조 도구로 문서화했습니다."
+    ],
+    "result": "반복되는 릴리즈 검토 작업을 재사용 가능한 도구로 바꾼 작은 공개 사례가 추가됐습니다.",
+    "stack": [
+      "Python",
+      "Codex plugin",
+      "App Store Connect"
+    ]
+  },
+  "Single-purpose iOS release packaging": {
+    "title": "단일 목적 iOS 앱 릴리즈 패키징",
+    "problem": "작은 App Store 제품도 제출 전에 프로덕션 서명, 스크린샷, 지원 페이지, 광고 설정, 앱 아이콘 정리가 필요했습니다.",
+    "approach": [
+      "짧은 세션형 모바일 제품에 맞춰 서명과 스크린샷 자산을 준비했습니다.",
+      "심사용 웹사이트와 프로덕션 광고 설정을 같은 릴리즈 경로에 연결했습니다.",
+      "스토어 준비가 불필요한 기능 확장으로 번지지 않도록 MVP 범위를 좁게 유지했습니다."
+    ],
+    "result": "큰 플랫폼 작업 사이에 실제 모바일 제출 준비 경험을 보여주는 중간 기록이 추가됐습니다.",
+    "stack": [
+      "iOS",
+      "App Store",
+      "AdMob",
+      "Release assets"
+    ]
+  },
+  "PDF utility App Store readiness": {
+    "title": "PDF 유틸리티 App Store 준비",
+    "problem": "작은 유틸리티 앱도 App Store 제출을 위해 공개 메타데이터, 개인정보 처리방침, 심사 설정, 마케팅 페이지가 필요했습니다.",
+    "approach": [
+      "심사 가능한 앱 설정과 저장소 메타데이터를 준비했습니다.",
+      "공개 개인정보 처리방침과 마케팅 사이트 화면을 추가했습니다.",
+      "비공개 제출 자격 정보를 노출하지 않고 릴리즈 흐름을 문서화했습니다."
+    ],
+    "result": "집중된 유틸리티 제품을 스토어 제출 가능한 상태로 만드는 또 하나의 실제 사례가 추가됐습니다.",
+    "stack": [
+      "Swift",
+      "App Store",
+      "Privacy policy",
+      "Marketing site"
+    ]
+  },
+  "Nutrition app feature expansion and refactor": {
+    "title": "영양 앱 기능 확장과 구조 정리",
+    "problem": "건강/영양 모바일 제품은 기록, AI 보조 입력, 데이터 내보내기, 기기 연동, 결제, 기능 담당 범위가 함께 커지고 있었습니다.",
+    "approach": [
+      "AI 음식 인식, 운동 기록, 데이터 내보내기, 건강 기기 연동 경로를 추가했습니다.",
+      "카메라 분석 주변에 프리미엄 게이트, 실제 API 연결, 뒤늦게 도착한 결과 방지, 비동기 취소 처리를 넣었습니다.",
+      "화면 로직을 기능별 훅과 컨테이너 기준으로 나눠 하나의 큰 화면에 책임이 몰리지 않게 했습니다."
+    ],
+    "result": "릴리즈 게이트뿐 아니라 실제 모바일 제품 기능 확장과 구조 정리 흐름도 체인지로그에 보강됐습니다.",
+    "stack": [
+      "React Native",
+      "Expo",
+      "AI 흐름",
+      "Health sync",
+      "Billing"
+    ]
+  },
+  "AI PRD generation product surface": {
+    "title": "AI PRD 생성 제품 화면",
+    "problem": "초기 제품 아이디어는 구현 전에 구조화된 요구사항과 제품 계획으로 정리될 필요가 있습니다.",
+    "approach": [
+      "아이디어 입력과 PRD 생성을 연결하는 AI 보조 제품 기획 흐름을 탐색했습니다.",
+      "작업 흐름이 실제 웹 앱으로 공유될 수 있도록 Next.js 제품 화면으로 구성했습니다.",
+      "비공개 기획 데이터를 노출하지 않고 제품 흐름 수준으로만 포트폴리오에 정리했습니다."
+    ],
+    "result": "IdeaToPRD는 구현 중심 케이스 사이에 공개 가능한 AI 제품 기획 사례를 더합니다.",
+    "stack": [
+      "Next.js",
+      "TypeScript",
+      "AI 흐름",
+      "Vercel"
+    ]
+  },
+  "Health tracker monetization and retention release": {
+    "title": "건강 추적 앱 수익화와 리텐션 릴리즈",
+    "problem": "건강 추적 앱은 수익화, 접근성, 알림 안정성, 앱 완성도, 스토어 제출용 마감 품질을 함께 조정해야 했습니다.",
+    "approach": [
+      "수익화 모델을 조정하고 공개 화면에서 과도하게 구체적인 데이터 가정을 제거했습니다.",
+      "앱 전반의 UI 구조, 접근성, 알림 처리, 설정 연결성을 개선했습니다.",
+      "다음 제출에 맞춰 빌드 번호, 아이콘, expo-doctor 정리, 릴리즈 문서를 함께 맞췄습니다."
+    ],
+    "result": "2월 중순의 모바일 릴리즈 흐름이 리텐션과 스토어 준비 관점으로 더 분명해졌습니다.",
+    "stack": [
+      "React Native",
+      "Expo",
+      "RevenueCat",
+      "Notifications",
+      "Accessibility"
+    ]
+  },
+  "Debt payoff app MVP hardening": {
+    "title": "부채 상환 앱 MVP 안정화",
+    "problem": "부채 상환 모바일 제품은 핵심 상환 흐름을 강조하면서도 오류 처리, 다국어, 테스트, 리텐션 기본기를 갖춰야 했습니다.",
+    "approach": [
+      "상환 우선 UX를 중심으로 모바일 제품을 부트스트랩했습니다.",
+      "단위 테스트, 오류 처리 경계, 한국어 로컬라이제이션, 남아 있던 TODO 정리를 추가했습니다.",
+      "핵심 UI와 리텐션 기능을 개선하고 쓰지 않는 의존성을 제거했습니다."
+    ],
+    "result": "개인 금융 앱 아이디어를 안정화된 MVP로 만드는 작은 사례가 체인지로그에 추가됐습니다.",
+    "stack": [
+      "React Native",
+      "TypeScript",
+      "Testing",
+      "i18n"
+    ]
+  },
+  "Programmatic SEO content system": {
+    "title": "프로그래매틱 SEO 콘텐츠 시스템",
+    "problem": "콘텐츠 중심 웹 제품은 검색 구조, AI 생성 글 처리 안정성, 정보 구조를 함께 갖춰야 했습니다.",
+    "approach": [
+      "토픽 클러스터, 프로그래매틱 SEO 라우트, 글 목록, Open Graph 이미지 지원을 추가했습니다.",
+      "AI 응답 파싱 실패가 숨겨지지 않도록 오류 메시지와 중복 slug 처리를 강화했습니다.",
+      "RAG 보조 콘텐츠 생성 경로를 쓰되 깨진 JSON을 조용히 받아들이지 않도록 했습니다."
+    ],
+    "result": "1월 구간에 웹 성장, 콘텐츠 아키텍처, AI 보조 발행 경험을 보여주는 기록이 채워졌습니다.",
+    "stack": [
+      "Next.js",
+      "SEO",
+      "AI 흐름",
+      "Supabase",
+      "TypeScript"
+    ]
+  },
+  "SwiftUI product module architecture": {
+    "title": "SwiftUI 제품 모듈 아키텍처",
+    "problem": "네이티브 생산성 앱에서 작업, 집중, 라벨, 위젯, 공유, 동기화 화면이 늘어나도 구조가 무너지지 않아야 했습니다.",
+    "approach": [
+      "앱 진입점, 핵심 유틸리티, 데이터 모델, 기능 모듈, 공통 UI, 리소스를 분리했습니다.",
+      "SwiftUI, SwiftData, CloudKit, adaptive navigation을 네이티브 제품 구조의 기준으로 사용했습니다.",
+      "모델, 서비스, ViewModel 동작은 Swift Testing과 인메모리 데이터 경로로 확인했습니다."
+    ],
+    "result": "PureFlow는 웹 프론트엔드 밖의 네이티브 제품 아키텍처 경험을 보여주는 축이 됐습니다.",
+    "stack": [
+      "SwiftUI",
+      "SwiftData",
+      "CloudKit",
+      "Swift Testing",
+      "XcodeGen"
+    ]
+  },
+  "Privacy-first developer toolkit direction": {
+    "title": "개인정보 우선 개발자 도구 제품 방향",
+    "problem": "개발자 도구는 사용자가 민감한 JSON, JWT, 텍스트를 붙여 넣는 경우가 많아 서버 처리 경로를 신중히 다뤄야 했습니다.",
+    "approach": [
+      "클라이언트 처리, 서버 업로드 없음, 오프라인 PWA 사용을 제품 방향으로 잡았습니다.",
+      "텍스트/코드, 미디어/디자인, 변환, 보안 그룹으로 도구를 분류했습니다.",
+      "i18n, 명령 검색, WebAssembly 처리, 공유 가능한 상태를 제품 기능으로 정리했습니다."
+    ],
+    "result": "Web Toolkit은 유틸리티 중심 브라우저 소프트웨어를 공개 제품 방향으로 보여주는 항목이 됐습니다.",
+    "stack": [
+      "Next.js",
+      "React",
+      "TypeScript",
+      "PWA",
+      "WebAssembly"
+    ]
+  },
+  "Bevy runtime verification loop": {
+    "title": "Bevy 런타임 검증 흐름",
+    "problem": "게임 런타임은 게임플레이 변경 이후 포맷팅, 컴파일, 테스트가 계속 통과하는지 빠르게 확인할 수 있어야 했습니다.",
+    "approach": [
+      "CI에서 쓰는 것과 같은 검증 경로를 하나의 스크립트로 문서화했습니다.",
+      "Cargo 기반 검사, 테스트 바이너리 빌드, 테스트 실행 명령을 분리해 집중 검증할 수 있게 했습니다.",
+      "게임 프로젝트도 단순 실험이 아니라 반복 가능한 피드백이 필요한 제품 시스템으로 다뤘습니다."
+    ],
+    "result": "Nightbound Survival은 Rust와 인터랙티브 런타임 경험을 제품 엔지니어링 흐름 안에 추가했습니다.",
+    "stack": [
+      "Rust",
+      "Bevy",
+      "Cargo",
+      "Serde"
+    ]
+  },
+  "Portfolio evidence model refinement": {
+    "title": "포트폴리오 근거 모델 정리",
+    "problem": "공개 포트폴리오는 프로젝트 기록, 라우트 구조, 변경 기록이 각자 다른 이야기를 하면 단순 활동 목록처럼 보이기 쉽습니다.",
+    "approach": [
+      "최근 작업이 흩어진 커밋이 아니라 제품 엔지니어링 노트로 읽히도록 체인지로그를 월별로 묶었습니다.",
+      "프로젝트 기록, 월별 변경 기록, 검증 근거가 같은 방향으로 읽히도록 정리했습니다.",
+      "프로토타입 중심 화면을 줄이고 첫 화면을 포지션과 근거 중심으로 재구성했습니다."
+    ],
+    "result": "커밋 이력이 원문 기록이 아니라 공개 가능한 제품 엔지니어링 근거로 읽히는 구조가 됐습니다.",
+    "stack": [
+      "Next.js",
+      "TypeScript",
+      "Tailwind CSS",
+      "Public safety checks"
+    ]
+  },
+  "Mobile product-catalog release boundary": {
+    "title": "모바일 제품 카탈로그 릴리즈 기준",
+    "problem": "모바일 릴리즈에서 제품 식별자, 권한 확인, 릴리즈 자산, 제출 자격 정보, 백엔드 스모크 테스트가 따로 움직이면 제출 준비 상태를 판단하기 어렵습니다.",
+    "approach": [
+      "결제 웹훅 인증을 제품 카탈로그 기준에 맞춰 라우팅했습니다.",
+      "iOS 릴리즈 경로에 맞춰 구독 제품 식별자를 정렬했습니다.",
+      "릴리즈 자산, 보호된 자격 정보, 백엔드 스모크 확인을 같은 제출 준비 흐름에 묶었습니다."
+    ],
+    "result": "비공개 자격 정보나 이슈 번호를 노출하지 않고도 스토어 제출 전 모바일 릴리즈 근거를 더 명확하게 보여줄 수 있게 됐습니다.",
+    "stack": [
+      "Expo",
+      "React Native",
+      "RevenueCat",
+      "Supabase",
+      "EAS"
+    ]
+  },
+  "Native widget and Expo config ownership": {
+    "title": "네이티브 위젯과 Expo 설정 담당 범위",
+    "problem": "네이티브 위젯과 Expo 설정은 앱 설정, 패키지 설정, privacy manifest, 생성 네이티브 화면이 각자 정책을 가지면 쉽게 어긋납니다.",
+    "approach": [
+      "네이티브 정책의 담당 범위를 Expo 설정 경로로 되돌렸습니다.",
+      "위젯 패키지 설정이 앱 로컬 릴리즈 가정에 묶이지 않도록 분리했습니다.",
+      "위젯 렌더링, 지역화된 페이로드, 네이티브 페이저 동작, 의존성 호환성을 함께 확인했습니다."
+    ],
+    "result": "스토어 제출용 검증 전에 네이티브 모바일 기준과 위젯 정책이 더 명확해졌습니다.",
+    "stack": [
+      "Expo",
+      "React Native",
+      "WidgetKit",
+      "TypeScript",
+      "Config plugins"
+    ]
+  },
+  "Agent LSP bridge release contract": {
+    "title": "Agent LSP Bridge 릴리즈 기준",
+    "problem": "AI 코딩 흐름에는 프로젝트에 넓은 쓰기 권한을 주지 않으면서 의미 기반 코드 정보를 제공하는 도구가 필요했습니다.",
+    "approach": [
+      "진단, 정의, 참조, 심볼, hover 정보를 읽기 전용 MCP 도구로 감쌌습니다.",
+      "작업 경로와 어댑터 기준을 명시적으로 유지했습니다.",
+      "빌드, 타입 검사, 통합 테스트, 패키지 스모크 검사로 패키지 동작을 검증했습니다."
+    ],
+    "result": "의미 기반 코드 정보를 에이전트 보조 개발 흐름에서 공개 가능하고 반복 가능한 도구로 사용할 수 있게 됐습니다.",
+    "stack": [
+      "TypeScript",
+      "Node.js",
+      "MCP",
+      "LSP",
+      "Vitest"
+    ]
+  },
+  "Agent semantic tooling hardening": {
+    "title": "에이전트 의미 기반 도구 안정화",
+    "problem": "의미 기반 에이전트 도구는 재사용 가능한 패키지로 쓰이려면 예측 가능한 진단 처리, 언어 서버 시작 동작, 릴리즈 문서가 필요했습니다.",
+    "approach": [
+      "자동 진단 타임아웃 정책과 호출별 타임아웃 처리를 추가했습니다.",
+      "초기 TypeScript 경로를 넘어 워크스페이스 시드와 언어 어댑터 범위를 넓혔습니다.",
+      "설치 안내, 진단 예시, 유지관리자 작업 흐름, 패키지 릴리즈 메타데이터를 문서화했습니다."
+    ],
+    "result": "LSP 브리지가 로컬 일회성 통합이 아니라 설치 가능한 공개 도구로 더 안정적으로 설명될 수 있게 됐습니다.",
+    "stack": [
+      "TypeScript",
+      "Node.js",
+      "MCP",
+      "LSP",
+      "Language servers"
+    ]
+  },
+  "Mobile release gate system": {
+    "title": "모바일 릴리즈 게이트 시스템",
+    "problem": "Expo 설정, 스토어 메타데이터, 위젯, 런타임 환경, 제품 문서를 따로 확인하면 네이티브 모바일 릴리즈 기준이 쉽게 어긋납니다.",
+    "approach": [
+      "릴리즈 설정, 네이티브 정책, 제품 문서가 하나의 전달 기준을 보게 했습니다.",
+      "반복되는 앱 동작이 공통 패키지에 남도록 공통 기반 검사를 추가했습니다.",
+      "스토어 제출용 빌드 전에 모바일 UI와 릴리즈 스모크 테스트 근거를 확인했습니다."
+    ],
+    "result": "iOS와 Android 운영 배포 전에 모바일 릴리즈 경로를 더 명확하게 검증할 수 있게 됐습니다.",
+    "stack": [
+      "Expo",
+      "React Native",
+      "EAS",
+      "Maestro",
+      "TypeScript"
+    ]
+  },
+  "Export runtime parity rules": {
+    "title": "Export 런타임 일관성 규칙 정리",
+    "problem": "조건부 렌더링 규칙이 여러 경로에서 평가되면 미리보기와 배포 결과물이 달라질 수 있었습니다.",
+    "approach": [
+      "공유 표시 판단을 하나의 공개 가능한 렌더링 기준으로 정리했습니다.",
+      "중첩 구조가 실제 생성 결과물에서 어떻게 동작하는지 확인했습니다.",
+      "영향 범위를 넓히기 전에 회귀 시나리오를 먼저 잡았습니다."
+    ],
+    "result": "같은 제품 상태가 미리보기, 내보내기, 배포 경로에서 어떻게 해석되는지 더 명확해졌습니다.",
+    "stack": [
+      "TypeScript",
+      "React",
+      "Vitest"
+    ]
+  },
+  "Variant state ownership": {
+    "title": "Variant 상태 담당 범위 정리",
+    "problem": "컴포넌트 Variant 선택은 편집 상태와 런타임 상태의 기준이 흐리면 쉽게 불안정해집니다.",
+    "approach": [
+      "디자인 시점 Variant 관심사와 런타임 인터랙션 관심사를 분리했습니다.",
+      "공유 조회 로직을 수정하기 전에 담당 경로와 상위 구조를 확인했습니다.",
+      "선택 동작이 해당 제품 모델의 범위 안에서만 움직이도록 정리했습니다."
+    ],
+    "result": "Variant 동작을 확장할 때 공유 조회 로직이 넓은 우회 경로가 되지 않도록 만들었습니다.",
+    "stack": [
+      "React",
+      "TypeScript",
+      "Zustand"
+    ]
+  },
+  "Generated artifact review loop": {
+    "title": "생성 결과물 검토 흐름",
+    "problem": "소스 코드만 보면 맞아 보여도 실제 HTML이나 배포 결과물에서 어긋남이 드러날 수 있습니다.",
+    "approach": [
+      "수정 완료 전 실제 생성 결과물을 직접 확인했습니다.",
+      "결과물 구조와 런타임 동작에 대한 회귀 검증을 추가했습니다.",
+      "검증 기준을 사용자가 실제로 받는 결과물에 맞췄습니다."
+    ],
+    "result": "사용자에게 전달되는 결과물에 더 가까운 지점에서 회귀를 잡을 수 있게 됐습니다.",
+    "stack": [
+      "HTML",
+      "CSS",
+      "JavaScript",
+      "Vitest"
+    ]
+  },
+  "Agent-assisted root-cause workflow": {
+    "title": "AI 에이전트 기반 원인 분석 흐름",
+    "problem": "큰 프론트엔드 시스템에서는 실제 담당 모듈을 찾지 못한 채 증상만 고치기 쉽습니다.",
+    "approach": [
+      "AI 에이전트로 코드 경로를 탐색하고 가설을 좁혔습니다.",
+      "모든 제안은 실제 소스 경로와 테스트로 검증했습니다.",
+      "근본 기준을 고쳐야 하는 경우 임시 우회성 수정을 배제했습니다."
+    ],
+    "result": "AI가 조사 속도를 높이되 최종 판단은 코드 근거와 회귀 검증에 두는 흐름을 만들었습니다.",
+    "stack": [
+      "Codex",
+      "Claude Code",
+      "GitHub",
+      "TypeScript"
+    ]
+  },
+  "Canvas performance guardrails": {
+    "title": "캔버스 성능 가드레일",
+    "problem": "큰 편집 화면은 문서가 복잡해져도 예측 가능한 조작감을 유지해야 합니다.",
+    "approach": [
+      "선택과 뷰포트 기반 화면에서 불필요한 렌더링을 줄였습니다.",
+      "주관적인 체감 대신 좁게 잡은 벤치마크와 인터랙션 확인을 사용했습니다.",
+      "최적화가 고립된 미세 변경이 아니라 에디터 동작과 연결되도록 했습니다."
+    ],
+    "result": "기능을 추가하면서도 에디터 화면의 반응성을 유지하기 쉬워졌습니다.",
+    "stack": [
+      "React",
+      "TypeScript",
+      "Performance profiling"
+    ]
+  },
+  "Admin empty and failure states": {
+    "title": "관리자 빈 상태와 실패 상태 정리",
+    "problem": "운영자는 데이터가 로딩 중인지, 없는지, 권한이 없는지, 실패했는지를 명확히 알아야 합니다.",
+    "approach": [
+      "로딩, 빈 상태, 실패 상태, 권한 상태를 제품 상태로 다뤘습니다.",
+      "운영자가 다음에 무엇을 할 수 있는지 중심으로 UI 문맥을 맞췄습니다.",
+      "일부 데이터만 있는 상황에서도 업무 흐름을 읽을 수 있게 했습니다."
+    ],
+    "result": "백오피스 업무 흐름을 실제 운영 상황에서 더 쉽게 이해하고 디버깅할 수 있게 했습니다.",
+    "stack": [
+      "React",
+      "TypeScript",
+      "API integration"
+    ]
+  },
+  "Environment-aware release workflow": {
+    "title": "환경별 릴리즈 흐름 정리",
+    "problem": "환경 설정을 수동으로 관리하면 잘못된 설정으로 배포될 위험이 커집니다.",
+    "approach": [
+      "로컬, 스테이징, 운영 설정 경로를 분리했습니다.",
+      "Docker와 GitHub Actions를 반복 가능한 배포 확인에 연결했습니다.",
+      "릴리즈 단계를 문서화하고 재현 가능하게 정리했습니다."
+    ],
+    "result": "배포가 개인의 수동 설정 기억에 덜 의존하게 됐습니다.",
+    "stack": [
+      "Docker",
+      "GitHub Actions",
+      "Firebase"
+    ]
+  },
+  "AI review operations workflow": {
+    "title": "AI 리뷰 운영 흐름",
+    "problem": "AI 생성 응답은 고객에게 노출되기 전에 운영자의 신뢰, 검토, 수정 흐름이 필요했습니다.",
+    "approach": [
+      "데이터 수집, AI 분석, 사람 검수, 응답 생성을 분리했습니다.",
+      "생성된 내용을 관리자 화면에서 확인하고 수정할 수 있게 했습니다.",
+      "자동화가 운영자의 판단 범위 안에서 동작하도록 만들었습니다."
+    ],
+    "result": "AI 보조가 숨겨진 백엔드 동작이 아니라 검토 가능한 운영 흐름의 일부가 됐습니다.",
+    "stack": [
+      "React",
+      "NestJS",
+      "Python",
+      "OpenAI API"
+    ]
+  },
+  "Menu scraper scheduling utility": {
+    "title": "메뉴 스크래퍼 스케줄링 유틸리티",
+    "problem": "작은 자동화 유틸리티도 메뉴 데이터를 안정적으로 수집하려면 웹 프로젝트 기반과 예측 가능한 스케줄이 필요했습니다.",
+    "approach": [
+      "Next.js 유틸리티 프로젝트를 부트스트랩하고 scraping과 schedule 제어에 범위를 좁혔습니다.",
+      "운영 의도에 맞는 시간대에 수집이 돌도록 cron 타이밍을 조정했습니다.",
+      "프레임워크 보안 공지가 필요한 경우 의존성 업데이트도 함께 처리했습니다."
+    ],
+    "result": "큰 모바일/플랫폼 작업 사이에 가벼운 자동화 유틸리티 사례가 체인지로그에 추가됐습니다.",
+    "stack": [
+      "Next.js",
+      "Cron",
+      "Automation",
+      "React"
+    ]
+  },
+  "Scheduler iOS widget iteration": {
+    "title": "스케줄러 iOS 위젯 반복 작업",
+    "problem": "스케줄러 앱에서 위젯을 제품 일부로 다루려면 위젯 전용 프로젝트 구조와 데이터 업데이트 경로가 필요했습니다.",
+    "approach": [
+      "iOS 위젯 기능을 위한 초기 프로젝트 구조를 추가했습니다.",
+      "위젯 상태 업데이트를 위한 예제 코드와 가이드를 정리했습니다.",
+      "네이티브 변경이 임시 파일로 남지 않도록 버전 업데이트와 함께 묶었습니다."
+    ],
+    "result": "이후 모바일 릴리즈 게이트 작업 이전의 네이티브 위젯 탐색 흐름이 월별 기록에 추가됐습니다.",
+    "stack": [
+      "Flutter",
+      "iOS Widget",
+      "Native extension",
+      "Release versioning"
+    ]
+  },
+  "Flutter auth and notification release hardening": {
+    "title": "Flutter 인증과 알림 릴리즈 안정화",
+    "problem": "웹 연동 흐름이 있는 Flutter 앱은 계정 연결, 알림 동작, 권한, 버전 업데이트가 함께 맞아야 했습니다.",
+    "approach": [
+      "익명 로그인과 소셜 계정 연동 흐름을 앱 화면에 추가했습니다.",
+      "FCM, 로컬 알림 처리, iOS 백그라운드 알림 권한을 릴리즈 경로에 연결했습니다.",
+      "Android SDK와 앱 버전 업데이트를 같은 제출 준비 흐름으로 다뤘습니다."
+    ],
+    "result": "비어 보이던 8월 구간이 실제 모바일 릴리즈 안정화 기록으로 채워졌습니다.",
+    "stack": [
+      "Flutter",
+      "Firebase",
+      "FCM",
+      "iOS",
+      "Android"
+    ]
+  },
+  "Weight tracking app bootstrap and release setup": {
+    "title": "체중 기록 앱 부트스트랩과 릴리즈 설정",
+    "problem": "체중 기록 제품은 기능 작업 전에 모바일 앱 기반, Firebase 설정, 인증, 앱 정체성, 릴리즈 설정이 필요했습니다.",
+    "approach": [
+      "Firebase, 앱 아이콘, 스플래시 화면, 릴리즈 키스토어 설정을 준비했습니다.",
+      "Google/Apple 로그인과 회원 탈퇴 흐름을 추가했습니다.",
+      "백그라운드 복귀 시 새로고침과 상태바 표현을 모바일 앱 기반의 일부로 정리했습니다."
+    ],
+    "result": "7월 모바일 제품 기반 작업이 이후 알림과 릴리즈 반복 작업의 앞단 기록으로 보강됐습니다.",
+    "stack": [
+      "Flutter",
+      "Firebase",
+      "Authentication",
+      "Release signing"
+    ]
+  },
+  "Early scheduler feature pass": {
+    "title": "초기 스케줄러 기능 반복",
+    "problem": "스케줄러 모바일 프로젝트는 이후 인증, 알림, 위젯 작업을 얹기 전에 초기 기능과 버그 수정 반복이 필요했습니다.",
+    "approach": [
+      "짧은 기능/수정 커밋을 통해 초기 Flutter 앱을 전진시켰습니다.",
+      "이 달의 커밋 제목이 짧기 때문에 공개 설명은 보수적으로 유지했습니다.",
+      "상세한 제품 주장보다 기반 작업 근거로만 다뤘습니다."
+    ],
+    "result": "로컬 커밋 제목에서 확인 가능한 범위를 넘지 않으면서 2025년 1월 작업을 기록했습니다.",
+    "stack": [
+      "Flutter",
+      "Mobile UI",
+      "Early product iteration"
+    ]
+  },
+  "Scheduler social login integration": {
+    "title": "스케줄러 소셜 로그인 연동",
+    "problem": "스케줄러 앱이 익명 로컬 사용을 넘어가려면 모바일 계정 진입 흐름이 필요했습니다.",
+    "approach": [
+      "Flutter 앱 흐름에 소셜 로그인을 연동했습니다.",
+      "여러 기능 커밋을 통해 초기 인증 화면을 반복했습니다.",
+      "공개 요약에서는 provider별 비공개 설정이 아니라 인증 기능 자체에 집중했습니다."
+    ],
+    "result": "2024년 11월이 모바일 계정 흐름의 구체적인 이정표로 기록됐습니다.",
+    "stack": [
+      "Flutter",
+      "Authentication",
+      "Mobile app"
+    ]
+  },
+  "Scheduler calendar optimization pass": {
+    "title": "스케줄러 캘린더 최적화 반복",
+    "problem": "캘린더 중심 스케줄러 작업은 핵심 기능 동작과 캘린더 성능을 초기에 함께 잡아야 했습니다.",
+    "approach": [
+      "여러 기능 커밋으로 스케줄러 앱을 반복했습니다.",
+      "데이터가 늘어나도 핵심 화면이 사용할 수 있도록 캘린더 최적화 작업을 포함했습니다.",
+      "오래된 커밋 제목이 짧기 때문에 월별 제품 시스템 노트 수준으로만 정리했습니다."
+    ],
+    "result": "2024년 10월의 캘린더 제품 방향이 이후 인증/위젯 작업 앞단에 놓였습니다.",
+    "stack": [
+      "Flutter",
+      "Calendar UI",
+      "Mobile performance"
+    ]
+  },
+  "Scheduler Flutter app bootstrap": {
+    "title": "스케줄러 Flutter 앱 부트스트랩",
+    "problem": "스케줄러 제품은 인증, 알림, 위젯 개발 전에 초기 Flutter 앱 기반이 필요했습니다.",
+    "approach": [
+      "초기 앱 커밋을 통해 스케줄러 Flutter 프로젝트를 시작했습니다.",
+      "초기 기능 작업으로 모바일 제품 화면을 세웠습니다.",
+      "가장 오래된 커밋 제목은 정보가 제한적이므로 공개 요약은 넓고 보수적으로 유지했습니다."
+    ],
+    "result": "현재 로컬 저장소 모음에서 확인 가능한 가장 이른 작업 근거가 포트폴리오 타임라인에 반영됐습니다.",
+    "stack": [
+      "Flutter",
+      "Dart",
+      "모바일 앱 초기 구축"
+    ]
+  },
+  "B2B operations admin and public-site foundation": {
+    "title": "B2B 운영 관리자와 공개 사이트 기반",
+    "problem": "초기 B2B 제품 작업은 운영자가 쓰는 관리자 화면과 외부에 보이는 공개 사이트가 함께 전진해야 했습니다.",
+    "approach": [
+      "같은 제품 맥락 안에서 React 관리자 화면과 공개 사이트 라우트를 반복했습니다.",
+      "비공개 사업명이나 내부 경로를 노출하지 않고 업무 흐름 수준으로만 정리했습니다.",
+      "요청된 2023년 3월 이후 확인 가능한 첫 커밋 기반 운영 항목으로 이 달을 기록했습니다."
+    ],
+    "result": "3월에 확인되는 커밋이 없다는 점을 넘겨짚지 않으면서 2023년 첫 제품 엔지니어링 달을 반영했습니다.",
+    "stack": [
+      "React",
+      "Admin UI",
+      "Public site",
+      "Product operations"
+    ]
+  },
+  "Operations API and admin workflow expansion": {
+    "title": "운영 API와 관리자 업무 흐름 확장",
+    "problem": "운영 제품은 실제 업무 흐름을 반복하기 위해 백엔드 라우트, 관리자 화면, 작은 스케줄링 유틸리티가 함께 필요했습니다.",
+    "approach": [
+      "같은 운영 도메인 안에서 API와 관리자 동작을 확장했습니다.",
+      "커밋 이력에 별도 프로젝트 활동이 보이는 시간 기반 작업 흐름 유틸리티를 함께 반영했습니다.",
+      "짧은 커밋 기록을 원문 작업명 대신 공개 가능한 시스템 책임으로 번역했습니다."
+    ],
+    "result": "2023년 5월이 빈 구간이 아니라 백엔드와 관리자 화면을 함께 다룬 반복 작업으로 보이게 됐습니다.",
+    "stack": [
+      "React",
+      "Node.js",
+      "Python",
+      "Scheduling utilities"
+    ]
+  },
+  "Admin-backend integration hardening": {
+    "title": "관리자-백엔드 통합 안정화",
+    "problem": "운영 업무 흐름이 커질수록 관리자 UI와 백엔드 서비스 동작이 반복 수정 과정에서도 맞아야 했습니다.",
+    "approach": [
+      "백엔드 서비스 변경과 관리자 화면 업데이트를 함께 반복했습니다.",
+      "오래된 커밋 메시지가 짧기 때문에 통합 안정성 중심으로 보수적으로 기록했습니다.",
+      "공개 설명에서 비공개 저장소 이름을 반복 노출하지 않았습니다."
+    ],
+    "result": "2023년 6월이 저장소 활동에 근거한 운영 플랫폼 안정화 기간으로 표현됐습니다.",
+    "stack": [
+      "React",
+      "Backend services",
+      "Python",
+      "Operational tooling"
+    ]
+  },
+  "Public-site and admin account surface iteration": {
+    "title": "공개 사이트와 관리자 계정 화면 반복",
+    "problem": "초기 운영 기반 이후 공개 사이트 업데이트와 관리자 계정 화면은 계속 다듬어져야 했습니다.",
+    "approach": [
+      "외부에 보이는 자산과 페이지를 전진시키면서 계정 중심 관리자 화면을 정리했습니다.",
+      "백엔드와 스크립트 수정을 같은 운영 지원 맥락에 묶었습니다.",
+      "내부 작업 라벨보다 실제로 보이는 제품 화면 기준으로 월을 요약했습니다."
+    ],
+    "result": "2023년 7월이 큰 관리자 작업 사이에 있던 제품 화면 반복 구간으로 기록됐습니다.",
+    "stack": [
+      "React",
+      "Public site",
+      "Admin UI",
+      "Backend fixes"
+    ]
+  },
+  "Review operations maintenance pass": {
+    "title": "리뷰 운영 유지보수 반복",
+    "problem": "운영 리뷰 도구는 관리자 UI, 백엔드 스크립트, 작은 런타임 실험이 함께 바뀔 때 꾸준한 유지보수가 필요했습니다.",
+    "approach": [
+      "관리자 화면, 서버, 스크립트 수정을 하나의 운영 유지보수 항목으로 묶었습니다.",
+      "제품 시스템 폭을 보여주는 경우가 아니면 실험성 보조 작업은 핵심 주장으로 삼지 않았습니다.",
+      "큰 기능 개발 기간 사이의 연속성을 보여주는 달로 기록했습니다."
+    ],
+    "result": "2023년 8월이 설명 없이 비어 있는 구간이 아니게 됐습니다.",
+    "stack": [
+      "React",
+      "Server maintenance",
+      "Python",
+      "Product operations"
+    ]
+  },
+  "Legacy POS refactor groundwork": {
+    "title": "레거시 POS 리팩토링 준비",
+    "problem": "레거시 POS 프론트엔드는 이후 결제 흐름 변경을 명확히 설명하기 전에 집중적인 리팩토링 준비가 필요했습니다.",
+    "approach": [
+      "9월의 리팩토링 준비 작업을 이후 결제 중심 이정표와 분리했습니다.",
+      "비공개 커밋 세부사항보다 시스템 현대화에 초점을 맞췄습니다.",
+      "이미 타임라인에 있는 POS 현대화 흐름과 연결했습니다."
+    ],
+    "result": "10월 결제 리팩토링 항목 전에 POS 사례의 준비 구간이 보이게 됐습니다.",
+    "stack": [
+      "React",
+      "POS UI",
+      "레거시 리팩토링",
+      "TypeScript"
+    ]
+  },
+  "Operations tooling maintenance bridge": {
+    "title": "운영 도구 유지보수 연결 구간",
+    "problem": "POS 중심 리팩토링 이후에도 운영 저장소에는 관리자 화면, 서버, 자동화 수정이 계속 필요했습니다.",
+    "approach": [
+      "작은 유지보수 커밋을 보수적인 월 단위 운영 노트로 묶었습니다.",
+      "커밋 근거가 강하지 않은 상태에서 새로운 제품 주장으로 과장하지 않았습니다.",
+      "2023년 주요 제품 항목 사이의 연속성을 유지했습니다."
+    ],
+    "result": "등록된 저장소 이력에서 보이는 2023년 11월 유지보수 작업이 기록됐습니다.",
+    "stack": [
+      "React",
+      "Server fixes",
+      "Automation scripts"
+    ]
+  },
+  "Year-end operations stabilization": {
+    "title": "연말 운영 안정화",
+    "problem": "연말 운영 코드베이스는 관리자 화면, 서버, 리뷰 지원 화면 전반의 안정화가 필요했습니다.",
+    "approach": [
+      "늦은 연말 수정을 더 큰 기능 주장으로 키우지 않고 안정화 작업으로 요약했습니다.",
+      "비공개 프로젝트 식별자 대신 업무 흐름 유형을 설명했습니다.",
+      "주변 2023년 항목과 같은 운영 플랫폼 흐름에 연결했습니다."
+    ],
+    "result": "2023년 12월이 등록된 저장소 커밋에 기반한 안정화 항목으로 채워졌습니다.",
+    "stack": [
+      "React",
+      "Backend services",
+      "Operations tooling"
+    ]
+  },
+  "Scheduler app and service iteration": {
+    "title": "스케줄러 앱과 서비스 반복",
+    "problem": "스케줄러 제품은 이후 Flutter 중심 모바일 작업 전에 앱과 서버를 함께 반복해야 했습니다.",
+    "approach": [
+      "앱 쪽과 서비스 쪽 스케줄러 커밋을 하나의 제품 시스템 항목으로 묶었습니다.",
+      "과거 커밋 메시지가 짧고 구현 중심이므로 요약 범위를 넓고 보수적으로 유지했습니다.",
+      "이전 서비스 반복과 이후 모바일 앱 초기 구축을 분리했습니다."
+    ],
+    "result": "2024년 1월에 스케줄러 제품 작업이 모바일 타임라인 이전부터 있었다는 점이 보입니다.",
+    "stack": [
+      "모바일 앱",
+      "스케줄러 서비스",
+      "제품 반복"
+    ]
+  },
+  "Scheduler service stabilization": {
+    "title": "스케줄러 서비스 안정화",
+    "problem": "스케줄러 app과 server 변경은 1월의 큰 반복 이후 작은 안정화 pass가 필요했습니다.",
+    "approach": [
+      "이 달을 새로운 대형 기능이 아니라 앱-서비스 유지보수로 기록했습니다.",
+      "1월과 이후 스케줄러 항목에서 쓰는 같은 제품 흐름을 유지했습니다.",
+      "공개 요약에서 내부 저장소 라벨을 제거했습니다."
+    ],
+    "result": "2024년 2월이 커밋 기반 스케줄러 안정화 노트로 채워졌습니다.",
+    "stack": [
+      "모바일 앱",
+      "백엔드 서비스",
+      "스케줄러 업무 흐름"
+    ]
+  },
+  "Delivery operations and scheduler service pass": {
+    "title": "배송 운영과 스케줄러 서비스 반복",
+    "problem": "배송 운영 백엔드 작업과 스케줄러 서비스가 여러 등록 저장소에서 병렬로 반복되고 있었습니다.",
+    "approach": [
+      "배송 서비스, 스케줄러 서비스, 작은 앱 수정을 하나의 운영 플랫폼 월로 묶었습니다.",
+      "비공개 운영 세부사항이 드러나지 않도록 익명화된 도메인 라벨을 사용했습니다.",
+      "이후 실시간 배달 백엔드 항목으로 이어지는 앞단 작업으로 연결했습니다."
+    ],
+    "result": "2024년 3월이 4월 실시간 백엔드 이정표로 이어지는 준비 구간으로 채워졌습니다.",
+    "stack": [
+      "백엔드 서비스",
+      "스케줄링",
+      "운영 시스템",
+      "Python"
+    ]
+  },
+  "Scheduler dark-mode polish": {
+    "title": "스케줄러 다크모드 다듬기",
+    "problem": "스케줄러 제품은 시각 모드가 바뀌어도 앱이 일관되게 보이도록 작은 표현 수정이 필요했습니다.",
+    "approach": [
+      "다크모드와 앱-서비스 유지보수 커밋을 좁은 다듬기 항목으로 기록했습니다.",
+      "등록된 커밋 수가 적어 이 달의 설명은 의도적으로 작게 유지했습니다.",
+      "더 큰 아키텍처 주장은 근거가 강한 다른 달에 맡겼습니다."
+    ],
+    "result": "2024년 5월이 작지만 실제 존재한 제품 다듬기 구간으로 표현됐습니다.",
+    "stack": [
+      "모바일 UI",
+      "다크모드",
+      "스케줄러 서비스"
+    ]
+  },
+  "Prototype systems and service upkeep": {
+    "title": "프로토타입 시스템과 서비스 유지보수",
+    "problem": "스케줄러 모바일 앱이 주요 흐름이 되기 전 여러 작은 저장소에서 서비스 유지보수와 프로토타입 작업이 보였습니다.",
+    "approach": [
+      "커밋 수가 적은 게임, 스케줄러, 서비스 작업을 보수적인 프로토타입 시스템 항목으로 묶었습니다.",
+      "강한 근거 없이 출시된 기능처럼 설명하지 않았습니다.",
+      "실제 커밋 기반 타임라인을 보존하기 위해 체인지로그에 남겼습니다."
+    ],
+    "result": "2024년 6월이 사라지지 않으면서도 범위를 정직하게 유지했습니다.",
+    "stack": [
+      "프로토타입 앱",
+      "서비스 유지보수",
+      "Flutter",
+      "Python"
+    ]
+  },
+  "Health and game prototype checkpoint": {
+    "title": "건강/게임 프로토타입 점검",
+    "problem": "스케줄러 이정표 사이에 작은 프로토타입 저장소 작업이 있어 공개 가능한 방식으로 표현할 필요가 있었습니다.",
+    "approach": [
+      "건강 모니터링과 게임 프로토타입 작업을 탐색형 제품 시스템 근거로 기록했습니다.",
+      "해당 월의 등록 커밋 묶음이 작기 때문에 항목을 짧게 유지했습니다.",
+      "프로토타입을 운영 제품처럼 표현하지 않았습니다."
+    ],
+    "result": "2024년 8월이 빈 달이 아니라 프로토타입 점검 구간으로 채워졌습니다.",
+    "stack": [
+      "프로토타입 앱",
+      "모바일 실험",
+      "런타임 검사"
+    ]
+  },
+  "Career project site bootstrap": {
+    "title": "커리어 프로젝트 사이트 초기 구축",
+    "problem": "지원용 공개 프로젝트 사이트는 이후 포트폴리오와 콘텐츠 시스템 작업 전에 초기 구조가 필요했습니다.",
+    "approach": [
+      "등록된 프로젝트 사이트 커밋을 공개 근거 시스템 이정표로 기록했습니다.",
+      "같은 달에 있는 POS 운영 항목과 별개의 흐름으로 분리했습니다.",
+      "비공개 지원 세부사항보다 사이트 구조와 보여주는 방식에 초점을 맞췄습니다."
+    ],
+    "result": "2025년 2월에 등록 저장소 이력에서 확인되는 커리어 사이트 작업이 추가됐습니다.",
+    "stack": [
+      "웹",
+      "포트폴리오 콘텐츠",
+      "프로젝트 표현"
+    ]
+  },
+  "Public profile content and deploy iteration": {
+    "title": "공개 프로필 콘텐츠와 배포 반복",
+    "problem": "공개 프로필 사이트가 지원 자산으로 쓰이려면 콘텐츠와 배포 반복이 필요했습니다.",
+    "approach": [
+      "콘텐츠, 페이지, 배포 커밋을 하나의 포트폴리오 시스템 항목으로 묶었습니다.",
+      "페이지별 활동명을 그대로 옮기기보다 공개 화면에 어떻게 보이는지를 중심으로 요약했습니다.",
+      "이후 포트폴리오 근거 모델 정리의 앞단 작업으로 위치시켰습니다."
+    ],
+    "result": "2025년 3월이 커밋 이력에 보이는 공개 프로필/배포 작업으로 표현됐습니다.",
+    "stack": [
+      "Next.js",
+      "공개 프로필",
+      "배포",
+      "콘텐츠 시스템"
+    ]
+  },
+  "Interview content and app-link routing": {
+    "title": "인터뷰 콘텐츠와 앱 링크 라우팅",
+    "problem": "지원용 웹 콘텐츠에는 인터뷰 중심 페이지와 안정적인 외부 앱 링크 처리가 필요했습니다.",
+    "approach": [
+      "프로필 콘텐츠와 인터뷰 페이지 화면을 반복했습니다.",
+      "앱스토어 링크 처리를 같은 공개 화면 흐름의 일부로 추가했습니다.",
+      "이미 존재하는 4월 AI 리뷰 운영 이정표와 구분했습니다."
+    ],
+    "result": "2025년 4월이 운영 AI 작업뿐 아니라 공개 커리어 사이트 반복도 함께 보여주게 됐습니다.",
+    "stack": [
+      "Next.js",
+      "Content pages",
+      "Routing",
+      "App links"
+    ]
+  },
+  "Social writing surface bootstrap": {
+    "title": "소셜 글쓰기 화면 초기 구축",
+    "problem": "소셜 글쓰기 제품은 피드 기능이 의미를 갖기 전에 인증, 프로필, 글쓰기, 모바일 웹 화면이 필요했습니다.",
+    "approach": [
+      "초기 인증, 프로필, 글쓰기 페이지, 웹뷰 지향 흐름을 구축했습니다.",
+      "등록 저장소 커밋을 하나의 제품 화면 이정표로 묶었습니다.",
+      "비공개 라벨을 노출하지 않고 시스템을 설명하는 일반화된 문구를 사용했습니다."
+    ],
+    "result": "2025년 5월이 4월 프로필 작업과 6월 피드 반복 사이의 구체적인 제품 항목이 됐습니다.",
+    "stack": [
+      "Next.js",
+      "인증",
+      "프로필 UI",
+      "모바일 웹뷰"
+    ]
+  },
+  "Social feed interaction iteration": {
+    "title": "소셜 피드 상호작용 반복",
+    "problem": "글쓰기 화면이 생긴 이후에는 피드, 검색, 상세, 댓글, 좋아요, 인증 라우팅 동작이 필요했습니다.",
+    "approach": [
+      "피드 탐색과 게시글 상세 상호작용을 중심으로 소셜 화면을 확장했습니다.",
+      "댓글과 좋아요 동작을 인증 라우팅 기대와 연결했습니다.",
+      "내부 구현명 대신 기능 범위 수준으로 정리했습니다."
+    ],
+    "result": "2025년 6월이 5월 제품 초기 구축 이후 붙은 상호작용 계층으로 설명됩니다.",
+    "stack": [
+      "Next.js",
+      "Feed UI",
+      "Search",
+      "Comments",
+      "Authentication"
+    ]
+  },
+  "Profile automation cadence": {
+    "title": "프로필 자동화 주기",
+    "problem": "공개 개발자 프로필은 수동 정리 작업에 의존하지 않고 최신 상태로 갱신되는 주기가 필요했습니다.",
+    "approach": [
+      "생성 프로필 커밋 흐름을 기능량이 아니라 자동화 근거로 기록했습니다.",
+      "작업 성격이 갱신 주기와 발행 기반에 가까워 항목을 작게 유지했습니다.",
+      "큰 제품 작업 사이의 지속적인 공개 프로필 유지보수를 보여주는 달로 사용했습니다."
+    ],
+    "result": "2025년 10월이 등록된 자동화 커밋을 기반으로 과장 없이 채워졌습니다.",
+    "stack": [
+      "GitHub 자동화",
+      "생성 콘텐츠",
+      "공개 프로필"
+    ]
+  },
+  "Nutrition app service and AI advice boundary": {
+    "title": "영양 앱 서비스와 AI 조언 기준",
+    "problem": "영양 앱은 이후 기능 확장을 설명하기 전에 서비스 기준, AI 조언 동작, 앱 설정이 필요했습니다.",
+    "approach": [
+      "AI 식단 조언, 저장소, 알림, 서비스 계층 커밋을 하나의 제품 이정표로 묶었습니다.",
+      "개인 데이터나 비공개 서비스 세부사항 대신 제품 동작에 초점을 맞췄습니다.",
+      "3월 기반 작업을 이미 타임라인에 있는 4월 영양 앱 확장 항목과 연결했습니다."
+    ],
+    "result": "2026년 3월이 영양 앱 흐름에서 빠져 있던 기반 구간으로 추가됐습니다.",
+    "stack": [
+      "Flutter",
+      "AI 조언",
+      "Notifications",
+      "로컬 저장소",
+      "서비스 계층"
+    ]
+  }
+} satisfies TranslationMap<ChangelogEntryTranslation>;
+
+const skillTranslations = {
+  "Product front-end": {
+    "group": "제품 프론트엔드",
+    "tools": [
+      "React",
+      "Next.js",
+      "TypeScript",
+      "TanStack Query"
+    ],
+    "context": "비주얼 빌더, B2B 운영 콘솔, App Router 기반 화면, API 계약 중심 UI, 타입 기반 컴포넌트 규칙에 사용했습니다.",
+    "evidenceLabel": "제품 UI 변경 기록 보기"
+  },
+  "State and product models": {
+    "group": "상태와 제품 모델",
+    "tools": [
+      "Zustand",
+      "Immer",
+      "AST-like editor models",
+      "Export/deploy contracts"
+    ],
+    "context": "에디터 상태 책임, Variant 동작, 중첩 구조, 생성 결과물, 단일 기준이 필요한 제품 액션에 사용했습니다.",
+    "evidenceLabel": "상태 모델 근거 보기"
+  },
+  "Quality and verification": {
+    "group": "품질과 검증",
+    "tools": [
+      "Vitest",
+      "Testing Library",
+      "Maestro",
+      "E2E checks",
+      "CI"
+    ],
+    "context": "미리보기와 결과물 일관성, 렌더링 기준, 릴리즈 게이트, 사용자 흐름의 회귀 방지에 사용했습니다.",
+    "evidenceLabel": "검증 기록 보기"
+  },
+  "Operations and backend understanding": {
+    "group": "운영/백엔드 이해",
+    "tools": [
+      "NestJS",
+      "FastAPI",
+      "Spring API",
+      "MySQL",
+      "Oracle"
+    ],
+    "context": "관리자 업무 흐름, API 규칙, 권한이 중요한 화면, 제품 UI 뒤의 데이터 구조를 이해하는 데 사용했습니다.",
+    "evidenceLabel": "운영 기록 보기"
+  },
+  "Release and deployment": {
+    "group": "릴리즈와 배포",
+    "tools": [
+      "Docker",
+      "GitHub Actions",
+      "Firebase",
+      "Vercel",
+      "EAS"
+    ],
+    "context": "환경 분리, 반복 가능한 배포, Vercel 전달, 모바일 스토어 준비, 운영 배포 검증 흐름에 사용했습니다.",
+    "evidenceLabel": "릴리즈 기록 보기"
+  },
+  "AI workflow": {
+    "group": "AI 개발 흐름",
+    "tools": [
+      "Codex",
+      "Claude Code",
+      "OpenAI API",
+      "MCP",
+      "LSP"
+    ],
+    "context": "코드베이스 탐색, 의미 기반 코드 도구, 원인 분석, CI 실패 추적, AI 기반 제품 운영 흐름에 사용했습니다.",
+    "evidenceLabel": "AI 개발 흐름 보기"
+  }
+} satisfies TranslationMap<SkillContextTranslation>;
+
+const workflowStepTranslations = {
+  "Intake the request": {
+    "title": "요청 접수",
+    "description": "대부분의 세션은 PRD, GitHub 이슈, 스크린샷, 크래시 로그, 직접적인 제품 우려에서 시작합니다.",
+    "tools": [
+      "PRD",
+      "GitHub issue",
+      "스크린샷",
+      "크래시 로그"
+    ],
+    "artifact": "저장소에서 처리할 일과 외부 콘솔/스토어에서 처리할 일을 분리한 작업 범위."
+  },
+  "Scan repo context": {
+    "title": "저장소 맥락 스캔",
+    "description": "수정 전에 로컬 파일, 커밋 이력, 이슈 맥락, 생성 결과물, 프로젝트 규칙을 함께 확인합니다.",
+    "tools": [
+      "Codex",
+      "rg",
+      "git 이력",
+      "AGENTS.md",
+      "공개 안전성 검사"
+    ],
+    "artifact": "수정할 파일, 건드리지 않을 파일, 유지해야 할 기준 규칙을 정리한 담당 경로."
+  },
+  "Capture evidence": {
+    "title": "증거 캡처",
+    "description": "좋은 세션은 화면, 로그, 라우트 출력, 브라우저 스냅샷처럼 관찰된 상태를 먼저 남깁니다.",
+    "tools": [
+      "Playwright",
+      "빌드 로그",
+      "시뮬레이터 로그",
+      "라우트 출력"
+    ],
+    "artifact": "비공개 세션 정보를 노출하지 않으면서 변경 필요성을 설명하는 초기 상태."
+  },
+  "Patch the owner": {
+    "title": "담당 경로 수정",
+    "description": "대체 UI나 중복 데이터, 우회 분기를 쌓지 않고 실제 기준 소스를 수정합니다.",
+    "tools": [
+      "React",
+      "TypeScript",
+      "공유 헬퍼",
+      "데이터 모델"
+    ],
+    "artifact": "제품 규칙, UI 문구, 검증 대상이 같은 기준을 보게 만드는 작은 변경."
+  },
+  "Verify the result": {
+    "title": "결과 검증",
+    "description": "검사가 통과하고 실제 렌더링/런타임 동작이 요청한 동작과 맞을 때 세션을 마무리합니다.",
+    "tools": [
+      "ESLint",
+      "Next 빌드",
+      "라우트 검사",
+      "공개 안전성 검사",
+      "Playwright"
+    ],
+    "artifact": "통과한 명령과 실제 페이지, 라우트 응답, 시뮬레이터 결과, 배포 상태."
+  },
+  "Ship and record": {
+    "title": "마무리 기록",
+    "description": "여러 세션은 커밋, 푸시, 배포, 이슈 종료, 공개 가능한 체인지로그로 끝납니다.",
+    "tools": [
+      "git commit",
+      "git push",
+      "Vercel",
+      "변경 기록"
+    ],
+    "artifact": "커밋 해시, 배포 결과, 검증 노트, 월별 엔지니어링 기록처럼 추적 가능한 완료 상태."
+  }
+} satisfies TranslationMap<WorkflowStepTranslation>;
+
+const strongFitTranslations = {
+  "Visual builder or editor systems": {
+    "title": "비주얼 빌더 또는 에디터 시스템",
+    "fit": "Variant, 중첩 모델, 미리보기/내보내기 일관성, 생성 결과물이 중요한 제품에서 강합니다.",
+    "evidence": [
+      "에디터 상태 근거",
+      "Export 런타임 일관성 기록",
+      "생성 결과 검토 흐름"
+    ],
+    "interviewProbe": "미리보기 동작과 내보내기 동작을 하나의 기준으로 유지하는 문제를 깊게 다뤄왔습니다."
+  },
+  "B2B SaaS product front-end": {
+    "title": "B2B SaaS 제품 프론트엔드",
+    "fit": "콘솔형 제품, 관리자 도구, 운영 흐름, 상태가 많은 제품 화면에서 강합니다.",
+    "evidence": [
+      "운영 콘솔 근거 필터",
+      "월별 체인지로그",
+      "프로젝트 근거 페이지"
+    ],
+    "interviewProbe": "공유 제품 동작을 바꾸기 전에 담당 범위, 업무 상태, API 계약을 먼저 찾습니다."
+  },
+  "Front-end platform with AI workflows": {
+    "title": "AI 개발 흐름이 있는 프론트엔드 플랫폼",
+    "fit": "AI가 제품 서사의 전부가 아니라, 검증 중심 개발 루프의 일부로 쓰이는 팀에서 강합니다.",
+    "evidence": [
+      "AI 개발 흐름 페이지",
+      "codex-lsp-bridge 공개 저장소",
+      "AI 원인 분석 체인지로그"
+    ],
+    "interviewProbe": "AI 제안은 바로 적용하지 않고 실제 코드 경로, 테스트, 생성 결과물 기준으로 검증합니다."
+  }
+} satisfies TranslationMap<HiringSignalTranslation>;
+
+const cautionFitTranslations = {
+  "Marketing-heavy visual design roles": {
+    "title": "마케팅 중심 비주얼 디자인 역할",
+    "fit": "제품 콘솔과 제품 시스템 작업에 비해 직접 연결되는 근거는 많지 않습니다.",
+    "evidence": [
+      "포트폴리오 방향은 의도적으로 콘솔형",
+      "캠페인이나 소비자 브랜드 아트디렉션 근거는 제한적"
+    ],
+    "interviewProbe": "캠페인 아트디렉션보다 제품 상태, 정보 구조, 반복 사용 화면에 더 강하게 맞습니다."
+  },
+  "Pure backend or infrastructure roles": {
+    "title": "순수 백엔드 또는 인프라 역할",
+    "fit": "백엔드 이해는 있지만, 포트폴리오는 프론트엔드 제품 책임에 맞춰져 있습니다.",
+    "evidence": [
+      "운영/백엔드 기술 맥락",
+      "실시간 운영과 관리자 프로젝트 기록"
+    ],
+    "interviewProbe": "백엔드 단독보다 프론트엔드가 API 규칙과 운영 흐름까지 함께 다루는 역할에 더 잘 맞습니다."
+  }
+} satisfies TranslationMap<HiringSignalTranslation>;
+
+export const proofPointsKo = localizeValues(proofPoints, proofPointTranslations, 'proof points');
+
+export const projectHighlightsKo: ProjectHighlight[] = localizeByKey(
+  projectHighlights,
+  'title',
+  projectHighlightTranslations,
+  'project highlights',
+  (project, translation) => ({
+    ...project,
+    ...translation,
+  }),
+);
+
+export const implementationEvidenceKo: ImplementationEvidence[] = localizeByKey(
+  implementationEvidence,
+  'title',
+  implementationEvidenceTranslations,
+  'implementation evidence',
+  (entry, translation) => ({
+    ...entry,
+    ...translation,
+    artifact: {
+      ...entry.artifact,
+      ...translation.artifact,
+      href: localizeInternalHref(entry.artifact.href),
+    },
+    link: {
+      ...entry.link,
+      label: translation.linkLabel,
+    },
+  }),
+);
+
+export const hiringFitKo = {
   summary:
     '가장 강한 작업은 에디터 상태, 운영 업무 상태, 생성 결과물, 검증 경로가 하나의 기준으로 맞아야 하는 제품 프론트엔드입니다.',
-  strongFits: [
-    {
-      title: '비주얼 빌더 또는 에디터 시스템',
-      fit: 'Variant, 중첩 모델, 미리보기/내보내기 일관성, 생성 결과물이 중요한 제품에서 강합니다.',
-      evidence: ['에디터 상태 근거', 'Export 런타임 일관성 기록', '생성 결과 검토 흐름'],
-      interviewProbe: '미리보기 동작과 내보내기 동작을 하나의 기준으로 유지하는 문제를 깊게 다뤄왔습니다.',
-    },
-    {
-      title: 'B2B SaaS 제품 프론트엔드',
-      fit: '콘솔형 제품, 관리자 도구, 운영 흐름, 상태가 많은 제품 화면에서 강합니다.',
-      evidence: ['운영 콘솔 근거 필터', '월별 체인지로그', '프로젝트 근거 페이지'],
-      interviewProbe: '공유 제품 동작을 바꾸기 전에 담당 범위, 업무 상태, API 계약을 먼저 찾습니다.',
-    },
-    {
-      title: 'AI 개발 흐름이 있는 프론트엔드 플랫폼',
-      fit: 'AI가 제품 서사의 전부가 아니라, 검증 중심 개발 루프의 일부로 쓰이는 팀에서 강합니다.',
-      evidence: ['AI 개발 흐름 페이지', 'codex-lsp-bridge 공개 저장소', 'AI 원인 분석 체인지로그'],
-      interviewProbe: 'AI 제안은 바로 적용하지 않고 실제 코드 경로, 테스트, 생성 결과물 기준으로 검증합니다.',
-    },
-  ],
-  cautionFits: [
-    {
-      title: '마케팅 중심 비주얼 디자인 역할',
-      fit: '제품 콘솔과 제품 시스템 작업에 비해 직접 연결되는 근거는 많지 않습니다.',
-      evidence: ['포트폴리오 방향은 의도적으로 콘솔형', '캠페인이나 소비자 브랜드 아트디렉션 근거는 제한적'],
-      interviewProbe: '캠페인 아트디렉션보다 제품 상태, 정보 구조, 반복 사용 화면에 더 강하게 맞습니다.',
-    },
-    {
-      title: '순수 백엔드 또는 인프라 역할',
-      fit: '백엔드 이해는 있지만, 포트폴리오는 프론트엔드 제품 책임에 맞춰져 있습니다.',
-      evidence: ['운영/백엔드 기술 맥락', '실시간 운영과 관리자 프로젝트 기록'],
-      interviewProbe: '백엔드 단독보다 프론트엔드가 API 규칙과 운영 흐름까지 함께 다루는 역할에 더 잘 맞습니다.',
-    },
-  ],
+  strongFits: localizeByKey(hiringFit.strongFits, 'title', strongFitTranslations, 'strong hiring fits', (_, translation) => translation),
+  cautionFits: localizeByKey(hiringFit.cautionFits, 'title', cautionFitTranslations, 'caution hiring fits', (_, translation) => translation),
 };
 
-export const changelogEntriesKo: ChangelogEntry[] = [
-  {
-    title: '세무 운영 플랫폼 마이그레이션 경로',
-    date: '2025-11-30',
-    category: 'ops-platform',
-    problem: '운영 중인 업무 플랫폼에서 세무 신청, 매입·매출 대시보드, 가맹점 심사, 알림, 프레임워크 마이그레이션을 서비스 중단 없이 다뤄야 했습니다.',
-    approach: [
-      '레거시 Vue 화면을 React와 Next.js 구조로 단계적으로 옮겼습니다.',
-      '세무대리 신청, 수임동의, 해지, 가맹점 승인, 관리 흐름을 운영 제품 상태로 다뤘습니다.',
-      'Firebase 알림, Docker 배포, 대시보드 화면을 같은 백오피스 흐름에 연결했습니다.',
-    ],
-    result: '빌더와 공개 도구 외에도 실제 업무 운영 플랫폼 경험이 포트폴리오에 보강됐습니다.',
-    stack: ['Flutter', 'React', 'Next.js', 'Firebase', 'Docker'],
-  },
-  {
-    title: 'Offline-first 데스크톱 POS 아키텍처',
-    date: '2025-02-28',
-    category: 'pos-system',
-    problem: '식당 POS는 네트워크가 불안정해도 주문, 결제, 프린터 출력, 매출 데이터가 계속 운영 가능해야 했습니다.',
-    approach: [
-      'Flutter Desktop으로 Windows와 macOS를 하나의 코드베이스에서 지원했습니다.',
-      'SQLite 기반 로컬 저장소로 오프라인 운영 흐름을 유지했습니다.',
-      '프린터와 주문 알림 흐름을 핵심 제품 경로로 통합했습니다.',
-    ],
-    result: '데스크톱 POS 작업은 오프라인 우선 운영과 하드웨어 인접 제품 경험을 보여주는 축이 됐습니다.',
-    stack: ['Flutter', 'Dart', 'SQLite', 'Desktop'],
-  },
-  {
-    title: '실시간 배달 운영 백엔드',
-    date: '2024-04-30',
-    category: 'realtime-backend',
-    problem: '배달 운영 시스템은 주문 상태, 업데이트 이벤트, 경로 지원, 데이터 수집 로그가 즉시 반영되고 추적 가능해야 했습니다.',
-    approach: [
-      'Socket.io로 실시간 주문과 업데이트 이벤트를 처리했습니다.',
-      'NestJS 백엔드와 Python 데이터 수집 책임을 분리했습니다.',
-      '운영 이슈를 추적할 수 있도록 로그와 오류 처리 흐름을 정리했습니다.',
-    ],
-    result: '변경 기록이 프론트엔드 UI뿐 아니라 백엔드와 실시간 운영 흐름 이해도까지 보여주게 됐습니다.',
-    stack: ['NestJS', 'Python', 'Socket.io'],
-  },
-  {
-    title: '레거시 POS 결제 리팩토링',
-    date: '2023-10-31',
-    category: 'pos-system',
-    problem: '레거시 POS 프론트엔드의 결제, 영수증, 테이블, 정산 로직은 유지보수와 성능 정리가 필요했습니다.',
-    approach: [
-      '결제와 취소 모달 흐름을 리팩토링했습니다.',
-      '테이블 이동, 분리, 합석, 그룹 지정, 그룹 결제 케이스를 정리했습니다.',
-      '실제 운영 중인 화면에서 렌더링과 유지보수성을 개선했습니다.',
-    ],
-    result: '과거 POS 작업이 실제 업무 흐름과 레거시 현대화 경험을 보강합니다.',
-    stack: ['React', 'JavaScript', 'POS 흐름'],
-  },
-  {
-    title: '카탈로그 사이트 SEO와 i18n 화면',
-    date: '2025-03-31',
-    category: 'catalog-site',
-    problem: '제품 정보 사이트는 빠른 초기 로딩, 검색 가능한 카탈로그 콘텐츠, 다국어 라우트, 반응형 표현이 필요했습니다.',
-    approach: [
-      'Next.js SSR, 동적 라우팅, 이미지 최적화를 사용했습니다.',
-      '제품 정보 중심 카탈로그 검색과 문의 흐름을 구성했습니다.',
-      '다국어 콘텐츠 전달을 위해 i18n 라우트 구조를 추가했습니다.',
-    ],
-    result: '프로젝트 기록에 외부에 공개되는 웹 성능과 콘텐츠 아키텍처 작업이 추가됐습니다.',
-    stack: ['Next.js', 'TypeScript', 'SSR', 'SEO', 'i18n'],
-  },
-  {
-    title: 'App Store 심사 대응 보조 도구',
-    date: '2026-04-19',
-    category: 'app-review-tooling',
-    problem: '릴리즈 제출 작업은 문구와 입력값을 신중하게 다뤄야 하며, 비공개 데이터나 검증되지 않은 설명이 섞이면 리뷰 지연으로 이어질 수 있습니다.',
-    approach: [
-      '제출 입력 검토와 App Review 응답 초안 작성에 집중한 보수적인 플러그인으로 범위를 좁혔습니다.',
-      '릴리즈 보조 문서 작성과 실제 스토어 운영 범위를 분리했습니다.',
-      '비공개 앱 릴리즈 세부사항을 넣지 않고 공개 가능한 보조 도구로 문서화했습니다.',
-    ],
-    result: '반복되는 릴리즈 검토 작업을 재사용 가능한 도구로 바꾼 작은 공개 사례가 추가됐습니다.',
-    stack: ['Python', 'Codex plugin', 'App Store Connect'],
-  },
-  {
-    title: '단일 목적 iOS 앱 릴리즈 패키징',
-    date: '2026-04-25',
-    category: 'mobile-release',
-    problem:
-      '작은 App Store 제품도 제출 전에 프로덕션 서명, 스크린샷, 지원 페이지, 광고 설정, 앱 아이콘 정리가 필요했습니다.',
-    approach: [
-      '짧은 세션형 모바일 제품에 맞춰 서명과 스크린샷 자산을 준비했습니다.',
-      '심사용 웹사이트와 프로덕션 광고 설정을 같은 릴리즈 경로에 연결했습니다.',
-      '스토어 준비가 불필요한 기능 확장으로 번지지 않도록 MVP 범위를 좁게 유지했습니다.',
-    ],
-    result:
-      '큰 플랫폼 작업 사이에 실제 모바일 제출 준비 경험을 보여주는 중간 기록이 추가됐습니다.',
-    stack: ['iOS', 'App Store', 'AdMob', 'Release assets'],
-  },
-  {
-    title: 'PDF 유틸리티 App Store 준비',
-    date: '2026-04-19',
-    category: 'app-review-tooling',
-    problem:
-      '작은 유틸리티 앱도 App Store 제출을 위해 공개 메타데이터, 개인정보 처리방침, 심사 설정, 마케팅 페이지가 필요했습니다.',
-    approach: [
-      '심사 가능한 앱 설정과 저장소 메타데이터를 준비했습니다.',
-      '공개 개인정보 처리방침과 마케팅 사이트 화면을 추가했습니다.',
-      '비공개 제출 자격 정보를 노출하지 않고 릴리즈 흐름을 문서화했습니다.',
-    ],
-    result:
-      '집중된 유틸리티 제품을 스토어 제출 가능한 상태로 만드는 또 하나의 실제 사례가 추가됐습니다.',
-    stack: ['Swift', 'App Store', 'Privacy policy', 'Marketing site'],
-  },
-  {
-    title: '영양 앱 기능 확장과 구조 정리',
-    date: '2026-04-08',
-    category: 'native-product',
-    problem:
-      '건강/영양 모바일 제품은 기록, AI 보조 입력, 데이터 내보내기, 기기 연동, 결제, 기능 담당 범위가 함께 커지고 있었습니다.',
-    approach: [
-      'AI 음식 인식, 운동 기록, 데이터 내보내기, 건강 기기 연동 경로를 추가했습니다.',
-      '카메라 분석 주변에 프리미엄 게이트, 실제 API 연결, 뒤늦게 도착한 결과 방지, 비동기 취소 처리를 넣었습니다.',
-      '화면 로직을 기능별 훅과 컨테이너 기준으로 나눠 하나의 큰 화면에 책임이 몰리지 않게 했습니다.',
-    ],
-    result:
-      '릴리즈 게이트뿐 아니라 실제 모바일 제품 기능 확장과 구조 정리 흐름도 체인지로그에 보강됐습니다.',
-    stack: ['React Native', 'Expo', 'AI 흐름', 'Health sync', 'Billing'],
-  },
-  {
-    title: 'AI PRD 생성 제품 화면',
-    date: '2026-01-17',
-    category: 'ai-product',
-    problem: '초기 제품 아이디어는 구현 전에 구조화된 요구사항과 제품 계획으로 정리될 필요가 있습니다.',
-    approach: [
-      '아이디어 입력과 PRD 생성을 연결하는 AI 보조 제품 기획 흐름을 탐색했습니다.',
-      '작업 흐름이 실제 웹 앱으로 공유될 수 있도록 Next.js 제품 화면으로 구성했습니다.',
-      '비공개 기획 데이터를 노출하지 않고 제품 흐름 수준으로만 포트폴리오에 정리했습니다.',
-    ],
-    result: 'IdeaToPRD는 구현 중심 케이스 사이에 공개 가능한 AI 제품 기획 사례를 더합니다.',
-    stack: ['Next.js', 'TypeScript', 'AI 흐름', 'Vercel'],
-  },
-  {
-    title: '건강 추적 앱 수익화와 리텐션 릴리즈',
-    date: '2026-02-19',
-    category: 'mobile-release',
-    problem:
-      '건강 추적 앱은 수익화, 접근성, 알림 안정성, 앱 완성도, 스토어 제출용 마감 품질을 함께 조정해야 했습니다.',
-    approach: [
-      '수익화 모델을 조정하고 공개 화면에서 과도하게 구체적인 데이터 가정을 제거했습니다.',
-      '앱 전반의 UI 구조, 접근성, 알림 처리, 설정 연결성을 개선했습니다.',
-      '다음 제출에 맞춰 빌드 번호, 아이콘, expo-doctor 정리, 릴리즈 문서를 함께 맞췄습니다.',
-    ],
-    result:
-      '2월 중순의 모바일 릴리즈 흐름이 리텐션과 스토어 준비 관점으로 더 분명해졌습니다.',
-    stack: ['React Native', 'Expo', 'RevenueCat', 'Notifications', 'Accessibility'],
-  },
-  {
-    title: '부채 상환 앱 MVP 안정화',
-    date: '2026-02-18',
-    category: 'native-product',
-    problem:
-      '부채 상환 모바일 제품은 핵심 상환 흐름을 강조하면서도 오류 처리, 다국어, 테스트, 리텐션 기본기를 갖춰야 했습니다.',
-    approach: [
-      '상환 우선 UX를 중심으로 모바일 제품을 부트스트랩했습니다.',
-      '단위 테스트, 오류 처리 경계, 한국어 로컬라이제이션, 남아 있던 TODO 정리를 추가했습니다.',
-      '핵심 UI와 리텐션 기능을 개선하고 쓰지 않는 의존성을 제거했습니다.',
-    ],
-    result:
-      '개인 금융 앱 아이디어를 안정화된 MVP로 만드는 작은 사례가 체인지로그에 추가됐습니다.',
-    stack: ['React Native', 'TypeScript', 'Testing', 'i18n'],
-  },
-  {
-    title: '프로그래매틱 SEO 콘텐츠 시스템',
-    date: '2026-01-11',
-    category: 'web-toolkit',
-    problem:
-      '콘텐츠 중심 웹 제품은 검색 구조, AI 생성 글 처리 안정성, 정보 구조를 함께 갖춰야 했습니다.',
-    approach: [
-      '토픽 클러스터, 프로그래매틱 SEO 라우트, 글 목록, Open Graph 이미지 지원을 추가했습니다.',
-      'AI 응답 파싱 실패가 숨겨지지 않도록 오류 메시지와 중복 slug 처리를 강화했습니다.',
-      'RAG 보조 콘텐츠 생성 경로를 쓰되 깨진 JSON을 조용히 받아들이지 않도록 했습니다.',
-    ],
-    result:
-      '1월 구간에 웹 성장, 콘텐츠 아키텍처, AI 보조 발행 경험을 보여주는 기록이 채워졌습니다.',
-    stack: ['Next.js', 'SEO', 'AI 흐름', 'Supabase', 'TypeScript'],
-  },
-  {
-    title: 'SwiftUI 제품 모듈 아키텍처',
-    date: '2026-02-08',
-    category: 'native-product',
-    problem: '네이티브 생산성 앱에서 작업, 집중, 라벨, 위젯, 공유, 동기화 화면이 늘어나도 구조가 무너지지 않아야 했습니다.',
-    approach: [
-      '앱 진입점, 핵심 유틸리티, 데이터 모델, 기능 모듈, 공통 UI, 리소스를 분리했습니다.',
-      'SwiftUI, SwiftData, CloudKit, adaptive navigation을 네이티브 제품 구조의 기준으로 사용했습니다.',
-      '모델, 서비스, ViewModel 동작은 Swift Testing과 인메모리 데이터 경로로 확인했습니다.',
-    ],
-    result: 'PureFlow는 웹 프론트엔드 밖의 네이티브 제품 아키텍처 경험을 보여주는 축이 됐습니다.',
-    stack: ['SwiftUI', 'SwiftData', 'CloudKit', 'Swift Testing', 'XcodeGen'],
-  },
-  {
-    title: '개인정보 우선 개발자 도구 제품 방향',
-    date: '2026-06-18',
-    category: 'web-toolkit',
-    problem: '개발자 도구는 사용자가 민감한 JSON, JWT, 텍스트를 붙여 넣는 경우가 많아 서버 처리 경로를 신중히 다뤄야 했습니다.',
-    approach: [
-      '클라이언트 처리, 서버 업로드 없음, 오프라인 PWA 사용을 제품 방향으로 잡았습니다.',
-      '텍스트/코드, 미디어/디자인, 변환, 보안 그룹으로 도구를 분류했습니다.',
-      'i18n, 명령 검색, WebAssembly 처리, 공유 가능한 상태를 제품 기능으로 정리했습니다.',
-    ],
-    result: 'Web Toolkit은 유틸리티 중심 브라우저 소프트웨어를 공개 제품 방향으로 보여주는 항목이 됐습니다.',
-    stack: ['Next.js', 'React', 'TypeScript', 'PWA', 'WebAssembly'],
-  },
-  {
-    title: 'Bevy 런타임 검증 흐름',
-    date: '2026-06-27',
-    category: 'game-runtime',
-    problem: '게임 런타임은 게임플레이 변경 이후 포맷팅, 컴파일, 테스트가 계속 통과하는지 빠르게 확인할 수 있어야 했습니다.',
-    approach: [
-      'CI에서 쓰는 것과 같은 검증 경로를 하나의 스크립트로 문서화했습니다.',
-      'Cargo 기반 검사, 테스트 바이너리 빌드, 테스트 실행 명령을 분리해 집중 검증할 수 있게 했습니다.',
-      '게임 프로젝트도 단순 실험이 아니라 반복 가능한 피드백이 필요한 제품 시스템으로 다뤘습니다.',
-    ],
-    result: 'Nightbound Survival은 Rust와 인터랙티브 런타임 경험을 제품 엔지니어링 흐름 안에 추가했습니다.',
-    stack: ['Rust', 'Bevy', 'Cargo', 'Serde'],
-  },
-  {
-    title: '포트폴리오 근거 모델 정리',
-    date: '2026-06-27',
-    category: 'portfolio-system',
-    problem:
-      '공개 포트폴리오는 프로젝트 기록, 라우트 구조, 변경 기록이 각자 다른 이야기를 하면 단순 활동 목록처럼 보이기 쉽습니다.',
-    approach: [
-      '최근 작업이 흩어진 커밋이 아니라 제품 엔지니어링 노트로 읽히도록 체인지로그를 월별로 묶었습니다.',
-      '프로젝트 기록, 월별 변경 기록, 검증 근거가 같은 방향으로 읽히도록 정리했습니다.',
-      '프로토타입 중심 화면을 줄이고 첫 화면을 포지션과 근거 중심으로 재구성했습니다.',
-    ],
-    result:
-      '커밋 이력이 원문 기록이 아니라 공개 가능한 제품 엔지니어링 근거로 읽히는 구조가 됐습니다.',
-    stack: ['Next.js', 'TypeScript', 'Tailwind CSS', 'Public safety checks'],
-  },
-  {
-    title: '모바일 제품 카탈로그 릴리즈 기준',
-    date: '2026-06-27',
-    category: 'mobile-release',
-    problem:
-      '모바일 릴리즈에서 제품 식별자, 권한 확인, 릴리즈 자산, 제출 자격 정보, 백엔드 스모크 테스트가 따로 움직이면 제출 준비 상태를 판단하기 어렵습니다.',
-    approach: [
-      '결제 웹훅 인증을 제품 카탈로그 기준에 맞춰 라우팅했습니다.',
-      'iOS 릴리즈 경로에 맞춰 구독 제품 식별자를 정렬했습니다.',
-      '릴리즈 자산, 보호된 자격 정보, 백엔드 스모크 확인을 같은 제출 준비 흐름에 묶었습니다.',
-    ],
-    result:
-      '비공개 자격 정보나 이슈 번호를 노출하지 않고도 스토어 제출 전 모바일 릴리즈 근거를 더 명확하게 보여줄 수 있게 됐습니다.',
-    stack: ['Expo', 'React Native', 'RevenueCat', 'Supabase', 'EAS'],
-  },
-  {
-    title: '네이티브 위젯과 Expo 설정 담당 범위',
-    date: '2026-06-18',
-    category: 'mobile-release',
-    problem:
-      '네이티브 위젯과 Expo 설정은 앱 설정, 패키지 설정, privacy manifest, 생성 네이티브 화면이 각자 정책을 가지면 쉽게 어긋납니다.',
-    approach: [
-      '네이티브 정책의 담당 범위를 Expo 설정 경로로 되돌렸습니다.',
-      '위젯 패키지 설정이 앱 로컬 릴리즈 가정에 묶이지 않도록 분리했습니다.',
-      '위젯 렌더링, 지역화된 페이로드, 네이티브 페이저 동작, 의존성 호환성을 함께 확인했습니다.',
-    ],
-    result:
-      '스토어 제출용 검증 전에 네이티브 모바일 기준과 위젯 정책이 더 명확해졌습니다.',
-    stack: ['Expo', 'React Native', 'WidgetKit', 'TypeScript', 'Config plugins'],
-  },
-  {
-    title: 'Agent LSP Bridge 릴리즈 기준',
-    date: '2026-05-19',
-    category: 'agent-tooling',
-    problem: 'AI 코딩 흐름에는 프로젝트에 넓은 쓰기 권한을 주지 않으면서 의미 기반 코드 정보를 제공하는 도구가 필요했습니다.',
-    approach: [
-      '진단, 정의, 참조, 심볼, hover 정보를 읽기 전용 MCP 도구로 감쌌습니다.',
-      '작업 경로와 어댑터 기준을 명시적으로 유지했습니다.',
-      '빌드, 타입 검사, 통합 테스트, 패키지 스모크 검사로 패키지 동작을 검증했습니다.',
-    ],
-    result: '의미 기반 코드 정보를 에이전트 보조 개발 흐름에서 공개 가능하고 반복 가능한 도구로 사용할 수 있게 됐습니다.',
-    stack: ['TypeScript', 'Node.js', 'MCP', 'LSP', 'Vitest'],
-  },
-  {
-    title: '에이전트 의미 기반 도구 안정화',
-    date: '2026-05-19',
-    category: 'agent-tooling',
-    problem:
-      '의미 기반 에이전트 도구는 재사용 가능한 패키지로 쓰이려면 예측 가능한 진단 처리, 언어 서버 시작 동작, 릴리즈 문서가 필요했습니다.',
-    approach: [
-      '자동 진단 타임아웃 정책과 호출별 타임아웃 처리를 추가했습니다.',
-      '초기 TypeScript 경로를 넘어 워크스페이스 시드와 언어 어댑터 범위를 넓혔습니다.',
-      '설치 안내, 진단 예시, 유지관리자 작업 흐름, 패키지 릴리즈 메타데이터를 문서화했습니다.',
-    ],
-    result:
-      'LSP 브리지가 로컬 일회성 통합이 아니라 설치 가능한 공개 도구로 더 안정적으로 설명될 수 있게 됐습니다.',
-    stack: ['TypeScript', 'Node.js', 'MCP', 'LSP', 'Language servers'],
-  },
-  {
-    title: '모바일 릴리즈 게이트 시스템',
-    date: '2026-06-27',
-    featured: true,
-    category: 'mobile-release',
-    problem: 'Expo 설정, 스토어 메타데이터, 위젯, 런타임 환경, 제품 문서를 따로 확인하면 네이티브 모바일 릴리즈 기준이 쉽게 어긋납니다.',
-    approach: [
-      '릴리즈 설정, 네이티브 정책, 제품 문서가 하나의 전달 기준을 보게 했습니다.',
-      '반복되는 앱 동작이 공통 패키지에 남도록 공통 기반 검사를 추가했습니다.',
-      '스토어 제출용 빌드 전에 모바일 UI와 릴리즈 스모크 테스트 근거를 확인했습니다.',
-    ],
-    result: 'iOS와 Android 운영 배포 전에 모바일 릴리즈 경로를 더 명확하게 검증할 수 있게 됐습니다.',
-    stack: ['Expo', 'React Native', 'EAS', 'Maestro', 'TypeScript'],
-  },
-  {
-    title: 'Export 런타임 일관성 규칙 정리',
-    date: '2026-06-26',
-    featured: true,
-    category: 'export-deploy',
-    problem: '조건부 렌더링 규칙이 여러 경로에서 평가되면 미리보기와 배포 결과물이 달라질 수 있었습니다.',
-    approach: [
-      '공유 표시 판단을 하나의 공개 가능한 렌더링 기준으로 정리했습니다.',
-      '중첩 구조가 실제 생성 결과물에서 어떻게 동작하는지 확인했습니다.',
-      '영향 범위를 넓히기 전에 회귀 시나리오를 먼저 잡았습니다.',
-    ],
-    result: '같은 제품 상태가 미리보기, 내보내기, 배포 경로에서 어떻게 해석되는지 더 명확해졌습니다.',
-    stack: ['TypeScript', 'React', 'Vitest'],
-  },
-  {
-    title: 'Variant 상태 담당 범위 정리',
-    date: '2026-06-25',
-    category: 'editor-engine',
-    problem: '컴포넌트 Variant 선택은 편집 상태와 런타임 상태의 기준이 흐리면 쉽게 불안정해집니다.',
-    approach: [
-      '디자인 시점 Variant 관심사와 런타임 인터랙션 관심사를 분리했습니다.',
-      '공유 조회 로직을 수정하기 전에 담당 경로와 상위 구조를 확인했습니다.',
-      '선택 동작이 해당 제품 모델의 범위 안에서만 움직이도록 정리했습니다.',
-    ],
-    result: 'Variant 동작을 확장할 때 공유 조회 로직이 넓은 우회 경로가 되지 않도록 만들었습니다.',
-    stack: ['React', 'TypeScript', 'Zustand'],
-  },
-  {
-    title: '생성 결과물 검토 흐름',
-    date: '2026-06-24',
-    category: 'testing-ci',
-    problem: '소스 코드만 보면 맞아 보여도 실제 HTML이나 배포 결과물에서 어긋남이 드러날 수 있습니다.',
-    approach: [
-      '수정 완료 전 실제 생성 결과물을 직접 확인했습니다.',
-      '결과물 구조와 런타임 동작에 대한 회귀 검증을 추가했습니다.',
-      '검증 기준을 사용자가 실제로 받는 결과물에 맞췄습니다.',
-    ],
-    result: '사용자에게 전달되는 결과물에 더 가까운 지점에서 회귀를 잡을 수 있게 됐습니다.',
-    stack: ['HTML', 'CSS', 'JavaScript', 'Vitest'],
-  },
-  {
-    title: 'AI 에이전트 기반 원인 분석 흐름',
-    date: '2026-06-23',
-    featured: true,
-    category: 'ai-workflow',
-    problem: '큰 프론트엔드 시스템에서는 실제 담당 모듈을 찾지 못한 채 증상만 고치기 쉽습니다.',
-    approach: [
-      'AI 에이전트로 코드 경로를 탐색하고 가설을 좁혔습니다.',
-      '모든 제안은 실제 소스 경로와 테스트로 검증했습니다.',
-      '근본 기준을 고쳐야 하는 경우 임시 우회성 수정을 배제했습니다.',
-    ],
-    result: 'AI가 조사 속도를 높이되 최종 판단은 코드 근거와 회귀 검증에 두는 흐름을 만들었습니다.',
-    stack: ['Codex', 'Claude Code', 'GitHub', 'TypeScript'],
-  },
-  {
-    title: '캔버스 성능 가드레일',
-    date: '2026-05-31',
-    category: 'performance',
-    problem: '큰 편집 화면은 문서가 복잡해져도 예측 가능한 조작감을 유지해야 합니다.',
-    approach: [
-      '선택과 뷰포트 기반 화면에서 불필요한 렌더링을 줄였습니다.',
-      '주관적인 체감 대신 좁게 잡은 벤치마크와 인터랙션 확인을 사용했습니다.',
-      '최적화가 고립된 미세 변경이 아니라 에디터 동작과 연결되도록 했습니다.',
-    ],
-    result: '기능을 추가하면서도 에디터 화면의 반응성을 유지하기 쉬워졌습니다.',
-    stack: ['React', 'TypeScript', 'Performance profiling'],
-  },
-  {
-    title: '관리자 빈 상태와 실패 상태 정리',
-    date: '2025-12-31',
-    category: 'admin-ops',
-    problem: '운영자는 데이터가 로딩 중인지, 없는지, 권한이 없는지, 실패했는지를 명확히 알아야 합니다.',
-    approach: [
-      '로딩, 빈 상태, 실패 상태, 권한 상태를 제품 상태로 다뤘습니다.',
-      '운영자가 다음에 무엇을 할 수 있는지 중심으로 UI 문맥을 맞췄습니다.',
-      '일부 데이터만 있는 상황에서도 업무 흐름을 읽을 수 있게 했습니다.',
-    ],
-    result: '백오피스 업무 흐름을 실제 운영 상황에서 더 쉽게 이해하고 디버깅할 수 있게 했습니다.',
-    stack: ['React', 'TypeScript', 'API integration'],
-  },
-  {
-    title: '환경별 릴리즈 흐름 정리',
-    date: '2025-08-31',
-    category: 'testing-ci',
-    problem: '환경 설정을 수동으로 관리하면 잘못된 설정으로 배포될 위험이 커집니다.',
-    approach: [
-      '로컬, 스테이징, 운영 설정 경로를 분리했습니다.',
-      'Docker와 GitHub Actions를 반복 가능한 배포 확인에 연결했습니다.',
-      '릴리즈 단계를 문서화하고 재현 가능하게 정리했습니다.',
-    ],
-    result: '배포가 개인의 수동 설정 기억에 덜 의존하게 됐습니다.',
-    stack: ['Docker', 'GitHub Actions', 'Firebase'],
-  },
-  {
-    title: 'AI 리뷰 운영 흐름',
-    date: '2025-04-30',
-    category: 'admin-ops',
-    problem: 'AI 생성 응답은 고객에게 노출되기 전에 운영자의 신뢰, 검토, 수정 흐름이 필요했습니다.',
-    approach: [
-      '데이터 수집, AI 분석, 사람 검수, 응답 생성을 분리했습니다.',
-      '생성된 내용을 관리자 화면에서 확인하고 수정할 수 있게 했습니다.',
-      '자동화가 운영자의 판단 범위 안에서 동작하도록 만들었습니다.',
-    ],
-    result: 'AI 보조가 숨겨진 백엔드 동작이 아니라 검토 가능한 운영 흐름의 일부가 됐습니다.',
-    stack: ['React', 'NestJS', 'Python', 'OpenAI API'],
-  },
-  {
-    title: '메뉴 스크래퍼 스케줄링 유틸리티',
-    date: '2025-11-24',
-    category: 'web-toolkit',
-    problem:
-      '작은 자동화 유틸리티도 메뉴 데이터를 안정적으로 수집하려면 웹 프로젝트 기반과 예측 가능한 스케줄이 필요했습니다.',
-    approach: [
-      'Next.js 유틸리티 프로젝트를 부트스트랩하고 scraping과 schedule 제어에 범위를 좁혔습니다.',
-      '운영 의도에 맞는 시간대에 수집이 돌도록 cron 타이밍을 조정했습니다.',
-      '프레임워크 보안 공지가 필요한 경우 의존성 업데이트도 함께 처리했습니다.',
-    ],
-    result:
-      '큰 모바일/플랫폼 작업 사이에 가벼운 자동화 유틸리티 사례가 체인지로그에 추가됐습니다.',
-    stack: ['Next.js', 'Cron', 'Automation', 'React'],
-  },
-  {
-    title: '스케줄러 iOS 위젯 반복 작업',
-    date: '2025-09-01',
-    category: 'native-product',
-    problem:
-      '스케줄러 앱에서 위젯을 제품 일부로 다루려면 위젯 전용 프로젝트 구조와 데이터 업데이트 경로가 필요했습니다.',
-    approach: [
-      'iOS 위젯 기능을 위한 초기 프로젝트 구조를 추가했습니다.',
-      '위젯 상태 업데이트를 위한 예제 코드와 가이드를 정리했습니다.',
-      '네이티브 변경이 임시 파일로 남지 않도록 버전 업데이트와 함께 묶었습니다.',
-    ],
-    result:
-      '이후 모바일 릴리즈 게이트 작업 이전의 네이티브 위젯 탐색 흐름이 월별 기록에 추가됐습니다.',
-    stack: ['Flutter', 'iOS Widget', 'Native extension', 'Release versioning'],
-  },
-  {
-    title: 'Flutter 인증과 알림 릴리즈 안정화',
-    date: '2025-08-18',
-    category: 'mobile-release',
-    problem:
-      '웹 연동 흐름이 있는 Flutter 앱은 계정 연결, 알림 동작, 권한, 버전 업데이트가 함께 맞아야 했습니다.',
-    approach: [
-      '익명 로그인과 소셜 계정 연동 흐름을 앱 화면에 추가했습니다.',
-      'FCM, 로컬 알림 처리, iOS 백그라운드 알림 권한을 릴리즈 경로에 연결했습니다.',
-      'Android SDK와 앱 버전 업데이트를 같은 제출 준비 흐름으로 다뤘습니다.',
-    ],
-    result:
-      '비어 보이던 8월 구간이 실제 모바일 릴리즈 안정화 기록으로 채워졌습니다.',
-    stack: ['Flutter', 'Firebase', 'FCM', 'iOS', 'Android'],
-  },
-  {
-    title: '체중 기록 앱 부트스트랩과 릴리즈 설정',
-    date: '2025-07-31',
-    category: 'native-product',
-    problem:
-      '체중 기록 제품은 기능 작업 전에 모바일 앱 기반, Firebase 설정, 인증, 앱 정체성, 릴리즈 설정이 필요했습니다.',
-    approach: [
-      'Firebase, 앱 아이콘, 스플래시 화면, 릴리즈 키스토어 설정을 준비했습니다.',
-      'Google/Apple 로그인과 회원 탈퇴 흐름을 추가했습니다.',
-      '백그라운드 복귀 시 새로고침과 상태바 표현을 모바일 앱 기반의 일부로 정리했습니다.',
-    ],
-    result:
-      '7월 모바일 제품 기반 작업이 이후 알림과 릴리즈 반복 작업의 앞단 기록으로 보강됐습니다.',
-    stack: ['Flutter', 'Firebase', 'Authentication', 'Release signing'],
-  },
-  {
-    title: '초기 스케줄러 기능 반복',
-    date: '2025-01-06',
-    category: 'native-product',
-    problem:
-      '스케줄러 모바일 프로젝트는 이후 인증, 알림, 위젯 작업을 얹기 전에 초기 기능과 버그 수정 반복이 필요했습니다.',
-    approach: [
-      '짧은 기능/수정 커밋을 통해 초기 Flutter 앱을 전진시켰습니다.',
-      '이 달의 커밋 제목이 짧기 때문에 공개 설명은 보수적으로 유지했습니다.',
-      '상세한 제품 주장보다 기반 작업 근거로만 다뤘습니다.',
-    ],
-    result:
-      '로컬 커밋 제목에서 확인 가능한 범위를 넘지 않으면서 2025년 1월 작업을 기록했습니다.',
-    stack: ['Flutter', 'Mobile UI', 'Early product iteration'],
-  },
-  {
-    title: '스케줄러 소셜 로그인 연동',
-    date: '2024-11-11',
-    category: 'native-product',
-    problem:
-      '스케줄러 앱이 익명 로컬 사용을 넘어가려면 모바일 계정 진입 흐름이 필요했습니다.',
-    approach: [
-      'Flutter 앱 흐름에 소셜 로그인을 연동했습니다.',
-      '여러 기능 커밋을 통해 초기 인증 화면을 반복했습니다.',
-      '공개 요약에서는 provider별 비공개 설정이 아니라 인증 기능 자체에 집중했습니다.',
-    ],
-    result:
-      '2024년 11월이 모바일 계정 흐름의 구체적인 이정표로 기록됐습니다.',
-    stack: ['Flutter', 'Authentication', 'Mobile app'],
-  },
-  {
-    title: '스케줄러 캘린더 최적화 반복',
-    date: '2024-10-27',
-    category: 'native-product',
-    problem:
-      '캘린더 중심 스케줄러 작업은 핵심 기능 동작과 캘린더 성능을 초기에 함께 잡아야 했습니다.',
-    approach: [
-      '여러 기능 커밋으로 스케줄러 앱을 반복했습니다.',
-      '데이터가 늘어나도 핵심 화면이 사용할 수 있도록 캘린더 최적화 작업을 포함했습니다.',
-      '오래된 커밋 제목이 짧기 때문에 월별 제품 시스템 노트 수준으로만 정리했습니다.',
-    ],
-    result:
-      '2024년 10월의 캘린더 제품 방향이 이후 인증/위젯 작업 앞단에 놓였습니다.',
-    stack: ['Flutter', 'Calendar UI', 'Mobile performance'],
-  },
-  {
-    title: '스케줄러 Flutter 앱 부트스트랩',
-    date: '2024-07-16',
-    category: 'native-product',
-    problem:
-      '스케줄러 제품은 인증, 알림, 위젯 개발 전에 초기 Flutter 앱 기반이 필요했습니다.',
-    approach: [
-      '초기 앱 커밋을 통해 스케줄러 Flutter 프로젝트를 시작했습니다.',
-      '초기 기능 작업으로 모바일 제품 화면을 세웠습니다.',
-      '가장 오래된 커밋 제목은 정보가 제한적이므로 공개 요약은 넓고 보수적으로 유지했습니다.',
-    ],
-    result:
-      '현재 로컬 저장소 모음에서 확인 가능한 가장 이른 작업 근거가 포트폴리오 타임라인에 반영됐습니다.',
-    stack: ['Flutter', 'Dart', '모바일 앱 초기 구축'],
-  },
-  {
-    title: 'B2B 운영 관리자와 공개 사이트 기반',
-    date: '2023-04-30',
-    category: 'admin-ops',
-    problem:
-      '초기 B2B 제품 작업은 운영자가 쓰는 관리자 화면과 외부에 보이는 공개 사이트가 함께 전진해야 했습니다.',
-    approach: [
-      '같은 제품 맥락 안에서 React 관리자 화면과 공개 사이트 라우트를 반복했습니다.',
-      '비공개 사업명이나 내부 경로를 노출하지 않고 업무 흐름 수준으로만 정리했습니다.',
-      '요청된 2023년 3월 이후 확인 가능한 첫 커밋 기반 운영 항목으로 이 달을 기록했습니다.',
-    ],
-    result:
-      '3월에 확인되는 커밋이 없다는 점을 넘겨짚지 않으면서 2023년 첫 제품 엔지니어링 달을 반영했습니다.',
-    stack: ['React', 'Admin UI', 'Public site', 'Product operations'],
-  },
-  {
-    title: '운영 API와 관리자 업무 흐름 확장',
-    date: '2023-05-31',
-    category: 'ops-platform',
-    problem:
-      '운영 제품은 실제 업무 흐름을 반복하기 위해 백엔드 라우트, 관리자 화면, 작은 스케줄링 유틸리티가 함께 필요했습니다.',
-    approach: [
-      '같은 운영 도메인 안에서 API와 관리자 동작을 확장했습니다.',
-      '커밋 이력에 별도 프로젝트 활동이 보이는 시간 기반 작업 흐름 유틸리티를 함께 반영했습니다.',
-      '짧은 커밋 기록을 원문 작업명 대신 공개 가능한 시스템 책임으로 번역했습니다.',
-    ],
-    result:
-      '2023년 5월이 빈 구간이 아니라 백엔드와 관리자 화면을 함께 다룬 반복 작업으로 보이게 됐습니다.',
-    stack: ['React', 'Node.js', 'Python', 'Scheduling utilities'],
-  },
-  {
-    title: '관리자-백엔드 통합 안정화',
-    date: '2023-06-30',
-    category: 'ops-platform',
-    problem:
-      '운영 업무 흐름이 커질수록 관리자 UI와 백엔드 서비스 동작이 반복 수정 과정에서도 맞아야 했습니다.',
-    approach: [
-      '백엔드 서비스 변경과 관리자 화면 업데이트를 함께 반복했습니다.',
-      '오래된 커밋 메시지가 짧기 때문에 통합 안정성 중심으로 보수적으로 기록했습니다.',
-      '공개 설명에서 비공개 저장소 이름을 반복 노출하지 않았습니다.',
-    ],
-    result:
-      '2023년 6월이 저장소 활동에 근거한 운영 플랫폼 안정화 기간으로 표현됐습니다.',
-    stack: ['React', 'Backend services', 'Python', 'Operational tooling'],
-  },
-  {
-    title: '공개 사이트와 관리자 계정 화면 반복',
-    date: '2023-07-31',
-    category: 'admin-ops',
-    problem:
-      '초기 운영 기반 이후 공개 사이트 업데이트와 관리자 계정 화면은 계속 다듬어져야 했습니다.',
-    approach: [
-      '외부에 보이는 자산과 페이지를 전진시키면서 계정 중심 관리자 화면을 정리했습니다.',
-      '백엔드와 스크립트 수정을 같은 운영 지원 맥락에 묶었습니다.',
-      '내부 작업 라벨보다 실제로 보이는 제품 화면 기준으로 월을 요약했습니다.',
-    ],
-    result:
-      '2023년 7월이 큰 관리자 작업 사이에 있던 제품 화면 반복 구간으로 기록됐습니다.',
-    stack: ['React', 'Public site', 'Admin UI', 'Backend fixes'],
-  },
-  {
-    title: '리뷰 운영 유지보수 반복',
-    date: '2023-08-31',
-    category: 'admin-ops',
-    problem:
-      '운영 리뷰 도구는 관리자 UI, 백엔드 스크립트, 작은 런타임 실험이 함께 바뀔 때 꾸준한 유지보수가 필요했습니다.',
-    approach: [
-      '관리자 화면, 서버, 스크립트 수정을 하나의 운영 유지보수 항목으로 묶었습니다.',
-      '제품 시스템 폭을 보여주는 경우가 아니면 실험성 보조 작업은 핵심 주장으로 삼지 않았습니다.',
-      '큰 기능 개발 기간 사이의 연속성을 보여주는 달로 기록했습니다.',
-    ],
-    result:
-      '2023년 8월이 설명 없이 비어 있는 구간이 아니게 됐습니다.',
-    stack: ['React', 'Server maintenance', 'Python', 'Product operations'],
-  },
-  {
-    title: '레거시 POS 리팩토링 준비',
-    date: '2023-09-30',
-    category: 'pos-system',
-    problem:
-      '레거시 POS 프론트엔드는 이후 결제 흐름 변경을 명확히 설명하기 전에 집중적인 리팩토링 준비가 필요했습니다.',
-    approach: [
-      '9월의 리팩토링 준비 작업을 이후 결제 중심 이정표와 분리했습니다.',
-      '비공개 커밋 세부사항보다 시스템 현대화에 초점을 맞췄습니다.',
-      '이미 타임라인에 있는 POS 현대화 흐름과 연결했습니다.',
-    ],
-    result:
-      '10월 결제 리팩토링 항목 전에 POS 사례의 준비 구간이 보이게 됐습니다.',
-    stack: ['React', 'POS UI', '레거시 리팩토링', 'TypeScript'],
-  },
-  {
-    title: '운영 도구 유지보수 연결 구간',
-    date: '2023-11-30',
-    category: 'admin-ops',
-    problem:
-      'POS 중심 리팩토링 이후에도 운영 저장소에는 관리자 화면, 서버, 자동화 수정이 계속 필요했습니다.',
-    approach: [
-      '작은 유지보수 커밋을 보수적인 월 단위 운영 노트로 묶었습니다.',
-      '커밋 근거가 강하지 않은 상태에서 새로운 제품 주장으로 과장하지 않았습니다.',
-      '2023년 주요 제품 항목 사이의 연속성을 유지했습니다.',
-    ],
-    result:
-      '등록된 저장소 이력에서 보이는 2023년 11월 유지보수 작업이 기록됐습니다.',
-    stack: ['React', 'Server fixes', 'Automation scripts'],
-  },
-  {
-    title: '연말 운영 안정화',
-    date: '2023-12-31',
-    category: 'admin-ops',
-    problem:
-      '연말 운영 코드베이스는 관리자 화면, 서버, 리뷰 지원 화면 전반의 안정화가 필요했습니다.',
-    approach: [
-      '늦은 연말 수정을 더 큰 기능 주장으로 키우지 않고 안정화 작업으로 요약했습니다.',
-      '비공개 프로젝트 식별자 대신 업무 흐름 유형을 설명했습니다.',
-      '주변 2023년 항목과 같은 운영 플랫폼 흐름에 연결했습니다.',
-    ],
-    result:
-      '2023년 12월이 등록된 저장소 커밋에 기반한 안정화 항목으로 채워졌습니다.',
-    stack: ['React', 'Backend services', 'Operations tooling'],
-  },
-  {
-    title: '스케줄러 앱과 서비스 반복',
-    date: '2024-01-31',
-    category: 'native-product',
-    problem:
-      '스케줄러 제품은 이후 Flutter 중심 모바일 작업 전에 앱과 서버를 함께 반복해야 했습니다.',
-    approach: [
-      '앱 쪽과 서비스 쪽 스케줄러 커밋을 하나의 제품 시스템 항목으로 묶었습니다.',
-      '과거 커밋 메시지가 짧고 구현 중심이므로 요약 범위를 넓고 보수적으로 유지했습니다.',
-      '이전 서비스 반복과 이후 모바일 앱 초기 구축을 분리했습니다.',
-    ],
-    result:
-      '2024년 1월에 스케줄러 제품 작업이 모바일 타임라인 이전부터 있었다는 점이 보입니다.',
-    stack: ['모바일 앱', '스케줄러 서비스', '제품 반복'],
-  },
-  {
-    title: '스케줄러 서비스 안정화',
-    date: '2024-02-29',
-    category: 'native-product',
-    problem:
-      '스케줄러 app과 server 변경은 1월의 큰 반복 이후 작은 안정화 pass가 필요했습니다.',
-    approach: [
-      '이 달을 새로운 대형 기능이 아니라 앱-서비스 유지보수로 기록했습니다.',
-      '1월과 이후 스케줄러 항목에서 쓰는 같은 제품 흐름을 유지했습니다.',
-      '공개 요약에서 내부 저장소 라벨을 제거했습니다.',
-    ],
-    result:
-      '2024년 2월이 커밋 기반 스케줄러 안정화 노트로 채워졌습니다.',
-    stack: ['모바일 앱', '백엔드 서비스', '스케줄러 업무 흐름'],
-  },
-  {
-    title: '배송 운영과 스케줄러 서비스 반복',
-    date: '2024-03-31',
-    category: 'realtime-backend',
-    problem:
-      '배송 운영 백엔드 작업과 스케줄러 서비스가 여러 등록 저장소에서 병렬로 반복되고 있었습니다.',
-    approach: [
-      '배송 서비스, 스케줄러 서비스, 작은 앱 수정을 하나의 운영 플랫폼 월로 묶었습니다.',
-      '비공개 운영 세부사항이 드러나지 않도록 익명화된 도메인 라벨을 사용했습니다.',
-      '이후 실시간 배달 백엔드 항목으로 이어지는 앞단 작업으로 연결했습니다.',
-    ],
-    result:
-      '2024년 3월이 4월 실시간 백엔드 이정표로 이어지는 준비 구간으로 채워졌습니다.',
-    stack: ['백엔드 서비스', '스케줄링', '운영 시스템', 'Python'],
-  },
-  {
-    title: '스케줄러 다크모드 다듬기',
-    date: '2024-05-31',
-    category: 'native-product',
-    problem:
-      '스케줄러 제품은 시각 모드가 바뀌어도 앱이 일관되게 보이도록 작은 표현 수정이 필요했습니다.',
-    approach: [
-      '다크모드와 앱-서비스 유지보수 커밋을 좁은 다듬기 항목으로 기록했습니다.',
-      '등록된 커밋 수가 적어 이 달의 설명은 의도적으로 작게 유지했습니다.',
-      '더 큰 아키텍처 주장은 근거가 강한 다른 달에 맡겼습니다.',
-    ],
-    result:
-      '2024년 5월이 작지만 실제 존재한 제품 다듬기 구간으로 표현됐습니다.',
-    stack: ['모바일 UI', '다크모드', '스케줄러 서비스'],
-  },
-  {
-    title: '프로토타입 시스템과 서비스 유지보수',
-    date: '2024-06-30',
-    category: 'testing-ci',
-    problem:
-      '스케줄러 모바일 앱이 주요 흐름이 되기 전 여러 작은 저장소에서 서비스 유지보수와 프로토타입 작업이 보였습니다.',
-    approach: [
-      '커밋 수가 적은 게임, 스케줄러, 서비스 작업을 보수적인 프로토타입 시스템 항목으로 묶었습니다.',
-      '강한 근거 없이 출시된 기능처럼 설명하지 않았습니다.',
-      '실제 커밋 기반 타임라인을 보존하기 위해 체인지로그에 남겼습니다.',
-    ],
-    result:
-      '2024년 6월이 사라지지 않으면서도 범위를 정직하게 유지했습니다.',
-    stack: ['프로토타입 앱', '서비스 유지보수', 'Flutter', 'Python'],
-  },
-  {
-    title: '건강/게임 프로토타입 점검',
-    date: '2024-08-31',
-    category: 'testing-ci',
-    problem:
-      '스케줄러 이정표 사이에 작은 프로토타입 저장소 작업이 있어 공개 가능한 방식으로 표현할 필요가 있었습니다.',
-    approach: [
-      '건강 모니터링과 게임 프로토타입 작업을 탐색형 제품 시스템 근거로 기록했습니다.',
-      '해당 월의 등록 커밋 묶음이 작기 때문에 항목을 짧게 유지했습니다.',
-      '프로토타입을 운영 제품처럼 표현하지 않았습니다.',
-    ],
-    result:
-      '2024년 8월이 빈 달이 아니라 프로토타입 점검 구간으로 채워졌습니다.',
-    stack: ['프로토타입 앱', '모바일 실험', '런타임 검사'],
-  },
-  {
-    title: '커리어 프로젝트 사이트 초기 구축',
-    date: '2025-02-28',
-    category: 'portfolio-system',
-    problem:
-      '지원용 공개 프로젝트 사이트는 이후 포트폴리오와 콘텐츠 시스템 작업 전에 초기 구조가 필요했습니다.',
-    approach: [
-      '등록된 프로젝트 사이트 커밋을 공개 근거 시스템 이정표로 기록했습니다.',
-      '같은 달에 있는 POS 운영 항목과 별개의 흐름으로 분리했습니다.',
-      '비공개 지원 세부사항보다 사이트 구조와 보여주는 방식에 초점을 맞췄습니다.',
-    ],
-    result:
-      '2025년 2월에 등록 저장소 이력에서 확인되는 커리어 사이트 작업이 추가됐습니다.',
-    stack: ['웹', '포트폴리오 콘텐츠', '프로젝트 표현'],
-  },
-  {
-    title: '공개 프로필 콘텐츠와 배포 반복',
-    date: '2025-03-31',
-    category: 'portfolio-system',
-    problem:
-      '공개 프로필 사이트가 지원 자산으로 쓰이려면 콘텐츠와 배포 반복이 필요했습니다.',
-    approach: [
-      '콘텐츠, 페이지, 배포 커밋을 하나의 포트폴리오 시스템 항목으로 묶었습니다.',
-      '페이지별 활동명을 그대로 옮기기보다 공개 화면에 어떻게 보이는지를 중심으로 요약했습니다.',
-      '이후 포트폴리오 근거 모델 정리의 앞단 작업으로 위치시켰습니다.',
-    ],
-    result:
-      '2025년 3월이 커밋 이력에 보이는 공개 프로필/배포 작업으로 표현됐습니다.',
-    stack: ['Next.js', '공개 프로필', '배포', '콘텐츠 시스템'],
-  },
-  {
-    title: '인터뷰 콘텐츠와 앱 링크 라우팅',
-    date: '2025-04-30',
-    category: 'portfolio-system',
-    problem:
-      '지원용 웹 콘텐츠에는 인터뷰 중심 페이지와 안정적인 외부 앱 링크 처리가 필요했습니다.',
-    approach: [
-      '프로필 콘텐츠와 인터뷰 페이지 화면을 반복했습니다.',
-      '앱스토어 링크 처리를 같은 공개 화면 흐름의 일부로 추가했습니다.',
-      '이미 존재하는 4월 AI 리뷰 운영 이정표와 구분했습니다.',
-    ],
-    result:
-      '2025년 4월이 운영 AI 작업뿐 아니라 공개 커리어 사이트 반복도 함께 보여주게 됐습니다.',
-    stack: ['Next.js', 'Content pages', 'Routing', 'App links'],
-  },
-  {
-    title: '소셜 글쓰기 화면 초기 구축',
-    date: '2025-05-31',
-    category: 'web-toolkit',
-    problem:
-      '소셜 글쓰기 제품은 피드 기능이 의미를 갖기 전에 인증, 프로필, 글쓰기, 모바일 웹 화면이 필요했습니다.',
-    approach: [
-      '초기 인증, 프로필, 글쓰기 페이지, 웹뷰 지향 흐름을 구축했습니다.',
-      '등록 저장소 커밋을 하나의 제품 화면 이정표로 묶었습니다.',
-      '비공개 라벨을 노출하지 않고 시스템을 설명하는 일반화된 문구를 사용했습니다.',
-    ],
-    result:
-      '2025년 5월이 4월 프로필 작업과 6월 피드 반복 사이의 구체적인 제품 항목이 됐습니다.',
-    stack: ['Next.js', '인증', '프로필 UI', '모바일 웹뷰'],
-  },
-  {
-    title: '소셜 피드 상호작용 반복',
-    date: '2025-06-30',
-    category: 'web-toolkit',
-    problem:
-      '글쓰기 화면이 생긴 이후에는 피드, 검색, 상세, 댓글, 좋아요, 인증 라우팅 동작이 필요했습니다.',
-    approach: [
-      '피드 탐색과 게시글 상세 상호작용을 중심으로 소셜 화면을 확장했습니다.',
-      '댓글과 좋아요 동작을 인증 라우팅 기대와 연결했습니다.',
-      '내부 구현명 대신 기능 범위 수준으로 정리했습니다.',
-    ],
-    result:
-      '2025년 6월이 5월 제품 초기 구축 이후 붙은 상호작용 계층으로 설명됩니다.',
-    stack: ['Next.js', 'Feed UI', 'Search', 'Comments', 'Authentication'],
-  },
-  {
-    title: '프로필 자동화 주기',
-    date: '2025-10-31',
-    category: 'portfolio-system',
-    problem:
-      '공개 개발자 프로필은 수동 정리 작업에 의존하지 않고 최신 상태로 갱신되는 주기가 필요했습니다.',
-    approach: [
-      '생성 프로필 커밋 흐름을 기능량이 아니라 자동화 근거로 기록했습니다.',
-      '작업 성격이 갱신 주기와 발행 기반에 가까워 항목을 작게 유지했습니다.',
-      '큰 제품 작업 사이의 지속적인 공개 프로필 유지보수를 보여주는 달로 사용했습니다.',
-    ],
-    result:
-      '2025년 10월이 등록된 자동화 커밋을 기반으로 과장 없이 채워졌습니다.',
-    stack: ['GitHub 자동화', '생성 콘텐츠', '공개 프로필'],
-  },
-  {
-    title: '영양 앱 서비스와 AI 조언 기준',
-    date: '2026-03-31',
-    category: 'ai-product',
-    problem:
-      '영양 앱은 이후 기능 확장을 설명하기 전에 서비스 기준, AI 조언 동작, 앱 설정이 필요했습니다.',
-    approach: [
-      'AI 식단 조언, 저장소, 알림, 서비스 계층 커밋을 하나의 제품 이정표로 묶었습니다.',
-      '개인 데이터나 비공개 서비스 세부사항 대신 제품 동작에 초점을 맞췄습니다.',
-      '3월 기반 작업을 이미 타임라인에 있는 4월 영양 앱 확장 항목과 연결했습니다.',
-    ],
-    result:
-      '2026년 3월이 영양 앱 흐름에서 빠져 있던 기반 구간으로 추가됐습니다.',
-    stack: ['Flutter', 'AI 조언', 'Notifications', '로컬 저장소', '서비스 계층'],
-  },
-];
+export const changelogEntriesKo: ChangelogEntry[] = localizeByKey(
+  changelogEntries,
+  'title',
+  changelogEntryTranslations,
+  'changelog entries',
+  (entry, translation) => ({
+    ...entry,
+    ...translation,
+  }),
+);
 
-export const skillsKo: SkillContext[] = [
-  {
-    group: '제품 프론트엔드',
-    tools: ['React', 'Next.js', 'TypeScript', 'TanStack Query'],
-    context: '비주얼 빌더, B2B 운영 콘솔, App Router 기반 화면, API 계약 중심 UI, 타입 기반 컴포넌트 규칙에 사용했습니다.',
-    evidenceHref: getRoutePath('changelog', 'ko'),
-    evidenceLabel: '제품 UI 변경 기록 보기',
-  },
-  {
-    group: '상태와 제품 모델',
-    tools: ['Zustand', 'Immer', 'AST-like editor models', 'Export/deploy contracts'],
-    context: '에디터 상태 책임, Variant 동작, 중첩 구조, 생성 결과물, 단일 기준이 필요한 제품 액션에 사용했습니다.',
-    evidenceHref: getRoutePath('changelog', 'ko'),
-    evidenceLabel: '상태 모델 근거 보기',
-  },
-  {
-    group: '품질과 검증',
-    tools: ['Vitest', 'Testing Library', 'Maestro', 'E2E checks', 'CI'],
-    context: '미리보기와 결과물 일관성, 렌더링 기준, 릴리즈 게이트, 사용자 흐름의 회귀 방지에 사용했습니다.',
-    evidenceHref: getRoutePath('changelog', 'ko'),
-    evidenceLabel: '검증 기록 보기',
-  },
-  {
-    group: '운영/백엔드 이해',
-    tools: ['NestJS', 'FastAPI', 'Spring API', 'MySQL', 'Oracle'],
-    context: '관리자 업무 흐름, API 규칙, 권한이 중요한 화면, 제품 UI 뒤의 데이터 구조를 이해하는 데 사용했습니다.',
-    evidenceHref: getRoutePath('changelog', 'ko'),
-    evidenceLabel: '운영 기록 보기',
-  },
-  {
-    group: '릴리즈와 배포',
-    tools: ['Docker', 'GitHub Actions', 'Firebase', 'Vercel', 'EAS'],
-    context: '환경 분리, 반복 가능한 배포, Vercel 전달, 모바일 스토어 준비, 운영 배포 검증 흐름에 사용했습니다.',
-    evidenceHref: getRoutePath('changelog', 'ko'),
-    evidenceLabel: '릴리즈 기록 보기',
-  },
-  {
-    group: 'AI 개발 흐름',
-    tools: ['Codex', 'Claude Code', 'OpenAI API', 'MCP', 'LSP'],
-    context: '코드베이스 탐색, 의미 기반 코드 도구, 원인 분석, CI 실패 추적, AI 기반 제품 운영 흐름에 사용했습니다.',
-    evidenceHref: getRoutePath('ai-workflow', 'ko'),
-    evidenceLabel: 'AI 개발 흐름 보기',
-  },
-];
+export const skillsKo: SkillContext[] = localizeByKey(skills, 'group', skillTranslations, 'skills', (skill, translation) => ({
+  ...skill,
+  ...translation,
+  evidenceHref: localizeInternalHref(skill.evidenceHref),
+}));
 
-export const aiWorkflowStepsKo = [
-  {
-    title: '요청 접수',
-    description: '대부분의 세션은 PRD, GitHub 이슈, 스크린샷, 크래시 로그, 직접적인 제품 우려에서 시작합니다.',
-    tools: ['PRD', 'GitHub issue', '스크린샷', '크래시 로그'],
-    artifact: '저장소에서 처리할 일과 외부 콘솔/스토어에서 처리할 일을 분리한 작업 범위.',
-  },
-  {
-    title: '저장소 맥락 스캔',
-    description: '수정 전에 로컬 파일, 커밋 이력, 이슈 맥락, 생성 결과물, 프로젝트 규칙을 함께 확인합니다.',
-    tools: ['Codex', 'rg', 'git 이력', 'AGENTS.md', '공개 안전성 검사'],
-    artifact: '수정할 파일, 건드리지 않을 파일, 유지해야 할 기준 규칙을 정리한 담당 경로.',
-  },
-  {
-    title: '증거 캡처',
-    description: '좋은 세션은 화면, 로그, 라우트 출력, 브라우저 스냅샷처럼 관찰된 상태를 먼저 남깁니다.',
-    tools: ['Playwright', '빌드 로그', '시뮬레이터 로그', '라우트 출력'],
-    artifact: '비공개 세션 정보를 노출하지 않으면서 변경 필요성을 설명하는 초기 상태.',
-  },
-  {
-    title: '담당 경로 수정',
-    description: '대체 UI나 중복 데이터, 우회 분기를 쌓지 않고 실제 기준 소스를 수정합니다.',
-    tools: ['React', 'TypeScript', '공유 헬퍼', '데이터 모델'],
-    artifact: '제품 규칙, UI 문구, 검증 대상이 같은 기준을 보게 만드는 작은 변경.',
-  },
-  {
-    title: '결과 검증',
-    description: '검사가 통과하고 실제 렌더링/런타임 동작이 요청한 동작과 맞을 때 세션을 마무리합니다.',
-    tools: ['ESLint', 'Next 빌드', '라우트 검사', '공개 안전성 검사', 'Playwright'],
-    artifact: '통과한 명령과 실제 페이지, 라우트 응답, 시뮬레이터 결과, 배포 상태.',
-  },
-  {
-    title: '마무리 기록',
-    description: '여러 세션은 커밋, 푸시, 배포, 이슈 종료, 공개 가능한 체인지로그로 끝납니다.',
-    tools: ['git commit', 'git push', 'Vercel', '변경 기록'],
-    artifact: '커밋 해시, 배포 결과, 검증 노트, 월별 엔지니어링 기록처럼 추적 가능한 완료 상태.',
-  },
-];
+export const aiWorkflowStepsKo = localizeByKey(
+  aiWorkflowSteps,
+  'title',
+  workflowStepTranslations,
+  'AI workflow steps',
+  (_, translation) => translation,
+);
+
+function localizeValues(sourceValues: string[], translations: TranslationMap<string>, owner: string) {
+  const localizedValues = sourceValues.map((value) => requireTranslation(translations, value, owner));
+  assertNoExtraTranslations(translations, new Set(sourceValues), owner);
+  return localizedValues;
+}
+
+function localizeByKey<Key extends PropertyKey, Source extends Record<Key, string>, Translation, Result>(
+  sourceItems: Source[],
+  key: Key,
+  translations: TranslationMap<Translation>,
+  owner: string,
+  merge: (sourceItem: Source, translation: Translation) => Result,
+) {
+  const sourceKeys = new Set(sourceItems.map((item) => item[key]));
+  const localizedItems = sourceItems.map((item) => merge(item, requireTranslation(translations, item[key], owner)));
+  assertNoExtraTranslations(translations, sourceKeys, owner);
+  return localizedItems;
+}
+
+function requireTranslation<T>(translations: TranslationMap<T>, sourceKey: string, owner: string) {
+  if (!Object.hasOwn(translations, sourceKey)) {
+    throw new Error(`Missing Korean translation for ${owner}: ${sourceKey}`);
+  }
+
+  return translations[sourceKey];
+}
+
+function assertNoExtraTranslations<T>(translations: TranslationMap<T>, sourceKeys: Set<string>, owner: string) {
+  const extraKeys = Object.keys(translations).filter((key) => !sourceKeys.has(key));
+
+  if (extraKeys.length > 0) {
+    throw new Error(`Korean translation map for ${owner} has stale source keys: ${extraKeys.join(', ')}`);
+  }
+}
+
+function localizeInternalHref(href: string) {
+  if (/^https?:\/\//.test(href)) {
+    return href;
+  }
+
+  const [pathname, search] = href.split('?');
+  const localizedPathname = getLocalizedRoutePath(pathname, 'ko');
+
+  return search ? `${localizedPathname}?${search}` : localizedPathname;
+}

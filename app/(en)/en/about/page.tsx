@@ -1,13 +1,16 @@
 import { SectionHeading } from '@/components/section-heading';
 import { ActionLink, Panel, TextLink } from '@/components/ui';
 import { cx, ds } from '@/lib/design-system';
+import { createPageMetadata } from '@/lib/page-metadata';
 import { getRoutePath } from '@/lib/routes';
 import { GITHUB_PROFILE_URL, PORTFOLIO_REPOSITORY_URL } from '@/lib/site-links';
 
-export const metadata = {
+export const metadata = createPageMetadata({
+  locale: 'en',
+  routeId: 'about',
   title: 'About',
   description: 'About Seunghun Jeon, product front-end working principles, focus areas, and public engineering evidence.',
-};
+});
 
 export default function AboutPage() {
   const changelogHref = getRoutePath('changelog', 'en');

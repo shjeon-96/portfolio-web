@@ -13,6 +13,7 @@ const publicRoutes = JSON.parse(readFileSync(new URL('../lib/public-routes.json'
 const portfolioSiteUrl = readPortfolioSiteUrl();
 validatePublicRoutes(publicRoutes);
 const routeContentExpectations = buildRouteContentExpectations(publicRoutes);
+const routeMetadataExpectations = buildRouteMetadataExpectations(publicRoutes, portfolioSiteUrl);
 const publicRoutePaths = [...routeContentExpectations.keys()];
 const routes = [...publicRoutePaths, '/sitemap.xml', '/robots.txt'];
 
@@ -51,6 +52,15 @@ try {
     const result = await checkRoute(`${effectiveBaseUrl}${route}`, routeContentExpectations.get(route));
     if (!result.ok) {
       failures.push(`${route} ${result.reason}`);
+      continue;
+    }
+
+    const metadataExpectation = routeMetadataExpectations.get(route);
+    if (metadataExpectation) {
+      const metadataResult = checkPageMetadata(result.body, metadataExpectation);
+      if (!metadataResult.ok) {
+        failures.push(`${route} ${metadataResult.reason}`);
+      }
     }
   }
 
@@ -110,7 +120,7 @@ async function checkRoute(url, expectedSnippets) {
     }
   }
 
-  return { ok: true };
+  return { ok: true, body: result.body };
 }
 
 async function checkSitemap(url, expectedPaths, expectedOrigin) {
@@ -178,6 +188,32 @@ async function checkRobots(url, expectedOrigin) {
   const sitemapUrl = sitemapLines[0].replace(/^Sitemap:\s*/i, '').trim();
   if (sitemapUrl !== expectedSitemapUrl) {
     return { ok: false, reason: `declared sitemap ${sitemapUrl} instead of ${expectedSitemapUrl}` };
+  }
+
+  return { ok: true };
+}
+
+function checkPageMetadata(body, expected) {
+  const links = [...body.matchAll(/<link\b[^>]*>/gi)].map((match) => match[0]);
+  const hasCanonical = links.some(
+    (link) => getAttribute(link, 'rel') === 'canonical' && getAttribute(link, 'href') === expected.canonical,
+  );
+
+  if (!hasCanonical) {
+    return { ok: false, reason: `missing canonical link for ${expected.canonical}` };
+  }
+
+  for (const [language, href] of Object.entries(expected.languages)) {
+    const hasAlternate = links.some(
+      (link) =>
+        getAttribute(link, 'rel') === 'alternate' &&
+        getAttribute(link, 'hreflang') === language &&
+        getAttribute(link, 'href') === href,
+    );
+
+    if (!hasAlternate) {
+      return { ok: false, reason: `missing ${language} alternate link for ${href}` };
+    }
   }
 
   return { ok: true };
@@ -267,6 +303,25 @@ function buildRouteContentExpectations(routeDefinitions) {
   return expectations;
 }
 
+function buildRouteMetadataExpectations(routeDefinitions, expectedOrigin) {
+  const expectations = new Map();
+
+  for (const route of routeDefinitions) {
+    for (const locale of ['ko', 'en']) {
+      expectations.set(route.paths[locale], {
+        canonical: absoluteRouteUrl(expectedOrigin, route.paths[locale]),
+        languages: {
+          en: absoluteRouteUrl(expectedOrigin, route.paths.en),
+          ko: absoluteRouteUrl(expectedOrigin, route.paths.ko),
+          'x-default': absoluteRouteUrl(expectedOrigin, route.paths.ko),
+        },
+      });
+    }
+  }
+
+  return expectations;
+}
+
 function validatePublicRoutes(routeDefinitions) {
   if (!Array.isArray(routeDefinitions) || routeDefinitions.length === 0) {
     throw new Error('Public route registry must be a non-empty array.');
@@ -310,4 +365,13 @@ function validatePublicRoutes(routeDefinitions) {
       }
     }
   }
+}
+
+function getAttribute(tag, attributeName) {
+  const match = tag.match(new RegExp(`\\s${attributeName}=["']([^"']+)["']`, 'i'));
+  return match?.[1];
+}
+
+function absoluteRouteUrl(origin, pathname) {
+  return pathname === '/' ? origin : `${origin}${pathname}`;
 }

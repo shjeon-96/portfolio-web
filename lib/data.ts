@@ -61,6 +61,13 @@ export type ImplementationEvidenceLink =
       label: string;
     };
 
+export type ImplementationEvidenceArtifact = {
+  description: string;
+  external?: boolean;
+  href: string;
+  label: string;
+};
+
 export type ImplementationEvidence = {
   title: string;
   label: string;
@@ -71,6 +78,7 @@ export type ImplementationEvidence = {
   verification: string[];
   outcome: string;
   link: ImplementationEvidenceLink;
+  artifact: ImplementationEvidenceArtifact;
   visualKind: 'editor' | 'ops' | 'mobile' | 'tooling' | 'web';
 };
 
@@ -1081,6 +1089,11 @@ export const implementationEvidence: ImplementationEvidence[] = [
     verification: ['Vitest regressions', 'Generated HTML inspection', 'Route/build checks'],
     outcome: 'This is the strongest portfolio signal: front-end judgment around state ownership, output parity, and regression control in a product builder.',
     link: { type: 'changelog-focus', focus: 'editor', label: 'Review editor evidence' },
+    artifact: {
+      description: 'Filtered public changelog entries for editor state, output parity, regression, and performance work.',
+      href: `${getRoutePath('changelog', 'en')}?focus=editor`,
+      label: 'Editor evidence changelog',
+    },
     visualKind: 'editor',
   },
   {
@@ -1094,6 +1107,11 @@ export const implementationEvidence: ImplementationEvidence[] = [
     verification: ['Route/build checks', 'Operational state review', 'Deployment pipeline checks'],
     outcome: 'This grounds the portfolio in B2B SaaS console work: forms, tables, permissions, and workflow state under real operations.',
     link: { type: 'changelog-focus', focus: 'ops', label: 'Review operations evidence' },
+    artifact: {
+      description: 'Filtered public changelog entries for operations-console, workflow-state, migration, and realtime work.',
+      href: `${getRoutePath('changelog', 'en')}?focus=ops`,
+      label: 'Operations evidence changelog',
+    },
     visualKind: 'ops',
   },
   {
@@ -1107,6 +1125,11 @@ export const implementationEvidence: ImplementationEvidence[] = [
     verification: ['EAS/build checks', 'Maestro smoke evidence', 'Runtime environment review'],
     outcome: 'The work signals a front-end engineer who can carry a product surface through release boundaries, not only local UI implementation.',
     link: { type: 'changelog-focus', focus: 'mobile-release', label: 'Review release evidence' },
+    artifact: {
+      description: 'Filtered public changelog entries where UI delivery, native configuration, store review, and release evidence move together.',
+      href: `${getRoutePath('changelog', 'en')}?focus=mobile-release`,
+      label: 'Mobile release evidence changelog',
+    },
     visualKind: 'mobile',
   },
   {
@@ -1120,6 +1143,12 @@ export const implementationEvidence: ImplementationEvidence[] = [
     verification: ['Vitest', 'Integration checks', 'Package smoke checks'],
     outcome: 'This supports the portfolio claim that AI workflow is backed by real tooling and verification, not prompt-only usage.',
     link: { type: 'external', href: 'https://github.com/shjeon-96/codex-lsp-bridge', label: 'Open public repository' },
+    artifact: {
+      description: 'Public GitHub repository with the package structure, README, and verification surface for the MCP/LSP bridge.',
+      external: true,
+      href: 'https://github.com/shjeon-96/codex-lsp-bridge',
+      label: 'codex-lsp-bridge repository',
+    },
     visualKind: 'tooling',
   },
   {
@@ -1133,6 +1162,12 @@ export const implementationEvidence: ImplementationEvidence[] = [
     verification: ['Route checks', 'Build checks', 'Public repository review'],
     outcome: 'The work adds a web-product signal alongside editor systems, mobile release work, and developer tooling.',
     link: { type: 'external', href: 'https://github.com/shjeon-96/dev-tool-kit', label: 'Open public repository' },
+    artifact: {
+      description: 'Public GitHub repository for the browser-based developer toolkit direction and route-level product surface.',
+      external: true,
+      href: 'https://github.com/shjeon-96/dev-tool-kit',
+      label: 'Web Toolkit repository',
+    },
     visualKind: 'web',
   },
 ];

@@ -8,11 +8,14 @@ import { getChangelogFocusState, getVisibleChangelogEntries } from '@/lib/change
 import { formatChangelogDate, getFeaturedChangelogEntries, groupChangelogEntriesByDate } from '@/lib/data';
 import { changelogEntriesKo } from '@/lib/data-ko';
 import { cx, ds } from '@/lib/design-system';
+import { createPageMetadata } from '@/lib/page-metadata';
 
-export const metadata = {
+export const metadata = createPageMetadata({
+  locale: 'ko',
+  routeId: 'changelog',
   title: '엔지니어링 체인지로그',
   description: '월별로 정리한 공개 가능한 엔지니어링 체인지로그입니다.',
-};
+});
 
 type KoreanChangelogPageProps = {
   searchParams: Promise<{
@@ -53,14 +56,14 @@ export default async function KoreanChangelogPage({ searchParams }: Readonly<Kor
             <MotionReveal key={group.date}>
               <div className="grid gap-4 border-b border-[var(--border)] py-7 last:border-b-0 md:grid-cols-[150px_1fr]">
                 <div>
-                  <p className="text-lg font-semibold text-[var(--text-primary)]">{formatChangelogDate(group.date, 'ko')}</p>
+                  <h2 className="text-lg font-semibold text-[var(--text-primary)]">{formatChangelogDate(group.date, 'ko')}</h2>
                   <p className={cx('mt-2', ds.text.eyebrowMuted)}>
                     변경 {group.entries.length}개
                   </p>
                 </div>
                 <div className="[&>article:last-child]:border-b-0">
                   {group.entries.map((entry) => (
-                    <ChangelogEntry entry={entry} key={entry.title} showDate={false} />
+                    <ChangelogEntry entry={entry} headingLevel={3} key={entry.title} showDate={false} />
                   ))}
                 </div>
               </div>

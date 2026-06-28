@@ -2,13 +2,16 @@ import { SectionHeading } from '@/components/section-heading';
 import { ActionLink, BadgeList, Panel } from '@/components/ui';
 import { projectHighlightsKo, skillsKo } from '@/lib/data-ko';
 import { cx, ds } from '@/lib/design-system';
+import { createPageMetadata } from '@/lib/page-metadata';
 import { getRoutePath } from '@/lib/routes';
 import { GITHUB_PROFILE_URL, PORTFOLIO_REPOSITORY_URL } from '@/lib/site-links';
 
-export const metadata = {
+export const metadata = createPageMetadata({
+  locale: 'ko',
+  routeId: 'resume',
   title: '공개 이력서',
   description: '전승훈의 제품 프론트엔드 공개 이력서입니다. 공개 가능한 프로젝트, 기술, 검증 중심 작업 방식을 요약합니다.',
-};
+});
 
 export default function KoreanResumePage() {
   const featuredProjects = projectHighlightsKo.filter((project) => project.featured).slice(0, 4);

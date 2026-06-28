@@ -4,10 +4,12 @@ import { cx, ds } from '@/lib/design-system';
 
 export function ChangelogEntry({
   entry,
+  headingLevel = 2,
   locale = 'ko',
   showDate = true,
 }: Readonly<{
   entry: ChangelogEntryType;
+  headingLevel?: 2 | 3 | 4;
   locale?: 'en' | 'ko';
   showDate?: boolean;
 }>) {
@@ -27,7 +29,7 @@ export function ChangelogEntry({
             {entry.category}
           </Badge>
         ) : null}
-        <h2 className="text-lg font-semibold">{entry.title}</h2>
+        <EntryHeading level={headingLevel}>{entry.title}</EntryHeading>
         <p className={cx('mt-2', ds.text.bodySmall)}>{entry.problem}</p>
         <ul className={cx('mt-3 space-y-2', ds.text.bodySmall)}>
           {entry.approach.map((item) => (
@@ -42,4 +44,18 @@ export function ChangelogEntry({
       </div>
     </article>
   );
+}
+
+function EntryHeading({ children, level }: Readonly<{ children: string; level: 2 | 3 | 4 }>) {
+  const className = 'text-lg font-semibold';
+
+  if (level === 3) {
+    return <h3 className={className}>{children}</h3>;
+  }
+
+  if (level === 4) {
+    return <h4 className={className}>{children}</h4>;
+  }
+
+  return <h2 className={className}>{children}</h2>;
 }

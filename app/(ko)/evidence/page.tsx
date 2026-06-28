@@ -4,11 +4,14 @@ import { ImplementationEvidenceBoard } from '@/components/implementation-evidenc
 import { LiveEvidenceConsole } from '@/components/live-evidence-console';
 import { SectionHeading } from '@/components/section-heading';
 import { hiringFitKo, implementationEvidenceKo } from '@/lib/data-ko';
+import { createPageMetadata } from '@/lib/page-metadata';
 
-export const metadata = {
+export const metadata = createPageMetadata({
+  locale: 'ko',
+  routeId: 'evidence',
   title: '구현 사례',
   description: '제품 프론트엔드 개발자로서 실제로 다룬 제품 영역, 문제, 역할, 접근, 결과, 검증 흐름을 정리한 페이지입니다.',
-};
+});
 
 export default function KoreanEvidencePage() {
   return (

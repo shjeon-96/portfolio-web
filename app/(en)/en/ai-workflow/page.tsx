@@ -3,11 +3,14 @@ import { SectionHeading } from '@/components/section-heading';
 import { Panel } from '@/components/ui';
 import { aiWorkflowSteps } from '@/lib/data';
 import { cx, ds } from '@/lib/design-system';
+import { createPageMetadata } from '@/lib/page-metadata';
 
-export const metadata = {
+export const metadata = createPageMetadata({
+  locale: 'en',
+  routeId: 'ai-workflow',
   title: 'AI Workflow',
   description: 'A public-safe workflow distilled from Codex sessions: request intake, repo scan, evidence capture, verification, and release records.',
-};
+});
 
 const sessionGroups = [
   {

@@ -1,13 +1,16 @@
 import { SectionHeading } from '@/components/section-heading';
 import { ActionLink, Panel, TextLink } from '@/components/ui';
 import { cx, ds } from '@/lib/design-system';
+import { createPageMetadata } from '@/lib/page-metadata';
 import { getRoutePath } from '@/lib/routes';
 import { GITHUB_PROFILE_URL, PORTFOLIO_REPOSITORY_URL } from '@/lib/site-links';
 
-export const metadata = {
+export const metadata = createPageMetadata({
+  locale: 'ko',
+  routeId: 'about',
   title: '소개',
   description: '전승훈의 제품 프론트엔드 작업 방식, 관심 영역, 공개 가능한 근거를 정리한 소개 페이지입니다.',
-};
+});
 
 export default function KoreanAboutPage() {
   const changelogHref = getRoutePath('changelog', 'ko');

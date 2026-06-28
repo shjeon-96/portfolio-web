@@ -3,11 +3,14 @@ import { SectionHeading } from '@/components/section-heading';
 import { Panel } from '@/components/ui';
 import { aiWorkflowStepsKo } from '@/lib/data-ko';
 import { cx, ds } from '@/lib/design-system';
+import { createPageMetadata } from '@/lib/page-metadata';
 
-export const metadata = {
+export const metadata = createPageMetadata({
+  locale: 'ko',
+  routeId: 'ai-workflow',
   title: 'AI 개발 흐름',
   description: '실제 Codex 세션에서 반복된 요청 접수, 저장소 스캔, 증거 캡처, 검증, 커밋/배포 흐름입니다.',
-};
+});
 
 const sessionGroups = [
   {

@@ -2,11 +2,14 @@ import { GuidePanel } from '@/components/guide-panel';
 import { SectionHeading } from '@/components/section-heading';
 import { SkillContextCard } from '@/components/skill-context-card';
 import { skillsKo } from '@/lib/data-ko';
+import { createPageMetadata } from '@/lib/page-metadata';
 
-export const metadata = {
+export const metadata = createPageMetadata({
+  locale: 'ko',
+  routeId: 'skills',
   title: '기술',
   description: '기술 스택을 제품 경험, 상태 모델, 검증 흐름과 함께 정리한 페이지입니다.',
-};
+});
 
 export default function KoreanSkillsPage() {
   return (

@@ -2,13 +2,16 @@ import { SectionHeading } from '@/components/section-heading';
 import { ActionLink, BadgeList, Panel } from '@/components/ui';
 import { projectHighlights, skills } from '@/lib/data';
 import { cx, ds } from '@/lib/design-system';
+import { createPageMetadata } from '@/lib/page-metadata';
 import { getRoutePath } from '@/lib/routes';
 import { GITHUB_PROFILE_URL, PORTFOLIO_REPOSITORY_URL } from '@/lib/site-links';
 
-export const metadata = {
+export const metadata = createPageMetadata({
+  locale: 'en',
+  routeId: 'resume',
   title: 'Public Resume',
   description: 'Public resume for Seunghun Jeon, focused on product front-end work, public-safe evidence, and verification-heavy delivery.',
-};
+});
 
 export default function ResumePage() {
   const featuredProjects = projectHighlights.filter((project) => project.featured).slice(0, 4);

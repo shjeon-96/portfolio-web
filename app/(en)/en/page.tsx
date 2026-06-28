@@ -7,14 +7,17 @@ import { ProjectHighlightCard } from '@/components/project-highlight-card';
 import { ActionLink, BadgeList, Panel } from '@/components/ui';
 import { changelogEntries, implementationEvidence, projectHighlights, proofPoints, sortChangelogEntriesByDateDesc } from '@/lib/data';
 import { cx, ds } from '@/lib/design-system';
+import { createPageMetadata } from '@/lib/page-metadata';
 import { getRoutePath } from '@/lib/routes';
 import { GITHUB_PROFILE_URL } from '@/lib/site-links';
 
-export const metadata = {
+export const metadata = createPageMetadata({
+  locale: 'en',
+  routeId: 'home',
   title: 'Product Front-End Portfolio',
   description:
     'Product front-end portfolio focused on no-code builders, B2B operation consoles, state models, and export/deploy output parity.',
-};
+});
 
 export default function Home() {
   const featuredProjects = projectHighlights.filter((project) => project.featured);
@@ -82,7 +85,7 @@ export default function Home() {
             View all evidence
           </ActionLink>
         </div>
-        <ImplementationEvidenceBoard entries={homeEvidenceEntries} locale="en" />
+        <ImplementationEvidenceBoard entries={homeEvidenceEntries} headingLevel={3} locale="en" />
       </section>
       <section className={ds.layout.sectionBand}>
         <div className={cx(ds.layout.content, 'py-14')}>
@@ -115,7 +118,7 @@ export default function Home() {
         </div>
         <Panel className="px-5 py-2">
           {homeChangelogEntries.map((entry) => (
-            <ChangelogEntry entry={entry} key={entry.title} locale="en" />
+            <ChangelogEntry entry={entry} headingLevel={3} key={entry.title} locale="en" />
           ))}
         </Panel>
       </section>

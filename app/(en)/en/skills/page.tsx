@@ -2,11 +2,14 @@ import { GuidePanel } from '@/components/guide-panel';
 import { SectionHeading } from '@/components/section-heading';
 import { SkillContextCard } from '@/components/skill-context-card';
 import { skills } from '@/lib/data';
+import { createPageMetadata } from '@/lib/page-metadata';
 
-export const metadata = {
+export const metadata = createPageMetadata({
+  locale: 'en',
+  routeId: 'skills',
   title: 'Skills',
   description: 'Technology stack presented through the product contexts where each skill is used.',
-};
+});
 
 export default function SkillsPage() {
   return (

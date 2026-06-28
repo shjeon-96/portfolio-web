@@ -6,9 +6,11 @@ import { cx, ds } from '@/lib/design-system';
 
 export function ImplementationEvidenceBoard({
   entries,
+  headingLevel = 2,
   locale,
 }: Readonly<{
   entries: ImplementationEvidence[];
+  headingLevel?: 2 | 3 | 4;
   locale: 'en' | 'ko';
 }>) {
   const labels = getLabels(locale);
@@ -22,10 +24,10 @@ export function ImplementationEvidenceBoard({
           <MotionReveal key={entry.title}>
             <Panel as="article" className="overflow-hidden">
               <div className="grid lg:grid-cols-[0.82fr_1.18fr]">
-                <EvidenceVisual entry={entry} locale={locale} />
+                <EvidenceVisual entry={entry} labels={labels} locale={locale} />
                 <div className="p-5">
                   <p className={ds.text.eyebrow}>{entry.label}</p>
-                  <h2 className="mt-3 text-2xl font-semibold">{entry.title}</h2>
+                  <EvidenceHeading level={headingLevel}>{entry.title}</EvidenceHeading>
                   <EvidenceField className="mt-3" label={labels.problem} value={entry.summary} />
 
                   <div className="mt-5 grid gap-4 border-y border-[var(--border)] py-4 md:grid-cols-2">
@@ -63,6 +65,20 @@ export function ImplementationEvidenceBoard({
   );
 }
 
+function EvidenceHeading({ children, level }: Readonly<{ children: string; level: 2 | 3 | 4 }>) {
+  const className = 'mt-3 text-2xl font-semibold';
+
+  if (level === 3) {
+    return <h3 className={className}>{children}</h3>;
+  }
+
+  if (level === 4) {
+    return <h4 className={className}>{children}</h4>;
+  }
+
+  return <h2 className={className}>{children}</h2>;
+}
+
 function getEvidenceLink(entry: ImplementationEvidence, locale: 'en' | 'ko') {
   if (entry.link.type === 'external') {
     return { external: true, href: entry.link.href };
@@ -88,7 +104,11 @@ function EvidenceField({
   );
 }
 
-function EvidenceVisual({ entry, locale }: Readonly<{ entry: ImplementationEvidence; locale: 'en' | 'ko' }>) {
+function EvidenceVisual({
+  entry,
+  labels,
+  locale,
+}: Readonly<{ entry: ImplementationEvidence; labels: ReturnType<typeof getLabels>; locale: 'en' | 'ko' }>) {
   return (
     <div className="border-b border-[var(--border)] bg-[var(--surface-strong)] p-5 lg:border-b-0 lg:border-r">
       <div className="mb-4 flex items-center justify-between">
@@ -102,6 +122,13 @@ function EvidenceVisual({ entry, locale }: Readonly<{ entry: ImplementationEvide
       {entry.visualKind === 'mobile' ? <MobileVisual /> : null}
       {entry.visualKind === 'tooling' ? <ToolingVisual locale={locale} /> : null}
       {entry.visualKind === 'web' ? <WebVisual /> : null}
+      <div className="mt-4 rounded-md border border-[var(--border)] bg-[var(--surface)] p-4">
+        <p className={ds.text.eyebrowMuted}>{labels.artifact}</p>
+        <p className={cx('mt-2', ds.text.bodySmall)}>{entry.artifact.description}</p>
+        <ActionLink className="mt-4" external={entry.artifact.external} href={entry.artifact.href} variant="compact">
+          {entry.artifact.label}
+        </ActionLink>
+      </div>
     </div>
   );
 }
@@ -240,11 +267,12 @@ function WebVisual() {
 
 function getLabels(locale: 'en' | 'ko') {
   if (locale === 'ko') {
-    return {
-      approach: '접근',
-      problem: '문제',
-      result: '결과',
-      role: '맡은 역할',
+      return {
+        approach: '접근',
+        artifact: '공개 근거',
+        problem: '문제',
+        result: '결과',
+        role: '맡은 역할',
       surface: '담당 영역',
       verification: '검증',
     };
@@ -252,6 +280,7 @@ function getLabels(locale: 'en' | 'ko') {
 
   return {
     approach: 'Approach',
+    artifact: 'Public artifact',
     problem: 'Problem',
     result: 'Result',
     role: 'Role',

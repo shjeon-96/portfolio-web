@@ -4,11 +4,14 @@ import { ImplementationEvidenceBoard } from '@/components/implementation-evidenc
 import { LiveEvidenceConsole } from '@/components/live-evidence-console';
 import { SectionHeading } from '@/components/section-heading';
 import { hiringFit, implementationEvidence } from '@/lib/data';
+import { createPageMetadata } from '@/lib/page-metadata';
 
-export const metadata = {
+export const metadata = createPageMetadata({
+  locale: 'en',
+  routeId: 'evidence',
   title: 'Case Studies',
   description: 'Representative product surfaces structured by problem, role, approach, result, and verification evidence.',
-};
+});
 
 export default function EvidencePage() {
   return (

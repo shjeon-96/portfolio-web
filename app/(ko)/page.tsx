@@ -8,13 +8,16 @@ import { ActionLink, BadgeList, Panel } from '@/components/ui';
 import { sortChangelogEntriesByDateDesc } from '@/lib/data';
 import { changelogEntriesKo, implementationEvidenceKo, projectHighlightsKo, proofPointsKo } from '@/lib/data-ko';
 import { cx, ds } from '@/lib/design-system';
+import { createPageMetadata } from '@/lib/page-metadata';
 import { getRoutePath } from '@/lib/routes';
 import { GITHUB_PROFILE_URL } from '@/lib/site-links';
 
-export const metadata = {
+export const metadata = createPageMetadata({
+  locale: 'ko',
+  routeId: 'home',
   title: '제품 프론트엔드 포트폴리오',
   description: '노코드 빌더, B2B 운영 콘솔, 릴리즈 경계에서 상태 모델과 배포 산출물 정합성을 다룬 제품 프론트엔드 포트폴리오.',
-};
+});
 
 export default function KoreanHomePage() {
   const featuredProjects = projectHighlightsKo.filter((project) => project.featured);
@@ -82,7 +85,7 @@ export default function KoreanHomePage() {
             전체 구현 근거 보기
           </ActionLink>
         </div>
-        <ImplementationEvidenceBoard entries={homeEvidenceEntries} locale="ko" />
+        <ImplementationEvidenceBoard entries={homeEvidenceEntries} headingLevel={3} locale="ko" />
       </section>
       <section className={ds.layout.sectionBand}>
         <div className={cx(ds.layout.content, 'py-14')}>
@@ -114,7 +117,7 @@ export default function KoreanHomePage() {
         </div>
         <Panel className="px-5 py-2">
           {homeChangelogEntries.map((entry) => (
-            <ChangelogEntry entry={entry} key={entry.title} />
+            <ChangelogEntry entry={entry} headingLevel={3} key={entry.title} />
           ))}
         </Panel>
       </section>

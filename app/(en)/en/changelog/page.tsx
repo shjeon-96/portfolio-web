@@ -7,11 +7,14 @@ import { Panel } from '@/components/ui';
 import { getChangelogFocusState, getVisibleChangelogEntries } from '@/lib/changelog-focus';
 import { changelogEntries, formatChangelogDate, getFeaturedChangelogEntries, groupChangelogEntriesByDate } from '@/lib/data';
 import { cx, ds } from '@/lib/design-system';
+import { createPageMetadata } from '@/lib/page-metadata';
 
-export const metadata = {
+export const metadata = createPageMetadata({
+  locale: 'en',
+  routeId: 'changelog',
   title: 'Engineering Changelog',
   description: 'Public-safe engineering changelog written as problem, approach, and result.',
-};
+});
 
 type ChangelogPageProps = {
   searchParams: Promise<{
@@ -52,14 +55,14 @@ export default async function ChangelogPage({ searchParams }: Readonly<Changelog
             <MotionReveal key={group.date}>
               <div className="grid gap-4 border-b border-[var(--border)] py-7 last:border-b-0 md:grid-cols-[150px_1fr]">
                 <div>
-                  <p className="text-lg font-semibold text-[var(--text-primary)]">{formatChangelogDate(group.date, 'en')}</p>
+                  <h2 className="text-lg font-semibold text-[var(--text-primary)]">{formatChangelogDate(group.date, 'en')}</h2>
                   <p className={cx('mt-2', ds.text.eyebrowMuted)}>
                     {group.entries.length} changes
                   </p>
                 </div>
                 <div className="[&>article:last-child]:border-b-0">
                   {group.entries.map((entry) => (
-                    <ChangelogEntry entry={entry} key={entry.title} locale="en" showDate={false} />
+                    <ChangelogEntry entry={entry} headingLevel={3} key={entry.title} locale="en" showDate={false} />
                   ))}
                 </div>
               </div>
