@@ -5,7 +5,7 @@ import { HeroSignalConsole } from '@/components/hero-signal-console';
 import { ImplementationEvidenceBoard } from '@/components/implementation-evidence-board';
 import { ProjectHighlightCard } from '@/components/project-highlight-card';
 import { ActionLink, BadgeList, Panel } from '@/components/ui';
-import { sortChangelogEntriesByDateDesc } from '@/lib/data';
+import { getFeaturedChangelogEntries } from '@/lib/data';
 import { changelogEntriesKo, implementationEvidenceKo, projectHighlightsKo, proofPointsKo } from '@/lib/data-ko';
 import { cx, ds } from '@/lib/design-system';
 import { createPageMetadata } from '@/lib/page-metadata';
@@ -21,7 +21,7 @@ export const metadata = createPageMetadata({
 
 export default function KoreanHomePage() {
   const featuredProjects = projectHighlightsKo.filter((project) => project.featured);
-  const homeChangelogEntries = sortChangelogEntriesByDateDesc(changelogEntriesKo).slice(0, 3);
+  const homeChangelogEntries = getFeaturedChangelogEntries(changelogEntriesKo);
   const homeEvidenceEntries = implementationEvidenceKo.slice(0, 2);
   const changelogHref = getRoutePath('changelog', 'ko');
   const evidenceHref = getRoutePath('evidence', 'ko');
@@ -108,11 +108,11 @@ export default function KoreanHomePage() {
       <section className={cx(ds.layout.content, 'py-14')}>
         <div className="mb-5 flex flex-col justify-between gap-3 md:flex-row md:items-end">
           <div>
-            <p className={ds.text.eyebrowAccent}>최근 엔지니어링 기록</p>
-            <h2 className="mt-2 text-3xl font-semibold">최근 엔지니어링 노트</h2>
+            <p className={ds.text.eyebrowAccent}>선별된 엔지니어링 근거</p>
+            <h2 className="mt-2 text-3xl font-semibold">작업 방식을 가장 잘 보여주는 기록</h2>
           </div>
           <ActionLink href={changelogHref} variant="subtle">
-            전체 체인지로그 보기
+            체인지로그 아카이브 보기
           </ActionLink>
         </div>
         <Panel className="px-5 py-2">

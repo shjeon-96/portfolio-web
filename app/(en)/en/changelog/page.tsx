@@ -1,12 +1,9 @@
-import { ChangelogEntry } from '@/components/changelog-entry';
+import { ChangelogArchiveList } from '@/components/changelog-archive-list';
 import { ChangelogFocusPanel } from '@/components/changelog-focus-panel';
 import { FeaturedChangelogList } from '@/components/featured-changelog-list';
-import { MotionReveal } from '@/components/motion-reveal';
 import { SectionHeading } from '@/components/section-heading';
-import { Panel } from '@/components/ui';
 import { getChangelogFocusState, getVisibleChangelogEntries } from '@/lib/changelog-focus';
-import { changelogEntries, formatChangelogDate, getFeaturedChangelogEntries, groupChangelogEntriesByDate } from '@/lib/data';
-import { cx, ds } from '@/lib/design-system';
+import { changelogEntries, getFeaturedChangelogEntries, groupChangelogEntriesByDate } from '@/lib/data';
 import { createPageMetadata } from '@/lib/page-metadata';
 
 export const metadata = createPageMetadata({
@@ -32,6 +29,11 @@ export default async function ChangelogPage({ searchParams }: Readonly<Changelog
     focusState.kind === 'active'
       ? focusState.rule.description.en
       : 'Release gates, output parity, and AI-assisted root-cause work are the clearest current signals in this portfolio.';
+  const archiveTitle = focusState.kind === 'active' ? `${focusState.rule.label.en} archive` : 'Full monthly archive';
+  const archiveDescription =
+    focusState.kind === 'active'
+      ? 'Monthly records matching the selected evidence filter.'
+      : 'The default view leads with representative evidence; the full monthly record stays available as an archive.';
 
   return (
     <main className="page-shell">
@@ -49,27 +51,13 @@ export default async function ChangelogPage({ searchParams }: Readonly<Changelog
           title={featuredTitle}
         />
       ) : null}
-      {groupedEntries.length > 0 ? (
-        <Panel as="section" className="mt-8 px-5 py-1">
-          {groupedEntries.map((group) => (
-            <MotionReveal key={group.date}>
-              <div className="grid gap-4 border-b border-[var(--border)] py-7 last:border-b-0 md:grid-cols-[150px_1fr]">
-                <div>
-                  <h2 className="text-lg font-semibold text-[var(--text-primary)]">{formatChangelogDate(group.date, 'en')}</h2>
-                  <p className={cx('mt-2', ds.text.eyebrowMuted)}>
-                    {group.entries.length} changes
-                  </p>
-                </div>
-                <div className="[&>article:last-child]:border-b-0">
-                  {group.entries.map((entry) => (
-                    <ChangelogEntry entry={entry} headingLevel={3} key={entry.title} locale="en" showDate={false} />
-                  ))}
-                </div>
-              </div>
-            </MotionReveal>
-          ))}
-        </Panel>
-      ) : null}
+      <ChangelogArchiveList
+        defaultOpen={focusState.kind === 'active'}
+        description={archiveDescription}
+        groups={groupedEntries}
+        locale="en"
+        title={archiveTitle}
+      />
     </main>
   );
 }

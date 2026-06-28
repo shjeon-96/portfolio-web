@@ -5,7 +5,7 @@ import { HeroSignalConsole } from '@/components/hero-signal-console';
 import { ImplementationEvidenceBoard } from '@/components/implementation-evidence-board';
 import { ProjectHighlightCard } from '@/components/project-highlight-card';
 import { ActionLink, BadgeList, Panel } from '@/components/ui';
-import { changelogEntries, implementationEvidence, projectHighlights, proofPoints, sortChangelogEntriesByDateDesc } from '@/lib/data';
+import { changelogEntries, getFeaturedChangelogEntries, implementationEvidence, projectHighlights, proofPoints } from '@/lib/data';
 import { cx, ds } from '@/lib/design-system';
 import { createPageMetadata } from '@/lib/page-metadata';
 import { getRoutePath } from '@/lib/routes';
@@ -21,7 +21,7 @@ export const metadata = createPageMetadata({
 
 export default function Home() {
   const featuredProjects = projectHighlights.filter((project) => project.featured);
-  const homeChangelogEntries = sortChangelogEntriesByDateDesc(changelogEntries).slice(0, 3);
+  const homeChangelogEntries = getFeaturedChangelogEntries(changelogEntries);
   const homeEvidenceEntries = implementationEvidence.slice(0, 2);
   const changelogHref = getRoutePath('changelog', 'en');
   const evidenceHref = getRoutePath('evidence', 'en');
@@ -109,11 +109,11 @@ export default function Home() {
       <section className={cx(ds.layout.content, 'py-14')}>
         <div className="mb-5 flex flex-col justify-between gap-3 md:flex-row md:items-end">
           <div>
-            <p className={ds.text.eyebrowAccent}>Recent Changelog</p>
-            <h2 className="mt-2 text-3xl font-semibold">Recent engineering notes</h2>
+            <p className={ds.text.eyebrowAccent}>Selected Engineering Evidence</p>
+            <h2 className="mt-2 text-3xl font-semibold">Records that best explain how I work</h2>
           </div>
           <ActionLink href={changelogHref} variant="subtle">
-            View full changelog
+            View changelog archive
           </ActionLink>
         </div>
         <Panel className="px-5 py-2">

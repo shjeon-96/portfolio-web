@@ -1,6 +1,7 @@
+import { ResumeFitStrip } from '@/components/resume-fit-strip';
 import { SectionHeading } from '@/components/section-heading';
 import { ActionLink, BadgeList, Panel } from '@/components/ui';
-import { projectHighlightsKo, skillsKo } from '@/lib/data-ko';
+import { hiringFitKo, projectHighlightsKo, skillsKo } from '@/lib/data-ko';
 import { cx, ds } from '@/lib/design-system';
 import { createPageMetadata } from '@/lib/page-metadata';
 import { getRoutePath } from '@/lib/routes';
@@ -57,6 +58,8 @@ export default function KoreanResumePage() {
           </div>
         </Panel>
       </section>
+
+      <ResumeFitStrip fit={hiringFitKo} locale="ko" />
 
       <section className="mt-10">
         <div className={ds.layout.sectionHeader}>

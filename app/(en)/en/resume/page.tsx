@@ -1,6 +1,7 @@
+import { ResumeFitStrip } from '@/components/resume-fit-strip';
 import { SectionHeading } from '@/components/section-heading';
 import { ActionLink, BadgeList, Panel } from '@/components/ui';
-import { projectHighlights, skills } from '@/lib/data';
+import { hiringFit, projectHighlights, skills } from '@/lib/data';
 import { cx, ds } from '@/lib/design-system';
 import { createPageMetadata } from '@/lib/page-metadata';
 import { getRoutePath } from '@/lib/routes';
@@ -57,6 +58,8 @@ export default function ResumePage() {
           </div>
         </Panel>
       </section>
+
+      <ResumeFitStrip fit={hiringFit} locale="en" />
 
       <section className="mt-10">
         <div className={ds.layout.sectionHeader}>
