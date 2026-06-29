@@ -27,14 +27,21 @@ The first public version should include:
 ## Local Workflow
 
 ```bash
-npm install
+npm ci
 npm run dev
 ```
 
 ## Verification
 
 ```bash
+npm run precommit:verify
+```
+
+The combined check runs:
+
+```bash
 npm run lint
+npm run test
 npm run build
 npm run check:public-safety
 npm run check:routes

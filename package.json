@@ -8,9 +8,11 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
+    "test": "vitest run",
+    "test:coverage": "vitest run --coverage",
     "check:public-safety": "node scripts/public-safety-check.mjs",
     "check:routes": "node scripts/verify-routes.mjs",
-    "precommit:verify": "npm run check:public-safety && npm run lint && npm run check:routes && npm run build",
+    "precommit:verify": "npm run check:public-safety && npm run lint && npm run test && npm run check:routes && npm run build",
     "changelog:candidates": "node scripts/generate-public-changelog.mjs"
   },
   "dependencies": {
@@ -25,11 +27,13 @@
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "@vitest/coverage-v8": "^4.1.9",
     "eslint": "^9",
     "eslint-config-next": "16.2.9",
     "postcss": "8.5.15",
     "tailwindcss": "^4",
-    "typescript": "^5"
+    "typescript": "^5",
+    "vitest": "^4.1.9"
   },
   "overrides": {
     "postcss": "8.5.15"

@@ -1311,12 +1311,16 @@ export function groupChangelogEntriesByDate<T extends ChangelogEntry>(entries: T
     const lastGroup = groups.at(-1);
 
     if (lastGroup?.date === entryMonth) {
-      lastGroup.entries.push(entry);
-      return groups;
+      return [
+        ...groups.slice(0, -1),
+        {
+          ...lastGroup,
+          entries: [...lastGroup.entries, entry],
+        },
+      ];
     }
 
-    groups.push({ date: entryMonth, entries: [entry] });
-    return groups;
+    return [...groups, { date: entryMonth, entries: [entry] }];
   }, []);
 }
 

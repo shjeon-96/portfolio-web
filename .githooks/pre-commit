@@ -7,6 +7,9 @@ npm run check:public-safety
 echo "[portfolio pre-commit] lint"
 npm run lint
 
+echo "[portfolio pre-commit] tests"
+npm run test
+
 echo "[portfolio pre-commit] route responses"
 npm run check:routes
 

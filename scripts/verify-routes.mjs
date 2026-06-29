@@ -10,8 +10,10 @@ const baseUrl = externalBaseUrl ?? `http://${host}:${port}`;
 const timeoutMs = Number(process.env.ROUTE_CHECK_TIMEOUT_MS ?? 75_000);
 
 const publicRoutes = JSON.parse(readFileSync(new URL('../lib/public-routes.json', import.meta.url), 'utf8'));
+const securityHeaders = JSON.parse(readFileSync(new URL('../lib/security-headers.json', import.meta.url), 'utf8'));
 const portfolioSiteUrl = readPortfolioSiteUrl();
 validatePublicRoutes(publicRoutes);
+validateSecurityHeaders(securityHeaders);
 const routeContentExpectations = buildRouteContentExpectations(publicRoutes);
 const routeMetadataExpectations = buildRouteMetadataExpectations(publicRoutes, portfolioSiteUrl);
 const publicRoutePaths = [...routeContentExpectations.keys()];
@@ -118,6 +120,11 @@ async function checkRoute(url, expectedSnippets) {
     if (missingSnippet) {
       return { ok: false, reason: `did not include expected content: ${JSON.stringify(missingSnippet)}` };
     }
+  }
+
+  const securityHeaderResult = checkSecurityHeaders(result.headers);
+  if (!securityHeaderResult.ok) {
+    return securityHeaderResult;
   }
 
   return { ok: true, body: result.body };
@@ -234,7 +241,7 @@ async function fetchText(url) {
     return { ok: false, reason: 'returned an empty body' };
   }
 
-  return { ok: true, body };
+  return { ok: true, body, headers: response.headers };
 }
 
 async function fetchQuietly(url) {
@@ -365,6 +372,44 @@ function validatePublicRoutes(routeDefinitions) {
       }
     }
   }
+}
+
+function validateSecurityHeaders(headers) {
+  if (!Array.isArray(headers) || headers.length === 0) {
+    throw new Error('Security header registry must be a non-empty array.');
+  }
+
+  const headerNames = new Set();
+  for (const header of headers) {
+    if (typeof header?.key !== 'string' || header.key.trim().length === 0) {
+      throw new Error('Security header is missing a string key.');
+    }
+
+    if (typeof header.value !== 'string' || header.value.trim().length === 0) {
+      throw new Error(`Security header ${header.key} is missing a string value.`);
+    }
+
+    const normalizedName = header.key.toLowerCase();
+    if (headerNames.has(normalizedName)) {
+      throw new Error(`Duplicate security header: ${header.key}`);
+    }
+
+    headerNames.add(normalizedName);
+  }
+}
+
+function checkSecurityHeaders(headers) {
+  for (const expectedHeader of securityHeaders) {
+    const actualValue = headers.get(expectedHeader.key);
+    if (actualValue !== expectedHeader.value) {
+      return {
+        ok: false,
+        reason: `returned ${expectedHeader.key}=${JSON.stringify(actualValue)} instead of ${JSON.stringify(expectedHeader.value)}`,
+      };
+    }
+  }
+
+  return { ok: true };
 }
 
 function getAttribute(tag, attributeName) {
