@@ -107,25 +107,25 @@ export const projectHighlights: ProjectHighlight[] = [
     title: 'No-code web builder editor',
     label: 'Visual builder product system',
     summary:
-      'Anonymized editor work around AST-like state models, component variants, data binding, canvas behavior, preview, and export/deploy output parity.',
+      'Owned front-end surfaces where editor state had to drive canvas behavior, component variants, data binding, preview, and generated output through one rule.',
     stack: ['React', 'Next.js', 'TypeScript', 'Zustand', 'Immer'],
-    status: 'Public-safe case study from private product work',
+    status: 'State model, canvas interaction, and output parity',
     featured: true,
   },
   {
     title: 'Tax and settlement operations platform',
     label: 'Back-office and mobile operations',
     summary:
-      'Business workflow platform covering tax agency requests, purchase and sales dashboards, merchant approval, notifications, and legacy Vue to React to Next.js migration.',
+      'Built and migrated operator workflows for tax requests, purchase/sales dashboards, merchant review, notifications, and approval states across web and mobile surfaces.',
     stack: ['Flutter', 'React', 'Next.js', 'Firebase', 'Docker'],
-    status: 'Operational workflow and framework migration',
+    status: 'B2B workflow state and framework migration',
     featured: true,
   },
   {
     title: 'codex-lsp-bridge',
     label: 'Open-source agent tooling',
     summary:
-      'Read-only MCP/LSP bridge that gives Codex diagnostics, definitions, references, symbols, hover, and status from local language servers.',
+      'Built a read-only MCP/LSP bridge so Codex can inspect diagnostics, definitions, references, symbols, hover text, and server status before editing code.',
     stack: ['TypeScript', 'Node.js', 'MCP', 'LSP', 'Vitest'],
     status: 'Public package and GitHub repository',
     featured: true,
@@ -135,7 +135,7 @@ export const projectHighlights: ProjectHighlight[] = [
     title: 'Gyeol Mobile',
     label: 'Expo/React Native product platform',
     summary:
-      'Calendar-first mobile product with release gates for native policy, EAS configuration, runtime environment, widgets, store metadata, and UI smoke evidence.',
+      'Shaped a calendar-first mobile product where Expo config, runtime environment, widgets, store metadata, and UI smoke evidence are checked as one release path.',
     stack: ['Expo', 'React Native', 'TypeScript', 'Supabase', 'EAS'],
     status: 'iOS/Android release workflow',
     featured: true,
@@ -152,7 +152,7 @@ export const projectHighlights: ProjectHighlight[] = [
     title: 'Web Toolkit',
     label: 'Privacy-first developer tools',
     summary:
-      'Browser-based developer toolkit direction for client-side processing, offline PWA usage, i18n, WebAssembly-powered tools, and shareable tool state.',
+      'Designed a browser-based developer toolkit around local processing, offline-capable routes, i18n, WebAssembly-powered utilities, and shareable tool state.',
     stack: ['Next.js', 'React', 'TypeScript', 'Tailwind CSS', 'Vitest'],
     status: 'Public web product direction',
     featured: true,
@@ -162,7 +162,7 @@ export const projectHighlights: ProjectHighlight[] = [
     title: 'app-store-connect-release',
     label: 'Codex release review plugin',
     summary:
-      'Conservative App Store Connect submission helper for reviewing release inputs and drafting App Review responses without exposing private release data.',
+      'Created a conservative release-review helper that checks App Store submission inputs and drafts review responses without storing private release data.',
     stack: ['Python', 'Codex plugin', 'App Store Connect', 'Release workflow'],
     status: 'Public GitHub repository',
     href: 'https://github.com/shjeon-96/app-store-connect-release',
@@ -171,7 +171,7 @@ export const projectHighlights: ProjectHighlight[] = [
     title: 'IdeaToPRD',
     label: 'AI product planning SaaS',
     summary:
-      'AI-assisted PRD generation product direction that connects idea capture, structured planning, and deployable Next.js product surfaces.',
+      'Turned loose product ideas into structured PRD flows, with Next.js surfaces for capturing context, shaping requirements, and preparing implementation scope.',
     stack: ['Next.js', 'TypeScript', 'AI workflow', 'Vercel'],
     status: 'Public repository and live web surface',
     href: 'https://github.com/shjeon-96/ideatoprd',
@@ -1082,12 +1082,12 @@ export const implementationEvidence: ImplementationEvidence[] = [
     title: 'Editor state and output parity',
     label: 'Visual builder front-end',
     summary:
-      'A builder surface where design-time state, runtime behavior, preview, and generated output have to follow one product contract.',
+      'The core problem was drift: canvas editing, runtime rendering, preview, and export could each interpret the same component differently unless one state model owned the rule.',
     surface: 'AST-like editor model, component variants, data binding, canvas behavior, preview state, and export/deploy output.',
-    role: 'Kept editable product state, runtime interpretation, and generated artifacts aligned instead of letting each path define its own rule.',
+    role: 'Owned the front-end contract between editable state and generated output, keeping variant rules, binding data, and artifact checks tied to the same source.',
     frontendSignals: ['React contracts', 'Zustand/Immer state model', 'Variant ownership', 'Export/deploy parity'],
     verification: ['Vitest regressions', 'Generated HTML inspection', 'Route/build checks'],
-    outcome: 'This is the strongest portfolio signal: front-end judgment around state ownership, output parity, and regression control in a product builder.',
+    outcome: 'This shows the highest-signal builder work: complex state ownership, canvas interaction, generated output, and regression checks handled as one product surface.',
     link: { type: 'changelog-focus', focus: 'editor', label: 'Review editor evidence' },
     artifact: {
       description: 'Filtered public changelog entries for editor state, output parity, regression, and performance work.',
@@ -1100,12 +1100,12 @@ export const implementationEvidence: ImplementationEvidence[] = [
     title: 'Operational console and migration workflows',
     label: 'B2B product operations',
     summary:
-      'Back-office surfaces where approval, tax and settlement states, dashboards, notifications, and framework migration had to keep operators moving.',
+      'The work was not just tables and forms: operators needed approval, tax, settlement, dashboard, and notification states to stay reliable while the front end migrated.',
     surface: 'Admin dashboards, approval flows, tax and settlement workflows, notification paths, and Vue to React/Next.js migration boundaries.',
-    role: 'Turned workflow rules into typed UI states and kept legacy migration tied to operational continuity.',
+    role: 'Translated business workflow rules into UI state, guarded permission and empty/failure paths, and kept migration work tied to real operator continuity.',
     frontendSignals: ['React/Next.js migration', 'Admin state modeling', 'API contract alignment', 'Permission-aware UI'],
     verification: ['Route/build checks', 'Operational state review', 'Deployment pipeline checks'],
-    outcome: 'This grounds the portfolio in B2B SaaS console work: forms, tables, permissions, and workflow state under real operations.',
+    outcome: 'This grounds the portfolio in B2B SaaS console work where front-end quality is measured by operational clarity, permission handling, and migration safety.',
     link: { type: 'changelog-focus', focus: 'ops', label: 'Review operations evidence' },
     artifact: {
       description: 'Filtered public changelog entries for operations-console, workflow-state, migration, and realtime work.',
@@ -1118,12 +1118,12 @@ export const implementationEvidence: ImplementationEvidence[] = [
     title: 'Mobile release gate workflow',
     label: 'React Native product platform',
     summary:
-      'A calendar-first mobile product where native configuration, widgets, store metadata, runtime environment, and UI smoke evidence must move together.',
+      'Mobile delivery had several failure points outside React components: native config, runtime env, widgets, store metadata, and smoke evidence all had to line up.',
     surface: 'Expo/React Native app surfaces, native policy, widget configuration, and release readiness checks.',
-    role: 'Connected product UI, runtime configuration, and release verification into one delivery path.',
+    role: 'Connected product UI work to release readiness, so configuration, store-facing details, and smoke checks were reviewed before distribution.',
     frontendSignals: ['React Native flows', 'Expo configuration', 'Widget surface ownership', 'Store-facing readiness'],
     verification: ['EAS/build checks', 'Maestro smoke evidence', 'Runtime environment review'],
-    outcome: 'The work signals a front-end engineer who can carry a product surface through release boundaries, not only local UI implementation.',
+    outcome: 'This shows release-aware front-end ownership: UI implementation carried through native configuration, verification evidence, and store submission boundaries.',
     link: { type: 'changelog-focus', focus: 'mobile-release', label: 'Review release evidence' },
     artifact: {
       description: 'Filtered public changelog entries where UI delivery, native configuration, store review, and release evidence move together.',
@@ -1136,12 +1136,12 @@ export const implementationEvidence: ImplementationEvidence[] = [
     title: 'Public code-intelligence tooling',
     label: 'Open-source developer tooling',
     summary:
-      'A read-only MCP/LSP bridge that exposes diagnostics, definitions, references, symbols, hover, and server status to agent workflows.',
+      'Agent workflows needed code evidence before edits. The tool exposes language-server diagnostics and navigation through read-only MCP contracts.',
     surface: 'Local language-server integration exposed as safe, typed tools for code investigation.',
-    role: 'Built the integration boundary so AI-assisted development could use semantic code evidence without broad project write access.',
+    role: 'Designed the integration boundary, typed tool contracts, and package checks so AI-assisted development could inspect code safely before making changes.',
     frontendSignals: ['TypeScript API design', 'MCP tool contracts', 'Language server adapters', 'Package release hygiene'],
     verification: ['Vitest', 'Integration checks', 'Package smoke checks'],
-    outcome: 'This supports the portfolio claim that AI workflow is backed by real tooling and verification, not prompt-only usage.',
+    outcome: 'This makes the AI workflow claim concrete: the portfolio points to shipped tooling, package hygiene, and tests rather than only process language.',
     link: { type: 'external', href: 'https://github.com/shjeon-96/codex-lsp-bridge', label: 'Open public repository' },
     artifact: {
       description: 'Public GitHub repository with the package structure, README, and verification surface for the MCP/LSP bridge.',
@@ -1155,12 +1155,12 @@ export const implementationEvidence: ImplementationEvidence[] = [
     title: 'Privacy-first web toolkit direction',
     label: 'Next.js web product',
     summary:
-      'A browser-based developer toolkit direction for client-side processing, offline usage, i18n, and shareable tool state.',
+      'A public web-product direction focused on developer utilities that should run locally, keep state shareable, and avoid unnecessary server-side handling.',
     surface: 'Next.js product shell, route model, tool panels, and public web deployment direction.',
-    role: 'Shaped a public-facing web product around local processing and repeatable tool state instead of server-dependent workflows.',
+    role: 'Defined the product shell, route structure, and tool-state model around client-side processing, offline use, and public-safe deployment.',
     frontendSignals: ['Next.js App Router', 'TypeScript UI contracts', 'Tailwind system', 'PWA-oriented surfaces'],
     verification: ['Route checks', 'Build checks', 'Public repository review'],
-    outcome: 'The work adds a web-product signal alongside editor systems, mobile release work, and developer tooling.',
+    outcome: 'This adds a public web-product signal: route architecture, reusable tool panels, privacy positioning, and deployment checks in one Next.js surface.',
     link: { type: 'external', href: 'https://github.com/shjeon-96/dev-tool-kit', label: 'Open public repository' },
     artifact: {
       description: 'Public GitHub repository for the browser-based developer toolkit direction and route-level product surface.',

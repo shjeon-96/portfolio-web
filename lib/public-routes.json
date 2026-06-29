@@ -28,8 +28,8 @@
       "en": "Case Studies"
     },
     "checkSnippets": {
-      "ko": ["내가 책임진 제품 화면과 검증 흐름"],
-      "en": ["Product surfaces and verification I have owned"]
+      "ko": ["제품 화면, 맡은 범위, 검증 근거"],
+      "en": ["Product surfaces, ownership, and verification evidence"]
     },
     "lastModified": "2026-06-27",
     "changeFrequency": "monthly",

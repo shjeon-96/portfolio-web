@@ -18,15 +18,15 @@ export default function KoreanEvidencePage() {
     <main className="page-shell">
       <SectionHeading
         eyebrow="구현 사례"
-        title="내가 책임진 제품 화면과 검증 흐름"
-        description="프로젝트 이름을 나열하기보다, 에디터 상태, 운영 업무 상태, 산출물 정합성, 검증 기준을 Problem, Role, Approach, Result, Verification 구조로 보여줍니다."
+        title="제품 화면, 맡은 범위, 검증 근거"
+        description="비공개·공개 프로젝트를 그대로 나열하지 않고, 어떤 제품 화면을 맡았는지, 어떤 프론트엔드 기준을 맞춰야 했는지, 결과를 어떻게 확인했는지로 정리했습니다."
       />
       <GuidePanel
         ariaLabel="구현 근거 읽는 기준"
         items={[
-          { title: '문제와 역할', body: '빌더, 운영 콘솔, 결과물, 릴리즈 기준처럼 실제로 책임져야 했던 범위와 역할을 봅니다.' },
-          { title: '접근과 결과', body: 'React, Next.js, TypeScript, 상태 모델, API 계약처럼 반복해서 사용한 해결 기준을 봅니다.' },
-          { title: '검증', body: '테스트, 빌드, 라우트, 생성 결과물 확인처럼 완료 판단에 사용한 근거를 봅니다.' },
+          { title: '제품 화면', body: '빌더, 운영 콘솔, 릴리즈 경로, 개발자 도구처럼 실제로 책임진 화면과 경계를 먼저 봅니다.' },
+          { title: '맡은 범위', body: '상태 소유권, API 계약, 마이그레이션 경계, 생성 결과물, 런타임 설정처럼 맞춰야 했던 기준을 봅니다.' },
+          { title: '검증 경로', body: '테스트, 빌드, 라우트, 생성 산출물, 스모크 근거, 공개 저장소 확인처럼 완료를 판단한 근거를 봅니다.' },
         ]}
       />
       <LiveEvidenceConsole locale="ko" />

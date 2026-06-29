@@ -18,15 +18,15 @@ export default function EvidencePage() {
     <main className="page-shell">
       <SectionHeading
         eyebrow="Case Studies"
-        title="Product surfaces and verification I have owned"
-        description="This page moves beyond project summaries. It shows how I structure editor state, operational workflow state, output parity, and verification paths through Problem, Role, Approach, Result, and Verification."
+        title="Product surfaces, ownership, and verification evidence"
+        description="These case studies translate private and public work into concrete product problems: what surface I owned, which front-end rules had to stay aligned, and how the result was verified."
       />
       <GuidePanel
         ariaLabel="How to read implementation evidence"
         items={[
-          { title: 'Problem and role', body: 'Look for the builder, operations console, output, or release boundary the work had to carry.' },
-          { title: 'Approach and result', body: 'Look for React, Next.js, TypeScript, state ownership, API contracts, and runtime verification signals.' },
-          { title: 'Verification', body: 'Look for tests, builds, routes, generated output, and public-safe completion checks.' },
+          { title: 'Product surface', body: 'Start with the builder, operations console, release path, or tooling boundary the work had to carry.' },
+          { title: 'Ownership signal', body: 'Look for state ownership, API contracts, migration boundaries, generated output, and runtime configuration.' },
+          { title: 'Verification path', body: 'Check how completion was proven through tests, builds, routes, generated artifacts, smoke evidence, or public repository checks.' },
         ]}
       />
       <LiveEvidenceConsole locale="en" />

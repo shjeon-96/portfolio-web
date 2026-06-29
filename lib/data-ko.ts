@@ -41,7 +41,7 @@ const projectHighlightTranslations = {
   "No-code web builder editor": {
     "title": "노코드 웹 빌더 에디터",
     "label": "비주얼 빌더 제품 시스템",
-    "summary": "AST형 상태 모델, 컴포넌트 Variant, 데이터 바인딩, 캔버스 동작, 미리보기, Export/Deploy 결과물 정합성을 다룬 비공개 제품 작업을 공개 가능한 수준으로 정리했습니다.",
+    "summary": "에디터 상태가 캔버스 동작, 컴포넌트 Variant, 데이터 바인딩, 미리보기, 생성 결과물을 하나의 규칙으로 움직이게 해야 했던 프론트엔드 화면을 맡았습니다.",
     "stack": [
       "React",
       "Next.js",
@@ -49,12 +49,12 @@ const projectHighlightTranslations = {
       "Zustand",
       "Immer"
     ],
-    "status": "비공개 제품 작업을 익명화한 공개 안전 사례"
+    "status": "상태 모델, 캔버스 인터랙션, 결과물 정합성"
   },
   "Tax and settlement operations platform": {
     "title": "세무·정산 운영 플랫폼",
     "label": "백오피스와 모바일 운영 흐름",
-    "summary": "세무대리 신청, 매입·매출 대시보드, 가맹점 승인, 알림, Vue에서 React와 Next.js로 이어지는 마이그레이션을 다룬 업무 시스템입니다.",
+    "summary": "세무대리 신청, 매입·매출 대시보드, 가맹점 심사, 알림, 승인 상태를 웹·모바일 운영 화면에서 구현하고 마이그레이션했습니다.",
     "stack": [
       "Flutter",
       "React",
@@ -62,12 +62,12 @@ const projectHighlightTranslations = {
       "Firebase",
       "Docker"
     ],
-    "status": "운영 흐름과 프레임워크 마이그레이션"
+    "status": "B2B 업무 상태와 프레임워크 마이그레이션"
   },
   "codex-lsp-bridge": {
     "title": "codex-lsp-bridge",
     "label": "오픈소스 개발 보조 도구",
-    "summary": "Codex가 로컬 언어 서버의 진단, 정의, 참조, 심볼, 호버 정보, 상태 정보를 읽기 전용으로 조회할 수 있게 만든 MCP/LSP 브리지입니다.",
+    "summary": "Codex가 코드를 수정하기 전에 로컬 언어 서버의 진단, 정의, 참조, 심볼, 호버 정보, 상태 정보를 읽기 전용으로 확인할 수 있게 만든 MCP/LSP 브리지입니다.",
     "stack": [
       "TypeScript",
       "Node.js",
@@ -80,7 +80,7 @@ const projectHighlightTranslations = {
   "Gyeol Mobile": {
     "title": "Gyeol Mobile",
     "label": "Expo/React Native 제품 플랫폼",
-    "summary": "네이티브 정책, EAS 설정, 런타임 환경, 위젯, 스토어 메타데이터, UI 스모크 테스트 결과를 하나의 릴리즈 기준으로 묶은 캘린더 중심 모바일 제품입니다.",
+    "summary": "Expo 설정, 런타임 환경, 위젯, 스토어 메타데이터, UI 스모크 근거를 하나의 릴리즈 경로로 확인하도록 정리한 캘린더 중심 모바일 제품입니다.",
     "stack": [
       "Expo",
       "React Native",
@@ -106,7 +106,7 @@ const projectHighlightTranslations = {
   "Web Toolkit": {
     "title": "Web Toolkit",
     "label": "개인정보 우선 개발자 도구",
-    "summary": "클라이언트 처리, 오프라인 PWA, i18n, WebAssembly 기반 처리, 공유할 수 있는 도구 상태를 중심으로 구성한 브라우저 개발자 도구 제품입니다.",
+    "summary": "로컬 처리, 오프라인 가능한 라우트, i18n, WebAssembly 기반 유틸리티, 공유 가능한 도구 상태를 중심으로 설계한 브라우저 개발자 도구입니다.",
     "stack": [
       "Next.js",
       "React",
@@ -119,7 +119,7 @@ const projectHighlightTranslations = {
   "app-store-connect-release": {
     "title": "app-store-connect-release",
     "label": "Codex 릴리즈 검토 플러그인",
-    "summary": "App Store Connect 제출 입력을 보수적으로 검토하고 App Review 응답 초안을 작성하기 위한 공개 Codex 플러그인입니다.",
+    "summary": "비공개 릴리즈 데이터를 저장하지 않고 App Store 제출 입력을 점검하고 App Review 응답 초안을 만드는 보수적인 릴리즈 검토 도구입니다.",
     "stack": [
       "Python",
       "Codex plugin",
@@ -221,9 +221,9 @@ const implementationEvidenceTranslations = {
   "Editor state and output parity": {
     "title": "에디터 상태와 결과물 일관성",
     "label": "비주얼 빌더 프론트엔드",
-    "summary": "편집 상태, 런타임 동작, 미리보기, 생성 결과물이 하나의 제품 기준을 따라야 하는 빌더 화면입니다.",
+    "summary": "핵심 문제는 드리프트였습니다. 캔버스 편집, 런타임 렌더링, 미리보기, Export가 같은 컴포넌트를 서로 다르게 해석하지 않도록 하나의 상태 모델이 규칙을 가져야 했습니다.",
     "surface": "AST형 에디터 모델, 컴포넌트 Variant, 데이터 바인딩, 캔버스 동작, 미리보기 상태, Export/Deploy 결과물.",
-    "role": "편집 가능한 제품 상태, 런타임 해석, 생성 결과물이 각자 다른 규칙을 갖지 않도록 정리했습니다.",
+    "role": "편집 가능한 상태와 생성 결과물 사이의 프론트엔드 계약을 맡아 Variant 규칙, 바인딩 데이터, 산출물 확인이 같은 기준을 보게 정리했습니다.",
     "frontendSignals": [
       "React 컴포넌트 규칙",
       "Zustand/Immer 상태 모델",
@@ -235,7 +235,7 @@ const implementationEvidenceTranslations = {
       "생성 HTML 확인",
       "라우트/빌드 검사"
     ],
-    "outcome": "가장 강한 포트폴리오 신호입니다. 제품 빌더 안에서 상태 책임, 결과물 정합성, 회귀 방지를 함께 다뤘다는 근거입니다.",
+    "outcome": "가장 강한 빌더 작업 신호입니다. 복잡한 상태 소유권, 캔버스 인터랙션, 생성 결과물, 회귀 검증을 하나의 제품 화면으로 다뤘다는 근거입니다.",
     "artifact": {
       "label": "에디터 근거 체인지로그",
       "description": "에디터 상태, 결과물 일관성, 회귀 검증, 성능 항목만 필터링한 공개 체인지로그입니다."
@@ -245,9 +245,9 @@ const implementationEvidenceTranslations = {
   "Operational console and migration workflows": {
     "title": "운영 콘솔과 마이그레이션 흐름",
     "label": "B2B 제품 운영 화면",
-    "summary": "승인, 세무·정산 상태, 대시보드, 알림, 프레임워크 마이그레이션이 실제 운영 흐름을 끊지 않아야 했던 백오피스 화면입니다.",
+    "summary": "단순한 테이블과 폼 작업이 아니라, 운영자가 쓰는 승인, 세무, 정산, 대시보드, 알림 상태를 유지하면서 프론트엔드를 마이그레이션해야 했던 작업입니다.",
     "surface": "관리자 대시보드, 승인 흐름, 세무·정산 업무, 알림 경로, Vue에서 React/Next.js로 이어지는 마이그레이션 경계.",
-    "role": "업무 규칙을 타입 기반 UI 상태로 옮기고, 레거시 마이그레이션이 운영 연속성과 분리되지 않게 다뤘습니다.",
+    "role": "업무 규칙을 UI 상태로 옮기고, 권한·빈 상태·실패 상태를 점검하면서 마이그레이션이 실제 운영 연속성과 분리되지 않게 다뤘습니다.",
     "frontendSignals": [
       "React/Next.js 마이그레이션",
       "관리자 상태 모델링",
@@ -259,7 +259,7 @@ const implementationEvidenceTranslations = {
       "운영 상태 검토",
       "배포 파이프라인 확인"
     ],
-    "outcome": "폼, 테이블, 권한, 업무 상태를 실제 운영 조건에서 다룬 B2B SaaS 콘솔 근거입니다.",
+    "outcome": "프론트엔드 품질이 운영 명확성, 권한 처리, 마이그레이션 안정성으로 평가되는 B2B SaaS 콘솔 경험을 보여줍니다.",
     "artifact": {
       "label": "운영 콘솔 근거 체인지로그",
       "description": "운영 콘솔, 업무 상태, 마이그레이션, 실시간 운영 항목만 필터링한 공개 체인지로그입니다."
@@ -269,9 +269,9 @@ const implementationEvidenceTranslations = {
   "Mobile release gate workflow": {
     "title": "모바일 릴리즈 게이트 흐름",
     "label": "React Native 제품 플랫폼",
-    "summary": "네이티브 설정, 위젯, 스토어 메타데이터, 런타임 환경, UI 스모크 테스트 결과가 함께 맞아야 하는 캘린더 중심 모바일 제품입니다.",
+    "summary": "모바일 배포는 React 컴포넌트 밖에도 실패 지점이 많았습니다. 네이티브 설정, 런타임 환경, 위젯, 스토어 메타데이터, 스모크 근거가 함께 맞아야 했습니다.",
     "surface": "Expo/React Native 앱 화면, 네이티브 정책, 위젯 설정, 릴리즈 준비 점검.",
-    "role": "제품 UI, 런타임 설정, 릴리즈 검증이 한 흐름으로 이어지도록 연결했습니다.",
+    "role": "제품 UI 작업이 릴리즈 준비와 끊기지 않도록 설정, 스토어 제출 정보, 스모크 확인을 배포 전에 함께 검토하는 흐름으로 묶었습니다.",
     "frontendSignals": [
       "React Native 흐름",
       "Expo 설정",
@@ -283,7 +283,7 @@ const implementationEvidenceTranslations = {
       "Maestro 스모크 테스트",
       "런타임 환경 검토"
     ],
-    "outcome": "로컬 UI 구현에서 끝나지 않고 릴리즈 기준까지 제품 화면을 가져갈 수 있음을 보여줍니다.",
+    "outcome": "UI 구현을 네이티브 설정, 검증 근거, 스토어 제출 경계까지 가져가는 릴리즈 인식형 프론트엔드 책임을 보여줍니다.",
     "artifact": {
       "label": "모바일 릴리즈 근거 체인지로그",
       "description": "UI 구현, 네이티브 설정, 스토어 검토, 릴리즈 근거가 함께 움직이는 항목을 모은 공개 체인지로그입니다."
@@ -293,9 +293,9 @@ const implementationEvidenceTranslations = {
   "Public code-intelligence tooling": {
     "title": "공개 코드 인텔리전스 도구",
     "label": "오픈소스 개발자 도구",
-    "summary": "진단, 정의, 참조, 심볼, 호버 정보, 서버 상태를 AI 보조 개발 흐름에 제공하는 읽기 전용 MCP/LSP 브리지입니다.",
+    "summary": "AI 에이전트가 수정 전에 코드 근거를 확인할 수 있도록 언어 서버 진단과 코드 내비게이션을 읽기 전용 MCP 계약으로 노출한 도구입니다.",
     "surface": "로컬 언어 서버 통합을 안전한 타입 기반 도구 인터페이스로 노출하는 개발자 도구.",
-    "role": "AI 보조 개발이 넓은 쓰기 권한 없이 의미 기반 코드 근거를 사용할 수 있도록 연동 기준을 만들었습니다.",
+    "role": "AI 보조 개발이 넓은 쓰기 권한 없이 코드를 조사할 수 있도록 연동 경계, 타입 기반 도구 계약, 패키지 검증 흐름을 설계했습니다.",
     "frontendSignals": [
       "TypeScript API 설계",
       "MCP 도구 규칙",
@@ -307,7 +307,7 @@ const implementationEvidenceTranslations = {
       "통합 검사",
       "패키지 스모크 검사"
     ],
-    "outcome": "AI 개발 흐름이 프롬프트 사용이 아니라 실제 도구와 검증으로 뒷받침된다는 근거가 됩니다.",
+    "outcome": "AI 개발 흐름이 단순한 프롬프트 사용이 아니라, 배포된 도구와 패키지 검증, 테스트로 뒷받침된다는 근거입니다.",
     "artifact": {
       "label": "codex-lsp-bridge 공개 저장소",
       "description": "MCP/LSP 브리지의 패키지 구조, README, 검증 표면을 확인할 수 있는 공개 GitHub 저장소입니다."
@@ -317,9 +317,9 @@ const implementationEvidenceTranslations = {
   "Privacy-first web toolkit direction": {
     "title": "개인정보 우선 웹 도구 제품 방향",
     "label": "Next.js 웹 제품",
-    "summary": "클라이언트 처리, 오프라인 사용, i18n, 공유 가능한 도구 상태를 중심으로 구성한 브라우저 개발자 도구 방향입니다.",
+    "summary": "서버로 데이터를 보내지 않아도 되는 개발자 유틸리티를 로컬 처리, 공유 가능한 상태, 오프라인 사용 중심으로 구성한 공개 웹 제품 방향입니다.",
     "surface": "Next.js 제품 기본 구조, 라우트 모델, 도구 패널, 공개 웹 배포 방향.",
-    "role": "서버 의존 흐름보다 로컬 처리와 반복 가능한 도구 상태를 중심으로 공개 웹 제품 방향을 잡았습니다.",
+    "role": "클라이언트 처리, 오프라인 사용, 공개 배포를 기준으로 제품 셸, 라우트 구조, 도구 상태 모델을 정리했습니다.",
     "frontendSignals": [
       "Next.js App Router",
       "TypeScript UI 규칙",
@@ -331,7 +331,7 @@ const implementationEvidenceTranslations = {
       "빌드 검사",
       "공개 저장소 검토"
     ],
-    "outcome": "에디터, 모바일 릴리즈, 개발자 도구 외에 웹 제품 구현 신호를 추가합니다.",
+    "outcome": "Next.js 안에서 라우트 구조, 재사용 가능한 도구 패널, 개인정보 우선 포지셔닝, 배포 검증을 함께 다룬 공개 웹 제품 신호입니다.",
     "artifact": {
       "label": "Web Toolkit 공개 저장소",
       "description": "브라우저 기반 개발자 도구 방향과 라우트 중심 제품 화면을 확인할 수 있는 공개 GitHub 저장소입니다."
