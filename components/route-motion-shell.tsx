@@ -18,7 +18,7 @@ export function RouteMotionShell({ children }: Readonly<RouteMotionShellProps>) 
   );
 
   return (
-    <div className="relative min-h-[calc(100vh-9rem)] overflow-hidden">
+    <div className="relative min-h-[calc(100vh-9rem)] overflow-hidden scroll-mt-24" id="main-content" tabIndex={-1}>
       {!reduceMotion ? <RouteScanLine key={pathname} /> : null}
       <AnimatePresence initial={false} mode="wait">
         <motion.div

@@ -1,4 +1,4 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import { RouteMotionShell } from '@/components/route-motion-shell';
 import { SiteFooter } from '@/components/site-footer';
 import { SiteHeader } from '@/components/site-header';
@@ -21,6 +21,11 @@ export const metadata: Metadata = {
   },
 };
 
+export const viewport: Viewport = {
+  colorScheme: 'light',
+  themeColor: '#f6f7f5',
+};
+
 export default function EnglishRootLayout({
   children,
 }: Readonly<{
@@ -29,6 +34,9 @@ export default function EnglishRootLayout({
   return (
     <html lang="en">
       <body>
+        <a className="skip-link" href="#main-content">
+          Skip to main content
+        </a>
         <SiteHeader />
         <RouteMotionShell>{children}</RouteMotionShell>
         <SiteFooter />

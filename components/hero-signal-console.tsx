@@ -2,10 +2,11 @@
 
 import { AnimatePresence, motion, type Transition, useReducedMotion } from 'framer-motion';
 import { CheckCircle2, MousePointer2, Rocket, Workflow } from 'lucide-react';
-import { useMemo, useState } from 'react';
+import { useMemo } from 'react';
 
 import { Badge, Panel } from '@/components/ui';
 import { cx, ds } from '@/lib/design-system';
+import { useUrlQueryState } from '@/lib/use-url-query-state';
 
 type Locale = 'en' | 'ko';
 type ModeKey = 'builder' | 'ops' | 'release';
@@ -83,7 +84,11 @@ const modeIcons = {
 const modeOrder: ModeKey[] = ['builder', 'ops', 'release'];
 
 export function HeroSignalConsole({ locale }: Readonly<{ locale: Locale }>) {
-  const [mode, setMode] = useState<ModeKey>('builder');
+  const [mode, setMode] = useUrlQueryState<ModeKey>({
+    defaultValue: 'builder',
+    key: 'heroMode',
+    values: modeOrder,
+  });
   const reduceMotion = useReducedMotion();
   const copy = modeCopy[locale][mode];
   const labels = getLabels(locale);

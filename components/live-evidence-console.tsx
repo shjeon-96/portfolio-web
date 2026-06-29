@@ -1,9 +1,10 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { useMemo } from 'react';
 
 import { Badge, BadgeList, Panel } from '@/components/ui';
 import { cx, ds } from '@/lib/design-system';
+import { useUrlQueryListState, useUrlQueryState } from '@/lib/use-url-query-state';
 
 type Locale = 'en' | 'ko';
 type WorkMode = 'agent' | 'editor' | 'ops';
@@ -106,14 +107,29 @@ const labels = {
   },
 };
 
+const workModes = ['agent', 'editor', 'ops'] as const satisfies readonly WorkMode[];
+const toggleKeys = ['contract', 'publicSafe', 'regression', 'release'] as const satisfies readonly ToggleKey[];
+
 export function LiveEvidenceConsole({ locale }: Readonly<{ locale: Locale }>) {
-  const [mode, setMode] = useState<WorkMode>('editor');
-  const [toggles, setToggles] = useState<Record<ToggleKey, boolean>>({
-    contract: true,
-    publicSafe: true,
-    regression: true,
-    release: true,
+  const [mode, setMode] = useUrlQueryState<WorkMode>({
+    defaultValue: 'editor',
+    key: 'evidenceMode',
+    values: workModes,
   });
+  const [enabledToggles, setToggleEnabled] = useUrlQueryListState<ToggleKey>({
+    defaultValues: toggleKeys,
+    key: 'evidenceChecks',
+    values: toggleKeys,
+  });
+  const toggles = useMemo<Record<ToggleKey, boolean>>(
+    () => ({
+      contract: enabledToggles.has('contract'),
+      publicSafe: enabledToggles.has('publicSafe'),
+      regression: enabledToggles.has('regression'),
+      release: enabledToggles.has('release'),
+    }),
+    [enabledToggles],
+  );
   const copy = modeCopy[locale][mode];
   const label = labels[locale];
 
@@ -144,7 +160,7 @@ export function LiveEvidenceConsole({ locale }: Readonly<{ locale: Locale }>) {
         <div className="border-b border-[var(--border)] p-5 lg:border-b-0 lg:border-r">
           <p className={ds.text.eyebrowMuted}>{label.mode}</p>
           <div className="mt-3 grid gap-2 sm:grid-cols-3" role="group" aria-label={label.mode}>
-            {(Object.keys(modeCopy[locale]) as WorkMode[]).map((item) => (
+            {workModes.map((item) => (
               <button
                 aria-pressed={mode === item}
                 className={cx(
@@ -163,13 +179,13 @@ export function LiveEvidenceConsole({ locale }: Readonly<{ locale: Locale }>) {
           </div>
 
           <div className="mt-5 grid gap-3">
-            {(Object.keys(toggles) as ToggleKey[]).map((key) => (
+            {toggleKeys.map((key) => (
               <label className="flex min-h-11 items-center justify-between gap-3 rounded-md border border-[var(--border)] bg-[var(--surface)] px-3" key={key}>
                 <span className="text-sm font-semibold text-[var(--text-primary)]">{label[key]}</span>
                 <input
                   checked={toggles[key]}
                   className="size-5 accent-[var(--text-primary)]"
-                  onChange={(event) => setToggles((current) => ({ ...current, [key]: event.target.checked }))}
+                  onChange={(event) => setToggleEnabled(key, event.target.checked)}
                   type="checkbox"
                 />
               </label>
